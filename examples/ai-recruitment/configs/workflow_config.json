@@ -1,0 +1,48 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "AI 招聘工作流",
+  "description": "岗位解析→简历匹配→打分→报告生成",
+  "steps": [
+    {
+      "id": "parse_jd",
+      "name": "岗位解析",
+      "type": "llm",
+      "description": "从 JD 提取结构化要求",
+      "prompt_template": "解析以下岗位描述，提取：学历、工作经验、技能关键词、薪资范围。返回 JSON。\n\n{{job_description}}"
+    },
+    {
+      "id": "match_resume",
+      "name": "简历匹配",
+      "type": "llm",
+      "dependencies": ["parse_jd"],
+      "description": "根据岗位要求匹配简历",
+      "prompt_template": "岗位要求：{{jd}}\n\n简历：{{resume}}\n\n评估匹配度，返回 JSON：education_score, experience_score, skill_score, total_score (0-10)"
+    },
+    {
+      "id": "score",
+      "name": "匹配打分",
+      "type": "llm",
+      "dependencies": ["match_resume"],
+      "description": "输出结构化打分",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "education_score": {"type": "number"},
+          "experience_score": {"type": "number"},
+          "skill_score": {"type": "number"},
+          "total_score": {"type": "number"},
+          "evidence": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    {
+      "id": "report",
+      "name": "生成报告",
+      "type": "script",
+      "dependencies": ["score"],
+      "description": "生成可审计的推荐报告",
+      "script": "scripts/generate_report.py"
+    }
+  ]
+}
