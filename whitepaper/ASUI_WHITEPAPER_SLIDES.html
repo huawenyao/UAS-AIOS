@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASUI 架构白皮书 | AI-System-UI 集成范式</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --accent: #3b82f6;
+      --accent-light: #60a5fa;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border: #334155;
+      --success: #22c55e;
+      --gradient: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .slide-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 6rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 1;
+    }
+
+    .slide-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* Title Slide */
+    .slide-1 {
+      background: var(--gradient);
+      position: relative;
+    }
+    .slide-1::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .slide-1 .slide-title {
+      font-size: 4rem;
+      -webkit-text-fill-color: #fff;
+    }
+    .slide-1 .slide-subtitle {
+      font-size: 1.5rem;
+      color: var(--accent-light);
+      margin-top: 0.5rem;
+    }
+    .slide-1 .version {
+      position: absolute;
+      bottom: 3rem;
+      right: 4rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      z-index: 2;
+    }
+
+    /* Content Slides */
+    .slide h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--accent-light);
+      align-self: flex-start;
+    }
+
+    .slide-content {
+      width: 100%;
+      max-width: 900px;
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .slide-content ul {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .slide-content li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .slide-content li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .slide-content li strong {
+      color: var(--text-primary);
+    }
+
+    .slide-content blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      background: rgba(59, 130, 246, 0.08);
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: var(--text-primary);
+    }
+
+    .slide-content pre, .slide-content code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      background: var(--bg-card);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    .slide-content code {
+      padding: 0.2rem 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .column-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .column-card h3 {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .column-card ul {
+      font-size: 0.95rem;
+    }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      margin: 1rem 0;
+    }
+    .data-table th, .data-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table th {
+      color: var(--accent-light);
+      font-weight: 600;
+    }
+    .data-table td {
+      color: var(--text-secondary);
+    }
+
+    /* Architecture Diagram */
+    .arch-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+    }
+    .arch-box .layer-name {
+      color: var(--accent-light);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .arch-box .layer-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 100;
+      background: rgba(30, 41, 59, 0.9);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      border: 1px solid var(--border);
+    }
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+    .nav-page {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      min-width: 4rem;
+      text-align: center;
+    }
+
+    /* Logo/Footer */
+    .footer-logo {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+      z-index: 99;
+    }
+
+    .slide-number {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      opacity: 0.5;
+      z-index: 99;
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 101;
+      transition: width 0.3s ease;
+    }
+
+    @media print {
+      .slide {
+        opacity: 1 !important;
+        visibility: visible !important;
+        page-break-after: always;
+      }
+      .nav, .footer-logo { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <!-- Slide 1: Title -->
+    <section class="slide active" data-slide="1">
+      <h1 class="slide-title">ASUI 架构白皮书</h1>
+      <p class="slide-subtitle">AI-System-UI 集成范式</p>
+      <p class="slide-subtitle">新一代知识驱动型智能系统架构</p>
+      <span class="version">版本 1.0 | 2025年3月</span>
+    </section>
+
+    <!-- Slide 2: 摘要 -->
+    <section class="slide" data-slide="2">
+      <h2>摘要</h2>
+      <div class="slide-content">
+        <p>ASUI（AI-System-UI Integration）是一种以<strong>显式知识为驱动</strong>、实现 AI 能力与系统执行深度融合、支持人机协同式增量演化的智能系统架构模式。</p>
+        <blockquote>核心主张：知识是可形式化的，且形式化知识可以驱动系统行为，而无需将知识编译为代码。</blockquote>
+      </div>
+    </section>
+
+    <!-- Slide 3: 问题背景 - 传统系统 -->
+    <section class="slide" data-slide="3">
+      <h2>问题背景 — 传统系统的困境</h2>
+      <div class="slide-content">
+        <ul>
+          <li><strong>开发-运行割裂</strong>：需求变化需经分析→开发→测试→部署，反馈周期长达数周</li>
+          <li><strong>功能死板</strong>：业务规则变更依赖代码修改，非技术人员无法参与</li>
+          <li><strong>知识散落</strong>：业务逻辑嵌入代码，难以追溯、难以复用</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Slide 4: 问题背景 - AI Chat -->
+    <section class="slide" data-slide="4">
+      <h2>问题背景 — 纯 AI Chat 的困境</h2>
+      <div class="slide-content">
+        <ul>
+          <li><strong>操作黑盒</strong>：AI 推理过程不透明，决策依据不可追溯</li>
+          <li><strong>上下文丢失</strong>：每次对话需重新解释需求，无系统化沉淀</li>
+          <li><strong>任务自动化不足</strong>：无法调用系统工具、无法写回数据库</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Slide 5: ASUI 解决路径 -->
+    <section class="slide" data-slide="5">
+      <h2>ASUI 的解决路径</h2>
+      <div class="slide-content">
+        <p>通过<strong>知识层</strong>、<strong>AI 编排层</strong>、<strong>执行层</strong>的三层融合，实现：</p>
+        <ul>
+          <li>知识即配置，修改即生效</li>
+          <li>操作可感知，决策可审计</li>
+          <li>构建即运行，增量可演化</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Slide 6: 核心定义 -->
+    <section class="slide" data-slide="6">
+      <h2>核心定义</h2>
+      <div class="slide-content">
+        <p><strong>ASUI 范式</strong>（AI-System-UI Integration Paradigm）：</p>
+        <blockquote>一种以显式知识为驱动、实现 AI 能力与系统执行深度融合、支持人机协同式增量演化的智能系统架构模式。</blockquote>
+      </div>
+    </section>
+
+    <!-- Slide 7: 系统三元组 -->
+    <section class="slide" data-slide="7">
+      <h2>系统三元组</h2>
+      <div class="slide-content">
+        <pre>ASUI_System = (K, A, E)
+
+K = 知识库（CLAUDE.md、workflow_config、skills）
+A = AI 编排器（知识解释、动态规划、执行协调）
+E = 执行引擎（脚本、数据库、外部 API）</pre>
+      </div>
+    </section>
+
+    <!-- Slide 8: 演化函数 -->
+    <section class="slide" data-slide="8">
+      <h2>演化函数</h2>
+      <div class="slide-content">
+        <pre>evolve(System, ΔK) → System'
+
+其中 ΔK 为知识增量，System'.K = System.K ∪ ΔK
+执行引擎 E 不变，无需代码变更即可实现系统行为演化。</pre>
+      </div>
+    </section>
+
+    <!-- Slide 9: 三层架构 -->
+    <section class="slide" data-slide="9">
+      <h2>三层架构</h2>
+      <div class="slide-content">
+        <div class="arch-box">
+          <div class="layer-name">知识层</div>
+          <div class="layer-desc">系统文档（CLAUDE.md）· 业务规则（workflow_config.json）· 功能模块（.claude/skills/）</div>
+        </div>
+        <div class="arch-box">
+          <div class="layer-name">AI 编排层</div>
+          <div class="layer-desc">知识解释 · 动态规划 · 执行协调（调用工具 + LLM）</div>
+        </div>
+        <div class="arch-box">
+          <div class="layer-name">执行层</div>
+          <div class="layer-desc">工具脚本 · 数据持久化（SQLite/文件）· 外部集成（API/消息平台）</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: 执行流程 -->
+    <section class="slide" data-slide="10">
+      <h2>执行流程</h2>
+      <div class="slide-content">
+        <pre>用户意图（自然语言）
+    ↓
+AI 理解（基于项目知识库）
+    ↓
+生成执行计划（解析 workflow_config）
+    ↓
+调用系统工具（脚本/LLM/数据库）
+    ↓
+结构化输出（JSON/SQLite/报告）
+    ↓
+用户反馈 → 知识库更新</pre>
+      </div>
+    </section>
+
+    <!-- Slide 11: 六大核心特征 -->
+    <section class="slide" data-slide="11">
+      <h2>六大核心特征</h2>
+      <div class="slide-content">
+        <table class="data-table">
+          <thead>
+            <tr><th>特征</th><th>验证标准</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>① 知识驱动的可解释性</td><td>非技术人员能否通过阅读知识文档理解系统行为？</td></tr>
+            <tr><td>② 构建运行一体化</td><td>新增功能需要重启/部署吗？</td></tr>
+            <tr><td>③ AI-System 深度融合</td><td>AI 能否直接调用系统工具并写回数据库？</td></tr>
+            <tr><td>④ 情景化人机协同</td><td>用户说「评分学生 A」，AI 能否自动找到数据、标准、流程？</td></tr>
+            <tr><td>⑤ 结构化可审计性</td><td>每个 AI 决策能否追溯到具体输入和知识依据？</td></tr>
+            <tr><td>⑥ 增量式可演化性</td><td>系统能力能否通过添加知识文件持续增长？</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 12: 适用场景 -->
+    <section class="slide" data-slide="12">
+      <h2>适用场景</h2>
+      <div class="slide-content">
+        <table class="data-table">
+          <thead>
+            <tr><th>领域</th><th>ASUI 应用模式</th><th>预期价值</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>智能客服</td><td>知识库驱动对话 + 工单系统集成</td><td>减少人工干预 80%</td></tr>
+            <tr><td>业务流程自动化</td><td>流程配置化 + AI 编排</td><td>流程上线周期缩短 90%</td></tr>
+            <tr><td>代码审查</td><td>规则知识化 + 增量学习</td><td>审查准确率提升 40%</td></tr>
+            <tr><td>数据分析</td><td>报告模板化 + AI 解读</td><td>分析师效率提升 3 倍</td></tr>
+            <tr><td>教育评分</td><td>维度配置化 + 证据链审计</td><td>评分周期从周级到分钟级</td></tr>
+            <tr><td>AI 招聘</td><td>岗位画像 + 简历匹配 + 面试评估</td><td>初筛效率提升 5 倍</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 13: 标准化规范 -->
+    <section class="slide" data-slide="13">
+      <h2>标准化规范</h2>
+      <div class="slide-content">
+        <pre>project/
+├── CLAUDE.md              # 系统操作手册
+├── .claude/
+│   ├── skills/            # 功能模块知识
+│   ├── agents/            # 领域 Agent
+│   └── commands/          # 交互命令
+├── configs/
+│   └── workflow_config.json
+├── scripts/               # 执行工具
+└── database/              # 数据持久化</pre>
+        <p style="margin-top:1rem;">workflow_config 遵循 JSON Schema 规范</p>
+      </div>
+    </section>
+
+    <!-- Slide 14: 结论 -->
+    <section class="slide" data-slide="14">
+      <h2>结论</h2>
+      <div class="slide-content">
+        <p>ASUI 范式不是对传统系统的「改良」，而是对软件架构的<strong>「重新想象」</strong>。</p>
+        <blockquote>当「AI 即操作系统」成为共识时，ASUI 定义了这种操作系统的知识层协议。</blockquote>
+        <p style="margin-top:1.5rem;"><strong>范式承诺</strong>：通过将知识从代码中解放，让业务系统获得软件的确定性、对话的灵活性，以及构建即运行的演化速度。</p>
+      </div>
+    </section>
+
+    <!-- Slide 15: 致谢 -->
+    <section class="slide" data-slide="15">
+      <h1 class="slide-title">感谢聆听</h1>
+      <p class="slide-subtitle" style="margin-top:2rem;">ASUI 架构白皮书 v1.0</p>
+      <p class="slide-subtitle">ACA-protocol | 2025</p>
+    </section>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn" id="prev" aria-label="上一页">←</button>
+    <span class="nav-page"><span id="current">1</span> / <span id="total">15</span></span>
+    <button class="nav-btn" id="next" aria-label="下一页">→</button>
+  </nav>
+
+  <div class="progress-bar" id="progress"></div>
+  <div class="footer-logo">ACA-protocol · ASUI</div>
+  <div class="slide-number" id="slideNum">1 / 15</div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    let current = 0;
+
+    function showSlide(n) {
+      current = ((n % total) + total) % total;
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      document.getElementById('current').textContent = current + 1;
+      document.getElementById('slideNum').textContent = (current + 1) + ' / ' + total;
+      document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+    }
+
+    document.getElementById('prev').onclick = () => showSlide(current - 1);
+    document.getElementById('next').onclick = () => showSlide(current + 1);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') showSlide(current - 1);
+      if (e.key === 'ArrowRight') showSlide(current + 1);
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (dx > 50) showSlide(current - 1);
+      if (dx < -50) showSlide(current + 1);
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>

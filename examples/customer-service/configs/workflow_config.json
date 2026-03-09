@@ -1,0 +1,39 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "智能客服工作流",
+  "description": "意图识别→知识检索→回复生成→工单创建",
+  "steps": [
+    {
+      "id": "intent",
+      "name": "意图识别",
+      "type": "llm",
+      "description": "分析用户咨询类型",
+      "prompt_template": "分析以下用户咨询的意图类型（product_inquiry/refund/complaint/technical）：\n\n{{user_input}}\n\n返回JSON: {\"intent\": \"...\", \"confidence\": 0.0-1.0}"
+    },
+    {
+      "id": "retrieve",
+      "name": "知识检索",
+      "type": "llm",
+      "dependencies": ["intent"],
+      "description": "从知识库匹配回复",
+      "prompt_template": "根据意图 {{intent}} 和用户问题 {{user_input}}，从知识库检索最相关的回复。"
+    },
+    {
+      "id": "reply",
+      "name": "生成回复",
+      "type": "llm",
+      "dependencies": ["retrieve"],
+      "description": "生成客服回复",
+      "prompt_template": "基于检索结果生成友好回复：\n{{retrieve_result}}"
+    },
+    {
+      "id": "ticket",
+      "name": "工单创建",
+      "type": "script",
+      "dependencies": ["intent", "reply"],
+      "description": "无法解决时创建工单",
+      "script": "scripts/create_ticket.py"
+    }
+  ]
+}
