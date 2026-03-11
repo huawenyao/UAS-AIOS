@@ -1,0 +1,230 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "selfpaw 原生认知蜂群工作流",
+  "description": "基于否定之否定的三阶段蜂群决策工作流",
+  "swarm": {
+    "mode": "dialectical-swarm",
+    "methodology": "negation-of-negation",
+    "decision_policy": "observer_synthesized_consensus",
+    "agents": [
+      {
+        "id": "user_view",
+        "name": "用户视角智能体",
+        "dimension": "user",
+        "stance": "终端用户/需求方"
+      },
+      {
+        "id": "obstacle_gate",
+        "name": "关卡障碍智能体",
+        "dimension": "gate",
+        "stance": "风险把控者"
+      },
+      {
+        "id": "decision_core",
+        "name": "核心决策智能体",
+        "dimension": "decision",
+        "stance": "目标执行者"
+      },
+      {
+        "id": "payer_value",
+        "name": "买单价值智能体",
+        "dimension": "payer",
+        "stance": "价值与成本守门人"
+      },
+      {
+        "id": "observer_referee",
+        "name": "博弈观察智能体",
+        "dimension": "observer",
+        "stance": "中立观察者"
+      }
+    ],
+    "phases": [
+      {
+        "id": "first_negation",
+        "name": "第一次否定",
+        "goal": "打破个人单一视角，形成五份独立报告"
+      },
+      {
+        "id": "second_negation",
+        "name": "第二次否定",
+        "goal": "通过对手盘交叉质询暴露盲区与冲突"
+      },
+      {
+        "id": "synthesis",
+        "name": "辩证融合",
+        "goal": "汇总共识、冲突与修订，输出最终决策方案"
+      }
+    ]
+  },
+  "global_config": {
+    "required_sections": [
+      "topic",
+      "final_decision",
+      "execution_path",
+      "risk_preplan",
+      "user_adaptation",
+      "cost_controls",
+      "game_response",
+      "consensus",
+      "open_conflicts",
+      "retrospective_triggers"
+    ]
+  },
+  "steps": [
+    {
+      "id": "intake",
+      "name": "议题归一化",
+      "type": "llm",
+      "description": "明确目标、边界、时间窗与决策成功标准",
+      "prompt_template": "请把以下议题归一化为结构化输入，包含目标、约束、时间窗、资源边界、成功标准。\n\n{{topic}}",
+      "swarm_mode": "topic_normalization"
+    },
+    {
+      "id": "first_negation",
+      "name": "第一次否定",
+      "type": "parallel",
+      "dependencies": ["intake"],
+      "description": "五个智能体并行独立输出，不提前妥协",
+      "parallel_steps": [
+        "user_report",
+        "obstacle_report",
+        "decision_report",
+        "payer_report",
+        "observer_report"
+      ]
+    },
+    {
+      "id": "user_report",
+      "name": "用户真实需求报告",
+      "type": "llm",
+      "agent_id": "user_view",
+      "agent_role": "终端用户/需求方",
+      "deliverable": "用户真实需求报告",
+      "dependencies": ["intake"],
+      "prompt_template": "站在终端用户立场，输出显性需求、隐性痛点、采用障碍、情绪偏好、拒绝理由。\n\n输入：{{intake}}"
+    },
+    {
+      "id": "obstacle_report",
+      "name": "关卡与风险清单",
+      "type": "llm",
+      "agent_id": "obstacle_gate",
+      "agent_role": "风险把控者",
+      "deliverable": "关卡与风险清单",
+      "dependencies": ["intake"],
+      "prompt_template": "以极致保守视角拆解执行关卡、约束条件、失败场景、资源短板。\n\n输入：{{intake}}"
+    },
+    {
+      "id": "decision_report",
+      "name": "初始决策方案",
+      "type": "llm",
+      "agent_id": "decision_core",
+      "agent_role": "目标执行者",
+      "deliverable": "初始决策方案",
+      "dependencies": ["intake"],
+      "prompt_template": "以目标达成与效率优先视角输出初始决策路径、里程碑与资源配置。\n\n输入：{{intake}}"
+    },
+    {
+      "id": "payer_report",
+      "name": "价值与成本评估",
+      "type": "llm",
+      "agent_id": "payer_value",
+      "agent_role": "价值与成本守门人",
+      "deliverable": "价值与成本评估",
+      "dependencies": ["intake"],
+      "prompt_template": "测算投入产出、回报周期、支付意愿阈值与亏损风险。\n\n输入：{{intake}}"
+    },
+    {
+      "id": "observer_report",
+      "name": "外部博弈格局",
+      "type": "llm",
+      "agent_id": "observer_referee",
+      "agent_role": "中立观察者",
+      "deliverable": "外部博弈格局",
+      "dependencies": ["intake"],
+      "prompt_template": "站在第三方视角，分析多方利益关系、外部变量、对手动作与动态趋势。\n\n输入：{{intake}}"
+    },
+    {
+      "id": "second_negation",
+      "name": "第二次否定",
+      "type": "llm",
+      "dependencies": [
+        "user_report",
+        "obstacle_report",
+        "decision_report",
+        "payer_report",
+        "observer_report"
+      ],
+      "description": "认知对手盘交叉质询，提炼共识、冲突与修订点",
+      "swarm_mode": "cross_examination",
+      "prompt_template": "请组织五个智能体完成公开质询。输出：共识、核心冲突、被证伪假设、修订建议、必须继续观察的变量。\n\n用户报告：{{user_report}}\n\n关卡报告：{{obstacle_report}}\n\n决策报告：{{decision_report}}\n\n买单报告：{{payer_report}}\n\n观察报告：{{observer_report}}"
+    },
+    {
+      "id": "synthesis",
+      "name": "辩证融合",
+      "type": "llm",
+      "dependencies": ["second_negation"],
+      "description": "输出经过辩证检验的最终决策方案",
+      "prompt_template": "基于第二次否定后的共识、冲突与修订点，输出《全维度辩证决策方案》。必须覆盖执行路径、风险预案、用户适配、成本把控、博弈应对、复盘触发条件。\n\n{{second_negation}}",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "topic": { "type": "string" },
+          "final_decision": { "type": "string" },
+          "execution_path": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "risk_preplan": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "user_adaptation": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "cost_controls": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "game_response": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "consensus": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "open_conflicts": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "retrospective_triggers": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": [
+          "topic",
+          "final_decision",
+          "execution_path",
+          "risk_preplan",
+          "user_adaptation",
+          "cost_controls",
+          "game_response",
+          "consensus",
+          "open_conflicts",
+          "retrospective_triggers"
+        ]
+      }
+    },
+    {
+      "id": "render_report",
+      "name": "写入决策报告",
+      "type": "script",
+      "dependencies": ["synthesis"],
+      "description": "将蜂群输出落盘为 JSON 与 Markdown 报告",
+      "script": "scripts/render_decision.py"
+    }
+  ]
+}
