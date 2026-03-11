@@ -14,12 +14,12 @@
 .
 ├── CLAUDE.md              # 本文件 - 系统操作手册
 ├── .claude/
-│   ├── skills/            # 功能模块知识
-│   ├── agents/            # 场景化 Agent 配置
-│   └── commands/          # 交互命令定义
-├── configs/               # 业务规则配置
-├── scripts/               # 执行工具脚本
-├── database/              # 数据持久化
+│   ├── skills/            # 功能模块知识（含 swarm_methodology、agent_opponent_matrix）
+│   ├── agents/            # 场景化 Agent 配置（含蜂群五智能体 01-05）
+│   └── commands/          # 交互命令定义（含 swarm_decision）
+├── configs/               # 业务规则配置（含 swarm_workflow_config.json）
+├── scripts/               # 执行工具脚本（含 swarm_run、swarm_persist）
+├── database/              # 数据持久化（swarm_decisions.json）
 └── docs/
     └── ASUI_ARCHITECTURE.md  # 架构理论文档
 ```
@@ -31,13 +31,23 @@
 3. **执行协调**：AI 调用 scripts、database 等系统工具
 4. **结果反馈**：结构化输出写入数据库，生成报告
 
-## 交互命令（待扩展）
+## 交互命令
 
 | 命令 | 功能 |
 |------|------|
 | /start | 启动主工作流 |
 | /addQuest | 添加新题目/任务 |
 | /addData | 添加新数据 |
+| /swarmDecision [议题] | 启动 SelfPaw 蜂群认知智能体，基于否定之否定辩证升维的全维度决策洞察 |
+
+### SelfPaw 蜂群智能体体系
+
+基于否定之否定辩证升维方法论，用蜂群智能体替代个人单一决策：
+
+- **五智能体**：用户视角、关卡障碍、核心决策、买单价值、博弈观察
+- **三阶段**：初次否定（多维拆解）→ 二次否定（对手盘博弈）→ 辩证融合（智能涌现）
+- **知识层**：`.claude/skills/swarm_methodology.md`、`.claude/agents/01-05_*.md`
+- **工作流**：`configs/swarm_workflow_config.json`
 
 ## 修改即生效
 

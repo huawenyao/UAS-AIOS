@@ -1,0 +1,158 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "SelfPaw 蜂群认知智能体工作流",
+  "description": "基于否定之否定辩证升维的三阶段决策工作流：初次否定→二次否定→辩证融合",
+  "global_config": {
+    "methodology": ".claude/skills/swarm_methodology.md",
+    "opponent_matrix": ".claude/skills/agent_opponent_matrix.md",
+    "agents_dir": ".claude/agents"
+  },
+  "steps": [
+    {
+      "id": "stage1_parallel",
+      "name": "第一阶段：初次否定 - 多维信息拆解",
+      "type": "parallel",
+      "description": "五智能体独立采集分析，坚守立场，彼此不妥协",
+      "parallel_steps": [
+        "agent_01_user",
+        "agent_02_obstacle",
+        "agent_03_decision",
+        "agent_04_value",
+        "agent_05_observer"
+      ]
+    },
+    {
+      "id": "agent_01_user",
+      "name": "用户视角智能体",
+      "type": "llm",
+      "description": "输出《用户真实需求报告》",
+      "prompt_template": "你扮演【用户视角智能体】。完全站在终端用户/需求方立场。\n\n决策议题：{{decision_topic}}\n背景信息：{{context}}\n\n请输出《用户真实需求报告》，包含：显性需求、隐性痛点、决策偏好、拒绝理由、使用场景。拒绝迎合决策目标，拒绝主观臆断。\n\n参考 .claude/agents/01_user_perspective.md 的输出结构，返回 JSON。",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "explicit_needs": { "type": "array", "items": { "type": "string" } },
+          "implicit_pain_points": { "type": "array", "items": { "type": "string" } },
+          "decision_preferences": { "type": "object" },
+          "rejection_reasons": { "type": "array", "items": { "type": "string" } },
+          "usage_scenarios": { "type": "array" },
+          "emotional_drivers": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    {
+      "id": "agent_02_obstacle",
+      "name": "关卡障碍智能体",
+      "type": "llm",
+      "description": "输出《关卡与风险清单》",
+      "prompt_template": "你扮演【关卡障碍智能体】。极致理性的风险把控者。\n\n决策议题：{{decision_topic}}\n背景信息：{{context}}\n\n请输出《关卡与风险清单》，包含：执行难点、约束条件、失败场景、资源短板、不可行性漏洞。不做乐观预估。\n\n参考 .claude/agents/02_obstacle_guardian.md 的输出结构，返回 JSON。",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "execution_gates": { "type": "array" },
+          "constraints": { "type": "object" },
+          "failure_scenarios": { "type": "array", "items": { "type": "string" } },
+          "resource_gaps": { "type": "array", "items": { "type": "string" } },
+          "infeasibility_flags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    {
+      "id": "agent_03_decision",
+      "name": "核心决策智能体",
+      "type": "llm",
+      "description": "输出《初始决策方案》",
+      "prompt_template": "你扮演【核心决策智能体】。个人核心诉求与目标执行者。\n\n决策议题：{{decision_topic}}\n背景信息：{{context}}\n\n请输出《初始决策方案》，包含：核心目标、执行路径、时间规划、效率优化点。基于个人核心诉求制定。\n\n参考 .claude/agents/03_core_decision.md 的输出结构，返回 JSON。",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "core_objectives": { "type": "array", "items": { "type": "string" } },
+          "success_criteria": { "type": "object" },
+          "execution_steps": { "type": "array" },
+          "timeline": { "type": "object" },
+          "efficiency_levers": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    {
+      "id": "agent_04_value",
+      "name": "买单价值智能体",
+      "type": "llm",
+      "description": "输出《价值与成本评估》",
+      "prompt_template": "你扮演【买单价值智能体】。价值变现与成本把控者。\n\n决策议题：{{decision_topic}}\n背景信息：{{context}}\n\n请输出《价值与成本评估》，包含：投入成本、回报周期、买单方意愿阈值、亏损风险、投入边界。\n\n参考 .claude/agents/04_value_buyer.md 的输出结构，返回 JSON。",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "investment_cost": { "type": "object" },
+          "value_return": { "type": "object" },
+          "buyer_willingness_threshold": { "type": "object" },
+          "loss_risk": { "type": "array", "items": { "type": "string" } },
+          "investment_boundary": { "type": "object" }
+        }
+      }
+    },
+    {
+      "id": "agent_05_observer",
+      "name": "博弈观察智能体",
+      "type": "llm",
+      "description": "输出《外部博弈格局》",
+      "prompt_template": "你扮演【博弈观察智能体】。第三方中立观察者。\n\n决策议题：{{decision_topic}}\n背景信息：{{context}}\n\n请输出《外部博弈格局》，包含：多方利益关系、对手决策逻辑、外部变量、动态趋势、隐性博弈方。保持绝对中立。\n\n参考 .claude/agents/05_game_observer.md 的输出结构，返回 JSON。",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "stakeholder_map": { "type": "array" },
+          "external_variables": { "type": "array", "items": { "type": "string" } },
+          "dynamic_trends": { "type": "array", "items": { "type": "string" } },
+          "hidden_players": { "type": "array", "items": { "type": "string" } },
+          "conflict_points": { "type": "array", "items": { "type": "string" } },
+          "consensus_areas": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    {
+      "id": "stage2_debate",
+      "name": "第二阶段：二次否定 - 认知对手盘对冲",
+      "type": "llm",
+      "dependencies": ["stage1_parallel"],
+      "description": "各智能体逐一质询，对手盘针对性否定，信息补全",
+      "prompt_template": "【第二阶段：认知对手盘博弈】\n\n以下是五智能体的初次输出：\n{{stage1_outputs}}\n\n请模拟认知对手盘博弈流程：\n1. 按对手盘矩阵，每个智能体依次陈述结论\n2. 对手盘智能体针对性提出否定意见（质疑点、保留内核、补充建议）\n3. 被质疑方补充信息或修正逻辑\n4. 博弈观察智能体记录各方诉求、矛盾焦点、共识内容\n\n输出结构：{\"debate_rounds\": [...], \"conflict_summary\": {}, \"consensus_summary\": {}, \"observer_notes\": \"\"}",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "debate_rounds": { "type": "array" },
+          "conflict_summary": { "type": "object" },
+          "consensus_summary": { "type": "object" },
+          "observer_notes": { "type": "string" }
+        }
+      }
+    },
+    {
+      "id": "stage3_synthesis",
+      "name": "第三阶段：辩证融合 - 智能涌现",
+      "type": "llm",
+      "dependencies": ["stage2_debate"],
+      "description": "整合所有合理内核，输出《全维度辩证决策方案》",
+      "prompt_template": "【第三阶段：辩证融合】\n\n初次否定输出：{{stage1_outputs}}\n二次否定博弈结果：{{stage2_output}}\n\n请完成否定之否定的闭环，在更高维度整合所有智能体的合理内核，涌现出《全维度辩证决策方案》。\n\n必须包含：\n1. 执行路径（经关卡检验）\n2. 风险预案（覆盖失败场景）\n3. 用户适配方案（满足真实需求）\n4. 成本把控细则（在买单边界内）\n5. 博弈应对策略（适配外部格局）\n6. 证据链（每项结论的辩证依据）\n\n遵循 agent_opponent_matrix 中的融合优先级。输出 JSON。",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "synthesis_version": { "type": "string" },
+          "execution_path": { "type": "object" },
+          "risk_mitigation": { "type": "array" },
+          "user_adaptation": { "type": "object" },
+          "cost_control": { "type": "object" },
+          "game_strategy": { "type": "object" },
+          "evidence_chain": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    {
+      "id": "persist_result",
+      "name": "持久化决策方案",
+      "type": "script",
+      "dependencies": ["stage3_synthesis"],
+      "description": "将《全维度辩证决策方案》写入数据库",
+      "script": "scripts/swarm_persist.py"
+    }
+  ]
+}
