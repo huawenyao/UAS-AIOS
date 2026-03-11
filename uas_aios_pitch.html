@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAS-AIOS · AI Operating System</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05050f;--bg2:#0a0a1e;
+  --blue:#00d4ff;--purple:#9b59f5;--green:#00ffaa;--gold:#ffd700;--pink:#ff4da6;
+  --text:#f0f0ff;--muted:#7070a0;
+  --glass:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);
+  --r:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+
+/* ── canvas background ── */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── slide system ── */
+.deck{position:fixed;inset:0;z-index:1}
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;padding:60px 80px;
+  opacity:0;transform:translateX(60px);pointer-events:none;
+  transition:opacity .6s cubic-bezier(.77,0,.175,1),transform .6s cubic-bezier(.77,0,.175,1);
+}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.slide.exit-left{opacity:0;transform:translateX(-60px)}
+
+/* ── nav ── */
+#nav{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:20px;z-index:99}
+.nav-btn{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--border);
+  background:var(--glass);color:var(--text);font-size:18px;cursor:pointer;
+  backdrop-filter:blur(12px);transition:.25s;display:flex;align-items:center;justify-content:center;
+}
+.nav-btn:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 0 16px rgba(0,212,255,.3)}
+#progress-bar{display:flex;gap:6px}
+.dot{width:6px;height:6px;border-radius:3px;background:var(--border);transition:.3s;cursor:pointer}
+.dot.active{width:22px;background:var(--blue)}
+#slide-num{font-size:12px;color:var(--muted);letter-spacing:.08em;min-width:40px;text-align:center}
+
+/* ── common layout ── */
+.slide-inner{width:100%;max-width:1200px;display:flex;flex-direction:column;gap:40px}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;
+  border:1px solid var(--border);background:var(--glass);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);backdrop-filter:blur(8px)}
+.tag .dot-tag{width:6px;height:6px;border-radius:50%;background:var(--blue)}
+h1{font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(36px,5vw,72px);
+  line-height:1.1;letter-spacing:-.02em}
+h2{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(22px,3vw,40px);
+  line-height:1.2;letter-spacing:-.01em}
+h3{font-size:18px;font-weight:600;line-height:1.4}
+.sub{font-size:clamp(14px,1.8vw,18px);color:var(--muted);line-height:1.7;font-weight:300}
+.grad-blue{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.grad-gold{background:linear-gradient(135deg,var(--gold),#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.grad-green{background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* glass card */
+.card{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);
+  padding:28px;backdrop-filter:blur(16px);transition:.3s}
+.card:hover{border-color:rgba(0,212,255,.3);transform:translateY(-2px)}
+
+/* grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+
+/* ─── SLIDE 1: COVER ─── */
+#s1{text-align:center}
+#s1 .formula{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  font-family:'Orbitron',sans-serif;font-size:clamp(16px,2vw,26px);font-weight:600;
+  margin:24px 0;
+}
+#s1 .formula .f-item{
+  padding:12px 24px;border-radius:12px;border:1px solid var(--border);
+  background:var(--glass);backdrop-filter:blur(8px);transition:.6s;
+}
+#s1 .formula .f-item.u{border-color:rgba(0,212,255,.4);color:var(--blue)}
+#s1 .formula .f-item.a{border-color:rgba(155,89,245,.4);color:var(--purple)}
+#s1 .formula .f-item.s{border-color:rgba(0,255,170,.4);color:var(--green)}
+#s1 .formula .f-item.eq{background:linear-gradient(135deg,var(--blue),var(--purple));
+  border:none;color:#fff;font-size:1.3em}
+#s1 .formula .op{color:var(--muted);font-size:1.4em}
+#s1 .tagline{font-size:clamp(13px,1.5vw,17px);color:var(--muted);max-width:700px;line-height:1.8}
+#s1 .badge-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.badge{padding:5px 14px;border-radius:20px;font-size:11px;letter-spacing:.08em;font-weight:500}
+.badge-blue{background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--blue)}
+.badge-purple{background:rgba(155,89,245,.12);border:1px solid rgba(155,89,245,.3);color:var(--purple)}
+.badge-green{background:rgba(0,255,170,.12);border:1px solid rgba(0,255,170,.3);color:var(--green)}
+
+/* ─── SLIDE 2: PROBLEM ─── */
+.friction-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;width:100%}
+.friction-card{
+  border-radius:var(--r);padding:28px 24px;text-align:center;
+  border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(12px);
+  position:relative;overflow:hidden;
+}
+.friction-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.fc-u::before{background:linear-gradient(90deg,var(--blue),transparent)}
+.fc-a::before{background:linear-gradient(90deg,var(--purple),transparent)}
+.fc-s::before{background:linear-gradient(90deg,var(--green),transparent)}
+.friction-icon{font-size:40px;margin-bottom:16px;display:block}
+.friction-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;
+  letter-spacing:.1em;margin-bottom:12px}
+.friction-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.friction-tag{margin-top:14px;padding:4px 12px;border-radius:12px;font-size:11px;
+  font-weight:600;display:inline-block}
+.fc-u .friction-tag{background:rgba(0,212,255,.15);color:var(--blue)}
+.fc-a .friction-tag{background:rgba(155,89,245,.15);color:var(--purple)}
+.fc-s .friction-tag{background:rgba(0,255,170,.15);color:var(--green)}
+.equation-bar{
+  width:100%;padding:20px 28px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(155,89,245,.08));
+  border:1px solid rgba(155,89,245,.2);text-align:center;
+  font-family:'Orbitron',sans-serif;font-size:clamp(13px,1.6vw,18px);
+  color:var(--purple);letter-spacing:.05em;
+}
+
+/* ─── SLIDE 3: EVOLUTION ─── */
+.timeline{width:100%;position:relative;padding:20px 0}
+.tl-line{position:absolute;top:50px;left:40px;right:40px;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--green),var(--gold))}
+.tl-nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative}
+.tl-node{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:0}
+.tl-dot{
+  width:20px;height:20px;border-radius:50%;border:3px solid;
+  background:var(--bg);z-index:2;margin-top:40px;flex-shrink:0;
+  box-shadow:0 0 20px currentColor;
+}
+.tl-n1 .tl-dot{color:var(--blue);border-color:var(--blue)}
+.tl-n2 .tl-dot{color:var(--purple);border-color:var(--purple)}
+.tl-n3 .tl-dot{color:var(--green);border-color:var(--green)}
+.tl-n4 .tl-dot{color:var(--gold);border-color:var(--gold)}
+.tl-content{text-align:center;padding:20px 16px;border-radius:var(--r);
+  background:var(--glass);border:1px solid var(--border);backdrop-filter:blur(8px);width:100%}
+.tl-year{font-size:11px;letter-spacing:.12em;font-weight:600;margin-bottom:6px}
+.tl-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin-bottom:10px}
+.tl-solved{font-size:11px;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:8px}
+.tl-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.tl-n1 .tl-year,.tl-n1 .tl-title{color:var(--blue)}
+.tl-n1 .tl-solved{background:rgba(0,212,255,.12);color:var(--blue)}
+.tl-n2 .tl-year,.tl-n2 .tl-title{color:var(--purple)}
+.tl-n2 .tl-solved{background:rgba(155,89,245,.12);color:var(--purple)}
+.tl-n3 .tl-year,.tl-n3 .tl-title{color:var(--green)}
+.tl-n3 .tl-solved{background:rgba(0,255,170,.12);color:var(--green)}
+.tl-n4 .tl-year,.tl-n4 .tl-title{color:var(--gold)}
+.tl-n4 .tl-solved{background:rgba(255,215,0,.12);color:var(--gold)}
+
+/* ─── SLIDE 4: THREE AXES ─── */
+.axes-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;width:100%}
+.axis-card{border-radius:var(--r);background:var(--glass);border:1px solid var(--border);
+  backdrop-filter:blur(12px);overflow:hidden}
+.axis-header{padding:20px 22px 14px;border-bottom:1px solid var(--border)}
+.axis-num{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.15em;margin-bottom:4px}
+.axis-title{font-size:15px;font-weight:600}
+.axis-levels{padding:16px 22px;display:flex;flex-direction:column;gap:8px}
+.level-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.level-idx{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.level-text{color:var(--muted);line-height:1.4}
+.ax-blue .axis-num{color:var(--blue)}.ax-blue .axis-title{color:var(--blue)}
+.ax-blue .level-idx{background:rgba(0,212,255,.15);color:var(--blue)}
+.ax-purple .axis-num{color:var(--purple)}.ax-purple .axis-title{color:var(--purple)}
+.ax-purple .level-idx{background:rgba(155,89,245,.15);color:var(--purple)}
+.ax-green .axis-num{color:var(--green)}.ax-green .axis-title{color:var(--green)}
+.ax-green .level-idx{background:rgba(0,255,170,.15);color:var(--green)}
+.phase-box{
+  padding:16px 24px;border-radius:12px;text-align:center;width:100%;
+  background:linear-gradient(135deg,rgba(155,89,245,.1),rgba(0,212,255,.1));
+  border:1px solid rgba(155,89,245,.25);font-size:13px;color:var(--muted)
+}
+.phase-box strong{color:var(--text);font-family:'Orbitron',sans-serif;font-size:14px;
+  display:block;margin-bottom:4px}
+
+/* ─── SLIDE 5: ARCHITECTURE ─── */
+#arch-canvas{border-radius:var(--r);border:1px solid var(--border)}
+
+/* ─── SLIDE 6-8: LAYERS ─── */
+.layer-split{display:grid;grid-template-columns:1fr 1fr;gap:32px;width:100%;align-items:center}
+.kv-list{display:flex;flex-direction:column;gap:12px}
+.kv-item{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;
+  border-radius:10px;background:var(--glass);border:1px solid var(--border)}
+.kv-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.kv-text .label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:2px}
+.kv-text .value{font-size:13px;line-height:1.5}
+.flow-diagram{display:flex;flex-direction:column;gap:0;align-items:center}
+.flow-step{
+  width:100%;padding:12px 20px;border-radius:10px;text-align:center;
+  font-size:13px;font-weight:500;position:relative;
+}
+.flow-arrow{font-size:18px;color:var(--muted);line-height:1;padding:2px 0}
+.flow-blue{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:var(--blue)}
+.flow-purple{background:rgba(155,89,245,.1);border:1px solid rgba(155,89,245,.25);color:var(--purple)}
+.flow-green{background:rgba(0,255,170,.1);border:1px solid rgba(0,255,170,.25);color:var(--green)}
+.flow-gray{background:var(--glass);border:1px solid var(--border);color:var(--text)}
+
+/* ─── SLIDE 9: PROTOCOL ─── */
+.protocol-stack{display:flex;flex-direction:column;gap:12px;width:100%}
+.proto-layer{
+  display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:center;
+  padding:18px 24px;border-radius:12px;border:1px solid var(--border);
+  background:var(--glass);backdrop-filter:blur(8px);
+}
+.proto-label{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700}
+.proto-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.proto-badge{padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600;
+  white-space:nowrap;text-align:center}
+.pl1{border-color:rgba(0,212,255,.3)}.pl1 .proto-label{color:var(--blue)}
+.pl1 .proto-badge{background:rgba(0,212,255,.12);color:var(--blue)}
+.pl2{border-color:rgba(155,89,245,.3)}.pl2 .proto-label{color:var(--purple)}
+.pl2 .proto-badge{background:rgba(155,89,245,.12);color:var(--purple)}
+.pl3{border-color:rgba(0,255,170,.3)}.pl3 .proto-label{color:var(--green)}
+.pl3 .proto-badge{background:rgba(0,255,170,.12);color:var(--green)}
+.pl4{border-color:rgba(255,215,0,.3)}.pl4 .proto-label{color:var(--gold)}
+.pl4 .proto-badge{background:rgba(255,215,0,.12);color:var(--gold)}
+
+/* ─── SLIDE 10: COMPETITIVE (canvas chart) ─── */
+#comp-canvas{border-radius:var(--r);border:1px solid var(--border)}
+.comp-legend{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;width:100%}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ─── SLIDE 11: MARKET ─── */
+#market-canvas{border-radius:var(--r)}
+.market-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}
+.stat-card{text-align:center;padding:20px;border-radius:var(--r);background:var(--glass);
+  border:1px solid var(--border)}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:clamp(22px,3vw,36px);font-weight:900;margin-bottom:4px}
+.stat-label{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ─── SLIDE 12: PRODUCTS ─── */
+.product-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;width:100%}
+.product-card{border-radius:var(--r);background:var(--glass);border:1px solid var(--border);
+  backdrop-filter:blur(12px);overflow:hidden;position:relative}
+.product-header{padding:22px 24px 16px;border-bottom:1px solid var(--border)}
+.product-tier{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.product-name{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px}
+.product-price{font-size:13px;color:var(--muted)}
+.product-body{padding:18px 24px}
+.product-feature{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;font-size:12.5px}
+.check{color:var(--green);flex-shrink:0;font-size:14px;margin-top:1px}
+.pc-blue .product-tier{color:var(--blue)}.pc-blue .product-name{color:var(--blue)}
+.pc-blue{border-color:rgba(0,212,255,.2)}
+.pc-purple .product-tier{color:var(--purple)}.pc-purple .product-name{color:var(--purple)}
+.pc-purple{border-color:rgba(155,89,245,.2)}
+.pc-gold .product-tier{color:var(--gold)}.pc-gold .product-name{color:var(--gold)}
+.pc-gold{border-color:rgba(255,215,0,.2)}
+
+/* ─── SLIDE 13: ROADMAP ─── */
+#roadmap-canvas{border-radius:var(--r);border:1px solid var(--border)}
+
+/* ─── SLIDE 14: NORTH STAR ─── */
+.ns-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.ns-item{padding:18px 22px;border-radius:12px;background:var(--glass);
+  border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start}
+.ns-num{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;
+  flex-shrink:0;line-height:1}
+.ns-label{font-size:13px;font-weight:600;margin-bottom:4px}
+.ns-question{font-size:12px;color:var(--muted);line-height:1.5}
+.ns-item:nth-child(1) .ns-num{color:var(--blue)}
+.ns-item:nth-child(2) .ns-num{color:var(--purple)}
+.ns-item:nth-child(3) .ns-num{color:var(--green)}
+.ns-item:nth-child(4) .ns-num{color:var(--gold)}
+.ns-item:nth-child(5) .ns-num{color:var(--pink)}
+.ns-item:nth-child(6) .ns-num{color:var(--blue)}
+
+/* ─── SLIDE 15: VISION ─── */
+#s15{text-align:center}
+.os-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;width:100%}
+.os-card{padding:20px 24px;border-radius:var(--r);background:var(--glass);border:1px solid var(--border)}
+.os-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.1em;margin-bottom:10px;color:var(--muted)}
+.os-analogy{display:flex;flex-direction:column;gap:8px}
+.os-row{display:flex;gap:8px;align-items:center;font-size:13px}
+.os-row .arrow-r{color:var(--muted);flex-shrink:0}
+.os-left{color:var(--muted)}.os-right{color:var(--text)}
+.vs-arrow{font-size:32px;color:var(--border);text-align:center}
+.closing{
+  padding:24px 32px;border-radius:var(--r);width:100%;text-align:center;
+  background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(155,89,245,.08));
+  border:1px solid rgba(155,89,245,.25);font-size:clamp(14px,1.8vw,18px);line-height:1.8;
+}
+
+/* entrance animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .slide-inner>*{animation:fadeUp .5s ease both}
+.slide.active .slide-inner>*:nth-child(1){animation-delay:.05s}
+.slide.active .slide-inner>*:nth-child(2){animation-delay:.15s}
+.slide.active .slide-inner>*:nth-child(3){animation-delay:.25s}
+.slide.active .slide-inner>*:nth-child(4){animation-delay:.35s}
+.slide.active .slide-inner>*:nth-child(5){animation-delay:.45s}
+
+/* scrollbar */
+::-webkit-scrollbar{display:none}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<div class="deck">
+
+<!-- ─── S1: COVER ─── -->
+<section class="slide active" id="s1">
+  <div class="slide-inner" style="align-items:center;text-align:center;gap:28px">
+    <div class="tag"><span class="dot-tag"></span>Business Plan · 2026</div>
+    <h1><span class="grad-blue">UAS</span><span style="color:var(--muted);font-weight:300">-</span><span style="color:var(--text)">AIOS</span></h1>
+    <div id="s1" class="formula">
+      <div class="f-item u">USER<br><span style="font-size:.7em;font-weight:400;color:var(--muted)">个人AI层</span></div>
+      <span class="op">×</span>
+      <div class="f-item a">AGENT<br><span style="font-size:.7em;font-weight:400;color:var(--muted)">协作网络层</span></div>
+      <span class="op">×</span>
+      <div class="f-item s">SYSTEM<br><span style="font-size:.7em;font-weight:400;color:var(--muted)">专业系统层</span></div>
+      <span class="op">=</span>
+      <div class="f-item eq">AI OS</div>
+    </div>
+    <p class="tagline">将AI能力抽象为统一操作系统<br>让每个人都能驾驭所有专业系统的全部智能</p>
+    <div class="badge-row">
+      <span class="badge badge-blue">Soul Protocol</span>
+      <span class="badge badge-purple">A2A · MCP</span>
+      <span class="badge badge-green">ASUI Knowledge</span>
+      <span class="badge badge-blue">Human Above the Loop</span>
+      <span class="badge badge-purple">AI Native Architecture</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S2: PROBLEM ─── -->
+<section class="slide" id="s2">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag" style="background:var(--pink)"></span>Problem</div>
+      <h2>AI应用的三元<span class="grad-blue"> 根本摩擦</span></h2>
+    </div>
+    <p class="sub" style="max-width:700px">所有AI应用系统的演化，都是在消解同一个不变量：<strong style="color:var(--text)">人类意图与专业系统能力之间的获取成本</strong>。这一摩擦由三个不可约维度构成。</p>
+    <div class="friction-cards">
+      <div class="friction-card fc-u">
+        <span class="friction-icon">🧠</span>
+        <div class="friction-title" style="color:var(--blue)">认知摩擦</div>
+        <div class="friction-desc">用户将意图转化为系统可执行指令的成本。需要专业知识才能与系统交互，普通用户被拒之门外。</div>
+        <span class="friction-tag">U · User Dimension</span>
+      </div>
+      <div class="friction-card fc-a">
+        <span class="friction-icon">⚙️</span>
+        <div class="friction-title" style="color:var(--purple)">执行摩擦</div>
+        <div class="friction-desc">系统将指令转化为专业结果的自主程度。每一步都需要人工触发，AI只是工具而非自主执行者。</div>
+        <span class="friction-tag">A · Agent Dimension</span>
+      </div>
+      <div class="friction-card fc-s">
+        <span class="friction-icon">📚</span>
+        <div class="friction-title" style="color:var(--green)">知识摩擦</div>
+        <div class="friction-desc">AI能力与领域专业知识之间的语义鸿沟。LLM不理解私有业务数据，幻觉问题导致专业场景不可用。</div>
+        <span class="friction-tag">S · System Dimension</span>
+      </div>
+    </div>
+    <div class="equation-bar">
+      最优AI系统 = max [ (1-U认知摩擦) × A执行自主度 × S知识匹配度 ]&nbsp;&nbsp;·&nbsp;&nbsp;任何范式跃迁 = 某维度技术突破打破旧有均衡
+    </div>
+  </div>
+</section>
+
+<!-- ─── S3: EVOLUTION ─── -->
+<section class="slide" id="s3">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag" style="background:var(--purple)"></span>Evolution</div>
+      <h2>三次范式<span class="grad-blue"> 跃迁</span></h2>
+    </div>
+    <p class="sub">每次跃迁都是对上一阶段内在矛盾的扬弃与超越——继承成果，解决留存矛盾</p>
+    <div class="timeline">
+      <div class="tl-line"></div>
+      <div class="tl-nodes">
+        <div class="tl-node tl-n1">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">2022 — 2023</div>
+            <div class="tl-title">RAG时代</div>
+            <span class="tl-solved">消解：知识摩擦 S</span>
+            <div class="tl-desc">检索增强生成将私有数据注入LLM，接地气化解决幻觉问题。<br><br><strong style="color:var(--blue)">留存矛盾：</strong>会知道，但不会行动</div>
+          </div>
+        </div>
+        <div class="tl-node tl-n2">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">2023 — 2024</div>
+            <div class="tl-title">ReAct/ProAct时代</div>
+            <span class="tl-solved">消解：执行摩擦 A</span>
+            <div class="tl-desc">思维-行动交织循环，工具调用延伸AI边界至物理执行空间。ProAct实现主动监控。<br><br><strong style="color:var(--purple)">留存矛盾：</strong>能执行，但体验割裂</div>
+          </div>
+        </div>
+        <div class="tl-node tl-n3">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">2024 — 2025</div>
+            <div class="tl-title">个人AI时代</div>
+            <span class="tl-solved">消解：认知摩擦 U</span>
+            <div class="tl-desc">OpenClaw多入口单内核，跨平台统一记忆与个性。247K+ Stars。<br><br><strong style="color:var(--green)">留存矛盾：</strong>体验好，深度受限</div>
+          </div>
+        </div>
+        <div class="tl-node tl-n4">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">2026 →</div>
+            <div class="tl-title">UAS-AIOS</div>
+            <span class="tl-solved">扬弃：三摩擦同步消解</span>
+            <div class="tl-desc">知识驱动(S)+自主执行(A)+个性化无摩擦(U)三者在统一协议栈下融合<br><br><strong style="color:var(--gold)">涌现：</strong>AI操作系统范式</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S4: THREE AXES ─── -->
+<section class="slide" id="s4">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag" style="background:var(--green)"></span>Framework</div>
+      <h2>三轴分析<span class="grad-blue"> 坐标系</span></h2>
+    </div>
+    <div class="axes-grid">
+      <div class="axis-card ax-blue">
+        <div class="axis-header">
+          <div class="axis-num">AXIS 01 · 自主性</div>
+          <div class="axis-title">Human ∈ {In, On, Above} Loop</div>
+        </div>
+        <div class="axis-levels">
+          <div class="level-row"><div class="level-idx">1</div><div class="level-text"><strong>In Loop</strong> — 每个动作需人工触发审批</div></div>
+          <div class="level-row"><div class="level-idx">2</div><div class="level-text"><strong>On Loop</strong> — 监控整体进展，检查点确认</div></div>
+          <div class="level-row"><div class="level-idx">3</div><div class="level-text"><strong>On→Above</strong> — 设定目标，接受最终结果</div></div>
+          <div class="level-row"><div class="level-idx">4</div><div class="level-text"><strong>Above Loop</strong> — 主动监控，战略决策</div></div>
+        </div>
+      </div>
+      <div class="axis-card ax-purple">
+        <div class="axis-header">
+          <div class="axis-num">AXIS 02 · 融合深度</div>
+          <div class="axis-title">Connected → Native</div>
+        </div>
+        <div class="axis-levels">
+          <div class="level-row"><div class="level-idx">1</div><div class="level-text"><strong>Connected</strong> — AI作为外部API，产品逻辑独立</div></div>
+          <div class="level-row"><div class="level-idx">2</div><div class="level-text"><strong>Component</strong> — AI嵌入特定功能模块</div></div>
+          <div class="level-row"><div class="level-idx">3</div><div class="level-text"><strong>Composition</strong> — AI编排多系统协作</div></div>
+          <div class="level-row"><div class="level-idx">4</div><div class="level-text"><strong>Native</strong> — AI是系统内核，万物围绕AI设计</div></div>
+        </div>
+      </div>
+      <div class="axis-card ax-green">
+        <div class="axis-header">
+          <div class="axis-num">AXIS 03 · 用户价值</div>
+          <div class="axis-title">Chat Tool → Partner</div>
+        </div>
+        <div class="axis-levels">
+          <div class="level-row"><div class="level-idx">1</div><div class="level-text"><strong>Chat Tool</strong> — 问答，无记忆，每次从零</div></div>
+          <div class="level-row"><div class="level-idx">2</div><div class="level-text"><strong>Work Tool</strong> — 场景专精，提升特定效率</div></div>
+          <div class="level-row"><div class="level-idx">3</div><div class="level-text"><strong>Workspace</strong> — 跨任务协同，完整工作流</div></div>
+          <div class="level-row"><div class="level-idx">4</div><div class="level-text"><strong>Partner</strong> — 理解用户目标，跨应用个性化</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-box">
+      <strong>🔴 相变条件：Axis1 × Axis2 × Axis3 ≥ 32 → 系统从"高级工具"涌现为"AI操作系统"</strong>
+      当前所有产品均在2-3级区间 · UAS-AIOS目标：三轴全部达到4级 = 64分 · 这是18-36个月的战略窗口
+    </div>
+  </div>
+</section>
+
+<!-- ─── S5: ARCHITECTURE ─── -->
+<section class="slide" id="s5">
+  <div class="slide-inner" style="align-items:center">
+    <div style="display:flex;align-items:center;gap:16px;width:100%">
+      <div class="tag"><span class="dot-tag" style="background:var(--gold)"></span>Architecture</div>
+      <h2>UAS-AIOS <span class="grad-blue">全景架构</span></h2>
+    </div>
+    <canvas id="arch-canvas" width="1080" height="380" style="width:100%;height:auto"></canvas>
+  </div>
+</section>
+
+<!-- ─── S6: U LAYER ─── -->
+<section class="slide" id="s6">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag"></span>Layer 01</div>
+      <h2><span class="grad-blue">U Layer</span> — 个人AI助手系统</h2>
+    </div>
+    <p class="sub">从"用户"到"<strong style="color:var(--blue)">这个用户</strong>"的本质跨越 — 跨应用持久化个人AI模型</p>
+    <div class="layer-split">
+      <div class="kv-list">
+        <div class="kv-item">
+          <div class="kv-icon">🪪</div>
+          <div class="kv-text">
+            <div class="label" style="color:var(--blue)">Soul Protocol · 用户身份</div>
+            <div class="value">去中心化身份（DID）+ 专业域知识等级 + 工作风格偏好 + 当前目标上下文</div>
+          </div>
+        </div>
+        <div class="kv-item">
+          <div class="kv-icon">🧠</div>
+          <div class="kv-text">
+            <div class="label" style="color:var(--blue)">Cecil Protocol · 三层记忆</div>
+            <div class="value">工作记忆（Redis）+ 语义记忆（Qdrant向量检索）+ 结构化记忆（SQLite）</div>
+          </div>
+        </div>
+        <div class="kv-item">
+          <div class="kv-icon">🎯</div>
+          <div class="kv-text">
+            <div class="label" style="color:var(--blue)">Intent Engine · 意图语义化</div>
+            <div class="value">自然语言 → 富语义Intent对象：用户上下文注入 + 目标对齐 + 偏好预设 + Agent路由建议</div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-diagram">
+        <div class="flow-step flow-gray">💬 用户输入："帮我看看Q1销售"</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-blue">Soul查询：数据分析师 · 偏好Python · 喜欢可视化</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-blue">Cecil记忆：正在做Q1汇报 · 上次用了pareto图</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-purple">Intent对象：[Python][Q1数据][可视化][董事会风格]</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-green">Agent收到完整业务上下文 — 无需用户重复解释</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S7: A LAYER ─── -->
+<section class="slide" id="s7">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag" style="background:var(--purple)"></span>Layer 02</div>
+      <h2><span style="color:var(--purple)">A Layer</span> — Agent协作网络</h2>
+    </div>
+    <p class="sub">基于 <strong style="color:var(--purple)">Google A2A Protocol</strong>（50+厂商支持）的专家Agent网络 — Cursor Cloud Agent设计哲学的领域泛化</p>
+    <div class="grid-2">
+      <div class="card" style="border-color:rgba(155,89,245,.2)">
+        <h3 style="color:var(--purple);margin-bottom:14px">主编排Agent · Orchestrator</h3>
+        <div class="kv-list" style="gap:8px">
+          <div class="flow-step flow-purple" style="text-align:left;font-size:12px;margin-bottom:4px">① 任务分解 → 子任务DAG（最大化并行度）</div>
+          <div class="flow-step flow-purple" style="text-align:left;font-size:12px;margin-bottom:4px">② 专家路由 → 基于Agent Card能力匹配</div>
+          <div class="flow-step flow-purple" style="text-align:left;font-size:12px;margin-bottom:4px">③ 上下文注入 → User Soul + ASUI知识</div>
+          <div class="flow-step flow-purple" style="text-align:left;font-size:12px">④ 结果合成 → 按用户偏好格式化输出</div>
+        </div>
+      </div>
+      <div class="card" style="border-color:rgba(155,89,245,.2)">
+        <h3 style="color:var(--purple);margin-bottom:14px">专业Agent生态 · Specialists</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="padding:10px 14px;border-radius:8px;background:rgba(155,89,245,.08);border:1px solid rgba(155,89,245,.2);font-size:12px"><strong style="color:var(--purple)">代码Agent</strong><br><span style="color:var(--muted)">Cursor Cloud型<br>VM隔离·分支工作</span></div>
+          <div style="padding:10px 14px;border-radius:8px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);font-size:12px"><strong style="color:var(--blue)">数据Agent</strong><br><span style="color:var(--muted)">SQL·Python·可视化</span></div>
+          <div style="padding:10px 14px;border-radius:8px;background:rgba(0,255,170,.08);border:1px solid rgba(0,255,170,.2);font-size:12px"><strong style="color:var(--green)">业务流程Agent</strong><br><span style="color:var(--muted)">ERP·CRM·工单</span></div>
+          <div style="padding:10px 14px;border-radius:8px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);font-size:12px"><strong style="color:var(--gold)">文档Agent</strong><br><span style="color:var(--muted)">报告·PPT·汇总</span></div>
+          <div style="padding:10px 14px;border-radius:8px;background:rgba(255,77,166,.08);border:1px solid rgba(255,77,166,.2);font-size:12px"><strong style="color:var(--pink)">研究Agent</strong><br><span style="color:var(--muted)">搜索·分析·综述</span></div>
+          <div style="padding:10px 14px;border-radius:8px;background:rgba(155,89,245,.08);border:1px solid rgba(155,89,245,.2);font-size:12px"><strong style="color:var(--purple)">通信Agent</strong><br><span style="color:var(--muted)">邮件·Slack·通知</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="equation-bar" style="font-size:12px">
+      沙箱权限模型：READ_ONLY（无需确认）→ WRITE_SAFE（新建，自动）→ WRITE_RISK（修改，需确认）→ SYSTEM_OP（外发，强制审批）
+    </div>
+  </div>
+</section>
+
+<!-- ─── S8: S LAYER ─── -->
+<section class="slide" id="s8">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag" style="background:var(--green)"></span>Layer 03</div>
+      <h2><span class="grad-green">S Layer</span> — 专业系统集成</h2>
+    </div>
+    <p class="sub"><strong style="color:var(--green)">MCP工具层</strong>（解决"如何调用"）+ <strong style="color:var(--gold)">ASUI知识层</strong>（解决"AI理解业务语义"）— 这是当前所有方案缺失的关键</p>
+    <div class="grid-2">
+      <div>
+        <div class="card" style="border-color:rgba(0,255,170,.2);margin-bottom:16px">
+          <h3 style="color:var(--green);margin-bottom:12px">MCP工具注册中心</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+            <div style="padding:8px 12px;border-radius:8px;background:rgba(0,255,170,.06);border:1px solid rgba(0,255,170,.15)">Salesforce CRM</div>
+            <div style="padding:8px 12px;border-radius:8px;background:rgba(0,255,170,.06);border:1px solid rgba(0,255,170,.15)">GitHub / GitLab</div>
+            <div style="padding:8px 12px;border-radius:8px;background:rgba(0,255,170,.06);border:1px solid rgba(0,255,170,.15)">Jira / Linear</div>
+            <div style="padding:8px 12px;border-radius:8px;background:rgba(0,255,170,.06);border:1px solid rgba(0,255,170,.15)">Slack / 飞书</div>
+            <div style="padding:8px 12px;border-radius:8px;background:rgba(0,255,170,.06);border:1px solid rgba(0,255,170,.15)">数据库 / 数仓</div>
+            <div style="padding:8px 12px;border-radius:8px;background:rgba(0,255,170,.06);border:1px solid rgba(0,255,170,.15)">SAP / ERP系统</div>
+          </div>
+        </div>
+        <div class="card" style="border-color:rgba(255,215,0,.2)">
+          <h3 style="color:var(--gold);margin-bottom:10px">ASUI知识文档层</h3>
+          <div style="font-size:12.5px;color:var(--muted);line-height:1.7">
+            每个系统配一份 <code style="color:var(--gold);background:rgba(255,215,0,.1);padding:1px 6px;border-radius:4px">SYSTEM.md</code>：<br>
+            • 业务语义定义（"健康分>80=客户关系良好"）<br>
+            • 操作规范（月末锁账期禁止批量修改）<br>
+            • 工作流配置（<code style="color:var(--gold)">workflow_config.json</code>）<br>
+            • Schema定义（输入输出结构化验证）
+          </div>
+        </div>
+      </div>
+      <div class="flow-diagram">
+        <div class="flow-step flow-gray">AI收到任务：更新ABC公司商机状态</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-green">加载SYSTEM.md：月末锁账期 → 自动阻止</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-green">MCP调用：salesforce.update_opportunity()</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-gold">Schema校验：必须填写Next Step字段</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-purple">权限检查：WRITE_SAFE → 自动执行</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step flow-blue">审计日志：操作记录 + 业务上下文 + Agent ID</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S9: PROTOCOL STACK ─── -->
+<section class="slide" id="s9">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag" style="background:var(--gold)"></span>Protocol</div>
+      <h2>AI协议栈 — <span class="grad-gold">UAS的神经网络</span></h2>
+    </div>
+    <p class="sub">四层协议分工明确，相互正交，共同构成连接U↔A↔S的标准化通信基础设施</p>
+    <div class="protocol-stack">
+      <div class="proto-layer pl1">
+        <div class="proto-label">UIP</div>
+        <div class="proto-desc"><strong style="color:var(--text)">用户意图协议</strong> · Soul Protocol + Cecil Protocol<br>解决："这个用户是谁，他真正想要什么" — 跨应用持久化身份与意图语义化</div>
+        <div class="proto-badge">Layer 4 · User</div>
+      </div>
+      <div class="proto-layer pl2">
+        <div class="proto-label">A2A</div>
+        <div class="proto-desc"><strong style="color:var(--text)">Agent间通信协议</strong> · Google A2A Protocol（50+厂商）<br>解决："哪个Agent能做，如何协调多Agent完成复杂任务" — Agent Card + Task生命周期</div>
+        <div class="proto-badge">Layer 3 · Agent</div>
+      </div>
+      <div class="proto-layer pl3">
+        <div class="proto-label">MCP</div>
+        <div class="proto-desc"><strong style="color:var(--text)">工具调用协议</strong> · Anthropic MCP（JSON-RPC 2.0，行业标准）<br>解决："调用哪个工具，如何标准化调用" — "AI世界的USB-C接口"</div>
+        <div class="proto-badge">Layer 2 · Tool</div>
+      </div>
+      <div class="proto-layer pl4">
+        <div class="proto-label">ASUI</div>
+        <div class="proto-desc"><strong style="color:var(--text)">知识执行协议</strong> · ASUI Spec v1.0（本项目核心贡献）<br>解决："如何知识驱动地执行，如何将AI输出沉淀为系统资产" — 知识即代码，SSOT原则</div>
+        <div class="proto-badge">Layer 1 · Knowledge</div>
+      </div>
+    </div>
+    <div class="equation-bar" style="font-size:12px">
+      UIP："这个用户是谁" &nbsp;·&nbsp; A2A："哪个Agent能做" &nbsp;·&nbsp; MCP："调用哪个工具" &nbsp;·&nbsp; ASUI："知识驱动执行+结果沉淀"
+    </div>
+  </div>
+</section>
+
+<!-- ─── S10: COMPETITIVE ─── -->
+<section class="slide" id="s10">
+  <div class="slide-inner" style="align-items:center">
+    <div style="display:flex;align-items:center;gap:16px;width:100%">
+      <div class="tag"><span class="dot-tag" style="background:var(--pink)"></span>Competition</div>
+      <h2>竞争格局 — <span class="grad-blue">三轴定位图</span></h2>
+    </div>
+    <canvas id="comp-canvas" width="900" height="340" style="width:100%;max-width:900px;height:auto"></canvas>
+    <div class="comp-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#555580"></div>ChatGPT（Chat Tool）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Cursor IDE（Work Tool）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Cursor Cloud Agent（Workspace）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>OpenClaw（Partner）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Microsoft Copilot（Composition）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--pink)"></div>UAS-AIOS 目标态（★）</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S11: MARKET ─── -->
+<section class="slide" id="s11">
+  <div class="slide-inner" style="align-items:center">
+    <div style="display:flex;align-items:center;gap:16px;width:100%">
+      <div class="tag"><span class="dot-tag" style="background:var(--gold)"></span>Market</div>
+      <h2>市场机会 — <span class="grad-gold">18-36个月战略窗口</span></h2>
+    </div>
+    <div class="market-stats">
+      <div class="stat-card">
+        <div class="stat-num grad-blue">$8.5B</div>
+        <div class="stat-label">2026年AI Agent<br>市场规模</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num grad-gold">$35B</div>
+        <div class="stat-label">2030年预测规模<br>4年4倍增长</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--green)">57%</div>
+        <div class="stat-label">企业已在生产中<br>部署AI Agent</div>
+      </div>
+    </div>
+    <canvas id="market-canvas" width="1080" height="220" style="width:100%;height:auto;border-radius:12px"></canvas>
+    <div class="grid-3" style="width:100%">
+      <div class="card" style="border-color:rgba(0,212,255,.2);padding:18px">
+        <div style="color:var(--blue);font-size:11px;font-weight:600;letter-spacing:.08em;margin-bottom:8px">技术临界点 ✅</div>
+        <div style="font-size:12.5px;color:var(--muted);line-height:1.6">LLM工具调用可靠性>99% · 1M token上下文 · MCP/A2A协议成熟</div>
+      </div>
+      <div class="card" style="border-color:rgba(255,215,0,.2);padding:18px">
+        <div style="color:var(--gold);font-size:11px;font-weight:600;letter-spacing:.08em;margin-bottom:8px">市场临界点 🔄</div>
+        <div style="font-size:12.5px;color:var(--muted);line-height:1.6">企业合规强制可审计AI · "AI工具过多"用户疲劳 · 统一体验需求涌现</div>
+      </div>
+      <div class="card" style="border-color:rgba(155,89,245,.2);padding:18px">
+        <div style="color:var(--purple);font-size:11px;font-weight:600;letter-spacing:.08em;margin-bottom:8px">竞争窗口 ⚡</div>
+        <div style="font-size:12.5px;color:var(--muted);line-height:1.6">无产品达到三轴4级 · 协议标准化降低集成成本 · 先发者获OS级平台效应</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S12: PRODUCTS ─── -->
+<section class="slide" id="s12">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag" style="background:var(--blue)"></span>Products</div>
+      <h2>三种产品形态 — <span class="grad-blue">从工具到生态</span></h2>
+    </div>
+    <div class="product-cards">
+      <div class="product-card pc-blue">
+        <div class="product-header">
+          <div class="product-tier">Personal AI</div>
+          <div class="product-name">Your AI</div>
+          <div class="product-price">$20-50 / 月 · 个人订阅</div>
+        </div>
+        <div class="product-body">
+          <div class="product-feature"><span class="check">✓</span>跨应用统一AI身份（Soul Protocol）</div>
+          <div class="product-feature"><span class="check">✓</span>持久化跨会话记忆（越用越懂你）</div>
+          <div class="product-feature"><span class="check">✓</span>主动提醒与目标追踪</div>
+          <div class="product-feature"><span class="check">✓</span>模型无关（Claude/GPT/本地）</div>
+          <div style="margin-top:14px;padding:10px;border-radius:8px;background:rgba(0,212,255,.08);font-size:11px;color:var(--muted)">
+            vs ChatGPT：有记忆<br>vs Notion AI：跨应用
+          </div>
+        </div>
+      </div>
+      <div class="product-card pc-purple">
+        <div class="product-header">
+          <div class="product-tier">Enterprise Platform</div>
+          <div class="product-name">UAS Enterprise</div>
+          <div class="product-price">$100K-1M / 年 · 按用户数</div>
+        </div>
+        <div class="product-body">
+          <div class="product-feature"><span class="check">✓</span>团队Soul管理（部门知识共享）</div>
+          <div class="product-feature"><span class="check">✓</span>企业系统全接入（10+系统MCP）</div>
+          <div class="product-feature"><span class="check">✓</span>内部Agent Marketplace</div>
+          <div class="product-feature"><span class="check">✓</span>全链路审计（SOC 2合规）</div>
+          <div class="product-feature"><span class="check">✓</span>私有化部署（数据不出企业）</div>
+          <div style="margin-top:10px;padding:10px;border-radius:8px;background:rgba(155,89,245,.08);font-size:11px;color:var(--muted)">
+            vs M365 Copilot：跨系统<br>vs Salesforce Einstein：全场景
+          </div>
+        </div>
+      </div>
+      <div class="product-card pc-gold">
+        <div class="product-header">
+          <div class="product-tier">Open Protocol Platform</div>
+          <div class="product-name">UAS Protocol</div>
+          <div class="product-price">平台抽成20% + API计费</div>
+        </div>
+        <div class="product-body">
+          <div class="product-feature"><span class="check">✓</span>Agent开发SDK（Python/TS）</div>
+          <div class="product-feature"><span class="check">✓</span>System MCP适配器库</div>
+          <div class="product-feature"><span class="check">✓</span>Agent Marketplace（发布销售）</div>
+          <div class="product-feature"><span class="check">✓</span>UAS认证体系</div>
+          <div style="margin-top:14px;padding:10px;border-radius:8px;background:rgba(255,215,0,.08);font-size:11px;color:var(--muted)">
+            vs LangChain：有用户层<br>vs Zapier：有AI编排
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S13: ROADMAP ─── -->
+<section class="slide" id="s13">
+  <div class="slide-inner" style="align-items:center">
+    <div style="display:flex;align-items:center;gap:16px;width:100%">
+      <div class="tag"><span class="dot-tag" style="background:var(--green)"></span>Roadmap</div>
+      <h2>技术路线图 — <span class="grad-green">三阶段演进</span></h2>
+    </div>
+    <canvas id="roadmap-canvas" width="1080" height="300" style="width:100%;height:auto;border-radius:12px;border:1px solid var(--border)"></canvas>
+    <div class="grid-3" style="width:100%">
+      <div class="card" style="border-color:rgba(0,212,255,.25);padding:18px">
+        <div style="color:var(--blue);font-weight:700;font-size:13px;margin-bottom:10px">Phase 1 · 基础层固化（0-6月）</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">ASUI Spec v1.0 · UAS参考实现<br>用户Soul规范 · asui CLI工具<br>2-3个系统MCP接入 · 审计DB</div>
+      </div>
+      <div class="card" style="border-color:rgba(155,89,245,.25);padding:18px">
+        <div style="color:var(--purple);font-weight:700;font-size:13px;margin-bottom:10px">Phase 2 · 协议标准化（6-18月）</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">UAS SDK · Agent Marketplace<br>System Hub（10+适配器）<br>UAS Studio可视化编辑器</div>
+      </div>
+      <div class="card" style="border-color:rgba(0,255,170,.25);padding:18px">
+        <div style="color:var(--green);font-weight:700;font-size:13px;margin-bottom:10px">Phase 3 · 平台化（18-36月）</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">UAS Cloud Runtime · 企业级Soul<br>Agent托管平台 · 行业套件<br>ARR $500K+ · 20+企业客户</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S14: NORTH STAR ─── -->
+<section class="slide" id="s14">
+  <div class="slide-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="tag"><span class="dot-tag" style="background:var(--gold)"></span>Metrics</div>
+      <h2>战略北极星 — <span class="grad-gold">六项不变量验证</span></h2>
+    </div>
+    <p class="sub">UAS-AIOS成立的六个必要条件，也是衡量任何AI应用系统成熟度的标准矩阵</p>
+    <div class="ns-grid">
+      <div class="ns-item">
+        <div class="ns-num">①</div>
+        <div><div class="ns-label">用户主权</div><div class="ns-question">系统真正服务于"这个用户"而非"通用用户"？<br><span style="color:var(--blue)">指标：用户重复解释需求次数 → 0</span></div></div>
+      </div>
+      <div class="ns-item">
+        <div class="ns-num">②</div>
+        <div><div class="ns-label">Agent自治</div><div class="ns-question">AI能独立完成多步专业任务，无需每步触发？<br><span style="color:var(--purple)">指标：任务完成率>95%，人工干预<10%</span></div></div>
+      </div>
+      <div class="ns-item">
+        <div class="ns-num">③</div>
+        <div><div class="ns-label">系统可知</div><div class="ns-question">AI完整理解业务语义，而非仅调用API接口？<br><span style="color:var(--green)">指标：知识改/代码改比率 > 10:1</span></div></div>
+      </div>
+      <div class="ns-item">
+        <div class="ns-num">④</div>
+        <div><div class="ns-label">执行可审计</div><div class="ns-question">每个AI决策能追溯到具体知识依据？<br><span style="color:var(--gold)">指标：决策可追溯率 = 100%</span></div></div>
+      </div>
+      <div class="ns-item">
+        <div class="ns-num">⑤</div>
+        <div><div class="ns-label">系统可演化</div><div class="ns-question">能力扩展无需重新部署？知识修改即能力升级？<br><span style="color:var(--pink)">指标：功能上线时间 < 30分钟</span></div></div>
+      </div>
+      <div class="ns-item">
+        <div class="ns-num">⑥</div>
+        <div><div class="ns-label">协议可互操作</div><div class="ns-question">任意Agent/系统可标准化接入，无厂商锁定？<br><span style="color:var(--blue)">指标：支持3+LLM + 10+系统 via MCP</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S15: VISION ─── -->
+<section class="slide" id="s15">
+  <div class="slide-inner" style="align-items:center;text-align:center;gap:28px">
+    <div class="tag" style="align-self:center"><span class="dot-tag" style="background:var(--gold)"></span>Vision</div>
+    <h2>AI不是"工具"<br>AI是<span class="grad-gold"> 操作系统</span></h2>
+    <div class="os-compare" style="width:100%;max-width:900px">
+      <div class="os-card">
+        <div class="os-title">TRADITIONAL OS</div>
+        <div class="os-analogy">
+          <div class="os-row"><span class="os-left">管理</span><span class="arrow-r">→</span><span class="os-right">硬件资源</span></div>
+          <div class="os-row"><span class="os-left">通过</span><span class="arrow-r">→</span><span class="os-right">API调用硬件</span></div>
+          <div class="os-row"><span class="os-left">进程调度</span><span class="arrow-r">→</span><span class="os-right">实现并发</span></div>
+          <div class="os-row"><span class="os-left">设备驱动</span><span class="arrow-r">→</span><span class="os-right">硬件抽象</span></div>
+        </div>
+      </div>
+      <div class="vs-arrow">⟺</div>
+      <div class="os-card" style="border-color:rgba(0,212,255,.25)">
+        <div class="os-title" style="color:var(--blue)">UAS-AIOS</div>
+        <div class="os-analogy">
+          <div class="os-row"><span class="os-left">管理</span><span class="arrow-r">→</span><span class="os-right" style="color:var(--blue)">知识资源</span></div>
+          <div class="os-row"><span class="os-left">通过</span><span class="arrow-r">→</span><span class="os-right" style="color:var(--blue)">知识文档调用业务逻辑</span></div>
+          <div class="os-row"><span class="os-left">动态编排</span><span class="arrow-r">→</span><span class="os-right" style="color:var(--blue)">实现智能协同</span></div>
+          <div class="os-row"><span class="os-left">MCP适配器</span><span class="arrow-r">→</span><span class="os-right" style="color:var(--blue)">系统抽象</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="closing" style="max-width:900px">
+      就像Unix将硬件抽象为统一接口，使无数应用得以运行；<br>
+      <strong style="color:var(--text)">UAS-AIOS将AI能力抽象为统一协议（UIP + A2A + MCP + ASUI）</strong><br>
+      使每个人都能驾驭所有专业系统的全部智能。<br><br>
+      <span style="color:var(--purple);font-family:'Orbitron',sans-serif;font-size:.9em">这不是AI应用的升级，而是软件架构的操作系统化。</span>
+    </div>
+    <div class="badge-row">
+      <span class="badge badge-blue">ACA-Protocol</span>
+      <span class="badge badge-purple">UAS-AIOS v1.0</span>
+      <span class="badge badge-green">2026 · Open Source</span>
+    </div>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- ── Navigation ── -->
+<div id="nav">
+  <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">‹</button>
+  <div id="progress-bar"></div>
+  <span id="slide-num">1 / 15</span>
+  <button class="nav-btn" id="next-btn" onclick="navigate(1)">›</button>
+</div>
+
+<script>
+/* ══════ SLIDE SYSTEM ══════ */
+const slides = document.querySelectorAll('.slide');
+const TOTAL = slides.length;
+let cur = 0, animating = false;
+
+function buildDots(){
+  const pb = document.getElementById('progress-bar');
+  pb.innerHTML = '';
+  for(let i=0;i<TOTAL;i++){
+    const d = document.createElement('div');
+    d.className = 'dot'+(i===0?' active':'');
+    d.onclick = ()=>goTo(i);
+    pb.appendChild(d);
+  }
+}
+function updateNav(){
+  document.getElementById('slide-num').textContent = `${cur+1} / ${TOTAL}`;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+}
+function goTo(idx){
+  if(animating||idx===cur||idx<0||idx>=TOTAL) return;
+  animating=true;
+  const dir = idx>cur?1:-1;
+  slides[cur].classList.add(dir>0?'exit-left':'');
+  slides[cur].classList.remove('active');
+  setTimeout(()=>{
+    slides[cur].classList.remove('exit-left');
+    cur=idx;
+    slides[cur].classList.add('active');
+    updateNav();
+    triggerCanvases(cur);
+    setTimeout(()=>animating=false,650);
+  },50);
+}
+function navigate(d){goTo(cur+d)}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') navigate(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') navigate(-1);
+});
+// swipe
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50) navigate(dx<0?1:-1);
+},{passive:true});
+
+/* ══════ PARTICLE BACKGROUND ══════ */
+(function(){
+  const c=document.getElementById('bg-canvas');
+  const ctx=c.getContext('2d');
+  let W,H,pts;
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;init()}
+  function init(){
+    pts=Array.from({length:80},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+      r:Math.random()*1.5+.5
+    }));
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // connections
+    for(let i=0;i<pts.length;i++)
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<130){
+          ctx.strokeStyle=`rgba(100,100,200,${.15*(1-d/130)})`;
+          ctx.lineWidth=.5;ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();
+        }
+      }
+    pts.forEach(p=>{
+      ctx.fillStyle='rgba(120,120,220,.5)';
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;
+      if(p.y<0||p.y>H)p.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  resize();draw();
+})();
+
+/* ══════ ARCHITECTURE CANVAS (S5) ══════ */
+function drawArch(){
+  const c=document.getElementById('arch-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);
+
+  const layers=[
+    {label:'U  Layer',sub:'User Intelligence',detail:'Soul Protocol · Cecil Memory · Intent Engine · Personalization',color:'#00d4ff',y:30,h:72},
+    {label:'A  Layer',sub:'Agent Network',detail:'Orchestrator · Specialists · A2A Protocol · Sandbox Isolation',color:'#9b59f5',y:126,h:72},
+    {label:'S  Layer',sub:'System Integration',detail:'MCP Tools · ASUI Knowledge · Enterprise Systems · Audit Engine',color:'#00ffaa',y:222,h:72},
+    {label:'AIOS  Kernel',sub:'OS Core',detail:'Resource Scheduler · Permission Manager · Evolution Engine',color:'#ffd700',y:318,h:52},
+  ];
+
+  layers.forEach(l=>{
+    // bg
+    ctx.save();
+    const grad=ctx.createLinearGradient(0,l.y,W,l.y);
+    grad.addColorStop(0,l.color+'22');grad.addColorStop(1,'transparent');
+    ctx.fillStyle=grad;
+    roundRect(ctx,20,l.y,W-40,l.h,10);ctx.fill();
+    // border
+    ctx.strokeStyle=l.color+'55';ctx.lineWidth=1.5;
+    roundRect(ctx,20,l.y,W-40,l.h,10);ctx.stroke();
+    ctx.restore();
+    // label
+    ctx.font='bold 13px Orbitron,sans-serif';
+    ctx.fillStyle=l.color;
+    ctx.fillText(l.label,44,l.y+26);
+    ctx.font='500 12px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,.5)';
+    ctx.fillText(l.sub,44+ctx.measureText(l.label).width+12,l.y+26);
+    ctx.font='400 12px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,.4)';
+    ctx.fillText(l.detail,44,l.y+50);
+  });
+
+  // protocol arrows (right side)
+  const protos=[
+    {label:'UIP',y:66,color:'#00d4ff'},
+    {label:'A2A',y:162,color:'#9b59f5'},
+    {label:'MCP',y:258,color:'#00ffaa'},
+  ];
+  protos.forEach(p=>{
+    ctx.save();
+    ctx.font='bold 11px Orbitron,sans-serif';
+    ctx.fillStyle=p.color;
+    const x=W-20;
+    ctx.fillText(p.label,x-ctx.measureText(p.label).width-8,p.y);
+    ctx.strokeStyle=p.color+'66';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(x-60,p.y+4);ctx.lineTo(x-60,p.y+58);ctx.stroke();
+    ctx.setLineDash([]);
+    // double-headed arrow hint
+    ctx.fillStyle=p.color+'88';
+    ctx.fillText('⇕',x-64,p.y+30);
+    ctx.restore();
+  });
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+}
+
+/* ══════ COMPETITIVE BUBBLE CHART (S10) ══════ */
+function drawComp(){
+  const c=document.getElementById('comp-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);
+
+  const pad={l:80,r:40,t:30,b:60};
+  const cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+
+  // grid
+  ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=1;
+  for(let i=1;i<4;i++){
+    ctx.beginPath();ctx.moveTo(pad.l+cW*i/4,pad.t);ctx.lineTo(pad.l+cW*i/4,pad.t+cH);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(pad.l,pad.t+cH*i/4);ctx.lineTo(pad.l+cW,pad.t+cH*i/4);ctx.stroke();
+  }
+
+  // axes labels
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='11px Inter,sans-serif';ctx.textAlign='center';
+  ['Connected','Component','Composition','Native'].forEach((t,i)=>{
+    ctx.fillText(t,pad.l+cW*(i+.5)/4,pad.t+cH+18);
+  });
+  ctx.textAlign='right';
+  ['Chat','Work','Workspace','Partner'].forEach((t,i)=>{
+    ctx.fillText(t,pad.l-10,pad.t+cH-cH*(i)/4+4);
+  });
+
+  // axis titles
+  ctx.fillStyle='rgba(255,255,255,.5)';ctx.textAlign='center';ctx.font='12px Inter,sans-serif';
+  ctx.fillText('← 融合深度（Integration Depth）→',pad.l+cW/2,H-6);
+  ctx.save();ctx.translate(16,pad.t+cH/2);ctx.rotate(-Math.PI/2);
+  ctx.fillText('← 用户价值（User Value）→',0,0);ctx.restore();
+
+  // products: [x(1-4), y(1-4), r(size=autonomy), color, name, sublabel]
+  const prods=[
+    [1,1,18,'#555580','ChatGPT','Lv1×1×1'],
+    [2,2,26,'#00d4ff','Cursor IDE','Lv2×2×2'],
+    [3,3,34,'#9b59f5','Cursor Cloud','Lv3×3×3'],
+    [2.3,3.8,30,'#00ffaa','OpenClaw','Lv2×3×4'],
+    [3.2,2.8,28,'#ffd700','MS Copilot','Lv3×3×3'],
+    [4,4,50,'#ff4da6','UAS-AIOS','★ 4×4×4'],
+  ];
+
+  prods.forEach(([px,py,r,color,name,sub])=>{
+    const x=pad.l+cW*(px-.5)/4;
+    const y=pad.t+cH*(4-py)/4;
+    // glow
+    if(color==='#ff4da6'){
+      ctx.save();
+      const g=ctx.createRadialGradient(x,y,0,x,y,r*2);
+      g.addColorStop(0,color+'60');g.addColorStop(1,'transparent');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*2,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle=color+'33';ctx.fill();
+    ctx.strokeStyle=color;ctx.lineWidth=color==='#ff4da6'?2:1.5;ctx.stroke();
+    ctx.fillStyle=color;ctx.font=`bold ${color==='#ff4da6'?13:11}px Inter,sans-serif`;
+    ctx.textAlign='center';ctx.fillText(name,x,y-r-6);
+    ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='10px Inter,sans-serif';
+    ctx.fillText(sub,x,y+r+14);
+  });
+  // star on UAS
+  const [ux,uy]=[pad.l+cW*3.5/4,pad.t+cH*0/4];
+  ctx.fillStyle='#ff4da6';ctx.font='bold 16px sans-serif';ctx.textAlign='center';
+  ctx.fillText('★',ux,uy+5);
+}
+
+/* ══════ MARKET CHART (S11) ══════ */
+function drawMarket(){
+  const c=document.getElementById('market-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);
+
+  const data=[
+    {year:'2022',val:1.1,color:'#444466'},
+    {year:'2023',val:1.8,color:'#555580'},
+    {year:'2024',val:3.2,color:'#6666aa'},
+    {year:'2025',val:5.5,color:'#7777cc'},
+    {year:'2026',val:8.5,color:'#00d4ff'},
+    {year:'2027',val:13,color:'#5599ff',proj:true},
+    {year:'2028',val:19,color:'#7755ff',proj:true},
+    {year:'2029',val:26,color:'#9b59f5',proj:true},
+    {year:'2030',val:35,color:'#ffd700',proj:true},
+  ];
+  const maxV=36;
+  const pad={l:50,r:30,t:20,b:36};
+  const bW=(W-pad.l-pad.r)/data.length;
+
+  // window highlight
+  const wx=pad.l+bW*4.5;const wx2=pad.l+bW*7;
+  ctx.fillStyle='rgba(155,89,245,.07)';
+  ctx.fillRect(wx,pad.t,wx2-wx,H-pad.b-pad.t);
+  ctx.fillStyle='rgba(155,89,245,.5)';ctx.font='11px Inter,sans-serif';ctx.textAlign='center';
+  ctx.fillText('⚡ 战略窗口 18-36月',(wx+wx2)/2,pad.t+14);
+
+  data.forEach((d,i)=>{
+    const x=pad.l+i*bW+bW*.15;
+    const bh=(d.val/maxV)*(H-pad.t-pad.b);
+    const y=H-pad.b-bh;
+    if(d.proj){
+      ctx.setLineDash([3,3]);
+      ctx.strokeStyle=d.color;ctx.lineWidth=1.5;
+      ctx.strokeRect(x,y,bW*.7,bh);
+      ctx.setLineDash([]);
+      ctx.fillStyle=d.color+'22';ctx.fillRect(x,y,bW*.7,bh);
+    } else {
+      const g=ctx.createLinearGradient(0,y,0,H-pad.b);
+      g.addColorStop(0,d.color);g.addColorStop(1,d.color+'44');
+      ctx.fillStyle=g;ctx.fillRect(x,y,bW*.7,bh);
+    }
+    // value
+    ctx.fillStyle=d.proj?'rgba(255,255,255,.4)':'rgba(255,255,255,.8)';
+    ctx.font=`${d.proj?'10':'11'}px Inter,sans-serif`;ctx.textAlign='center';
+    ctx.fillText(`$${d.val}B`,x+bW*.35,y-6);
+    // year
+    ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='10px Inter,sans-serif';
+    ctx.fillText(d.year,x+bW*.35,H-pad.b+14);
+  });
+}
+
+/* ══════ ROADMAP GANTT (S13) ══════ */
+function drawRoadmap(){
+  const c=document.getElementById('roadmap-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);
+
+  const phases=[
+    {name:'Phase 1 · 基础层固化',start:0,end:6,color:'#00d4ff',tasks:[
+      'ASUI Spec v1.0 · UAS参考实现',
+      'User Soul规范 · Cecil记忆实现',
+      'asui CLI工具 · MCP接入(3个系统)',
+      'UAS开发者文档 · 社区建立',
+    ]},
+    {name:'Phase 2 · 协议标准化',start:6,end:18,color:'#9b59f5',tasks:[
+      'UAS SDK (Python/TS) · Agent Hub',
+      'System Hub (10+ MCP适配器)',
+      'UAS Studio可视化编辑器 MVP',
+      '3-5家企业试点 · 商业案例验证',
+    ]},
+    {name:'Phase 3 · 平台化',start:18,end:36,color:'#00ffaa',tasks:[
+      'UAS Cloud Runtime · 企业Soul服务',
+      'Agent托管平台 · 行业套件发布',
+      'ARR $500K+ · 20+企业客户',
+      '行业认证 · 标准推进',
+    ]},
+  ];
+
+  const totalM=36;
+  const pad={l:180,r:30,t:30,b:20};
+  const tW=W-pad.l-pad.r;
+  const rowH=60;
+
+  // month ticks
+  for(let m=0;m<=36;m+=6){
+    const x=pad.l+tW*m/totalM;
+    ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,H-pad.b);ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,.3)';ctx.font='10px Inter,sans-serif';ctx.textAlign='center';
+    ctx.fillText(`M${m}`,x,pad.t-8);
+  }
+
+  phases.forEach((p,i)=>{
+    const y=pad.t+i*rowH+i*10;
+    const x1=pad.l+tW*p.start/totalM;
+    const x2=pad.l+tW*p.end/totalM;
+    // bar
+    const g=ctx.createLinearGradient(x1,0,x2,0);
+    g.addColorStop(0,p.color+'cc');g.addColorStop(1,p.color+'44');
+    ctx.fillStyle=g;roundRect(ctx,x1,y,x2-x1,rowH-4,6);ctx.fill();
+    ctx.strokeStyle=p.color+'88';ctx.lineWidth=1.5;
+    roundRect(ctx,x1,y,x2-x1,rowH-4,6);ctx.stroke();
+    // phase name
+    ctx.fillStyle='rgba(255,255,255,.9)';ctx.font='bold 11px Orbitron,sans-serif';ctx.textAlign='left';
+    ctx.fillText(p.name,pad.l-175,y+18);
+    ctx.fillStyle='rgba(255,255,255,.45)';ctx.font='10px Inter,sans-serif';
+    p.tasks.slice(0,2).forEach((t,ti)=>ctx.fillText('· '+t,pad.l-175,y+32+ti*14));
+    // milestones
+    const milestones=[p.end];
+    milestones.forEach(m=>{
+      const mx=pad.l+tW*m/totalM;
+      ctx.beginPath();ctx.arc(mx,y+rowH/2-2,6,0,Math.PI*2);
+      ctx.fillStyle=p.color;ctx.fill();
+    });
+  });
+}
+
+/* ══════ CANVAS TRIGGER ══════ */
+const drawn=new Set();
+function triggerCanvases(idx){
+  const id=['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15'][idx];
+  if(id==='s5'&&!drawn.has('arch')){drawArch();drawn.add('arch')}
+  if(id==='s10'&&!drawn.has('comp')){drawComp();drawn.add('comp')}
+  if(id==='s11'&&!drawn.has('market')){drawMarket();drawn.add('market')}
+  if(id==='s13'&&!drawn.has('roadmap')){drawRoadmap();drawn.add('roadmap')}
+}
+
+/* ══════ INIT ══════ */
+buildDots();
+updateNav();
+// pre-draw arch on load for faster first view
+setTimeout(()=>{drawArch();drawn.add('arch')},400);
+</script>
+</body>
+</html>
