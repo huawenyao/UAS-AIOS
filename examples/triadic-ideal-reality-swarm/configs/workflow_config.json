@@ -1,0 +1,135 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "三维理念现实涌现蜂群工作流",
+  "description": "基于宏观/中观/微观与理念/现实对冲的三阶段涌现工作流",
+  "swarm": {
+    "mode": "triadic-ideal-reality-swarm",
+    "methodology": "macro-meso-micro-ideal-reality",
+    "decision_policy": "purpose_activated_emergence",
+    "agents": [
+      { "id": "purpose_anchor", "name": "目的激活智能体", "dimension": "purpose", "stance": "目的监督者" },
+      { "id": "macro_ideal", "name": "宏观理念智能体", "dimension": "macro", "stance": "生态应然设计者" },
+      { "id": "macro_reality", "name": "宏观现实智能体", "dimension": "macro", "stance": "生态实然观察者" },
+      { "id": "meso_ideal", "name": "中观理念智能体", "dimension": "meso", "stance": "价值回路设计者" },
+      { "id": "meso_reality", "name": "中观现实智能体", "dimension": "meso", "stance": "流程现实校验者" },
+      { "id": "micro_ideal", "name": "微观理念智能体", "dimension": "micro", "stance": "人-物-理念应然建模者" },
+      { "id": "micro_reality", "name": "微观现实智能体", "dimension": "micro", "stance": "人-物-信号实然观察者" }
+    ]
+  },
+  "steps": [
+    {
+      "id": "intake",
+      "name": "议题归一化",
+      "type": "llm",
+      "description": "明确场景、边界、对象与预期涌现结果",
+      "prompt_template": "请把以下议题归一化为结构化输入，至少包含场景、目标对象、约束、当前现实、预期涌现结果。\n\n{{topic}}"
+    },
+    {
+      "id": "purpose_activation",
+      "name": "目的激活",
+      "type": "llm",
+      "dependencies": ["intake"],
+      "agent_id": "purpose_anchor",
+      "agent_role": "基础目的与场景激活监督者",
+      "deliverable": "目的激活报告",
+      "prompt_template": "基于议题输入，提炼基础目的、场景激活条件、目的漂移风险与必须守住的底线。\n\n输入：{{intake}}"
+    },
+    {
+      "id": "triadic_scan",
+      "name": "三维拆解",
+      "type": "parallel",
+      "dependencies": ["purpose_activation"],
+      "parallel_steps": [
+        "macro_ideal_report",
+        "macro_reality_report",
+        "meso_ideal_report",
+        "meso_reality_report",
+        "micro_ideal_report",
+        "micro_reality_report"
+      ]
+    },
+    {
+      "id": "macro_ideal_report",
+      "name": "宏观理念报告",
+      "type": "llm",
+      "agent_id": "macro_ideal",
+      "deliverable": "宏观理念报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在宏观理念层，提炼整体生态的目的结构、关键要素、作用机制、秩序原则与演化方向。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "macro_reality_report",
+      "name": "宏观现实报告",
+      "type": "llm",
+      "agent_id": "macro_reality",
+      "deliverable": "宏观现实报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在宏观现实层，识别真实生态中的参与者、资源、规则、外部变量、结构性约束与现实演化趋势。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "meso_ideal_report",
+      "name": "中观理念报告",
+      "type": "llm",
+      "agent_id": "meso_ideal",
+      "deliverable": "中观理念报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在中观理念层，设计价值回路、场景闭环流程、理想解决方案与应有工作方式。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "meso_reality_report",
+      "name": "中观现实报告",
+      "type": "llm",
+      "agent_id": "meso_reality",
+      "deliverable": "中观现实报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在中观现实层，还原真实流程、组织接口、工具链、数据流、瓶颈与断点。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "micro_ideal_report",
+      "name": "微观理念报告",
+      "type": "llm",
+      "agent_id": "micro_ideal",
+      "deliverable": "微观理念报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在微观理念层，刻画人、物、角色、理念对象的融合体，定义其应有状态、感知、动作与工作方式。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "micro_reality_report",
+      "name": "微观现实报告",
+      "type": "llm",
+      "agent_id": "micro_reality",
+      "deliverable": "微观现实报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在微观现实层，识别具体的人、物理对象、信号、动作链、限制条件与真实交互。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "ideal_reality_debate",
+      "name": "理念现实对冲",
+      "type": "llm",
+      "dependencies": [
+        "macro_ideal_report",
+        "macro_reality_report",
+        "meso_ideal_report",
+        "meso_reality_report",
+        "micro_ideal_report",
+        "micro_reality_report"
+      ],
+      "prompt_template": "请组织三组理念现实对冲，并补充跨维度张力。\n\n宏观理念：{{macro_ideal_report}}\n\n宏观现实：{{macro_reality_report}}\n\n中观理念：{{meso_ideal_report}}\n\n中观现实：{{meso_reality_report}}\n\n微观理念：{{micro_ideal_report}}\n\n微观现实：{{micro_reality_report}}"
+    },
+    {
+      "id": "emergence_synthesis",
+      "name": "涌现综合",
+      "type": "llm",
+      "dependencies": ["ideal_reality_debate", "purpose_activation"],
+      "prompt_template": "基于目的激活报告与理念现实对冲结果，输出《三维理念现实涌现方案》。必须覆盖宏观生态、中观价值回路、微观实体矩阵、张力清单、场景激活路径、真实工作方式与评估指标。\n\n目的激活：{{purpose_activation}}\n\n对冲结果：{{ideal_reality_debate}}"
+    },
+    {
+      "id": "render_report",
+      "name": "写入涌现报告",
+      "type": "script",
+      "dependencies": ["emergence_synthesis"],
+      "script": "scripts/render_emergence_report.py"
+    }
+  ]
+}
