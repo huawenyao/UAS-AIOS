@@ -6,7 +6,9 @@
   "governance": {
     "human_role": "purpose_orchestrator_only",
     "allow_purpose_drift": false,
-    "require_scene_activation": true
+    "require_scene_activation": true,
+    "require_real_instantiation": true,
+    "require_cross_validation": true
   },
   "agents": [
     {
@@ -71,6 +73,24 @@
       "mission": "识别可感知的物理对象、行为、信号、限制与真实动作链",
       "deliverable": "微观现实报告",
       "challenge_targets": ["micro_ideal", "meso_reality"]
+    },
+    {
+      "id": "scene_instantiator",
+      "name": "现实实例化智能体",
+      "dimension": "instantiation",
+      "stance": "抽象到实体的映射者",
+      "mission": "把理念结构、现实结构与场景目标映射为具体实体、角色、接口、流程和对象",
+      "deliverable": "现实实例化报告",
+      "challenge_targets": ["macro_ideal", "meso_ideal", "micro_ideal"]
+    },
+    {
+      "id": "validation_evolution",
+      "name": "验证进化智能体",
+      "dimension": "validation",
+      "stance": "交叉验证与进化监督者",
+      "mission": "验证三维一致性、现实可执行性、指标可评估性，并生成进化回路",
+      "deliverable": "验证进化报告",
+      "challenge_targets": ["scene_instantiator", "macro_reality", "meso_reality", "micro_reality"]
     }
   ]
 }

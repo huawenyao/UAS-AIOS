@@ -5,27 +5,30 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
 
 ## 系统概述
 
-本项目采用“三维 × 理念现实”涌现范式：围绕宏观、中观、微观三个维度，分别建立理念智能体与现实智能体，并以“目的激活”为锚点，将基础目的转译为具体场景中的真实造化路径。
+本项目采用“三维 × 理念现实 × 实例化验证进化”涌现范式：围绕宏观、中观、微观三个维度，分别建立理念智能体与现实智能体，并以“目的激活”为锚点，将基础目的转译为具体场景中的真实造化路径，再经过现实实体实例化、交叉验证、评估与进化，形成可运转、可迭代、可评估的方案。
 
 ## 核心命令
 
 - `/emerge [议题]` - 发起一次完整的三维理念现实涌现分析
-- `/activate [议题ID]` - 重做目的激活与场景转译
-- `/reshape [议题ID]` - 基于现实反馈重构三维方案
+- `/instantiate [议题ID]` - 把理念与结构映射成真实实体、角色、对象和接口
+- `/validate [议题ID]` - 对实例化方案执行交叉验证与评估
+- `/evolve [议题ID]` - 基于验证反馈重构与进化方案
 
 ## 运作机制
 
 1. **目的激活**：先提炼基础目的，再绑定到真实场景
 2. **三维拆解**：宏观、中观、微观分别展开理念与现实的独立分析
 3. **理念现实对冲**：每个维度都要完成理念与现实的互相校正
-4. **涌现综合**：把目的、维度、实体、机制、工作方式综合成《三维理念现实涌现方案》
+4. **现实实例化**：把理念结构映射成具体的人、物、流程、工具、信号和接口
+5. **交叉验证与评估**：检查三维之间、理念与现实之间、方案与指标之间是否闭环
+6. **涌现进化**：形成《三维理念现实涌现方案》，并内置评估与进化机制
 
 ## 知识层
 
 | 文件 | 用途 |
 |------|------|
 | `configs/workflow_config.json` | 三维理念现实蜂群工作流定义 |
-| `configs/swarm_agents.json` | 七大智能体角色、维度、对手盘与交付物 |
+| `configs/swarm_agents.json` | 九大智能体角色、维度、对手盘与交付物 |
 | `.claude/skills/triadic_protocol.md` | 三维理念现实执行协议 |
 | `.claude/skills/emergence_output_contract.md` | 最终涌现方案输出契约 |
 
@@ -35,6 +38,8 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
 - 三维并行：宏观、中观、微观必须分开建模，不能互相替代
 - 理念现实对照：每个维度都要同时看到应然与实然
 - 场景激活：一切基础理念都必须转译为具体场景下的动作、实体和工作方式
+- 实体落地：所有理念结构都必须映射为现实实体、接口、流程、角色或对象
+- 评估进化：所有方案都必须有验证矩阵、指标系统和进化闭环
 """,
     ".claude/skills/triadic_protocol.md": """# 三维理念现实涌现协议
 
@@ -68,7 +73,27 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
 
 目的激活智能体必须全程监督，检查是否偏离基础目的。
 
-## 第三阶段：涌现综合
+## 第三阶段：现实实例化
+
+必须把前面的抽象结论落成现实实体映射：
+
+1. 人与角色
+2. 组织单元与职责接口
+3. 工具、系统与数据接口
+4. 物理对象与理念对象
+5. 流程节点与行为动作
+6. 场景信号、异常与反馈源
+
+## 第四阶段：交叉验证与评估
+
+必须验证以下问题：
+
+1. 宏观、中观、微观是否一致
+2. 理念与现实是否闭环
+3. 方案是否可执行、可评估、可迭代
+4. 是否存在目的漂移或现实断裂
+
+## 第五阶段：涌现综合与进化
 
 必须形成以下产物：
 
@@ -76,16 +101,21 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
 2. 宏观生态机制图
 3. 中观价值回路与闭环流程
 4. 微观实体矩阵与工作方式
-5. 理念现实张力清单
-6. 真实场景下的解决方案
-7. 运行机制与评估指标
-8. 复盘触发器
+5. 实例化实体图谱
+6. 理念现实张力清单
+7. 交叉验证矩阵
+8. 产品/方案定义
+9. 体验蓝图与运行机制
+10. 技术选择与评估指标
+11. 进化闭环与复盘触发器
 
 ## 禁忌
 
 - 不允许只谈宏观理念，不落到中观闭环与微观实体
 - 不允许只看现实阻力，不回到基础目的
 - 不允许把“人”简化成抽象角色而忽略其具体感知与动作
+- 不允许输出无法被现实实体承载的抽象方案
+- 不允许输出没有验证机制和进化路径的静态方案
 """,
     ".claude/skills/emergence_output_contract.md": """# 《三维理念现实涌现方案》输出契约
 
@@ -96,16 +126,22 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
 - `macro_ecology`: 宏观生态要素、机制与整体关系
 - `meso_value_loops`: 中观价值回路、闭环流程与关键场景
 - `micro_object_matrix`: 微观实体、角色、物理对象与理念对象的融合矩阵
+- `instantiated_entity_map`: 从抽象结构到现实实体的实例化映射
 - `ideal_reality_tensions`: 各维度的理念现实张力
+- `validation_matrix`: 三维交叉验证与现实校验矩阵
+- `product_definition`: 方案或产品的清晰定义
+- `experience_blueprint`: 关键用户体验与工作方式蓝图
+- `technical_choices`: 支撑该方案的关键技术与系统选择
 - `activation_plan`: 从基础目的到场景造化的激活路径
 - `emergence_solution`: 最终解决方案与真实工作方式
 - `operating_mode`: 运行机制、协作方式与治理规则
 - `key_entities`: 必须被智能化建模的核心实体
-- `scene_metrics`: 评估该方案是否成立的场景指标
+- `evaluation_metrics`: 评估该方案是否成立的指标系统
+- `iteration_loop`: 方案如何被持续迭代与进化
 - `retrospective_triggers`: 触发复盘与重构的信号
 """,
     ".claude/agents/README.md": "# 三维智能体定义\n\n智能体元数据统一维护在 `configs/swarm_agents.json`，由工作流按 `agent_id` 引用。\n",
-    ".claude/commands/README.md": "# 交互命令\n\n- `/emerge [议题]`：触发三维理念现实涌现分析\n- `/activate [议题ID]`：重做目的激活\n- `/reshape [议题ID]`：基于现实反馈重构方案\n",
+    ".claude/commands/README.md": "# 交互命令\n\n- `/emerge [议题]`：触发三维理念现实涌现分析\n- `/instantiate [议题ID]`：把理念结构映射成现实实体\n- `/validate [议题ID]`：执行交叉验证与评估\n- `/evolve [议题ID]`：基于验证反馈重构方案\n",
     "configs/swarm_agents.json": """{
   "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
   "version": "v1.0",
@@ -114,7 +150,9 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
   "governance": {
     "human_role": "purpose_orchestrator_only",
     "allow_purpose_drift": false,
-    "require_scene_activation": true
+    "require_scene_activation": true,
+    "require_real_instantiation": true,
+    "require_cross_validation": true
   },
   "agents": [
     {
@@ -124,7 +162,7 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
       "stance": "基础目的与场景激活监督者",
       "mission": "提炼基础目的，识别场景激活条件，防止理念漂移",
       "deliverable": "目的激活报告",
-      "challenge_targets": ["macro_ideal", "macro_reality", "meso_ideal", "meso_reality", "micro_ideal", "micro_reality"]
+      "challenge_targets": ["macro_ideal", "macro_reality", "meso_ideal", "meso_reality", "micro_ideal", "micro_reality", "scene_instantiator", "validation_evolution"]
     },
     {
       "id": "macro_ideal",
@@ -179,6 +217,24 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
       "mission": "识别可感知的物理对象、行为、信号、限制与现实动作链",
       "deliverable": "微观现实报告",
       "challenge_targets": ["micro_ideal", "meso_reality"]
+    },
+    {
+      "id": "scene_instantiator",
+      "name": "现实实例化智能体",
+      "dimension": "instantiation",
+      "stance": "抽象到实体的映射者",
+      "mission": "把理念结构、现实结构与场景目标映射为具体实体、角色、接口、流程和对象",
+      "deliverable": "现实实例化报告",
+      "challenge_targets": ["macro_ideal", "meso_ideal", "micro_ideal"]
+    },
+    {
+      "id": "validation_evolution",
+      "name": "验证进化智能体",
+      "dimension": "validation",
+      "stance": "交叉验证与进化监督者",
+      "mission": "验证三维一致性、现实可执行性、指标可评估性，并生成进化回路",
+      "deliverable": "验证进化报告",
+      "challenge_targets": ["scene_instantiator", "macro_reality", "meso_reality", "micro_reality"]
     }
   ],
   "pairings": [
@@ -198,6 +254,16 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
       "challenge": "人的理念角色与现实动作链是否真正统一"
     },
     {
+      "source": "scene_instantiator",
+      "target": "all",
+      "challenge": "抽象结论是否已经映射为具体实体、接口、对象和流程"
+    },
+    {
+      "source": "validation_evolution",
+      "target": "all",
+      "challenge": "方案是否可执行、可评估、可迭代、可进化"
+    },
+    {
       "source": "purpose_anchor",
       "target": "all",
       "challenge": "各维度是否仍然服务于基础目的并完成场景激活"
@@ -209,7 +275,7 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
   "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
   "version": "v1.0",
   "name": "三维理念现实涌现蜂群工作流",
-  "description": "基于宏观/中观/微观与理念/现实对冲的三阶段涌现工作流",
+  "description": "基于宏观/中观/微观与理念/现实对冲，并加入实例化、验证、评估与进化的闭环工作流",
   "swarm": {
     "mode": "triadic-ideal-reality-swarm",
     "methodology": "macro-meso-micro-ideal-reality",
@@ -221,7 +287,9 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
       { "id": "meso_ideal", "name": "中观理念智能体", "dimension": "meso", "stance": "价值回路设计者" },
       { "id": "meso_reality", "name": "中观现实智能体", "dimension": "meso", "stance": "流程现实校验者" },
       { "id": "micro_ideal", "name": "微观理念智能体", "dimension": "micro", "stance": "人-物-理念应然建模者" },
-      { "id": "micro_reality", "name": "微观现实智能体", "dimension": "micro", "stance": "人-物-信号实然观察者" }
+      { "id": "micro_reality", "name": "微观现实智能体", "dimension": "micro", "stance": "人-物-信号实然观察者" },
+      { "id": "scene_instantiator", "name": "现实实例化智能体", "dimension": "instantiation", "stance": "抽象到实体映射者" },
+      { "id": "validation_evolution", "name": "验证进化智能体", "dimension": "validation", "stance": "验证与进化监督者" }
     ],
     "phases": [
       {
@@ -235,9 +303,19 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
         "goal": "三维理念现实独立输出，不提前混合"
       },
       {
+        "id": "scene_instantiation",
+        "name": "现实实例化",
+        "goal": "把抽象结构映射为现实实体、流程、对象与接口"
+      },
+      {
+        "id": "cross_validation",
+        "name": "交叉验证",
+        "goal": "验证三维一致性、现实可执行性与评估闭环"
+      },
+      {
         "id": "emergence",
-        "name": "涌现综合",
-        "goal": "把目的、维度、实体、流程与工作方式综合成真实方案"
+        "name": "涌现进化",
+        "goal": "把目的、维度、实体、验证结果综合成可进化方案"
       }
     ]
   },
@@ -248,12 +326,18 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
       "macro_ecology",
       "meso_value_loops",
       "micro_object_matrix",
+      "instantiated_entity_map",
       "ideal_reality_tensions",
+      "validation_matrix",
+      "product_definition",
+      "experience_blueprint",
+      "technical_choices",
       "activation_plan",
       "emergence_solution",
       "operating_mode",
       "key_entities",
-      "scene_metrics",
+      "evaluation_metrics",
+      "iteration_loop",
       "retrospective_triggers"
     ]
   },
@@ -368,12 +452,32 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
       "prompt_template": "请组织三组理念现实对冲，并补充跨维度张力：\\n1. 宏观理念 vs 宏观现实\\n2. 中观理念 vs 中观现实\\n3. 微观理念 vs 微观现实\\n4. 目的激活是否被偏离\\n\\n宏观理念：{{macro_ideal_report}}\\n\\n宏观现实：{{macro_reality_report}}\\n\\n中观理念：{{meso_ideal_report}}\\n\\n中观现实：{{meso_reality_report}}\\n\\n微观理念：{{micro_ideal_report}}\\n\\n微观现实：{{micro_reality_report}}"
     },
     {
+      "id": "scene_instantiation",
+      "name": "现实实例化",
+      "type": "llm",
+      "dependencies": ["ideal_reality_debate", "purpose_activation"],
+      "agent_id": "scene_instantiator",
+      "agent_role": "抽象到实体映射者",
+      "deliverable": "现实实例化报告",
+      "prompt_template": "请把目的激活结果与三维对冲结果映射为现实世界中的实体、角色、工具、接口、对象、信号、流程节点与工作动作，形成实例化实体图谱。\\n\\n目的激活：{{purpose_activation}}\\n\\n对冲结果：{{ideal_reality_debate}}"
+    },
+    {
+      "id": "cross_validation",
+      "name": "交叉验证与评估",
+      "type": "llm",
+      "dependencies": ["scene_instantiation", "purpose_activation", "ideal_reality_debate"],
+      "agent_id": "validation_evolution",
+      "agent_role": "验证与进化监督者",
+      "deliverable": "验证进化报告",
+      "prompt_template": "请验证当前方案是否同时满足：\\n1. 宏观/中观/微观一致\\n2. 理念/现实闭环\\n3. 现实可执行\\n4. 可评估\\n5. 可迭代\\n并输出验证矩阵、评估指标与进化建议。\\n\\n目的激活：{{purpose_activation}}\\n\\n对冲结果：{{ideal_reality_debate}}\\n\\n实例化结果：{{scene_instantiation}}"
+    },
+    {
       "id": "emergence_synthesis",
       "name": "涌现综合",
       "type": "llm",
-      "dependencies": ["ideal_reality_debate", "purpose_activation"],
+      "dependencies": ["cross_validation", "scene_instantiation", "purpose_activation"],
       "description": "输出《三维理念现实涌现方案》",
-      "prompt_template": "基于目的激活报告与理念现实对冲结果，输出《三维理念现实涌现方案》。必须覆盖宏观生态、中观价值回路、微观实体矩阵、张力清单、场景激活路径、真实工作方式与评估指标。\\n\\n目的激活：{{purpose_activation}}\\n\\n对冲结果：{{ideal_reality_debate}}",
+      "prompt_template": "基于目的激活、理念现实对冲、现实实例化与交叉验证结果，输出《三维理念现实涌现方案》。必须覆盖产品定义、体验蓝图、技术选择、运行机制、评估指标与进化回路。\\n\\n目的激活：{{purpose_activation}}\\n\\n实例化结果：{{scene_instantiation}}\\n\\n验证结果：{{cross_validation}}",
       "output_schema": {
         "type": "object",
         "properties": {
@@ -382,12 +486,18 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
           "macro_ecology": { "type": "array", "items": { "type": "string" } },
           "meso_value_loops": { "type": "array", "items": { "type": "string" } },
           "micro_object_matrix": { "type": "array", "items": { "type": "string" } },
+          "instantiated_entity_map": { "type": "array", "items": { "type": "string" } },
           "ideal_reality_tensions": { "type": "array", "items": { "type": "string" } },
+          "validation_matrix": { "type": "array", "items": { "type": "string" } },
+          "product_definition": { "type": "array", "items": { "type": "string" } },
+          "experience_blueprint": { "type": "array", "items": { "type": "string" } },
+          "technical_choices": { "type": "array", "items": { "type": "string" } },
           "activation_plan": { "type": "array", "items": { "type": "string" } },
           "emergence_solution": { "type": "array", "items": { "type": "string" } },
           "operating_mode": { "type": "array", "items": { "type": "string" } },
           "key_entities": { "type": "array", "items": { "type": "string" } },
-          "scene_metrics": { "type": "array", "items": { "type": "string" } },
+          "evaluation_metrics": { "type": "array", "items": { "type": "string" } },
+          "iteration_loop": { "type": "array", "items": { "type": "string" } },
           "retrospective_triggers": { "type": "array", "items": { "type": "string" } }
         },
         "required": [
@@ -396,12 +506,18 @@ TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE = {
           "macro_ecology",
           "meso_value_loops",
           "micro_object_matrix",
+          "instantiated_entity_map",
           "ideal_reality_tensions",
+          "validation_matrix",
+          "product_definition",
+          "experience_blueprint",
+          "technical_choices",
           "activation_plan",
           "emergence_solution",
           "operating_mode",
           "key_entities",
-          "scene_metrics",
+          "evaluation_metrics",
+          "iteration_loop",
           "retrospective_triggers"
         ]
       }
@@ -452,7 +568,7 @@ def main() -> int:
     payload = json.load(sys.stdin)
     topic = str(payload.get("topic", "emergence"))
     synthesis = payload.get("emergence_synthesis", payload)
-    debate = payload.get("ideal_reality_debate", {})
+    validation = payload.get("cross_validation", {})
 
     slug = slugify(topic)
     report_dir = Path("reports")
@@ -470,12 +586,18 @@ def main() -> int:
         section("宏观生态机制", synthesis.get("macro_ecology")),
         section("中观价值回路", synthesis.get("meso_value_loops")),
         section("微观实体矩阵", synthesis.get("micro_object_matrix")),
-        section("理念现实张力", synthesis.get("ideal_reality_tensions") or debate.get("tensions")),
+        section("现实实例化图谱", synthesis.get("instantiated_entity_map")),
+        section("理念现实张力", synthesis.get("ideal_reality_tensions") or validation.get("tensions")),
+        section("交叉验证矩阵", synthesis.get("validation_matrix") or validation.get("validation_matrix")),
+        section("产品定义", synthesis.get("product_definition")),
+        section("体验蓝图", synthesis.get("experience_blueprint")),
+        section("技术选择", synthesis.get("technical_choices")),
         section("场景激活路径", synthesis.get("activation_plan")),
         section("涌现解决方案", synthesis.get("emergence_solution")),
         section("运行机制", synthesis.get("operating_mode")),
         section("关键实体", synthesis.get("key_entities")),
-        section("场景指标", synthesis.get("scene_metrics")),
+        section("评估指标", synthesis.get("evaluation_metrics")),
+        section("进化回路", synthesis.get("iteration_loop")),
         section("复盘触发器", synthesis.get("retrospective_triggers")),
     ]
 
@@ -483,7 +605,7 @@ def main() -> int:
 
     stored_payload = {
         "topic": topic,
-        "ideal_reality_debate": debate,
+        "cross_validation": validation,
         "emergence_synthesis": synthesis,
     }
     decision_path.write_text(

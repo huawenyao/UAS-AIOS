@@ -2,7 +2,7 @@
   "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
   "version": "v1.0",
   "name": "三维理念现实涌现蜂群工作流",
-  "description": "基于宏观/中观/微观与理念/现实对冲的三阶段涌现工作流",
+  "description": "基于宏观/中观/微观与理念/现实对冲，并加入实例化、验证、评估与进化的闭环工作流",
   "swarm": {
     "mode": "triadic-ideal-reality-swarm",
     "methodology": "macro-meso-micro-ideal-reality",
@@ -14,7 +14,38 @@
       { "id": "meso_ideal", "name": "中观理念智能体", "dimension": "meso", "stance": "价值回路设计者" },
       { "id": "meso_reality", "name": "中观现实智能体", "dimension": "meso", "stance": "流程现实校验者" },
       { "id": "micro_ideal", "name": "微观理念智能体", "dimension": "micro", "stance": "人-物-理念应然建模者" },
-      { "id": "micro_reality", "name": "微观现实智能体", "dimension": "micro", "stance": "人-物-信号实然观察者" }
+      { "id": "micro_reality", "name": "微观现实智能体", "dimension": "micro", "stance": "人-物-信号实然观察者" },
+      { "id": "scene_instantiator", "name": "现实实例化智能体", "dimension": "instantiation", "stance": "抽象到实体映射者" },
+      { "id": "validation_evolution", "name": "验证进化智能体", "dimension": "validation", "stance": "验证与进化监督者" }
+    ],
+    "phases": [
+      { "id": "purpose_activation", "name": "目的激活", "goal": "把基础目的绑定到具体场景与边界" },
+      { "id": "triadic_scan", "name": "三维拆解", "goal": "三维理念现实独立输出，不提前混合" },
+      { "id": "scene_instantiation", "name": "现实实例化", "goal": "把抽象结构映射为现实实体、流程、对象与接口" },
+      { "id": "cross_validation", "name": "交叉验证", "goal": "验证三维一致性、现实可执行性与评估闭环" },
+      { "id": "emergence", "name": "涌现进化", "goal": "把目的、维度、实体、验证结果综合成可进化方案" }
+    ]
+  },
+  "global_config": {
+    "required_sections": [
+      "topic",
+      "purpose_anchor",
+      "macro_ecology",
+      "meso_value_loops",
+      "micro_object_matrix",
+      "instantiated_entity_map",
+      "ideal_reality_tensions",
+      "validation_matrix",
+      "product_definition",
+      "experience_blueprint",
+      "technical_choices",
+      "activation_plan",
+      "emergence_solution",
+      "operating_mode",
+      "key_entities",
+      "evaluation_metrics",
+      "iteration_loop",
+      "retrospective_triggers"
     ]
   },
   "steps": [
@@ -118,11 +149,29 @@
       "prompt_template": "请组织三组理念现实对冲，并补充跨维度张力。\n\n宏观理念：{{macro_ideal_report}}\n\n宏观现实：{{macro_reality_report}}\n\n中观理念：{{meso_ideal_report}}\n\n中观现实：{{meso_reality_report}}\n\n微观理念：{{micro_ideal_report}}\n\n微观现实：{{micro_reality_report}}"
     },
     {
+      "id": "scene_instantiation",
+      "name": "现实实例化",
+      "type": "llm",
+      "dependencies": ["ideal_reality_debate", "purpose_activation"],
+      "agent_id": "scene_instantiator",
+      "deliverable": "现实实例化报告",
+      "prompt_template": "请把目的激活结果与三维对冲结果映射为现实世界中的实体、角色、工具、接口、对象、信号、流程节点与工作动作，形成实例化实体图谱。\n\n目的激活：{{purpose_activation}}\n\n对冲结果：{{ideal_reality_debate}}"
+    },
+    {
+      "id": "cross_validation",
+      "name": "交叉验证与评估",
+      "type": "llm",
+      "dependencies": ["scene_instantiation", "purpose_activation", "ideal_reality_debate"],
+      "agent_id": "validation_evolution",
+      "deliverable": "验证进化报告",
+      "prompt_template": "请验证当前方案是否同时满足：\n1. 宏观/中观/微观一致\n2. 理念/现实闭环\n3. 现实可执行\n4. 可评估\n5. 可迭代\n并输出验证矩阵、评估指标与进化建议。\n\n目的激活：{{purpose_activation}}\n\n对冲结果：{{ideal_reality_debate}}\n\n实例化结果：{{scene_instantiation}}"
+    },
+    {
       "id": "emergence_synthesis",
       "name": "涌现综合",
       "type": "llm",
-      "dependencies": ["ideal_reality_debate", "purpose_activation"],
-      "prompt_template": "基于目的激活报告与理念现实对冲结果，输出《三维理念现实涌现方案》。必须覆盖宏观生态、中观价值回路、微观实体矩阵、张力清单、场景激活路径、真实工作方式与评估指标。\n\n目的激活：{{purpose_activation}}\n\n对冲结果：{{ideal_reality_debate}}"
+      "dependencies": ["cross_validation", "scene_instantiation", "purpose_activation"],
+      "prompt_template": "基于目的激活、理念现实对冲、现实实例化与交叉验证结果，输出《三维理念现实涌现方案》。必须覆盖产品定义、体验蓝图、技术选择、运行机制、评估指标与进化回路。\n\n目的激活：{{purpose_activation}}\n\n实例化结果：{{scene_instantiation}}\n\n验证结果：{{cross_validation}}"
     },
     {
       "id": "render_report",
