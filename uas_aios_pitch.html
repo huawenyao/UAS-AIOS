@@ -14,16 +14,23 @@
   --r:16px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+html,body{
+  width:100%;height:100%;overflow:hidden;
+  background:linear-gradient(180deg,#f9fafb 0%,#edf2f7 45%,#e5e7eb 100%);
+  color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;font-smooth:always;
+}
 
-/* ── canvas background ── */
-#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+/* ── subtle background ── */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55};
 
 /* ── slide system ── */
 .deck{position:fixed;inset:0;z-index:1}
 .slide{
   position:absolute;inset:0;display:flex;flex-direction:column;
-  justify-content:center;align-items:center;padding:60px 80px;
+  justify-content:center;align-items:center;
+  padding:56px 72px;
   opacity:0;transform:translateX(60px);pointer-events:none;
   transition:opacity .6s cubic-bezier(.77,0,.175,1),transform .6s cubic-bezier(.77,0,.175,1);
 }
@@ -72,8 +79,8 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
 .card:hover{border-color:rgba(0,212,255,.45);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
 
 /* grid */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:flex-start}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px}
 
 /* ─── SLIDE 1: COVER ─── */
 #s1{text-align:center}
@@ -102,8 +109,9 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
 /* ─── SLIDE 2: PROBLEM ─── */
 .friction-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;width:100%}
 .friction-card{
-  border-radius:var(--r);padding:28px 24px;text-align:center;
-  border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(12px);
+  border-radius:var(--r);padding:24px 22px;text-align:left;
+  border:1px solid rgba(15,23,42,0.08);
+  background:linear-gradient(180deg,#f9fafb 0%,#f3f4f6 100%);
   position:relative;overflow:hidden;
 }
 .friction-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
@@ -144,7 +152,8 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
 .tl-n3 .tl-dot{color:var(--green);border-color:var(--green)}
 .tl-n4 .tl-dot{color:var(--gold);border-color:var(--gold)}
 .tl-content{text-align:center;padding:20px 16px;border-radius:var(--r);
-  background:var(--glass);border:1px solid var(--border);backdrop-filter:blur(8px);width:100%}
+  background:linear-gradient(180deg,#ffffff 0%,#f3f4f6 100%);
+  border:1px solid rgba(15,23,42,0.08);width:100%}
 .tl-year{font-size:11px;letter-spacing:.12em;font-weight:600;margin-bottom:6px}
 .tl-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin-bottom:10px}
 .tl-solved{font-size:11px;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:8px}
@@ -160,8 +169,12 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
 
 /* ─── SLIDE 4: THREE AXES ─── */
 .axes-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;width:100%}
-.axis-card{border-radius:var(--r);background:var(--glass);border:1px solid var(--border);
-  backdrop-filter:blur(12px);overflow:hidden}
+.axis-card{
+  border-radius:var(--r);
+  background:linear-gradient(180deg,#ffffff 0%,#f9fafb 60%);
+  border:1px solid rgba(15,23,42,0.08);
+  overflow:hidden;
+}
 .axis-header{padding:20px 22px 14px;border-bottom:1px solid var(--border)}
 .axis-num{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
   letter-spacing:.15em;margin-bottom:4px}
@@ -192,7 +205,7 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
 .layer-split{display:grid;grid-template-columns:1fr 1fr;gap:32px;width:100%;align-items:center}
 .kv-list{display:flex;flex-direction:column;gap:12px}
 .kv-item{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;
-  border-radius:10px;background:var(--glass);border:1px solid var(--border)}
+  border-radius:10px;background:#f9fafb;border:1px solid rgba(15,23,42,0.06)}
 .kv-icon{font-size:20px;flex-shrink:0;margin-top:1px}
 .kv-text .label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   color:var(--text-secondary);margin-bottom:2px}
@@ -213,8 +226,8 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
 .protocol-stack{display:flex;flex-direction:column;gap:12px;width:100%}
 .proto-layer{
   display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:center;
-  padding:18px 24px;border-radius:12px;border:1px solid var(--border);
-  background:var(--glass);backdrop-filter:blur(8px);
+  padding:18px 24px;border-radius:12px;border:1px solid rgba(15,23,42,0.08);
+  background:linear-gradient(180deg,#ffffff 0%,#f3f4f6 100%);
 }
 .proto-label{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700}
 .proto-desc{font-size:13px;color:var(--text-secondary);line-height:1.5}
@@ -239,7 +252,7 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
 #market-canvas{border-radius:var(--r)}
 .market-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}
 .stat-card{text-align:center;padding:20px;border-radius:var(--r);background:var(--glass);
-  border:1px solid var(--border)}
+  border:1px solid rgba(15,23,42,0.08)}
 .stat-num{font-family:'Orbitron',sans-serif;font-size:clamp(22px,3vw,36px);font-weight:900;margin-bottom:4px}
 .stat-label{font-size:12px;color:var(--text-secondary);line-height:1.5}
 
@@ -325,7 +338,7 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
 <!-- ─── S1: COVER ─── -->
 <section class="slide active" id="s1">
   <div class="slide-inner" style="align-items:center;text-align:center;gap:28px">
-    <div class="tag"><span class="dot-tag"></span>Business Plan · 2026</div>
+    <div class="tag"><span class="dot-tag"></span>C-Level Strategic Brief · 2026</div>
     <h1><span class="grad-blue">UAS</span><span style="color:var(--muted);font-weight:300">-</span><span style="color:var(--text)">AIOS</span></h1>
     <div id="s1" class="formula">
       <div class="f-item u">USER<br><span style="font-size:.7em;font-weight:400;color:rgba(0,212,255,.9)">个人AI层</span></div>
@@ -336,13 +349,13 @@ h3{font-size:18px;font-weight:600;line-height:1.4}
       <span class="op">=</span>
       <div class="f-item eq">AI OS</div>
     </div>
-    <p class="tagline">将AI能力抽象为统一操作系统<br>让每个人都能驾驭所有专业系统的全部智能</p>
+    <p class="tagline">以操作系统形态重构企业AI底座<br>在统一协议栈下，让个人、Agent与业务系统形成可治理的智能闭环</p>
     <div class="badge-row">
-      <span class="badge badge-blue">Soul Protocol</span>
-      <span class="badge badge-purple">A2A · MCP</span>
-      <span class="badge badge-green">ASUI Knowledge</span>
-      <span class="badge badge-blue">Human Above the Loop</span>
-      <span class="badge badge-purple">AI Native Architecture</span>
+      <span class="badge badge-blue">Soul Protocol · 用户主权</span>
+      <span class="badge badge-purple">A2A · MCP · 标准协议</span>
+      <span class="badge badge-green">ASUI Knowledge · 知识即代码</span>
+      <span class="badge badge-blue">Human Above the Loop · 战略决策在人</span>
+      <span class="badge badge-purple">AI Native Architecture · 面向未来的架构</span>
     </div>
   </div>
 </section>
@@ -966,13 +979,13 @@ document.addEventListener('touchend',e=>{
         const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
         const d=Math.sqrt(dx*dx+dy*dy);
         if(d<130){
-          ctx.strokeStyle=`rgba(100,100,200,${.15*(1-d/130)})`;
+          ctx.strokeStyle=`rgba(148,163,184,${.14*(1-d/130)})`;
           ctx.lineWidth=.5;ctx.beginPath();
           ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();
         }
       }
     pts.forEach(p=>{
-      ctx.fillStyle='rgba(120,120,220,.5)';
+      ctx.fillStyle='rgba(148,163,184,.55)';
       ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
       p.x+=p.vx;p.y+=p.vy;
       if(p.x<0||p.x>W)p.vx*=-1;
