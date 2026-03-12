@@ -1,0 +1,113 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "swarm_name": "ai_recruitment_os_swarm",
+  "methodology": "swarm-plus-triadic-reality",
+  "governance": {
+    "human_role": "purpose_orchestrator_only",
+    "allow_goal_drift": false,
+    "require_real_instantiation": true,
+    "require_cross_validation": true
+  },
+  "agents": [
+    {
+      "id": "purpose_guard",
+      "name": "目标守恒智能体",
+      "dimension": "purpose",
+      "stance": "招聘基础目的监督者",
+      "mission": "确保方案持续服务于招聘目标，不因局部优化而偏离",
+      "deliverable": "目的激活报告"
+    },
+    {
+      "id": "hiring_manager_swarm",
+      "name": "用人部门智能体",
+      "dimension": "swarm",
+      "stance": "业务交付与能力匹配优先",
+      "mission": "强调岗位胜任力、业务交付与团队补位"
+    },
+    {
+      "id": "hr_ops_swarm",
+      "name": "HR运营智能体",
+      "dimension": "swarm",
+      "stance": "效率、标准化与协同优先",
+      "mission": "强调流程效率、协同与可复制性"
+    },
+    {
+      "id": "candidate_experience_swarm",
+      "name": "候选人体验智能体",
+      "dimension": "swarm",
+      "stance": "透明、公平、反馈及时",
+      "mission": "代表候选人体验、感知与信任"
+    },
+    {
+      "id": "fairness_compliance_swarm",
+      "name": "公平合规智能体",
+      "dimension": "swarm",
+      "stance": "偏差控制与合规底线守门人",
+      "mission": "识别偏见、歧视、黑箱决策与制度风险"
+    },
+    {
+      "id": "macro_ideal",
+      "name": "宏观理念智能体",
+      "dimension": "macro",
+      "stance": "组织人才生态应然设计者",
+      "mission": "设计组织层人才战略、HC结构与长期匹配逻辑"
+    },
+    {
+      "id": "macro_reality",
+      "name": "宏观现实智能体",
+      "dimension": "macro",
+      "stance": "市场供需与组织约束观察者",
+      "mission": "识别真实招聘市场、品牌吸引与资源边界"
+    },
+    {
+      "id": "meso_ideal",
+      "name": "中观理念智能体",
+      "dimension": "meso",
+      "stance": "招聘闭环与流程设计者",
+      "mission": "设计招聘价值回路、流程闭环与协作机制"
+    },
+    {
+      "id": "meso_reality",
+      "name": "中观现实智能体",
+      "dimension": "meso",
+      "stance": "流程现实校验者",
+      "mission": "识别流程断裂、审批瓶颈、职责冲突与数据缺口"
+    },
+    {
+      "id": "micro_ideal",
+      "name": "微观理念智能体",
+      "dimension": "micro",
+      "stance": "岗位与候选人体验应然建模者",
+      "mission": "定义理想岗位卡、候选人体验、面试对象与评分体系"
+    },
+    {
+      "id": "micro_reality",
+      "name": "微观现实智能体",
+      "dimension": "micro",
+      "stance": "招聘实体与行为观察者",
+      "mission": "识别招聘中的真实对象、记录、行为、面试动作与反馈"
+    },
+    {
+      "id": "scene_instantiator",
+      "name": "现实实例化智能体",
+      "dimension": "instantiation",
+      "stance": "抽象到实体映射者",
+      "mission": "把抽象结构映射为岗位卡、候选人卡、评分卡、Offer卡等真实对象"
+    },
+    {
+      "id": "deviation_auditor",
+      "name": "偏差校验智能体",
+      "dimension": "validation",
+      "stance": "目标偏差与效果失真审计者",
+      "mission": "检查目标损失、体验偏差、流程断裂与评估盲区"
+    },
+    {
+      "id": "evolution_planner",
+      "name": "进化规划智能体",
+      "dimension": "evolution",
+      "stance": "下一轮迭代设计者",
+      "mission": "基于验证结果生成下一轮进化路径与优先级"
+    }
+  ]
+}
