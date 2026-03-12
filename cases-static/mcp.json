@@ -1,0 +1,17 @@
+{
+  "name": "cases-static",
+  "version": "1.0.0",
+  "description": "UAS-AIOS 案例展示：战略简报与商业计划书",
+  "resources": [
+    {
+      "uri": "file://uas_aios_pitch.html",
+      "name": "UAS-AIOS 战略简报",
+      "mimeType": "text/html"
+    },
+    {
+      "uri": "file://aios_business_plan.html",
+      "name": "UAS-AIOS 商业计划书",
+      "mimeType": "text/html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "cases-static": {
+      "url": "https://bridge.staticmcp.com/sse?url=https://huawenyao.github.io/UAS-AIOS/cases-static"
+    }
+  }
+}
