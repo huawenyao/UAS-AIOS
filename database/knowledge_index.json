@@ -1,0 +1,318 @@
+{
+  "version": "1.0",
+  "built_at": "2026-03-13T14:30:06.642697",
+  "cognition_space": "UAS-AIOS",
+  "entities": [
+    {
+      "id": "skill:swarm_methodology",
+      "type": "Skill",
+      "path": ".claude/skills/swarm_methodology.md",
+      "name": "swarm_methodology",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "skill:agent_opponent_matrix",
+      "type": "Skill",
+      "path": ".claude/skills/agent_opponent_matrix.md",
+      "name": "agent_opponent_matrix",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "agent:swarm_04",
+      "type": "Agent",
+      "path": ".claude/agents/04_value_buyer.md",
+      "name": "买单价值智能体",
+      "stance": "价值变现与成本把控",
+      "cognition_layer": "A"
+    },
+    {
+      "id": "agent:swarm_03",
+      "type": "Agent",
+      "path": ".claude/agents/03_core_decision.md",
+      "name": "核心决策智能体",
+      "stance": "个人目标执行者",
+      "cognition_layer": "A"
+    },
+    {
+      "id": "agent:swarm_01",
+      "type": "Agent",
+      "path": ".claude/agents/01_user_perspective.md",
+      "name": "用户视角智能体",
+      "stance": "终端用户/需求方",
+      "cognition_layer": "A"
+    },
+    {
+      "id": "agent:swarm_02",
+      "type": "Agent",
+      "path": ".claude/agents/02_obstacle_guardian.md",
+      "name": "关卡障碍智能体",
+      "stance": "极致理性风险把控",
+      "cognition_layer": "A"
+    },
+    {
+      "id": "agent:swarm_05",
+      "type": "Agent",
+      "path": ".claude/agents/05_game_observer.md",
+      "name": "博弈观察智能体",
+      "stance": "第三方中立观察者",
+      "cognition_layer": "A"
+    },
+    {
+      "id": "command:swarmdecision",
+      "type": "Command",
+      "path": ".claude/commands/swarm_decision.md",
+      "name": "/swarmdecision",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "workflow:swarm_workflow_config",
+      "type": "Workflow",
+      "path": "configs/swarm_workflow_config.json",
+      "name": "SelfPaw 蜂群认知智能体工作流",
+      "version": "v1.0",
+      "steps_count": 9,
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:README",
+      "type": "Document",
+      "path": "docs/README.md",
+      "name": "README",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:PROJECT_STRUCTURE_AND_COGNITIVE_SPACE_REPORT",
+      "type": "Document",
+      "path": "docs/PROJECT_STRUCTURE_AND_COGNITIVE_SPACE_REPORT.md",
+      "name": "PROJECT_STRUCTURE_AND_COGNITIVE_SPACE_REPORT",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:COGNITIVE_SPACE",
+      "type": "Document",
+      "path": "docs/COGNITIVE_SPACE.md",
+      "name": "COGNITIVE_SPACE",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:ASUI_TECHNICAL_APPENDIX",
+      "type": "Document",
+      "path": "docs/architecture/ASUI_TECHNICAL_APPENDIX.md",
+      "name": "ASUI_TECHNICAL_APPENDIX",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:UAS_AIOS_ARCHITECTURE",
+      "type": "Document",
+      "path": "docs/architecture/UAS_AIOS_ARCHITECTURE.md",
+      "name": "UAS_AIOS_ARCHITECTURE",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:ASUI_ARCHITECTURE",
+      "type": "Document",
+      "path": "docs/architecture/ASUI_ARCHITECTURE.md",
+      "name": "ASUI_ARCHITECTURE",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:ASUI_STRATEGIC_ANALYSIS_2025",
+      "type": "Document",
+      "path": "docs/strategy/ASUI_STRATEGIC_ANALYSIS_2025.md",
+      "name": "ASUI_STRATEGIC_ANALYSIS_2025",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:ASUI_STRATEGY",
+      "type": "Document",
+      "path": "docs/strategy/ASUI_STRATEGY.md",
+      "name": "ASUI_STRATEGY",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:AI_APPLICATION_PARADIGM_REPORT",
+      "type": "Document",
+      "path": "docs/strategy/AI_APPLICATION_PARADIGM_REPORT.md",
+      "name": "AI_APPLICATION_PARADIGM_REPORT",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "doc:ASUI_WHITEPAPER_CN",
+      "type": "Document",
+      "path": "docs/whitepaper/ASUI_WHITEPAPER_CN.md",
+      "name": "ASUI_WHITEPAPER_CN",
+      "cognition_layer": "S"
+    },
+    {
+      "id": "schema:workflow_config.schema",
+      "type": "Schema",
+      "path": "schemas/workflow_config.schema.json",
+      "name": "workflow_config.schema",
+      "cognition_layer": "S"
+    }
+  ],
+  "relations": [
+    {
+      "subject": "agent:swarm_04",
+      "predicate": "opponent_of",
+      "object": "agent:swarm_03"
+    },
+    {
+      "subject": "agent:swarm_04",
+      "predicate": "opponent_of",
+      "object": "agent:swarm_01"
+    },
+    {
+      "subject": "agent:swarm_03",
+      "predicate": "opponent_of",
+      "object": "agent:swarm_01"
+    },
+    {
+      "subject": "agent:swarm_03",
+      "predicate": "opponent_of",
+      "object": "agent:swarm_02"
+    },
+    {
+      "subject": "agent:swarm_01",
+      "predicate": "opponent_of",
+      "object": "agent:swarm_04"
+    },
+    {
+      "subject": "agent:swarm_01",
+      "predicate": "opponent_of",
+      "object": "agent:swarm_03"
+    },
+    {
+      "subject": "agent:swarm_02",
+      "predicate": "opponent_of",
+      "object": "agent:swarm_03"
+    },
+    {
+      "subject": "agent:swarm_02",
+      "predicate": "opponent_of",
+      "object": "agent:swarm_05"
+    },
+    {
+      "subject": "command:swarmdecision",
+      "predicate": "references",
+      "object": "01_user_perspective.md"
+    },
+    {
+      "subject": "command:swarmdecision",
+      "predicate": "references",
+      "object": "workflow:swarm_workflow_config"
+    },
+    {
+      "subject": "command:swarmdecision",
+      "predicate": "references",
+      "object": "swarm_methodology.md"
+    },
+    {
+      "subject": "command:swarmdecision",
+      "predicate": "references",
+      "object": "skill:swarm_methodology"
+    },
+    {
+      "subject": "command:swarmdecision",
+      "predicate": "references",
+      "object": "agent:swarm_01"
+    },
+    {
+      "subject": "command:swarmdecision",
+      "predicate": "references",
+      "object": "agent_opponent_matrix.md"
+    },
+    {
+      "subject": "command:swarmdecision",
+      "predicate": "references",
+      "object": "05_game_observer.md"
+    },
+    {
+      "subject": "command:swarmdecision",
+      "predicate": "references",
+      "object": "skill:agent_opponent_matrix"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "references",
+      "object": "skill:swarm_methodology"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "references",
+      "object": "skill:agent_opponent_matrix"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:stage1_parallel"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:agent_01_user"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:agent_02_obstacle"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:agent_03_decision"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:agent_04_value"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:agent_05_observer"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:stage2_debate"
+    },
+    {
+      "subject": "step:stage2_debate",
+      "predicate": "depends_on",
+      "object": "step:stage1_parallel"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:stage3_synthesis"
+    },
+    {
+      "subject": "step:stage3_synthesis",
+      "predicate": "depends_on",
+      "object": "step:stage2_debate"
+    },
+    {
+      "subject": "workflow:swarm_workflow_config",
+      "predicate": "contains",
+      "object": "step:persist_result"
+    },
+    {
+      "subject": "step:persist_result",
+      "predicate": "depends_on",
+      "object": "step:stage3_synthesis"
+    }
+  ],
+  "stats": {
+    "entities_count": 20,
+    "relations_count": 30,
+    "by_type": {
+      "Skill": 2,
+      "Agent": 5,
+      "Command": 1,
+      "Workflow": 1,
+      "Document": 10,
+      "Schema": 1
+    }
+  }
+}

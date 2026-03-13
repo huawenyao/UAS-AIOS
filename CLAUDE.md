@@ -18,10 +18,14 @@
 │   ├── agents/            # 场景化 Agent 配置（含蜂群五智能体 01-05）
 │   └── commands/          # 交互命令定义（含 swarm_decision）
 ├── configs/               # 业务规则配置（含 swarm_workflow_config.json）
-├── scripts/               # 执行工具脚本（含 swarm_run、swarm_persist）
-├── database/              # 数据持久化（swarm_decisions.json）
-└── docs/
-    └── ASUI_ARCHITECTURE.md  # 架构理论文档
+├── scripts/               # 执行工具脚本（含 build_knowledge_index、swarm_*、query_index）
+├── database/              # 数据持久化（swarm_decisions.json、knowledge_index.json）
+├── docs/                  # 统一文档中心
+│   ├── architecture/      # UAS_AIOS、ASUI 架构
+│   ├── strategy/          # 战略与范式分析
+│   ├── whitepaper/        # 白皮书
+│   └── COGNITIVE_SPACE.md # 认知空间定义
+└── assets/                # 产品材料（uas_aios_pitch.html）
 ```
 
 ## 核心工作流
@@ -49,7 +53,14 @@
 - **知识层**：`.claude/skills/swarm_methodology.md`、`.claude/agents/01-05_*.md`
 - **工作流**：`configs/swarm_workflow_config.json`
 
+## 认知空间与索引
+
+- **认知空间**：用户认知、系统认知、Agent 认知、协议认知（见 `docs/COGNITIVE_SPACE.md`）
+- **知识索引**：`python scripts/build_knowledge_index.py` 构建实体-关系索引
+- **索引查询**：`python scripts/query_index.py --entity agent` 按类型筛选；`--refs` / `--deps` 查询引用
+
 ## 修改即生效
 
 - 修改本文件或 configs 中的配置 → 无需重启，下次执行即生效
 - 添加 .claude/skills/ 下的知识文件 → AI 自动纳入上下文
+- 知识变更后运行 `build_knowledge_index.py` → 更新索引
