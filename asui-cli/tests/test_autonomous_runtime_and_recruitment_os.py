@@ -104,9 +104,14 @@ def test_uas_runtime_service_discovers_and_runs_multiple_subapps(tmp_path):
 
     assert "finance-subapp" in app_ids
     assert "ai-recruitment-os" in app_ids
+    finance_entry = next(app for app in apps if app["app_id"] == "finance-subapp")
+    assert finance_entry["version"] == "v1.0"
+    assert any(tag.startswith("agent:") for tag in finance_entry["capability_tags"])
 
     validation = service.validate_app("ai-recruitment-os")
     assert validation["status"] == "ok"
+    health = service.health_check("ai-recruitment-os")
+    assert health["status"] == "healthy"
 
     result = service.run_app("finance-subapp", "shared-runtime-topic", payload={"governance_controls": ["audit"], "evolution_loop": ["intent_activation"]}, evaluate=True)
     assert result["status"] == "completed"
@@ -114,3 +119,14 @@ def test_uas_runtime_service_discovers_and_runs_multiple_subapps(tmp_path):
     state_slug = "shared-runtime-topic"
     cognitive = service.get_cognitive_state("finance-subapp", state_slug)
     assert cognitive["topic"] == "shared-runtime-topic"
+    registry_snapshot = service.registry_snapshot()
+    assert registry_snapshot["entries"]
+
+    queued = service.enqueue_job("finance-subapp", "queued-topic", payload={"governance_controls": ["audit"]}, evaluate=True)
+    assert queued["status"] == "queued"
+    queue_before = service.queue_status()
+    assert queue_before["queued_jobs"] >= 1
+    processed = service.process_next_job()
+    assert processed["status"] == "processed"
+    queue_after = service.queue_status()
+    assert queue_after["completed_jobs"] >= 1

@@ -18,7 +18,7 @@ def load_service():
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="运行共享 UAS Runtime Service")
-    parser.add_argument("command", choices=["list", "validate", "run", "state"], help="执行动作")
+    parser.add_argument("command", choices=["list", "registry", "health", "validate", "run", "state", "enqueue", "process", "queue"], help="执行动作")
     parser.add_argument("--app-id", help="sub uas app ID")
     parser.add_argument("--topic", help="运行时的业务议题")
     parser.add_argument("--topic-slug", help="认知状态文件的 slug")
@@ -34,8 +34,25 @@ def main() -> int:
         print(json.dumps(service.list_apps(), ensure_ascii=False, indent=2))
         return 0
 
+    if args.command == "registry":
+        print(json.dumps(service.registry_snapshot(), ensure_ascii=False, indent=2))
+        return 0
+
     if not args.app_id:
-        parser.error("--app-id is required for validate/run/state")
+        if args.command not in {"process", "queue"}:
+            parser.error("--app-id is required for health/validate/run/state/enqueue")
+
+    if args.command == "queue":
+        print(json.dumps(service.queue_status(), ensure_ascii=False, indent=2))
+        return 0
+
+    if args.command == "process":
+        print(json.dumps(service.process_next_job(), ensure_ascii=False, indent=2))
+        return 0
+
+    if args.command == "health":
+        print(json.dumps(service.health_check(args.app_id), ensure_ascii=False, indent=2))
+        return 0
 
     if args.command == "validate":
         print(json.dumps(service.validate_app(args.app_id), ensure_ascii=False, indent=2))
@@ -54,7 +71,13 @@ def main() -> int:
         return 0
 
     if not args.topic:
-        parser.error("--topic is required for run")
+        if args.command != "enqueue":
+            parser.error("--topic is required for run/enqueue")
+
+    if args.command == "enqueue":
+        payload = json.loads(args.payload_json) if args.payload_json else None
+        print(json.dumps(service.enqueue_job(args.app_id, args.topic, payload=payload, evaluate=args.evaluate), ensure_ascii=False, indent=2))
+        return 0
 
     payload = json.loads(args.payload_json) if args.payload_json else None
     result = service.run_app(args.app_id, args.topic, payload=payload, evaluate=args.evaluate)

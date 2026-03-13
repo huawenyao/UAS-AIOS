@@ -83,6 +83,7 @@ UAS 不是松散的用户、Agent、系统拼装体，而是一个标准化的 A
 - audit / rollback
 - context injection
 - 多 subapp 统一发现与运行（UAS Runtime Service）
+- health / version / capability tags / queue
 
 ### System Hub
 
@@ -102,8 +103,13 @@ UAS 不是松散的用户、Agent、系统拼装体，而是一个标准化的 A
 平台级共享运行入口：
 
 - `python3 scripts/run_uas_runtime_service.py list`
+- `python3 scripts/run_uas_runtime_service.py registry`
+- `python3 scripts/run_uas_runtime_service.py health --app-id <subapp>`
 - `python3 scripts/run_uas_runtime_service.py validate --app-id <subapp>`
 - `python3 scripts/run_uas_runtime_service.py run --app-id <subapp> --topic "<业务议题>" --evaluate`
 - `python3 scripts/run_uas_runtime_service.py state --app-id <subapp> --topic-slug "<topic-slug>"`
+- `python3 scripts/run_uas_runtime_service.py enqueue --app-id <subapp> --topic "<业务议题>" --evaluate`
+- `python3 scripts/run_uas_runtime_service.py process`
+- `python3 scripts/run_uas_runtime_service.py queue`
 
 这意味着多个 `projects/<business-app>/` 不必各自实现运行服务，而是统一挂接到共享 `UASRuntimeService`。

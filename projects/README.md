@@ -20,9 +20,14 @@ python3 scripts/create_sub_uas_app.py <business-app>
 
 ```bash
 python3 scripts/run_uas_runtime_service.py list
+python3 scripts/run_uas_runtime_service.py registry
+python3 scripts/run_uas_runtime_service.py health --app-id <business-app>
 python3 scripts/run_uas_runtime_service.py validate --app-id <business-app>
 python3 scripts/run_uas_runtime_service.py run --app-id <business-app> --topic "<业务议题>" --evaluate
 python3 scripts/run_uas_runtime_service.py state --app-id <business-app> --topic-slug "<topic-slug>"
+python3 scripts/run_uas_runtime_service.py enqueue --app-id <business-app> --topic "<业务议题>" --evaluate
+python3 scripts/run_uas_runtime_service.py process
+python3 scripts/run_uas_runtime_service.py queue
 ```
 
 ## 标准约束
