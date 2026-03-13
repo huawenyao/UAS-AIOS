@@ -174,32 +174,46 @@ S层（专业系统）：
 ### 3.1 系统定义
 
 ```
-UAS-AIOS = (U, A, S, Π, Ω)
+UAS-Platform = (I, K, R, A, S, G, E, Π)
 
-U = 用户层（User Intelligence Layer）
-  U = {Identity, Memory, Preference, Context, ExpertiseModel}
-  特性：跨应用持久化、个性化、自进化
+I = 意图与目标层（Intent Layer）
+  I = {UserIntent, OrgGoal, Constraints, SuccessCriteria}
+  特性：目标驱动、上下文感知、面向组织而非单会话
 
-A = Agent层（Agent Collaborative Network）
-  A = {Orchestrator, Specialists[], CoordinationProtocol}
-  特性：意图理解、任务分解、多Agent协调、自主执行
+K = 知识底座（Knowledge Substrate）
+  K = {CLAUDE, WorkflowConfig, SwarmAgents, Skills, Schemas, Policies}
+  特性：ASUI原生、显式知识驱动、构建-运行一体化
 
-S = 系统层（System Integration Layer）
-  S = {DomainSystems[], ToolRegistry, KnowledgeBase, ExecutionEngine}
-  特性：专业能力封装、标准化接口、ASUI知识驱动
+R = 自主智能体运行时（Autonomous Agent Runtime）
+  R = {ContextInjector, TaskIsolator, RuntimeScheduler, ToolGateway, RollbackManager}
+  特性：autonomous_agent 统一运行、状态隔离、可恢复
+
+A = Agent编织层（Agent Fabric）
+  A = {Orchestrator, Specialists[], Evaluators[], EvolutionAgents[]}
+  特性：多Agent协作、任务分解、并行执行、结果综合
+
+S = 专业系统网格层（System Mesh）
+  S = {DomainSystems[], ToolRegistry, DataPlane, ExecutionPlane}
+  特性：MCP接入、业务系统原生化、数据语义映射
+
+G = 治理平面（Governance Plane）
+  G = {PermissionManager, AuditEngine, Explainability, ApprovalGate, RiskPolicies}
+  特性：审计治理、权限控制、解释链、人工审批
+
+E = 演化回路（Evolution Loop）
+  E = {MetricSampler, DriftDetector, FeedbackEngine, IterationPlanner}
+  特性：偏差检测、持续改进、目标守恒、自动进化
 
 Π = AI协议栈（AI Protocol Stack）
   Π = {UIP, A2A, MCP, ASUI}
-  特性：连接U↔A↔S的标准化通信协议
-
-Ω = 操作系统内核（AIOS Kernel）
-  Ω = {ResourceScheduler, PermissionManager, AuditEngine, EvolutionEngine}
-  特性：资源调度、权限管控、审计追踪、系统演化
+  特性：连接 I↔K↔R↔A↔S↔G↔E 的标准化协议
 
 核心不变量：
-  ∀ UserIntent i:
-    UAS-AIOS(i) → optimal_professional_outcome(i, U.context)
-    满足：可审计(Ω.AuditEngine) ∧ 可回滚 ∧ 持续改进
+  ∀ BusinessIntent b:
+    UAS-Platform(b) → auditable ∧ rollbackable ∧ evolvable professional outcome
+
+企业AGI定义：
+  企业 AGI = 目标驱动 + 知识驱动 + Agent协作 + 系统执行 + 审计治理 + 演化闭环 的平台化统一
 ```
 
 ### 3.2 UAS-AIOS全景架构图

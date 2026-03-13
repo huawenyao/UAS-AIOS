@@ -32,6 +32,9 @@ asui init selfpaw-swarm-demo -t selfpaw-swarm
 
 # 三维理念现实涌现蜂群模板
 asui init triadic-swarm-demo -t triadic-ideal-reality-swarm
+
+# UAS业务子应用模板
+asui init business-subapp -t uas-subapp
 ```
 
 ### 在当前目录初始化
@@ -55,6 +58,7 @@ asui init my-project -f
 | **recruitment** | AI 招聘：岗位解析 + 简历匹配 + 评估报告 |
 | **selfpaw-swarm** | 认知蜂群：五智能体对手盘 + 否定之否定辩证决策 |
 | **triadic-ideal-reality-swarm** | 三维涌现蜂群：宏观/中观/微观 × 理念/现实 × 目的激活 |
+| **uas-subapp** | UAS业务子应用：ASUI底座 + autonomous_agent runtime + 审计治理 + 演化闭环 |
 
 ## 生成的项目结构
 

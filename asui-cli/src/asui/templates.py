@@ -2,6 +2,7 @@
 
 from .selfpaw_template import SELFPAW_SWARM_TEMPLATE
 from .triadic_template import TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE
+from .uas_subapp_template import UAS_SUBAPP_TEMPLATE
 
 # 默认模板
 DEFAULT_TEMPLATE = {
@@ -289,5 +290,6 @@ def get_template(name: str) -> dict:
         "recruitment": RECRUITMENT_TEMPLATE,
         "selfpaw-swarm": SELFPAW_SWARM_TEMPLATE,
         "triadic-ideal-reality-swarm": TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE,
+        "uas-subapp": UAS_SUBAPP_TEMPLATE,
     }
     return templates.get(name, DEFAULT_TEMPLATE)
