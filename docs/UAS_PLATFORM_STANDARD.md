@@ -82,6 +82,7 @@ UAS 不是松散的用户、Agent、系统拼装体，而是一个标准化的 A
 - task orchestration
 - audit / rollback
 - context injection
+- 多 subapp 统一发现与运行（UAS Runtime Service）
 
 ### System Hub
 
@@ -95,3 +96,13 @@ UAS 不是松散的用户、Agent、系统拼装体，而是一个标准化的 A
 - 偏差检测
 - 迭代建议
 - 知识更新
+
+## 共享 Runtime Service
+
+平台级共享运行入口：
+
+- `python3 scripts/run_uas_runtime_service.py list`
+- `python3 scripts/run_uas_runtime_service.py validate --app-id <subapp>`
+- `python3 scripts/run_uas_runtime_service.py run --app-id <subapp> --topic "<业务议题>" --evaluate`
+
+这意味着多个 `projects/<business-app>/` 不必各自实现运行服务，而是统一挂接到共享 `UASRuntimeService`。

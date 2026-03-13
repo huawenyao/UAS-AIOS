@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from asui.init import run_init
 from asui.runtime.runtime_manager import RuntimeManager
+from asui.runtime.service import UASRuntimeService
 
 
 def test_runtime_manager_executes_uas_subapp(tmp_path):
@@ -82,3 +83,27 @@ def test_ai_recruitment_os_conforms_and_runs(tmp_path):
     assert output["status"] == "completed"
     assert output["evaluation"]["status"] == "pass"
     assert (app_root / output["audit_log"]).exists()
+
+
+def test_uas_runtime_service_discovers_and_runs_multiple_subapps(tmp_path):
+    projects_root = tmp_path / "projects"
+    projects_root.mkdir()
+
+    assert run_init(projects_root / "finance-subapp", template="uas-subapp")
+
+    source_root = WORKSPACE_ROOT / "projects" / "ai-recruitment-os"
+    shutil.copytree(source_root, projects_root / "ai-recruitment-os")
+
+    service = UASRuntimeService(tmp_path, projects_root="projects")
+    apps = service.list_apps()
+    app_ids = {app["app_id"] for app in apps}
+
+    assert "finance-subapp" in app_ids
+    assert "ai-recruitment-os" in app_ids
+
+    validation = service.validate_app("ai-recruitment-os")
+    assert validation["status"] == "ok"
+
+    result = service.run_app("finance-subapp", "shared-runtime-topic", payload={"governance_controls": ["audit"], "evolution_loop": ["intent_activation"]}, evaluate=True)
+    assert result["status"] == "completed"
+    assert result["evaluation"]["status"] == "pass"

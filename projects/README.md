@@ -16,6 +16,14 @@ asui init projects/<business-app> -t uas-subapp
 python3 scripts/create_sub_uas_app.py <business-app>
 ```
 
+### 方式三：使用共享 Runtime Service 运行
+
+```bash
+python3 scripts/run_uas_runtime_service.py list
+python3 scripts/run_uas_runtime_service.py validate --app-id <business-app>
+python3 scripts/run_uas_runtime_service.py run --app-id <business-app> --topic "<业务议题>" --evaluate
+```
+
 ## 标准约束
 
 所有 `projects/<business-app>/` 都必须：
