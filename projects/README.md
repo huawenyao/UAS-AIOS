@@ -22,6 +22,7 @@ python3 scripts/create_sub_uas_app.py <business-app>
 python3 scripts/run_uas_runtime_service.py list
 python3 scripts/run_uas_runtime_service.py validate --app-id <business-app>
 python3 scripts/run_uas_runtime_service.py run --app-id <business-app> --topic "<业务议题>" --evaluate
+python3 scripts/run_uas_runtime_service.py state --app-id <business-app> --topic-slug "<topic-slug>"
 ```
 
 ## 标准约束

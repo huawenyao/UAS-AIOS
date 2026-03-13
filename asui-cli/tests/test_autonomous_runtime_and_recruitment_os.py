@@ -29,6 +29,8 @@ def test_runtime_manager_executes_uas_subapp(tmp_path):
     assert result["status"] == "completed"
     assert result["evaluation"]["status"] == "pass"
     assert (target / result["audit_log"]).exists()
+    assert (target / result["cognitive_state"]).exists()
+    assert (target / result["capability_registry_path"]).exists()
     report_path = target / result["state"]["report_path"]
     data_path = target / result["state"]["data_path"]
     assert report_path.exists()
@@ -83,6 +85,8 @@ def test_ai_recruitment_os_conforms_and_runs(tmp_path):
     assert output["status"] == "completed"
     assert output["evaluation"]["status"] == "pass"
     assert (app_root / output["audit_log"]).exists()
+    assert (app_root / output["cognitive_state"]).exists()
+    assert (app_root / output["capability_registry_path"]).exists()
 
 
 def test_uas_runtime_service_discovers_and_runs_multiple_subapps(tmp_path):
@@ -107,3 +111,6 @@ def test_uas_runtime_service_discovers_and_runs_multiple_subapps(tmp_path):
     result = service.run_app("finance-subapp", "shared-runtime-topic", payload={"governance_controls": ["audit"], "evolution_loop": ["intent_activation"]}, evaluate=True)
     assert result["status"] == "completed"
     assert result["evaluation"]["status"] == "pass"
+    state_slug = "shared-runtime-topic"
+    cognitive = service.get_cognitive_state("finance-subapp", state_slug)
+    assert cognitive["topic"] == "shared-runtime-topic"

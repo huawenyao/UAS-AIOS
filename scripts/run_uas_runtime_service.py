@@ -18,9 +18,10 @@ def load_service():
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="运行共享 UAS Runtime Service")
-    parser.add_argument("command", choices=["list", "validate", "run"], help="执行动作")
+    parser.add_argument("command", choices=["list", "validate", "run", "state"], help="执行动作")
     parser.add_argument("--app-id", help="sub uas app ID")
     parser.add_argument("--topic", help="运行时的业务议题")
+    parser.add_argument("--topic-slug", help="认知状态文件的 slug")
     parser.add_argument("--payload-json", help="额外 JSON payload")
     parser.add_argument("--evaluate", action="store_true", help="运行后执行评估")
     parser.add_argument("--projects-root", default="projects", help="sub uas app 根目录")
@@ -34,10 +35,22 @@ def main() -> int:
         return 0
 
     if not args.app_id:
-        parser.error("--app-id is required for validate/run")
+        parser.error("--app-id is required for validate/run/state")
 
     if args.command == "validate":
         print(json.dumps(service.validate_app(args.app_id), ensure_ascii=False, indent=2))
+        return 0
+
+    if args.command == "state":
+        if not args.topic_slug and not args.topic:
+            parser.error("--topic-slug or --topic is required for state")
+        print(
+            json.dumps(
+                service.get_cognitive_state(args.app_id, topic_slug=args.topic_slug, topic=args.topic),
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
         return 0
 
     if not args.topic:

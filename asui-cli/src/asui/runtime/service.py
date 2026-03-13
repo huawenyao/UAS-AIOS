@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from .cognitive_state_store import slugify
 from .runtime_manager import RuntimeManager
 
 
@@ -29,12 +30,14 @@ class UASRuntimeService:
         apps = []
         for app_id, app_root in self.discover_apps().items():
             manifest = self._load_json(app_root / "configs" / "platform_manifest.json")
+            registry = self._safe_load_json(app_root / "database" / "capabilities" / "registry.json")
             apps.append(
                 {
                     "app_id": app_id,
                     "app_root": str(app_root),
                     "technical_base": manifest["platform"]["technical_base"],
                     "runtime": manifest["platform"]["runtime"],
+                    "capability_registry_cached": registry is not None,
                 }
             )
         return apps
@@ -51,6 +54,17 @@ class UASRuntimeService:
         validation["app_id"] = app_id
         return validation
 
+    def get_cognitive_state(self, app_id: str, topic_slug: str | None = None, topic: str | None = None) -> dict:
+        apps = self.discover_apps()
+        if app_id not in apps:
+            raise KeyError(f"Unknown subapp: {app_id}")
+        if topic_slug is None:
+            if topic is None:
+                raise ValueError("topic_slug or topic must be provided")
+            topic_slug = slugify(topic)
+        state_path = apps[app_id] / "database" / "cognitive_state" / f"{topic_slug}.json"
+        return self._load_json(state_path)
+
     def run_app(
         self,
         app_id: str,
@@ -65,3 +79,8 @@ class UASRuntimeService:
 
     def _load_json(self, path: Path) -> dict:
         return json.loads(path.read_text(encoding="utf-8"))
+
+    def _safe_load_json(self, path: Path) -> dict | None:
+        if not path.exists():
+            return None
+        return self._load_json(path)

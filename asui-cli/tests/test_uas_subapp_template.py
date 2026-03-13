@@ -31,6 +31,8 @@ def test_uas_subapp_template_creates_platform_assets(tmp_path):
         "scripts/evaluate_evolution.py",
         "docs/APP_BLUEPRINT.md",
         "database/audit/README.md",
+        "database/cognitive_state/README.md",
+        "database/capabilities/README.md",
     ]
     for relative_path in expected_files:
         assert (target / relative_path).exists(), relative_path

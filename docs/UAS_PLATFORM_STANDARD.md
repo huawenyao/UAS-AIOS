@@ -104,5 +104,6 @@ UAS 不是松散的用户、Agent、系统拼装体，而是一个标准化的 A
 - `python3 scripts/run_uas_runtime_service.py list`
 - `python3 scripts/run_uas_runtime_service.py validate --app-id <subapp>`
 - `python3 scripts/run_uas_runtime_service.py run --app-id <subapp> --topic "<业务议题>" --evaluate`
+- `python3 scripts/run_uas_runtime_service.py state --app-id <subapp> --topic-slug "<topic-slug>"`
 
 这意味着多个 `projects/<business-app>/` 不必各自实现运行服务，而是统一挂接到共享 `UASRuntimeService`。
