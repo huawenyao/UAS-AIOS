@@ -1,0 +1,27 @@
+{
+  "$schema": "https://asui.dev/schemas/uas_platform_manifest.schema.json",
+  "version": "v1.0",
+  "platform": {
+    "name": "UAS-Platform",
+    "formal_definition": ["I", "K", "R", "A", "S", "G", "E", "Π"],
+    "enterprise_agi_definition": "目标驱动 + 知识驱动 + Agent协作 + 系统执行 + 审计治理 + 演化闭环 的平台化统一",
+    "technical_base": "ASUI",
+    "runtime": "autonomous_agent"
+  },
+  "layers": {
+    "I": "Intent Layer",
+    "K": "Knowledge Substrate",
+    "R": "Autonomous Agent Runtime",
+    "A": "Agent Fabric",
+    "S": "System Mesh",
+    "G": "Governance Plane",
+    "E": "Evolution Loop",
+    "Π": "Protocol Stack"
+  },
+  "defaults": {
+    "subapp_root": "projects",
+    "require_governance": true,
+    "require_evolution": true,
+    "require_audit": true
+  }
+}

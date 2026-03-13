@@ -1,0 +1,209 @@
+{
+  "agents": [
+    {
+      "id": "intent_guard",
+      "name": "意图守恒智能体",
+      "dimension": "intent",
+      "stance": "招聘目标监督者",
+      "mission": "确保招聘OS始终服务于匹配、效率、公平、体验与成本目标",
+      "deliverable": "意图激活报告"
+    },
+    {
+      "id": "knowledge_architect",
+      "name": "知识架构智能体",
+      "dimension": "knowledge",
+      "stance": "招聘知识底座设计者",
+      "mission": "把岗位画像、评分规则、面试协议、候选人体验规则沉淀为 ASUI 知识资产",
+      "deliverable": "知识绑定报告"
+    },
+    {
+      "id": "agent_fabric_architect",
+      "name": "Agent编织智能体",
+      "dimension": "agent",
+      "stance": "招聘智能体协作设计者",
+      "mission": "规划招聘蜂群、三维智能体、治理智能体和进化智能体的协作拓扑",
+      "deliverable": "Agent分工报告"
+    },
+    {
+      "id": "runtime_architect",
+      "name": "运行时智能体",
+      "dimension": "runtime",
+      "stance": "招聘 runtime 设计者",
+      "mission": "设计 autonomous_agent runtime 的上下文注入、状态隔离、权限与调度方式",
+      "deliverable": "运行时拓扑报告"
+    },
+    {
+      "id": "system_mesh_architect",
+      "name": "系统网格智能体",
+      "dimension": "system",
+      "stance": "招聘系统接入设计者",
+      "mission": "映射 ATS、简历库、日历、HRIS、题库、BI 与知识系统",
+      "deliverable": "系统映射报告"
+    },
+    {
+      "id": "governance_guard",
+      "name": "治理审计智能体",
+      "dimension": "governance",
+      "stance": "招聘治理守门人",
+      "mission": "校验公平、合规、可解释性、审计留痕与高风险审批",
+      "deliverable": "治理校验报告"
+    },
+    {
+      "id": "evolution_planner",
+      "name": "进化规划智能体",
+      "dimension": "evolution",
+      "stance": "招聘演化设计者",
+      "mission": "输出评估指标、偏差风险、迭代路径和下一轮进化建议",
+      "deliverable": "进化规划报告"
+    },
+    {
+      "id": "hiring_manager_swarm",
+      "name": "用人部门智能体",
+      "dimension": "swarm",
+      "stance": "业务交付与能力匹配优先",
+      "mission": "强调岗位胜任力、业务交付与团队补位",
+      "deliverable": null
+    },
+    {
+      "id": "hr_ops_swarm",
+      "name": "HR运营智能体",
+      "dimension": "swarm",
+      "stance": "效率、标准化与协同优先",
+      "mission": "强调流程效率、协同与可复制性",
+      "deliverable": null
+    },
+    {
+      "id": "candidate_experience_swarm",
+      "name": "候选人体验智能体",
+      "dimension": "swarm",
+      "stance": "透明、公平、反馈及时",
+      "mission": "代表候选人体验、感知与信任",
+      "deliverable": null
+    },
+    {
+      "id": "fairness_compliance_swarm",
+      "name": "公平合规智能体",
+      "dimension": "swarm",
+      "stance": "偏差控制与合规底线守门人",
+      "mission": "识别偏见、歧视、黑箱决策与制度风险",
+      "deliverable": null
+    },
+    {
+      "id": "macro_ideal",
+      "name": "宏观理念智能体",
+      "dimension": "macro",
+      "stance": "组织人才生态应然设计者",
+      "mission": "设计组织层人才战略、HC结构与长期匹配逻辑",
+      "deliverable": null
+    },
+    {
+      "id": "macro_reality",
+      "name": "宏观现实智能体",
+      "dimension": "macro",
+      "stance": "市场供需与组织约束观察者",
+      "mission": "识别真实招聘市场、品牌吸引与资源边界",
+      "deliverable": null
+    },
+    {
+      "id": "meso_ideal",
+      "name": "中观理念智能体",
+      "dimension": "meso",
+      "stance": "招聘闭环与流程设计者",
+      "mission": "设计招聘价值回路、流程闭环与协作机制",
+      "deliverable": null
+    },
+    {
+      "id": "meso_reality",
+      "name": "中观现实智能体",
+      "dimension": "meso",
+      "stance": "流程现实校验者",
+      "mission": "识别流程断裂、审批瓶颈、职责冲突与数据缺口",
+      "deliverable": null
+    },
+    {
+      "id": "micro_ideal",
+      "name": "微观理念智能体",
+      "dimension": "micro",
+      "stance": "岗位与候选人体验应然建模者",
+      "mission": "定义理想岗位卡、候选人体验、面试对象与评分体系",
+      "deliverable": null
+    },
+    {
+      "id": "micro_reality",
+      "name": "微观现实智能体",
+      "dimension": "micro",
+      "stance": "招聘实体与行为观察者",
+      "mission": "识别招聘中的真实对象、记录、行为、面试动作与反馈",
+      "deliverable": null
+    }
+  ],
+  "systems": [
+    {
+      "id": "ats",
+      "type": "recruitment_tracking",
+      "mode": "external"
+    },
+    {
+      "id": "resume_source",
+      "type": "candidate_source",
+      "mode": "external"
+    },
+    {
+      "id": "calendar",
+      "type": "interview_scheduling",
+      "mode": "external"
+    },
+    {
+      "id": "hris",
+      "type": "onboarding_feedback",
+      "mode": "external"
+    },
+    {
+      "id": "knowledge_base",
+      "type": "asui_knowledge",
+      "mode": "native"
+    }
+  ],
+  "workflow_capabilities": [
+    {
+      "step_id": "intent_activation",
+      "type": "llm",
+      "agent_id": "intent_guard"
+    },
+    {
+      "step_id": "knowledge_binding",
+      "type": "llm",
+      "agent_id": "knowledge_architect"
+    },
+    {
+      "step_id": "agent_planning",
+      "type": "llm",
+      "agent_id": "agent_fabric_architect"
+    },
+    {
+      "step_id": "runtime_topology",
+      "type": "llm",
+      "agent_id": "runtime_architect"
+    },
+    {
+      "step_id": "system_mapping",
+      "type": "llm",
+      "agent_id": "system_mesh_architect"
+    },
+    {
+      "step_id": "governance_check",
+      "type": "llm",
+      "agent_id": "governance_guard"
+    },
+    {
+      "step_id": "evolution_plan",
+      "type": "llm",
+      "agent_id": "evolution_planner"
+    },
+    {
+      "step_id": "render_report",
+      "type": "script",
+      "agent_id": null
+    }
+  ]
+}

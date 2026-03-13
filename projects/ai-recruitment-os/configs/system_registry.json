@@ -1,0 +1,30 @@
+{
+  "version": "v1.0",
+  "systems": [
+    {
+      "id": "ats",
+      "type": "recruitment_tracking",
+      "mode": "external"
+    },
+    {
+      "id": "resume_source",
+      "type": "candidate_source",
+      "mode": "external"
+    },
+    {
+      "id": "calendar",
+      "type": "interview_scheduling",
+      "mode": "external"
+    },
+    {
+      "id": "hris",
+      "type": "onboarding_feedback",
+      "mode": "external"
+    },
+    {
+      "id": "knowledge_base",
+      "type": "asui_knowledge",
+      "mode": "native"
+    }
+  ]
+}

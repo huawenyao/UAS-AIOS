@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/uas_platform_manifest.schema.json",
+  "title": "UAS Platform Manifest",
+  "description": "UAS-Platform 工程级平台清单，定义 sub uas app 的平台标准与默认运行约束",
+  "type": "object",
+  "required": ["version", "platform", "layers"],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "object",
+      "required": ["name", "formal_definition", "technical_base", "runtime"],
+      "properties": {
+        "name": { "type": "string" },
+        "formal_definition": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 8
+        },
+        "enterprise_agi_definition": { "type": "string" },
+        "technical_base": {
+          "type": "string",
+          "enum": ["ASUI"]
+        },
+        "runtime": {
+          "type": "string",
+          "enum": ["autonomous_agent"]
+        }
+      }
+    },
+    "layers": {
+      "type": "object",
+      "required": ["I", "K", "R", "A", "S", "G", "E", "Π"],
+      "additionalProperties": false,
+      "properties": {
+        "I": { "type": "string" },
+        "K": { "type": "string" },
+        "R": { "type": "string" },
+        "A": { "type": "string" },
+        "S": { "type": "string" },
+        "G": { "type": "string" },
+        "E": { "type": "string" },
+        "Π": { "type": "string" }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "properties": {
+        "subapp_root": { "type": "string" },
+        "require_governance": { "type": "boolean" },
+        "require_evolution": { "type": "boolean" },
+        "require_audit": { "type": "boolean" }
+      }
+    }
+  }
+}

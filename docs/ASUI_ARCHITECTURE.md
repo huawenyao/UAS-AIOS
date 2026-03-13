@@ -231,6 +231,32 @@ AI 驱动的知识系统 + 原有执行能力 = ASUI
 
 ---
 
+## 🧩 ASUI 在 UAS 中的标准角色
+
+当 ASUI 被用于 UAS-Platform 时，它不再只是架构理念，而是默认技术底座：
+
+- 所有 UAS 业务应用必须采用 ASUI
+- 所有 UAS 业务应用必须运行在 `autonomous_agent runtime`
+- 所有业务项目必须以显式知识资产 + 可执行脚本 + 审计结果 + 演化策略组成最小闭环
+
+对应关系：
+
+| UAS 构件 | ASUI 对应实现 |
+|---|---|
+| `I` 意图与目标层 | `CLAUDE.md` + 业务输入归一化 |
+| `K` 知识底座 | `workflow_config.json` + `skills` + `policies` |
+| `R` 运行时 | context injection + task isolation + tool execution |
+| `A` Agent编织层 | swarm agents + orchestrator |
+| `S` 系统网格层 | MCP tools + scripts + database |
+| `G` 治理平面 | governance policy + audit trace + approval gate |
+| `E` 演化回路 | evolution policy + evaluation scripts + feedback |
+
+这意味着：
+
+**所有 UAS 应用的技术架构都应被视为 ASUI + autonomous_agent 的工程化标准实现。**
+
+---
+
 ## 📝 形式化定义（研究建议）
 
 ```

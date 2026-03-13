@@ -1,0 +1,91 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "AI招聘智能OS工作流",
+  "description": "基于 ASUI 与 autonomous_agent runtime 的标准招聘 sub uas app 工作流",
+  "swarm": {
+    "mode": "uas-subapp-standard",
+    "methodology": "swarm-plus-triadic-reality",
+    "decision_policy": "purpose-preserving-evolution",
+    "agents": [
+      { "id": "intent_guard", "name": "意图守恒智能体", "dimension": "intent", "stance": "招聘目标监督者" },
+      { "id": "knowledge_architect", "name": "知识架构智能体", "dimension": "knowledge", "stance": "招聘知识设计者" },
+      { "id": "agent_fabric_architect", "name": "Agent编织智能体", "dimension": "agent", "stance": "招聘智能体协作设计者" },
+      { "id": "runtime_architect", "name": "运行时智能体", "dimension": "runtime", "stance": "招聘 runtime 设计者" },
+      { "id": "system_mesh_architect", "name": "系统网格智能体", "dimension": "system", "stance": "招聘系统接入设计者" },
+      { "id": "governance_guard", "name": "治理审计智能体", "dimension": "governance", "stance": "招聘治理守门人" },
+      { "id": "evolution_planner", "name": "进化规划智能体", "dimension": "evolution", "stance": "招聘演化设计者" }
+    ]
+  },
+  "steps": [
+    {
+      "id": "intent_activation",
+      "name": "意图激活",
+      "type": "llm",
+      "agent_id": "intent_guard",
+      "description": "归一化招聘目标、岗位对象、约束和成功标准",
+      "prompt_template": "请把以下招聘议题归一化为结构化意图，至少包含组织阶段、岗位目标、候选人对象、成功标准和关键风险。\\n\\n{{topic}}"
+    },
+    {
+      "id": "knowledge_binding",
+      "name": "知识绑定",
+      "type": "llm",
+      "dependencies": ["intent_activation"],
+      "agent_id": "knowledge_architect",
+      "description": "绑定招聘领域知识资产与规则",
+      "prompt_template": "基于招聘业务意图，定义应沉淀的岗位画像、评分规则、面试协议、候选人体验规则和知识资产。"
+    },
+    {
+      "id": "agent_planning",
+      "name": "Agent规划",
+      "type": "llm",
+      "dependencies": ["knowledge_binding"],
+      "agent_id": "agent_fabric_architect",
+      "description": "生成招聘蜂群与三维理念现实智能体的协作拓扑",
+      "prompt_template": "为该招聘OS规划用人部门、HR、候选人体验、公平合规、宏观/中观/微观、实例化、验证与进化智能体的协作方式。"
+    },
+    {
+      "id": "runtime_topology",
+      "name": "运行时拓扑",
+      "type": "llm",
+      "dependencies": ["agent_planning"],
+      "agent_id": "runtime_architect",
+      "description": "生成招聘OS的 autonomous_agent runtime 设计",
+      "prompt_template": "输出招聘OS的 runtime 拓扑、上下文注入、状态隔离、权限等级与执行模式。"
+    },
+    {
+      "id": "system_mapping",
+      "name": "系统映射",
+      "type": "llm",
+      "dependencies": ["runtime_topology"],
+      "agent_id": "system_mesh_architect",
+      "description": "定义 ATS/简历库/日历/HRIS/知识库等接入边界",
+      "prompt_template": "列出招聘OS必须接入的业务系统、数据系统、工具接口与知识系统。"
+    },
+    {
+      "id": "governance_check",
+      "name": "治理校验",
+      "type": "llm",
+      "dependencies": ["system_mapping"],
+      "agent_id": "governance_guard",
+      "description": "校验公平、审计、权限、可解释性与回滚机制",
+      "prompt_template": "检查该招聘OS方案是否具备公平审查、权限控制、审计留痕、回滚能力和高风险审批。"
+    },
+    {
+      "id": "evolution_plan",
+      "name": "进化规划",
+      "type": "llm",
+      "dependencies": ["governance_check"],
+      "agent_id": "evolution_planner",
+      "description": "生成评估指标、偏差风险、迭代回路与下一轮进化建议",
+      "prompt_template": "输出招聘OS的评估指标、偏差风险、迭代回路和下一轮演化建议。"
+    },
+    {
+      "id": "render_report",
+      "name": "写入方案报告",
+      "type": "script",
+      "dependencies": ["evolution_plan"],
+      "script": "scripts/render_uas_plan.py"
+    }
+  ]
+}
