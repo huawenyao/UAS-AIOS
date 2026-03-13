@@ -1,22 +1,70 @@
 {
   "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
   "version": "v1.0",
-  "swarm_name": "ai_recruitment_os_swarm",
-  "methodology": "swarm-plus-triadic-reality",
+  "swarm_name": "ai_recruitment_os_subapp_fabric",
+  "methodology": "platform-standard-plus-recruitment",
   "governance": {
-    "human_role": "purpose_orchestrator_only",
-    "allow_goal_drift": false,
-    "require_real_instantiation": true,
-    "require_cross_validation": true
+    "require_goal_guard": true,
+    "require_governance_audit": true,
+    "require_evolution_loop": true,
+    "require_fairness_review": true
   },
   "agents": [
     {
-      "id": "purpose_guard",
-      "name": "目标守恒智能体",
-      "dimension": "purpose",
-      "stance": "招聘基础目的监督者",
-      "mission": "确保方案持续服务于招聘目标，不因局部优化而偏离",
-      "deliverable": "目的激活报告"
+      "id": "intent_guard",
+      "name": "意图守恒智能体",
+      "dimension": "intent",
+      "stance": "招聘目标监督者",
+      "mission": "确保招聘OS始终服务于匹配、效率、公平、体验与成本目标",
+      "deliverable": "意图激活报告"
+    },
+    {
+      "id": "knowledge_architect",
+      "name": "知识架构智能体",
+      "dimension": "knowledge",
+      "stance": "招聘知识底座设计者",
+      "mission": "把岗位画像、评分规则、面试协议、候选人体验规则沉淀为 ASUI 知识资产",
+      "deliverable": "知识绑定报告"
+    },
+    {
+      "id": "agent_fabric_architect",
+      "name": "Agent编织智能体",
+      "dimension": "agent",
+      "stance": "招聘智能体协作设计者",
+      "mission": "规划招聘蜂群、三维智能体、治理智能体和进化智能体的协作拓扑",
+      "deliverable": "Agent分工报告"
+    },
+    {
+      "id": "runtime_architect",
+      "name": "运行时智能体",
+      "dimension": "runtime",
+      "stance": "招聘 runtime 设计者",
+      "mission": "设计 autonomous_agent runtime 的上下文注入、状态隔离、权限与调度方式",
+      "deliverable": "运行时拓扑报告"
+    },
+    {
+      "id": "system_mesh_architect",
+      "name": "系统网格智能体",
+      "dimension": "system",
+      "stance": "招聘系统接入设计者",
+      "mission": "映射 ATS、简历库、日历、HRIS、题库、BI 与知识系统",
+      "deliverable": "系统映射报告"
+    },
+    {
+      "id": "governance_guard",
+      "name": "治理审计智能体",
+      "dimension": "governance",
+      "stance": "招聘治理守门人",
+      "mission": "校验公平、合规、可解释性、审计留痕与高风险审批",
+      "deliverable": "治理校验报告"
+    },
+    {
+      "id": "evolution_planner",
+      "name": "进化规划智能体",
+      "dimension": "evolution",
+      "stance": "招聘演化设计者",
+      "mission": "输出评估指标、偏差风险、迭代路径和下一轮进化建议",
+      "deliverable": "进化规划报告"
     },
     {
       "id": "hiring_manager_swarm",
@@ -87,27 +135,6 @@
       "dimension": "micro",
       "stance": "招聘实体与行为观察者",
       "mission": "识别招聘中的真实对象、记录、行为、面试动作与反馈"
-    },
-    {
-      "id": "scene_instantiator",
-      "name": "现实实例化智能体",
-      "dimension": "instantiation",
-      "stance": "抽象到实体映射者",
-      "mission": "把抽象结构映射为岗位卡、候选人卡、评分卡、Offer卡等真实对象"
-    },
-    {
-      "id": "deviation_auditor",
-      "name": "偏差校验智能体",
-      "dimension": "validation",
-      "stance": "目标偏差与效果失真审计者",
-      "mission": "检查目标损失、体验偏差、流程断裂与评估盲区"
-    },
-    {
-      "id": "evolution_planner",
-      "name": "进化规划智能体",
-      "dimension": "evolution",
-      "stance": "下一轮迭代设计者",
-      "mission": "基于验证结果生成下一轮进化路径与优先级"
     }
   ]
 }

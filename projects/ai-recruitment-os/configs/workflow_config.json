@@ -2,118 +2,90 @@
   "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
   "version": "v1.0",
   "name": "AI招聘智能OS工作流",
-  "description": "蜂群对冲 + 三维理念现实 + 偏差校验 + 进化开发的招聘智能OS工作流",
+  "description": "基于 ASUI 与 autonomous_agent runtime 的标准招聘 sub uas app 工作流",
   "swarm": {
-    "mode": "recruitment-os-swarm",
+    "mode": "uas-subapp-standard",
     "methodology": "swarm-plus-triadic-reality",
     "decision_policy": "purpose-preserving-evolution",
     "agents": [
-      { "id": "purpose_guard", "name": "目标守恒智能体", "dimension": "purpose", "stance": "招聘目标监督者" },
-      { "id": "hiring_manager_swarm", "name": "用人部门智能体", "dimension": "swarm", "stance": "业务交付优先" },
-      { "id": "hr_ops_swarm", "name": "HR运营智能体", "dimension": "swarm", "stance": "效率与标准化优先" },
-      { "id": "candidate_experience_swarm", "name": "候选人体验智能体", "dimension": "swarm", "stance": "体验与透明优先" },
-      { "id": "fairness_compliance_swarm", "name": "公平合规智能体", "dimension": "swarm", "stance": "合规底线守门" },
-      { "id": "macro_ideal", "name": "宏观理念智能体", "dimension": "macro", "stance": "人才生态应然设计者" },
-      { "id": "macro_reality", "name": "宏观现实智能体", "dimension": "macro", "stance": "市场约束观察者" },
-      { "id": "meso_ideal", "name": "中观理念智能体", "dimension": "meso", "stance": "流程闭环设计者" },
-      { "id": "meso_reality", "name": "中观现实智能体", "dimension": "meso", "stance": "流程现实校验者" },
-      { "id": "micro_ideal", "name": "微观理念智能体", "dimension": "micro", "stance": "岗位体验建模者" },
-      { "id": "micro_reality", "name": "微观现实智能体", "dimension": "micro", "stance": "招聘实体观察者" },
-      { "id": "scene_instantiator", "name": "现实实例化智能体", "dimension": "instantiation", "stance": "抽象到实体映射者" },
-      { "id": "deviation_auditor", "name": "偏差校验智能体", "dimension": "validation", "stance": "目标偏差审计者" },
-      { "id": "evolution_planner", "name": "进化规划智能体", "dimension": "evolution", "stance": "下一轮迭代设计者" }
+      { "id": "intent_guard", "name": "意图守恒智能体", "dimension": "intent", "stance": "招聘目标监督者" },
+      { "id": "knowledge_architect", "name": "知识架构智能体", "dimension": "knowledge", "stance": "招聘知识设计者" },
+      { "id": "agent_fabric_architect", "name": "Agent编织智能体", "dimension": "agent", "stance": "招聘智能体协作设计者" },
+      { "id": "runtime_architect", "name": "运行时智能体", "dimension": "runtime", "stance": "招聘 runtime 设计者" },
+      { "id": "system_mesh_architect", "name": "系统网格智能体", "dimension": "system", "stance": "招聘系统接入设计者" },
+      { "id": "governance_guard", "name": "治理审计智能体", "dimension": "governance", "stance": "招聘治理守门人" },
+      { "id": "evolution_planner", "name": "进化规划智能体", "dimension": "evolution", "stance": "招聘演化设计者" }
     ]
   },
   "steps": [
     {
-      "id": "intake",
-      "name": "议题归一化",
+      "id": "intent_activation",
+      "name": "意图激活",
       "type": "llm",
-      "description": "明确组织阶段、用工目标、岗位对象、约束与预期结果",
-      "prompt_template": "请把以下招聘议题归一化为结构化输入，包含组织阶段、岗位目标、约束、候选人对象、成功标准。\\n\\n{{topic}}"
+      "agent_id": "intent_guard",
+      "description": "归一化招聘目标、岗位对象、约束和成功标准",
+      "prompt_template": "请把以下招聘议题归一化为结构化意图，至少包含组织阶段、岗位目标、候选人对象、成功标准和关键风险。\\n\\n{{topic}}"
     },
     {
-      "id": "purpose_activation",
-      "name": "目的激活",
+      "id": "knowledge_binding",
+      "name": "知识绑定",
       "type": "llm",
-      "dependencies": ["intake"],
-      "agent_id": "purpose_guard",
-      "deliverable": "目的激活报告",
-      "prompt_template": "提炼招聘基础目的，识别目标损失风险、效果偏差风险与必须守住的底线。\\n\\n{{intake}}"
+      "dependencies": ["intent_activation"],
+      "agent_id": "knowledge_architect",
+      "description": "绑定招聘领域知识资产与规则",
+      "prompt_template": "基于招聘业务意图，定义应沉淀的岗位画像、评分规则、面试协议、候选人体验规则和知识资产。"
     },
     {
-      "id": "swarm_debate",
-      "name": "蜂群立场对冲",
+      "id": "agent_planning",
+      "name": "Agent规划",
       "type": "llm",
-      "dependencies": ["purpose_activation"],
-      "swarm_mode": "cross_examination",
-      "prompt_template": "围绕用人部门、HR运营、候选人体验、公平合规四方立场，输出冲突点、共识与必须继续校验的风险。\\n\\n{{purpose_activation}}"
+      "dependencies": ["knowledge_binding"],
+      "agent_id": "agent_fabric_architect",
+      "description": "生成招聘蜂群与三维理念现实智能体的协作拓扑",
+      "prompt_template": "为该招聘OS规划用人部门、HR、候选人体验、公平合规、宏观/中观/微观、实例化、验证与进化智能体的协作方式。"
     },
     {
-      "id": "triadic_scan",
-      "name": "三维建模",
-      "type": "parallel",
-      "dependencies": ["swarm_debate"],
-      "parallel_steps": [
-        "macro_report",
-        "meso_report",
-        "micro_report"
-      ]
-    },
-    {
-      "id": "macro_report",
-      "name": "宏观建模",
+      "id": "runtime_topology",
+      "name": "运行时拓扑",
       "type": "llm",
-      "dependencies": ["swarm_debate"],
-      "prompt_template": "输出招聘系统在宏观层的人才生态、市场约束、雇主品牌与战略匹配机制。\\n\\n{{swarm_debate}}"
+      "dependencies": ["agent_planning"],
+      "agent_id": "runtime_architect",
+      "description": "生成招聘OS的 autonomous_agent runtime 设计",
+      "prompt_template": "输出招聘OS的 runtime 拓扑、上下文注入、状态隔离、权限等级与执行模式。"
     },
     {
-      "id": "meso_report",
-      "name": "中观建模",
+      "id": "system_mapping",
+      "name": "系统映射",
       "type": "llm",
-      "dependencies": ["swarm_debate"],
-      "prompt_template": "输出招聘价值回路、流程闭环、协作审批、反馈回流与断点修复方案。\\n\\n{{swarm_debate}}"
+      "dependencies": ["runtime_topology"],
+      "agent_id": "system_mesh_architect",
+      "description": "定义 ATS/简历库/日历/HRIS/知识库等接入边界",
+      "prompt_template": "列出招聘OS必须接入的业务系统、数据系统、工具接口与知识系统。"
     },
     {
-      "id": "micro_report",
-      "name": "微观建模",
+      "id": "governance_check",
+      "name": "治理校验",
       "type": "llm",
-      "dependencies": ["swarm_debate"],
-      "prompt_template": "输出岗位、候选人、面试对象、评分卡、Offer、入职反馈等微观实体和真实交互。\\n\\n{{swarm_debate}}"
+      "dependencies": ["system_mapping"],
+      "agent_id": "governance_guard",
+      "description": "校验公平、审计、权限、可解释性与回滚机制",
+      "prompt_template": "检查该招聘OS方案是否具备公平审查、权限控制、审计留痕、回滚能力和高风险审批。"
     },
     {
-      "id": "instantiate",
-      "name": "现实实例化",
-      "type": "llm",
-      "dependencies": ["macro_report", "meso_report", "micro_report"],
-      "agent_id": "scene_instantiator",
-      "deliverable": "现实实例化报告",
-      "prompt_template": "把宏观/中观/微观结构映射成真实角色、界面对象、数据实体、工具接口、流程节点与审计对象。"
-    },
-    {
-      "id": "validate",
-      "name": "偏差校验",
-      "type": "llm",
-      "dependencies": ["instantiate", "purpose_activation"],
-      "agent_id": "deviation_auditor",
-      "deliverable": "偏差校验报告",
-      "prompt_template": "检查当前招聘OS方案是否存在目标损失、体验偏差、流程断裂、公平风险、评估盲区，并输出验证矩阵与修正建议。"
-    },
-    {
-      "id": "evolve",
+      "id": "evolution_plan",
       "name": "进化规划",
       "type": "llm",
-      "dependencies": ["validate"],
+      "dependencies": ["governance_check"],
       "agent_id": "evolution_planner",
-      "deliverable": "进化规划报告",
-      "prompt_template": "基于偏差校验结果，生成下一轮招聘OS迭代计划、优先级、验证指标和复盘触发器。"
+      "description": "生成评估指标、偏差风险、迭代回路与下一轮进化建议",
+      "prompt_template": "输出招聘OS的评估指标、偏差风险、迭代回路和下一轮演化建议。"
     },
     {
       "id": "render_report",
       "name": "写入方案报告",
       "type": "script",
-      "dependencies": ["evolve"],
-      "script": "scripts/render_recruitment_plan.py"
+      "dependencies": ["evolution_plan"],
+      "script": "scripts/render_uas_plan.py"
     }
   ]
 }

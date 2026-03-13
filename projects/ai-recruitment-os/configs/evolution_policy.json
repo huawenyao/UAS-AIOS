@@ -8,7 +8,19 @@
       "体验",
       "成本"
     ],
-    "minimum_keyword_hits": 3
+    "minimum_keyword_hits": 3,
+    "enabled": true,
+    "require_goal_statement": true,
+    "require_success_metrics": true
+  },
+  "iteration": {
+    "enabled": true,
+    "require_validation_before_evolution": true,
+    "default_loop": [
+      "intent_activation",
+      "governance_check",
+      "evolution_plan"
+    ]
   },
   "evaluation_thresholds": {
     "candidate_experience_score": 0.75,

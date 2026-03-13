@@ -26,9 +26,11 @@ def test_uas_subapp_template_creates_platform_assets(tmp_path):
         "configs/swarm_agents.json",
         ".claude/skills/platform_protocol.md",
         ".claude/skills/output_contract.md",
+        "scripts/run_subapp.py",
         "scripts/render_uas_plan.py",
         "scripts/evaluate_evolution.py",
         "docs/APP_BLUEPRINT.md",
+        "database/audit/README.md",
     ]
     for relative_path in expected_files:
         assert (target / relative_path).exists(), relative_path
@@ -91,6 +93,25 @@ def test_uas_subapp_scripts_render_and_evaluate(tmp_path):
     )
     evaluation = json.loads(evaluate_result.stdout)
     assert evaluation["status"] == "pass"
+
+    runtime_result = subprocess.run(
+        [
+            sys.executable,
+            str(target / "scripts" / "run_subapp.py"),
+            "finance-ops-subapp",
+            "--payload-json",
+            json.dumps(payload, ensure_ascii=False),
+            "--evaluate",
+        ],
+        text=True,
+        capture_output=True,
+        cwd=target,
+        check=True,
+    )
+    runtime_output = json.loads(runtime_result.stdout)
+    assert runtime_output["status"] == "completed"
+    assert runtime_output["evaluation"]["status"] == "pass"
+    assert (target / runtime_output["audit_log"]).exists()
 
 
 def test_create_sub_uas_app_script_creates_project(tmp_path):

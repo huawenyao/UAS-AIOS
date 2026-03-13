@@ -347,7 +347,34 @@ UAS_SUBAPP_TEMPLATE = {
 - 指标采集
 - 进化迭代
 """,
-    "scripts/README.md": "# 执行脚本\n\n- `render_uas_plan.py`：生成 sub uas app 结构化方案\n- `evaluate_evolution.py`：校验目标守恒与治理完整性\n",
+    "scripts/README.md": "# 执行脚本\n\n- `run_subapp.py`：通过 autonomous_agent runtime 运行 sub uas app\n- `render_uas_plan.py`：生成 sub uas app 结构化方案\n- `evaluate_evolution.py`：校验目标守恒与治理完整性\n",
+    "scripts/run_subapp.py": """#!/usr/bin/env python3
+\"\"\"运行 sub uas app。\"\"\"
+
+import argparse
+import json
+from pathlib import Path
+
+from asui.runtime.runtime_manager import RuntimeManager
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="运行 UAS sub app")
+    parser.add_argument("topic", help="业务议题")
+    parser.add_argument("--payload-json", help="额外 JSON payload")
+    parser.add_argument("--evaluate", action="store_true", help="运行后执行评估")
+    args = parser.parse_args()
+
+    payload = json.loads(args.payload_json) if args.payload_json else None
+    manager = RuntimeManager(Path(__file__).resolve().parents[1])
+    result = manager.run(args.topic, payload=payload, evaluate=args.evaluate)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+""",
     "scripts/render_uas_plan.py": """#!/usr/bin/env python3
 \"\"\"渲染 UAS sub app 方案。\"\"\"
 
@@ -458,6 +485,7 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 """,
-    "database/README.md": "# 数据持久化\n\n- `database/plans/`：存放结构化 sub uas app 方案\n",
+    "database/README.md": "# 数据持久化\n\n- `database/plans/`：存放结构化 sub uas app 方案\n- `database/audit/`：存放运行时审计日志\n",
+    "database/audit/README.md": "# 审计目录\n\nRuntime 审计日志（如 `execution_log.jsonl`）会写入这里。\n",
     "reports/README.md": "# 报告目录\n\nMarkdown 版 sub uas app 方案会输出到这里。\n",
 }

@@ -1,6 +1,6 @@
 # 交互命令
 
-- `/recruit-os [议题]`：生成招聘智能 OS 方案
-- `/instantiate [议题ID]`：映射真实实体与工作对象
+- `/intent [议题]`：归一化招聘业务目标与场景
+- `/design [议题ID]`：生成招聘智能 OS 方案
 - `/validate [议题ID]`：执行偏差校验与评估
 - `/evolve [议题ID]`：生成下一轮进化建议

@@ -46,5 +46,5 @@
 | 蜂群立场对冲 | `configs/swarm_agents.json` 中 swarm 角色 |
 | 三维建模 | `configs/workflow_config.json` 中 `macro/meso/micro` 步骤 |
 | 现实实例化 | `instantiate` 步骤 |
-| 偏差校验 | `validate` 步骤与 `scripts/evaluate_iteration.py` |
+| 偏差校验 | `validate` 步骤与 `scripts/evaluate_evolution.py` |
 | 进化开发 | `evolve` 步骤与 `docs/IMPLEMENTATION_ROADMAP.md` |
