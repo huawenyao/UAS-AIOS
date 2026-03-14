@@ -1,0 +1,85 @@
+[
+  {
+    "name": "未知姓名",
+    "total_score": 48.0,
+    "detailed_scores": {
+      "skill_match": 13.125,
+      "experience_match": 100.0,
+      "education_match": 100.0,
+      "management_match": 20.0,
+      "industry_match": 28.57142857142857
+    },
+    "skills": [
+      "深度学习",
+      "算法",
+      "人工智能"
+    ],
+    "experience_years": 28,
+    "management_experience": true,
+    "team_size": 0,
+    "core_advantages": [
+      "掌握技能: 深度学习, 算法, 人工智能",
+      "工作经验: 28年",
+      "管理经验: 有",
+      "团队规模: 未明确"
+    ],
+    "file_path": "C:\\Users\\ranwu\\Documents\\xwechat_files\\wxid_i70l9yurpce422_b7a7\\msg\\file\\2026-03\\校友投稿参考附件.pdf"
+  },
+  {
+    "name": "华文尧|",
+    "total_score": 27.1,
+    "detailed_scores": {
+      "skill_match": 32.5,
+      "experience_match": 0.0,
+      "education_match": 100.0,
+      "management_match": 20.0,
+      "industry_match": 0.0
+    },
+    "skills": [
+      "深度学习",
+      "LLM",
+      "NLP",
+      "算法",
+      "项目管理",
+      "产品落地",
+      "跨部门协作",
+      "技术创新"
+    ],
+    "experience_years": 0,
+    "management_experience": true,
+    "team_size": 0,
+    "core_advantages": [
+      "掌握技能: 深度学习, LLM, NLP, 算法, 项目管理, 产品落地, 跨部门协作, 技术创新",
+      "工作经验: 0年",
+      "管理经验: 有",
+      "团队规模: 未明确"
+    ],
+    "file_path": "C:\\Users\\ranwu\\Documents\\华文尧个人简历.pdf"
+  },
+  {
+    "name": "乔兰迪",
+    "total_score": 22.0,
+    "detailed_scores": {
+      "skill_match": 11.875,
+      "experience_match": 0.0,
+      "education_match": 100.0,
+      "management_match": 20.0,
+      "industry_match": 0.0
+    },
+    "skills": [
+      "算法",
+      "团队管理",
+      "团队建设"
+    ],
+    "experience_years": 0,
+    "management_experience": true,
+    "team_size": 0,
+    "core_advantages": [
+      "掌握技能: 算法, 团队管理, 团队建设",
+      "工作经验: 0年",
+      "管理经验: 有",
+      "团队规模: 未明确"
+    ],
+    "file_path": "C:\\Users\\ranwu\\Documents\\xwechat_files\\wxid_i70l9yurpce422_b7a7\\msg\\file\\2026-03\\乔兰迪简历.pdf"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "job_id": "job-1",
+    "raw_jd": "招聘 Python 后端工程师，本科以上，3年经验，熟悉 Django",
+    "parsed_profile": {
+      "title": "Python 后端工程师",
+      "degree_requirement": "本科及以上",
+      "experience_years_min": 3,
+      "experience_years_max": null,
+      "skills": [
+        "Python",
+        "Django",
+        "后端开发"
+      ],
+      "salary_range": null,
+      "location": null
+    },
+    "created_at": "2026-03-13T00:00:00"
+  }
+]
+

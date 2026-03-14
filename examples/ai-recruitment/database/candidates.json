@@ -1,0 +1,83 @@
+[
+  {
+    "name": "华文尧|",
+    "total_score": 70.8,
+    "experience_years": 12,
+    "team_size": 50,
+    "skills": [
+      "深度学习",
+      "LLM",
+      "NLP",
+      "算法",
+      "项目管理",
+      "产品落地"
+    ],
+    "decision": "recommend",
+    "file_path": "C:\\Users\\ranwu\\Documents\\华文尧个人简历.pdf",
+    "detailed_scores": {
+      "education_score": 8.0,
+      "experience_score": 9.5,
+      "skill_score": 4.300000000000001,
+      "engineering_score": 5.0,
+      "domain_score": 10,
+      "potential_score": 9.0
+    }
+  },
+  {
+    "name": "未知姓名",
+    "total_score": 35.9,
+    "experience_years": 0,
+    "team_size": 0,
+    "skills": [
+      "深度学习",
+      "算法"
+    ],
+    "decision": "not_recommend",
+    "file_path": "C:\\Users\\ranwu\\Documents\\xwechat_files\\wxid_i70l9yurpce422_b7a7\\msg\\file\\2026-03\\校友投稿参考附件.pdf",
+    "detailed_scores": {
+      "education_score": 8.0,
+      "experience_score": 2.0,
+      "skill_score": 1.4000000000000001,
+      "engineering_score": 5.0,
+      "domain_score": 8,
+      "potential_score": 5.0
+    }
+  },
+  {
+    "name": "乔兰迪",
+    "total_score": 34.1,
+    "experience_years": 0,
+    "team_size": 0,
+    "skills": [
+      "算法",
+      "团队管理"
+    ],
+    "decision": "not_recommend",
+    "file_path": "C:\\Users\\ranwu\\Documents\\xwechat_files\\wxid_i70l9yurpce422_b7a7\\msg\\file\\2026-03\\乔兰迪简历.pdf",
+    "detailed_scores": {
+      "education_score": 8.0,
+      "experience_score": 2.0,
+      "skill_score": 1.4500000000000002,
+      "engineering_score": 5.0,
+      "domain_score": 4,
+      "potential_score": 7.0
+    }
+  },
+  {
+    "name": "未知姓名",
+    "total_score": 23.0,
+    "experience_years": 0,
+    "team_size": 0,
+    "skills": [],
+    "decision": "not_recommend",
+    "file_path": "C:\\Users\\ranwu\\Documents\\xwechat_files\\wxid_i70l9yurpce422_b7a7\\msg\\file\\2026-03\\关于征集四川大学130周年校庆电子信息学院优秀校友事迹的通知2026-1.pdf",
+    "detailed_scores": {
+      "education_score": 8.0,
+      "experience_score": 2.0,
+      "skill_score": 0.0,
+      "engineering_score": 5.0,
+      "domain_score": 0,
+      "potential_score": 5.0
+    }
+  }
+]

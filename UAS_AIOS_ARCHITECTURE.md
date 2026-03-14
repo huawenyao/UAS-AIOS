@@ -212,7 +212,15 @@ E = 演化回路（Evolution Loop）
   ∀ BusinessIntent b:
     UAS-Platform(b) → auditable ∧ rollbackable ∧ evolvable professional outcome
 
-企业AGI定义：
+世界模型（详见 [AGI_WORLD_MODEL_UAS](./docs/AGI_WORLD_MODEL_UAS.md)）：
+  世界模型 = 对真实世界反馈能力的模型化（空间、时间、主体、客体、感知—行动—反馈）
+  全面融入 I/K/R/A/S/G/E；系统与元系统自主发现反馈体系与关键主客体，基于主客体交互与交付；
+  演化依 推动 → 反馈 → 反身 螺旋；任务与交付需做推动/阻碍/连接视角的评估与主客体全链路推演。
+
+企业AGI定义（双轨 AGI 见 [AGI_WORLD_MODEL_UAS](./docs/AGI_WORLD_MODEL_UAS.md)）：
+  通用形式：AGI = World Model + AI Agent
+  User AGI   = selfpaw (UAS-U)   — 个人侧世界模型 + 个人 Agent/蜂群
+  Business AGI = Πpaw(UAS-S)    — 业务侧世界模型 + 多专业 Agent 编排
   企业 AGI = 目标驱动 + 知识驱动 + Agent协作 + 系统执行 + 审计治理 + 演化闭环 的平台化统一
 ```
 

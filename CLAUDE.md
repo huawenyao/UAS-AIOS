@@ -21,7 +21,9 @@
 ├── scripts/               # 执行工具脚本
 ├── database/              # 数据持久化
 └── docs/
-    └── ASUI_ARCHITECTURE.md  # 架构理论文档
+    ├── ASUI_ARCHITECTURE.md  # 架构理论文档
+    ├── THEORY_SYSTEM.md     # 理论体系总纲（方法论综合与关系图谱）
+    └── theory_system_visualization.html  # 理论体系可视化（浏览器打开）
 ```
 
 ## 核心工作流

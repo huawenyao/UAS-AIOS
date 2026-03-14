@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "cases-static": {
+      "name": "Cases 静态资源服务器",
+      "description": "部署在 /data/cases 的静态资源 MCP 服务器",
+      "baseUrl": "http://cases.wumaitech.com:8081",
+      "resources": {
+        "static": {
+          "path": "/",
+          "root": "/data/cases"
+        }
+      },
+      "tools": [
+        {
+          "name": "list_files",
+          "description": "列出静态目录中的文件",
+          "endpoint": "/api/list"
+        },
+        {
+          "name": "get_file",
+          "description": "获取指定文件内容",
+          "endpoint": "/api/file"
+        }
+      ]
+    }
+  }
+}
