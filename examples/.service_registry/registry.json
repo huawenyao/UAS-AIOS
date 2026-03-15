@@ -1,0 +1,30 @@
+[
+  {
+    "app_id": "triadic-ideal-reality-swarm",
+    "app_root": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/triadic-ideal-reality-swarm",
+    "version": "v1.0",
+    "technical_base": "ASUI",
+    "runtime": "autonomous_agent",
+    "capability_tags": [
+      "agent:instantiation",
+      "agent:macro",
+      "agent:meso",
+      "agent:micro",
+      "agent:purpose",
+      "agent:validation",
+      "system:ad_campaign",
+      "system:asui_knowledge",
+      "system:channel_insight",
+      "system:content_publish"
+    ],
+    "health": {
+      "status": "healthy",
+      "missing_assets": [],
+      "queue": {
+        "queued_jobs": 0,
+        "completed_jobs": 0
+      }
+    },
+    "updated_at": "2026-03-15T05:30:47.718786+00:00"
+  }
+]

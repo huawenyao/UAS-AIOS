@@ -1,0 +1,159 @@
+{
+  "timestamp": "2026-03-15T16:26:24.634834",
+  "total_subapps": 15,
+  "meet_target_count": 0,
+  "need_optimization_count": 15,
+  "all_meet_target": false,
+  "results": [
+    {
+      "name": "ai-recruitment",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\ai-recruitment",
+      "last_evaluated": "2026-03-15T16:26:24.625046",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "ai-recruitment\\skills\\humanizer",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\ai-recruitment\\skills\\humanizer",
+      "last_evaluated": "2026-03-15T16:26:24.626084",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "ai-recruitment\\skills\\marketing-mode",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\ai-recruitment\\skills\\marketing-mode",
+      "last_evaluated": "2026-03-15T16:26:24.627073",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "selfpaw-cognitive-swarm",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\selfpaw-cognitive-swarm",
+      "last_evaluated": "2026-03-15T16:26:24.627586",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "selfpaw-cognitive-swarm\\.claude\\agents",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\selfpaw-cognitive-swarm\\.claude\\agents",
+      "last_evaluated": "2026-03-15T16:26:24.628276",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "selfpaw-cognitive-swarm\\.claude\\commands",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\selfpaw-cognitive-swarm\\.claude\\commands",
+      "last_evaluated": "2026-03-15T16:26:24.628787",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "selfpaw-cognitive-swarm\\database",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\selfpaw-cognitive-swarm\\database",
+      "last_evaluated": "2026-03-15T16:26:24.629377",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "selfpaw-cognitive-swarm\\reports",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\selfpaw-cognitive-swarm\\reports",
+      "last_evaluated": "2026-03-15T16:26:24.629891",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "selfpaw-cognitive-swarm\\scripts",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\selfpaw-cognitive-swarm\\scripts",
+      "last_evaluated": "2026-03-15T16:26:24.630482",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "triadic-ideal-reality-swarm",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\triadic-ideal-reality-swarm",
+      "last_evaluated": "2026-03-15T16:26:24.631126",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "triadic-ideal-reality-swarm\\.claude\\agents",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\triadic-ideal-reality-swarm\\.claude\\agents",
+      "last_evaluated": "2026-03-15T16:26:24.631760",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "triadic-ideal-reality-swarm\\.claude\\commands",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\triadic-ideal-reality-swarm\\.claude\\commands",
+      "last_evaluated": "2026-03-15T16:26:24.632281",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "triadic-ideal-reality-swarm\\database",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\triadic-ideal-reality-swarm\\database",
+      "last_evaluated": "2026-03-15T16:26:24.632909",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "triadic-ideal-reality-swarm\\reports",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\triadic-ideal-reality-swarm\\reports",
+      "last_evaluated": "2026-03-15T16:26:24.633435",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    },
+    {
+      "name": "triadic-ideal-reality-swarm\\scripts",
+      "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\triadic-ideal-reality-swarm\\scripts",
+      "last_evaluated": "2026-03-15T16:26:24.634029",
+      "last_score": 89.2,
+      "experience_score": 94,
+      "business_score": 82,
+      "status": "optimized",
+      "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+    }
+  ]
+}

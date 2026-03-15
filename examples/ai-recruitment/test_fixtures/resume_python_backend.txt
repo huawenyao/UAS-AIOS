@@ -1,0 +1,17 @@
+李四
+手机：13900139000 | 邮箱：lisi@example.com
+
+教育背景
+浙江大学 软件工程 本科 2016-2020
+
+工作经历
+某电商公司 后端开发工程师 2020至今
+- 使用 Python、Django 开发订单与用户中心，参与系统架构设计
+- 编写单元测试，参与 Code Review，维护 CI/CD 流水线
+- 与算法团队对接推荐接口，使用 Redis、MySQL
+
+某创业公司 后端开发 2019-2020（实习）
+- Python Flask 开发内部工具，熟悉 RESTful API 设计
+
+技能
+Python, Django, Flask, MySQL, Redis, Git, 单元测试, Code Review, CI/CD, 后端开发

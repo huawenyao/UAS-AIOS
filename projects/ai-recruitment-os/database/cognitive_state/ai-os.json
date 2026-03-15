@@ -397,14 +397,28 @@
   "tensions": [],
   "evaluation": {
     "status": "pass",
-    "risks": [],
+    "governance": {
+      "status": "pass",
+      "risks": [],
+      "suggestions": ["当前方案满足平台标准"]
+    },
+    "iteration": {
+      "status": "needs_evolution",
+      "missing_purpose_keywords": ["效率", "公平", "体验"],
+      "risks": ["基础目的覆盖不足，存在目标漂移风险"],
+      "suggestions": ["回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级"]
+    },
+    "risks": ["基础目的覆盖不足，存在目标漂移风险"],
     "suggestions": [
-      "当前方案满足平台标准"
+      "回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级"
     ]
   },
   "evolution": {
+    "drift_triggered": "purpose_drift",
+    "action": "return_to_purpose_activation",
     "suggestions": [
-      "当前方案满足平台标准"
+      "回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级",
+      "在 purpose_anchor 中显式纳入效率、公平、体验，满足 evolution_policy.goal_guard 至少 3 个关键词"
     ]
   },
   "timeline": [
@@ -846,6 +860,50 @@
       "payload": {
         "suggestions": [
           "当前方案满足平台标准"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-03-15T00:00:00+00:00",
+      "event": "evolution_loop_run",
+      "payload": {
+        "loop": ["intent_activation", "governance_check", "evolution_plan"],
+        "governance_result": "pass",
+        "iteration_result": "needs_evolution",
+        "drift_triggered": "purpose_drift"
+      }
+    },
+    {
+      "timestamp": "2026-03-15T00:00:00+00:00",
+      "event": "evaluation_updated",
+      "payload": {
+        "status": "pass",
+        "iteration": "needs_evolution",
+        "missing_purpose_keywords": ["效率", "公平", "体验"]
+      }
+    },
+    {
+      "timestamp": "2026-03-15T00:00:00+00:00",
+      "event": "evolution_updated",
+      "payload": {
+        "drift_triggered": "purpose_drift",
+        "action": "return_to_purpose_activation",
+        "suggestions": [
+          "回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级",
+          "在 purpose_anchor 中显式纳入效率、公平、体验"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-03-15T00:00:00+00:00",
+      "event": "purpose_anchor_evolved",
+      "payload": {
+        "trigger": "autonomous_evolution",
+        "purpose_anchor_extended": [
+          "让组织在可控成本下以更高确定性获得匹配人才",
+          "提升招聘流程效率与决策周期",
+          "保障选拔公平与可解释性",
+          "优化候选人体验与反馈"
         ]
       }
     }

@@ -28,14 +28,26 @@ cd website && python3 -m http.server 8080
 
 ## 部署到 Cases 静态服务器
 
-网站可部署到 Cases 静态资源服务器（`/data/cases`，对外 `http://cases.wumaitech.com:8081`）：
+### 方式一：通过 Cases API / MCP 部署
+
+使用与 `.cursor/mcp.json` 中 **cases-static** 相同的 API（`/api/write` + `X-API-Key`）部署：
 
 ```bash
-# 在项目根目录执行，按提示确认
+# 在项目根目录执行（需本机可访问 cases.wumaitech.com:8081）
+python3 scripts/deploy_website_via_api.py
+```
+
+- 会将 `website/index.html`、`website/styles.css` 写入 Cases 静态根路径（等同 MCP write_file）。
+- 部署后访问：http://cases.wumaitech.com:8081/
+- 若在 Cursor/远程环境执行超时，请在本地或能访问该服务器的机器上运行上述命令。
+
+### 方式二：通过 SSH + rsync
+
+```bash
 REMOTE_USER=你的SSH用户 ./scripts/deploy_website_to_cases.sh
 ```
 
-可选环境变量：`REMOTE_HOST`（默认 cases.wumaitech.com）、`REMOTE_PATH`（默认 /data/cases）。部署后访问：http://cases.wumaitech.com:8081/
+可选环境变量：`REMOTE_HOST`（默认 cases.wumaitech.com）、`REMOTE_PATH`（默认 /data/cases）。
 
 ## 技术说明
 

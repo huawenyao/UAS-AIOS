@@ -15,7 +15,43 @@
       "salary_range": null,
       "location": null
     },
-    "created_at": "2026-03-13T00:00:00"
+    "status": "open",
+    "created_at": "2026-03-13T00:00:00",
+    "updated_at": "2026-03-15T00:00:00"
+  },
+  {
+    "job_id": "job-ai-director",
+    "raw_jd": "AI负责人：本科及以上，8年以上经验，具备团队管理能力；精通 Python/Java/C++，TensorFlow/PyTorch、深度学习、大模型、NLP/CV；有技术架构与产品落地经验优先。",
+    "parsed_profile": {
+      "title": "AI负责人",
+      "degree_requirement": "本科及以上",
+      "experience_years_min": 8,
+      "experience_years_max": null,
+      "skills": [
+        "Python",
+        "Java",
+        "C++",
+        "TensorFlow",
+        "PyTorch",
+        "深度学习",
+        "机器学习",
+        "大语言模型",
+        "LLM",
+        "计算机视觉",
+        "CV",
+        "自然语言处理",
+        "NLP",
+        "算法"
+      ],
+      "bonus_skills": ["团队管理", "项目管理", "技术架构", "技术战略", "产品落地"],
+      "management_required": true,
+      "target_industry": "互联网/AI",
+      "salary_range": null,
+      "location": null
+    },
+    "status": "open",
+    "created_at": "2026-03-15T00:00:00",
+    "updated_at": "2026-03-15T00:00:00"
   }
 ]
 

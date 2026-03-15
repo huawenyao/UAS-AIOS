@@ -1,0 +1,42 @@
+{
+  "version": "v1.0",
+  "goal_guard": {
+    "required_purpose_keywords": ["目的", "场景", "约束", "指标", "闭环"],
+    "minimum_keyword_hits": 2,
+    "enabled": true,
+    "require_goal_statement": true,
+    "require_success_metrics": true
+  },
+  "iteration": {
+    "enabled": true,
+    "require_validation_before_evolution": true,
+    "default_loop": ["purpose_activation", "governance_check", "retrospective", "evolution_plan"]
+  },
+  "evaluation_thresholds": {
+    "emergence_consistency_score": 0.75,
+    "data_flow_completion_score": 0.8,
+    "retrospective_actionability_score": 0.7
+  },
+  "drift_rules": [
+    {
+      "id": "purpose_drift",
+      "condition": "missing_purpose_keywords",
+      "action": "return_to_purpose_activation"
+    },
+    {
+      "id": "emergence_inconsistency",
+      "condition": "emergence_consistency_score_below_threshold",
+      "action": "rebuild_triadic_reports"
+    },
+    {
+      "id": "data_flow_break",
+      "condition": "data_flow_completion_score_below_threshold",
+      "action": "repair_chain_step"
+    },
+    {
+      "id": "retrospective_weak",
+      "condition": "retrospective_actionability_score_below_threshold",
+      "action": "strengthen_retrospective_protocol"
+    }
+  ]
+}

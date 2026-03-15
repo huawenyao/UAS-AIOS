@@ -1,4 +1,6 @@
-# 三维理念现实涌现蜂群 - ASUI 验证项目
+# 三维理念现实涌现蜂群 - UAS SubApp
+
+> 本示例同时作为 **UAS 平台 SubApp** 建设，目标为具备**智能全链路闭环**（渠道洞察→智能选品→内容生成→自动投放→效果优化→数据复盘）的顶级 SubApp。建设规划见 [docs/UAS_SUBAPP_建设规划.md](docs/UAS_SUBAPP_建设规划.md)。
 
 ## 验证目标
 
@@ -28,3 +30,39 @@
 | 现实实例化 | 调整 workflow 中的实例化步骤 | 输出自动映射为新的实体图谱 |
 | 交叉验证 | 调整输出契约与验证规则 | 输出自动包含新的验证矩阵与评估指标 |
 | 结构化输出 | 执行 `scripts/render_emergence_report.py` | 生成 JSON 与 Markdown 报告 |
+
+## UAS 平台标准资产（已就绪）
+
+- `configs/platform_manifest.json` - 平台清单
+- `configs/runtime_config.json` - 运行时配置
+- `configs/governance_policy.json` - 治理策略
+- `configs/evolution_policy.json` - 演化策略
+- `configs/system_registry.json` - 系统网格注册
+
+使用共享 Runtime 运行（需在仓库根目录执行，且以 `examples` 为 subapp 根目录）：
+
+```bash
+python3 scripts/run_uas_runtime_service.py list --projects-root examples
+python3 scripts/run_uas_runtime_service.py validate --app-id triadic-ideal-reality-swarm --projects-root examples
+python3 scripts/run_uas_runtime_service.py run --app-id triadic-ideal-reality-swarm --projects-root examples --topic "如何把行业解决方案转化为真实工作方式？"
+```
+
+## 项目结构
+
+```
+triadic-ideal-reality-swarm/
+├── CLAUDE.md
+├── configs/
+│   ├── platform_manifest.json
+│   ├── runtime_config.json
+│   ├── governance_policy.json
+│   ├── evolution_policy.json
+│   ├── system_registry.json
+│   ├── workflow_config.json
+│   └── swarm_agents.json
+├── .claude/skills/
+├── database/
+├── reports/
+├── scripts/
+└── docs/
+```

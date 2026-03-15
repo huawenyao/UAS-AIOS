@@ -1,13 +1,17 @@
 import os
+import sys
 import json
+import argparse
 from datetime import datetime
+from pathlib import Path
 import olefile
 from docx import Document
 import PyPDF2
 import re
 
-# 配置
-RESUME_DIR = r"C:\Users\ranwu\Documents"
+# 配置（可通过环境变量 RESUME_DIR 或 CLI --resume-dir 覆盖）
+DEFAULT_RESUME_DIR = os.environ.get("RESUME_DIR", r"C:\Users\ranwu\Documents")
+RESUME_DIR = DEFAULT_RESUME_DIR
 JOB_REQUIREMENTS = {
     "position_title": "AI负责人",
     "required_degree": "本科及以上",
@@ -312,15 +316,25 @@ def calculate_professional_score(resume_info, job_req):
             "skills": resume_info["skills"],
             "management_experience": resume_info["management_experience"],
             "team_size": resume_info["team_size"],
-            "file_path": file_path
+            "file_path": resume_info.get("file_path", "")
         }
     }
 
 def main():
+    global RESUME_DIR
+    parser = argparse.ArgumentParser(description="AI 招聘智能分析工作流：扫描简历目录 → 匹配打分 → 生成报告")
+    parser.add_argument("--resume-dir", default=None, help="简历目录路径（默认使用环境变量 RESUME_DIR 或内置默认）")
+    args = parser.parse_args()
+    if args.resume_dir:
+        RESUME_DIR = os.path.abspath(args.resume_dir)
+    else:
+        RESUME_DIR = DEFAULT_RESUME_DIR
+
     print("="*60)
     print("AI招聘智能分析工作流 - 专业版")
     print("="*60)
-    
+    print(f"简历目录: {RESUME_DIR}")
+
     # 步骤1：扫描简历
     print("\n[步骤1/4 扫描简历目录]")
     resume_files = []
@@ -347,6 +361,7 @@ def main():
         
         valid_count += 1
         resume_info = parse_resume_info(text, file_path)
+        resume_info["file_path"] = file_path
         score_result = calculate_professional_score(resume_info, JOB_REQUIREMENTS)
         results.append(score_result)
     
@@ -357,11 +372,27 @@ def main():
     # 步骤4：保存结果
     print("\n[步骤4/4 保存结果]")
     
-    # 保存到database
+    # 保存到 database（与 entity_schemas 对齐：补全 status、updated_at）
     os.makedirs('database', exist_ok=True)
+    now = datetime.now().isoformat()
+    for r in results:
+        r.setdefault("status", "screened")
+        r.setdefault("created_at", now)
+        r.setdefault("updated_at", now)
     with open('database/candidates.json', 'w', encoding='utf-8') as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     print("已保存: database/candidates.json")
+
+    # 实体运行时闭环：发布 screening_completed 事件（与 UAS agent runtime 事件驱动一致）
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent / "scripts"))
+        from entity_runtime import emit_event
+        job_id = results[0].get("job_id", "job-ai-director") if results else "job-ai-director"
+        for r in results:
+            emit_event("screening_completed", job_id=job_id, candidate_id=r.get("candidate_id"), payload={"decision": r.get("decision")})
+        print("已发布 screening_completed 事件（见 database/events.json）")
+    except Exception as e:
+        pass  # 无 entity_runtime 时跳过
     
     # 保存到reports
     os.makedirs('reports', exist_ok=True)
@@ -369,6 +400,29 @@ def main():
     with open(report_file, 'w', encoding='utf-8') as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     print(f"已保存: {report_file}")
+
+    # 为每位候选人生成带证据链与风险标识的 HTML 报告
+    root_dir = Path(__file__).resolve().parent
+    reports_dir = root_dir / "reports"
+    try:
+        sys.path.insert(0, str(root_dir / "scripts"))
+        from report_renderer import render_html
+        for r in results:
+            cid = r.get("candidate_id", "unknown")
+            html = render_html(
+                cid,
+                r.get("scores", {}),
+                decision=r.get("decision"),
+                risk_flags=r.get("risk_flags"),
+                evidence=r.get("evidence"),
+                name=r.get("name"),
+                job_id=r.get("job_id"),
+            )
+            out_path = reports_dir / f"candidate_{cid}.html"
+            out_path.write_text(html, encoding="utf-8")
+        print(f"已生成 {len(results)} 份 HTML 报告（含证据链与风险标识）")
+    except Exception as e:
+        print(f"HTML 报告生成跳过: {e}")
     
     # 输出统计
     print("\n" + "="*60)
@@ -380,4 +434,9 @@ def main():
     decisions = {}
     for r in results:
         dec = r['decision']
-       
+        decisions[dec] = decisions.get(dec, 0) + 1
+    for k, v in decisions.items():
+        print(f"  {k}: {v}")
+    # 价值感呈现：一句可感知的价值摘要
+    recommend_count = sum(decisions.get(d, 0) for d in ["strong_recommend", "recommend", "borderline"])
+    print("\n[价值摘要] 本批 {} 份有效简历，推荐/待定共 {} 人，可解释推荐名单已生成，可直接用于面试名单决策。".format(valid_count, recommend_count))

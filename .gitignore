@@ -12,3 +12,15 @@ build/
 .vscode/
 *.swp
 *.swo
+
+# Report output & runtime data
+examples/ai-recruitment/reports/
+**/reports/*.html
+**/reports/*.json
+**/database/audit/
+**/database/observability/
+**/database/candidates.json
+**/database/events.json
+**/database/tasks.json
+**/database/notifications.json
+**/database/evaluations.json

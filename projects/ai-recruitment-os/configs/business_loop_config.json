@@ -1,0 +1,38 @@
+{
+  "version": "v1.0",
+  "description": "业务回路配置：按 UAS 进化架构自主调用蜂群、全流程观测、漂移与全方位问题处理",
+  "loop": {
+    "id": "evolution_loop",
+    "name": "进化回路",
+    "steps": ["intent_activation", "governance_check", "evolution_plan"],
+    "source": "evolution_policy.iteration.default_loop",
+    "optional_extension_steps": ["knowledge_binding", "agent_planning", "runtime_topology", "system_mapping", "render_report"]
+  },
+  "observation": {
+    "enabled": true,
+    "storage": "database/observability/loop_runs",
+    "record_step_start": true,
+    "record_step_end": true,
+    "record_input_output_summary": true,
+    "record_drift_and_repair": true
+  },
+  "swarm_invocation": {
+    "mode": "autonomous",
+    "fallback_when_no_llm": "stub_from_plan",
+    "agent_step_mapping": {
+      "intent_activation": "intent_guard",
+      "governance_check": "governance_guard",
+      "evolution_plan": "evolution_planner"
+    }
+  },
+  "drift_handling": {
+    "on_needs_evolution": "record_and_apply_rule",
+    "apply_actions": ["return_to_purpose_activation", "rebuild_micro_experience", "rebuild_evaluation_rubric", "repair_meso_workflow"]
+  },
+  "full_scope_checks": [
+    "purpose_keywords",
+    "governance_controls",
+    "evolution_metrics",
+    "business_runtime_sync"
+  ]
+}

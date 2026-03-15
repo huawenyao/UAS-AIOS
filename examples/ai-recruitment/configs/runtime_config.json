@@ -1,0 +1,11 @@
+{
+  "version": "v1.0",
+  "runtime_name": "autonomous_agent_runtime",
+  "execution_mode": "knowledge_driven",
+  "context_injection": true,
+  "state_isolation": "task_level",
+  "audit_enabled": true,
+  "rollback_enabled": true,
+  "human_checkpoints": ["WRITE_RISK", "SYSTEM_OP"],
+  "_comment": "与 UAS-ASUI 平台 projects/ai-recruitment-os 一致；Task 为 task_level 执行单元，实体写操作见 database/audit/"
+}

@@ -3,6 +3,12 @@
   "version": "v1.0",
   "name": "AI 招聘工作流",
   "description": "岗位解析→简历匹配→打分→报告生成",
+  "shared_web": {
+    "enabled": true,
+    "project_id": "proj_8cfb81100d44",
+    "allowed_scopes": ["ai_recruitment_candidate", "recruitment_candidate_view"],
+    "default_ttl_hours": 168
+  },
   "steps": [
     {
       "id": "parse_jd",
@@ -16,8 +22,8 @@
       "name": "简历匹配（画像提取）",
       "type": "llm",
       "dependencies": ["parse_jd"],
-      "description": "根据岗位要求解析简历，抽取人才画像要素，供评分步骤使用",
-      "prompt_template": "你是专业的简历解析引擎。\\n\\n岗位要求（Job Profile）：\\n{{jd}}\\n\\n候选人简历：\\n{{resume}}\\n\\n请提取与岗位匹配相关的结构化信息，输出 JSON，字段包括（可根据内容补充，但不要删除）：\\n- education: 学历（最高学历、学校、专业）\\n- experience: 工作经历（公司、时间、岗位、职责、成果）\\n- skills: 技能与技术栈列表\\n- domains: 业务/行业领域\\n- engineering_practices: 工程实践（测试、CI/CD、Review、监控等）\\n- potential_signals: 成长与承担的信号（如快速晋升、主导重构等）"
+      "description": "根据岗位要求解析简历，提取人才画像要素，供评分步骤使用",
+      "prompt_template": "你是专业的简历解析引擎。\n\n岗位要求（Job Profile）：\n{{jd}}\n\n候选人简历：\n{{resume}}\n\n请提取与岗位匹配相关的结构化信息，输出 JSON，字段包括（可根据内容补充，但不要删除）：\n- education: 学历（最高学历、学校、专业）\n- experience: 工作经验（公司、时间、岗位、职责、成果）\n- skills: 技能与技术栈列表\n- domains: 业务/行业领域\n- engineering_practices: 工程实践（测试、CI/CD、Review、监控等）\n- potential_signals: 成长与承担的信号（如快速晋升、主导重构等）"
     },
     {
       "id": "score",

@@ -1,8 +1,8 @@
-# 三维理念现实涌现智能体群（验证项目）
+# 三维理念现实涌现智能体群（UAS SubApp）
 
 ## 系统概述
 
-本项目验证如何把“宏观 / 中观 / 微观”与“理念 / 现实”组合成一套可执行的智能体蜂群，并用“目的激活 → 现实实例化 → 交叉验证 → 进化重构”把基础目的转译为真实场景中的解决方案与工作方式。
+本项目是 **UAS 平台 SubApp**，技术底座为 **ASUI**，运行时为 **autonomous_agent**。当前实现“宏观 / 中观 / 微观”与“理念 / 现实”的涌现蜂群；按 [docs/UAS_SUBAPP_建设规划.md](docs/UAS_SUBAPP_建设规划.md)，将扩展为**智能全链路闭环**（渠道洞察→智能选品→内容生成→自动投放→效果优化→数据复盘）与智能驱动数据全流通。
 
 ## 核心命令
 
@@ -26,7 +26,12 @@
 
 | 文件 | 用途 |
 |------|------|
-| `configs/workflow_config.json` | 三维涌现工作流定义 |
+| `configs/platform_manifest.json` | UAS 平台清单（I,K,R,A,S,G,E,Π） |
+| `configs/runtime_config.json` | 运行时、审计、回滚、人工检查点 |
+| `configs/governance_policy.json` | 治理策略 |
+| `configs/evolution_policy.json` | 演化策略与漂移规则 |
+| `configs/system_registry.json` | 系统网格（渠道数据、广告平台、内容平台等） |
+| `configs/workflow_config.json` | 三维涌现工作流定义（后续扩展六链路） |
 | `configs/swarm_agents.json` | 智能体角色、维度、目的、实例化与验证对手盘 |
 | `.claude/skills/triadic_protocol.md` | 三维理念现实执行协议 |
 | `.claude/skills/emergence_output_contract.md` | 最终输出契约 |

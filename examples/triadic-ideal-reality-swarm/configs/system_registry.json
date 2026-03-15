@@ -1,0 +1,29 @@
+{
+  "version": "v1.0",
+  "systems": [
+    {
+      "id": "channel_data_source",
+      "type": "channel_insight",
+      "mode": "external",
+      "description": "电商/社交/行业渠道数据（蝉妈妈、灰豚、平台API等）"
+    },
+    {
+      "id": "ad_platform",
+      "type": "ad_campaign",
+      "mode": "external",
+      "description": "广告投放平台（直通车、引力魔方、巨量、Amazon SP、TikTok Ads等）"
+    },
+    {
+      "id": "content_platform",
+      "type": "content_publish",
+      "mode": "external",
+      "description": "内容与素材发布（店铺、小红书、抖音等）"
+    },
+    {
+      "id": "knowledge_base",
+      "type": "asui_knowledge",
+      "mode": "native",
+      "description": "本 SubApp 知识层（CLAUDE.md + skills）"
+    }
+  ]
+}

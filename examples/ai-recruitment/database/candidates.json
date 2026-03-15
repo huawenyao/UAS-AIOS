@@ -1,83 +1,155 @@
 [
   {
-    "name": "华文尧|",
-    "total_score": 70.8,
-    "experience_years": 12,
-    "team_size": 50,
-    "skills": [
-      "深度学习",
-      "LLM",
-      "NLP",
-      "算法",
-      "项目管理",
-      "产品落地"
-    ],
-    "decision": "recommend",
-    "file_path": "C:\\Users\\ranwu\\Documents\\华文尧个人简历.pdf",
-    "detailed_scores": {
-      "education_score": 8.0,
+    "candidate_id": "cand_1773562602_resume_pyt",
+    "job_id": "job-1",
+    "name": "李四",
+    "scores": {
+      "education_score": 3.0,
       "experience_score": 9.5,
-      "skill_score": 4.300000000000001,
-      "engineering_score": 5.0,
-      "domain_score": 10,
-      "potential_score": 9.0
-    }
-  },
-  {
-    "name": "未知姓名",
-    "total_score": 35.9,
-    "experience_years": 0,
-    "team_size": 0,
-    "skills": [
-      "深度学习",
-      "算法"
+      "skill_score": 8.0,
+      "engineering_score": 10.0,
+      "domain_score": 2,
+      "potential_score": 5.0,
+      "total_score": 7.17
+    },
+    "decision": "recommend",
+    "risk_flags": [
+      "education_below_requirement"
     ],
-    "decision": "not_recommend",
-    "file_path": "C:\\Users\\ranwu\\Documents\\xwechat_files\\wxid_i70l9yurpce422_b7a7\\msg\\file\\2026-03\\校友投稿参考附件.pdf",
-    "detailed_scores": {
-      "education_score": 8.0,
-      "experience_score": 2.0,
-      "skill_score": 1.4000000000000001,
-      "engineering_score": 5.0,
-      "domain_score": 8,
-      "potential_score": 5.0
-    }
-  },
-  {
-    "name": "乔兰迪",
-    "total_score": 34.1,
-    "experience_years": 0,
-    "team_size": 0,
-    "skills": [
-      "算法",
-      "团队管理"
+    "evidence": [
+      "学历不足：要求本科及以上",
+      "经验远超要求：3年要求，2019年",
+      "技能：必备3/3，加分0"
     ],
-    "decision": "not_recommend",
-    "file_path": "C:\\Users\\ranwu\\Documents\\xwechat_files\\wxid_i70l9yurpce422_b7a7\\msg\\file\\2026-03\\乔兰迪简历.pdf",
-    "detailed_scores": {
-      "education_score": 8.0,
-      "experience_score": 2.0,
-      "skill_score": 1.4500000000000002,
-      "engineering_score": 5.0,
-      "domain_score": 4,
-      "potential_score": 7.0
-    }
+    "basic_info": {
+      "experience_years": 2019,
+      "skills": [
+        "Python",
+        "Django",
+        "后端开发"
+      ],
+      "management_experience": false,
+      "team_size": 0,
+      "file_path": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/ai-recruitment/test_fixtures/resume_python_backend.txt"
+    },
+    "status": "screened",
+    "created_at": "2026-03-15T16:16:42.236069",
+    "updated_at": "2026-03-15T16:16:42.236069"
   },
   {
-    "name": "未知姓名",
-    "total_score": 23.0,
-    "experience_years": 0,
-    "team_size": 0,
-    "skills": [],
-    "decision": "not_recommend",
-    "file_path": "C:\\Users\\ranwu\\Documents\\xwechat_files\\wxid_i70l9yurpce422_b7a7\\msg\\file\\2026-03\\关于征集四川大学130周年校庆电子信息学院优秀校友事迹的通知2026-1.pdf",
-    "detailed_scores": {
-      "education_score": 8.0,
-      "experience_score": 2.0,
-      "skill_score": 0.0,
-      "engineering_score": 5.0,
-      "domain_score": 0,
-      "potential_score": 5.0
-    }
+    "candidate_id": "cand_1773562602_resume_sam",
+    "job_id": "job-1",
+    "name": "张三",
+    "scores": {
+      "education_score": 3.0,
+      "experience_score": 9.5,
+      "skill_score": 8.0,
+      "engineering_score": 10.0,
+      "domain_score": 6,
+      "potential_score": 7.0,
+      "total_score": 7.77
+    },
+    "decision": "recommend",
+    "risk_flags": [
+      "education_below_requirement"
+    ],
+    "evidence": [
+      "学历不足：要求本科及以上",
+      "经验远超要求：3年要求，2019年",
+      "技能：必备3/3，加分0"
+    ],
+    "basic_info": {
+      "experience_years": 2019,
+      "skills": [
+        "Python",
+        "Django",
+        "后端开发"
+      ],
+      "management_experience": true,
+      "team_size": 0,
+      "file_path": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/ai-recruitment/test_fixtures/resume_sample.txt"
+    },
+    "status": "screened",
+    "created_at": "2026-03-15T16:16:42.236069",
+    "updated_at": "2026-03-15T16:16:42.236069"
+  },
+  {
+    "candidate_id": "cand_1773562602_resume_pyt",
+    "job_id": "job-ai-director",
+    "name": "李四",
+    "scores": {
+      "education_score": 3.0,
+      "experience_score": 9.5,
+      "skill_score": 2.0,
+      "engineering_score": 10.0,
+      "domain_score": 2,
+      "potential_score": 5.0,
+      "total_score": 5.08
+    },
+    "decision": "borderline",
+    "risk_flags": [
+      "education_below_requirement",
+      "insufficient_skills"
+    ],
+    "evidence": [
+      "学历不足：要求本科及以上",
+      "经验远超要求：8年要求，2019年",
+      "技能：必备2/14，加分0"
+    ],
+    "basic_info": {
+      "experience_years": 2019,
+      "skills": [
+        "Python",
+        "算法"
+      ],
+      "management_experience": false,
+      "team_size": 0,
+      "file_path": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/ai-recruitment/test_fixtures/resume_python_backend.txt"
+    },
+    "status": "screened",
+    "created_at": "2026-03-15T16:16:42.236069",
+    "updated_at": "2026-03-15T16:16:42.236069"
+  },
+  {
+    "candidate_id": "cand_1773562602_resume_sam",
+    "job_id": "job-ai-director",
+    "name": "张三",
+    "scores": {
+      "education_score": 3.0,
+      "experience_score": 9.5,
+      "skill_score": 5.6,
+      "engineering_score": 10.0,
+      "domain_score": 6,
+      "potential_score": 7.0,
+      "total_score": 6.93
+    },
+    "decision": "borderline",
+    "risk_flags": [
+      "education_below_requirement"
+    ],
+    "evidence": [
+      "学历不足：要求本科及以上",
+      "经验远超要求：8年要求，2019年",
+      "技能：必备7/14，加分1"
+    ],
+    "basic_info": {
+      "experience_years": 2019,
+      "skills": [
+        "Python",
+        "TensorFlow",
+        "PyTorch",
+        "深度学习",
+        "机器学习",
+        "NLP",
+        "算法",
+        "项目管理"
+      ],
+      "management_experience": true,
+      "team_size": 0,
+      "file_path": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/ai-recruitment/test_fixtures/resume_sample.txt"
+    },
+    "status": "screened",
+    "created_at": "2026-03-15T16:16:42.236069",
+    "updated_at": "2026-03-15T16:16:42.236069"
   }
 ]

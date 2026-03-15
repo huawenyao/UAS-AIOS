@@ -1,61 +1,72 @@
-# 招聘智能OS方案：ai-full-cycle-recruitment-os
+# UAS 招聘 Sub App 方案：ai-full-cycle-recruitment-os
 
-## 基础目的
-- 让组织在可控成本下以更高确定性获得匹配人才
+## 意图模型
+- 围绕“ai-full-cycle-recruitment-os”生成的业务意图与成功标准
 
-## 宏观战略
-- 把招聘纳入组织人才战略与HC管理
+## 知识资产
+- .claude\skills\output_contract.md
+- .claude\skills\platform_protocol.md
+- .claude\skills\recruitment_os_protocol.md
+- .claude\skills\recruitment_output_contract.md
+- CLAUDE.md
+- configs/business_loop_config.json
+- configs/evolution_policy.json
+- configs/governance_policy.json
+- configs/platform_manifest.json
+- configs/runtime_config.json
+- configs/swarm_agents.json
+- configs/system_registry.json
+- configs/workflow_config.json
 
-## 中观流程
-- 需求澄清-岗位画像-搜寻-筛选-面试-校准-Offer-入职回流形成闭环
+## 运行时拓扑
+- runtime=autonomous_agent_runtime
+- context_injection=True
+- state_isolation=task_level
 
-## 微观实体
-- 岗位卡
-- 候选人档案
-- 面试评分卡
-- Offer卡
-- 入职反馈卡
-
-## 智能体分工
+## Agent编织
+- 意图守恒智能体
+- 知识架构智能体
+- Agent编织智能体
+- 运行时智能体
+- 系统网格智能体
+- 治理审计智能体
+- 进化规划智能体
 - 用人部门智能体
 - HR运营智能体
 - 候选人体验智能体
 - 公平合规智能体
+- 宏观理念智能体
+- 宏观现实智能体
+- 中观理念智能体
+- 中观现实智能体
+- 微观理念智能体
+- 微观现实智能体
 
-## 现实实例化对象
-- 招聘战役卡
-- 岗位能力卡
-- 面试流程板
-- 校准决策板
+## 系统网格
+- ats:recruitment_tracking
+- resume_source:candidate_source
+- calendar:interview_scheduling
+- hris:onboarding_feedback
+- knowledge_base:asui_knowledge
 
-## 产品定义
-- 招聘闭环OS而非单点筛选工具
-
-## 体验蓝图
-- 以招聘战役卡和候选人档案卡组织体验
-
-## 技术架构
-- UAS分层+大模型+规则引擎+审计链路
-
-## MVP范围
-- 岗位画像
-- 结构化筛选
-- 面试辅助
-- 校准决策
+## 治理控制
+- audit
+- approval
+- rollback
 
 ## 评估指标
-- 简历筛选耗时下降
-- 决策周期缩短
-- 面试官一致性提升
+- candidate_experience_score>=0.75
+- decision_explainability_score>=0.8
+- interviewer_alignment_score>=0.7
+- process_completion_score>=0.85
 
-## 偏差风险
-- 目标漂移
-- 候选人体验偏差
-- 评分口径不一致
+## 演化回路
+- intent_activation
+- governance_check
+- evolution_plan
 
-## 迭代回路
-- 偏差校验失败时回退到目的激活或中观流程层重构
-
-## 复盘触发器
-- 候选人流失率升高
-- 入职90天匹配率下降
+## 交付计划
+- Phase 1：方案与骨架
+- Phase 2：MVP
+- Phase 3：闭环增强
+- Phase 4：演化开发
