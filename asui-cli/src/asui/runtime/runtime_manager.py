@@ -123,7 +123,12 @@ class RuntimeManager:
 
         evaluation = None
         if evaluate:
-            evaluation = self.evolution_engine.evaluate(self.app_root, state)
+            eval_payload = {
+                **state,
+                "step_outputs": state_store.state.get("step_outputs", {}),
+                "intent_model": state.get("intent_model") or state_store.state.get("intent", {}),
+            }
+            evaluation = self.evolution_engine.evaluate(self.app_root, eval_payload)
             state["evaluation"] = evaluation
             state_store.update_evaluation(evaluation)
             self.audit_engine.record(
@@ -135,7 +140,11 @@ class RuntimeManager:
             )
             for risk in evaluation.get("risks", []):
                 state_store.add_tension(risk)
-            state_store.update_evolution({"suggestions": evaluation.get("suggestions", [])})
+            state_store.update_evolution({
+                "suggestions": evaluation.get("suggestions", []),
+                "total_score": evaluation.get("total_score"),
+                "dimension_scores": evaluation.get("dimension_scores", {}),
+            })
 
         self.audit_engine.record({"event": "run_finished", "topic": topic})
         cognitive_snapshot = state_store.snapshot()
