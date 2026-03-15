@@ -139,7 +139,13 @@ UAS_SUBAPP_TEMPLATE = {
     "enabled": true,
     "require_validation_before_evolution": true,
     "default_loop": ["intent_activation", "governance_check", "evolution_plan"]
-  }
+  },
+  "evolution_phases": {
+    "drive": "intent_activation",
+    "feedback": ["step_outputs", "evaluation"],
+    "reflexivity": "evolution_plan"
+  },
+  "human_feedback_path": "database/feedback/{topic_slug}.json"
 }
 """,
     "configs/system_registry.json": """{
@@ -485,9 +491,11 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 """,
-    "database/README.md": "# 数据持久化\n\n- `database/plans/`：存放结构化 sub uas app 方案\n- `database/audit/`：存放运行时审计日志\n- `database/cognitive_state/`：存放认知状态快照\n- `database/capabilities/`：存放能力注册表快照\n",
+    "database/README.md": "# 数据持久化\n\n- `database/plans/`：存放结构化 sub uas app 方案\n- `database/audit/`：存放运行时审计日志\n- `database/cognitive_state/`：存放认知状态快照\n- `database/capabilities/`：存放能力注册表快照\n- `database/feedback/`：人机协同反馈（human_review 步骤写入）\n- `database/evolution_backups/`：演化回写前的配置备份\n",
     "database/audit/README.md": "# 审计目录\n\nRuntime 审计日志（如 `execution_log.jsonl`）会写入这里。\n",
     "database/cognitive_state/README.md": "# 认知状态目录\n\n每次运行的认知状态快照会写入这里。\n",
     "database/capabilities/README.md": "# 能力注册目录\n\n每个 sub uas app 的能力注册表快照会写入这里。\n",
+    "database/feedback/README.md": "# 人机协同反馈\n\nhuman_review 步骤等待用户将反馈写入此处。格式：{topic_slug}.json。\n",
+    "database/evolution_backups/README.md": "# 演化回写备份\n\n/evolveApply 执行前的 configs/skills 备份。\n",
     "reports/README.md": "# 报告目录\n\nMarkdown 版 sub uas app 方案会输出到这里。\n",
 }

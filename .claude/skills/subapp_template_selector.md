@@ -2,7 +2,12 @@
 
 ## 技能定位
 
-本技能定义如何根据业务意图选择 sub app 模板。当用户未指定 `--template` 时，Agent 使用本逻辑进行推断。
+本技能定义如何根据**世界模型分析输出**选择 sub app 模板。当用户未指定 `--template` 时，Agent 必须基于 `world_model_analysis` 的 `methodology_signals` 进行选择，禁止仅凭关键词匹配。
+
+## 输入
+
+- **world_model_analysis**（来自 subapp_producer_protocol 阶段 2）：含 subjects、objects、methodology_signals
+- **可选的 --template**：用户显式指定时跳过本逻辑
 
 ## 可用模板
 
@@ -18,24 +23,27 @@
 
 若用户提供 `--template <id>`，直接使用该模板，不做推断。
 
-### 规则 2：关键词匹配
+### 规则 2：基于 methodology_signals（主规则）
 
-- 若意图描述包含「多角色」「博弈」「对手盘」「蜂群」「用户视角」「关卡」「决策」「买单」等 → 倾向 `selfpaw-swarm`
-- 若意图描述包含「理念」「现实」「宏观」「中观」「微观」「涌现」「实例化」「对冲」等 → 倾向 `triadic-ideal-reality-swarm`
-- 否则 → `uas-subapp`
+从 world_model_analysis.methodology_signals 读取：
+- `multi_agent_game` > 0.6 → `selfpaw-swarm`
+- `ideal_reality_tension` > 0.6 → `triadic-ideal-reality-swarm`
+- `linear_flow` > 0.6 且另两者 < 0.4 → `uas-subapp`
+- 混合或同分：取最高分对应模板；同分时优先 selfpaw > triadic > uas-subapp
 
-### 规则 3：场景类型推断
+### 规则 3：基于 subjects 数量与冲突（辅助）
 
-| 场景类型 | 推荐模板 |
-|----------|----------|
-| 决策支持、多立场评估 | selfpaw-swarm |
-| 战略规划、方案推演、理念落地 | triadic-ideal-reality-swarm |
-| 业务流程、数据聚合、自动化 | uas-subapp |
-| 招聘、客服、选品等垂直业务 | uas-subapp |
+若 methodology_signals 不明确：
+- subjects ≥ 3 且存在明显立场冲突 → 倾向 `selfpaw-swarm`
+- 需「目的激活」「实例化」「涌现」→ 倾向 `triadic-ideal-reality-swarm`
 
 ### 规则 4：默认
 
 无法明确推断时，使用 `uas-subapp`，确保产出物满足 UAS Platform 标准。
+
+### 规则 5：关键词匹配（仅作兜底）
+
+当 world_model_analysis 不可用时（如旧版协议），可退化为关键词匹配，但应在报告中标注「未执行世界模型分析」。
 
 ## 模板能力差异
 

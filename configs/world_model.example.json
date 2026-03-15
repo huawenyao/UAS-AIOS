@@ -1,0 +1,9 @@
+{
+  "$schema": "https://asui.dev/schemas/world_model.schema.json",
+  "version": "v1.0",
+  "subjects": [],
+  "objects": [],
+  "feedback_channels": [],
+  "spatial_constraints": [],
+  "temporal_constraints": []
+}

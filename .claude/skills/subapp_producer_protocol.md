@@ -23,17 +23,41 @@
 
 **规则**：必须明确目标、约束、对象、成功标准，缺一不可。
 
-### 2. template_selection（模板选择）
+### 2. world_model_analysis（世界模型分析）
 
-**输入**：意图对象 + 可选的 `--template` 参数
+**输入**：意图对象
+
+**输出**：世界模型分析对象（见 `theory_to_template_derivation.md`）
+```json
+{
+  "subjects": [...],
+  "objects": [...],
+  "feedback_channels": [...],
+  "methodology_signals": {
+    "multi_agent_game": 0.0,
+    "ideal_reality_tension": 0.0,
+    "linear_flow": 0.0
+  }
+}
+```
+
+**规则**：
+- 必须产出 subjects、objects、feedback_channels、methodology_signals
+- methodology_signals 为 0-1 标量，三者之和可大于 1
+- 参考 `.claude/skills/theory_to_template_derivation.md`
+
+### 3. template_selection（模板选择）
+
+**输入**：意图对象 + world_model_analysis 输出 + 可选的 `--template` 参数
 
 **输出**：模板 ID（uas-subapp | selfpaw-swarm | triadic-ideal-reality-swarm）
 
 **规则**：
 - 若用户指定 `--template`，优先使用
-- 否则根据意图推断：多角色博弈/对手盘 → selfpaw-swarm；理念-现实张力/宏观中观微观 → triadic；通用业务 → uas-subapp
+- 否则根据 world_model_analysis.methodology_signals 选模板（见 theory_to_template_derivation）
+- 禁止仅凭关键词匹配，必须基于 world_model_analysis
 
-### 3. blueprint_design（方案设计）
+### 4. blueprint_design（方案设计）
 
 **输入**：意图对象 + 模板 ID + UAS 标准知识
 
@@ -43,8 +67,9 @@
 - 必须包含 intent_model, knowledge_assets, agent_fabric, governance_controls, evolution_loop
 - 方案中的 workflow、swarm_agents 需与模板结构兼容
 - 参考 `docs/UAS_PLATFORM_STANDARD.md`、`docs/ASUI_AUTONOMOUS_AGENT_STANDARD.md`
+- 生产报告必须包含 world_model_analysis 与 methodology_signals，便于审计
 
-### 4. asset_generation（资产生成）
+### 5. asset_generation（资产生成）
 
 **输入**：方案 JSON + 模板 ID + 目标路径
 
@@ -59,7 +84,7 @@
    - `.claude/skills/`：业务协议与输出契约
    - `docs/APP_BLUEPRINT.md`：产品定义
 
-### 5. validate（校验）
+### 6. validate（校验）
 
 **输入**：生成路径
 
@@ -67,11 +92,11 @@
 
 **规则**：调用 `run_uas_runtime_service.py validate --app-id <app_id>`，或执行 `scripts/evaluate_evolution.py`
 
-### 6. register（注册，可选）
+### 7. register（注册，可选）
 
 **规则**：创建与运行必须使用相同的 subapp_root。创建到 `projects/` 则运行需 `--projects-root projects`；创建到 `examples/` 则运行需 `--projects-root examples`。二者为同一概念（见 docs/TEMPLATE_PROJECT_RELATIONSHIP.md）。
 
-### 7. report（生产报告）
+### 8. report（生产报告）
 
 **输出**：写入 `database/productions/<app_id>_<timestamp>.json`，包含意图、方案、校验结果、生成路径。
 
@@ -87,12 +112,16 @@
 | 生产阶段 | UAS 标准阶段 |
 |----------|--------------|
 | intent_normalization | intent_activation |
+| world_model_analysis | （理论推演，无直接对应） |
+| template_selection | （模板选择，无直接对应） |
 | blueprint_design | knowledge_binding, agent_planning, runtime_topology, system_mapping, governance_check, evolution_plan |
 | asset_generation | render_report（写入资产生成） |
 | validate | governance_check, evolution 评估 |
 
 ## 参考文档
 
+- `.claude/skills/theory_to_template_derivation.md`（理论→模板推演）
+- `.claude/skills/subapp_template_selector.md`（模板选择细则）
 - `docs/UAS_PLATFORM_STANDARD.md`
 - `docs/ASUI_AUTONOMOUS_AGENT_STANDARD.md`
 - `asui-cli/src/asui/uas_subapp_template.py`（模板结构）
