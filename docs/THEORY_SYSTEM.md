@@ -27,6 +27,7 @@ UAS-AIOS 以**世界模型**为认知内核、以**双轨 AGI**（User / Busines
 | **三维理念现实 (triadic)** | 理念—现实一体化；目的激活、宏/中/微观、理念vs现实对冲、实例化、涌现 | examples/triadic-ideal-reality-swarm |
 | **三元张力与范式跃迁** | AI 应用本质；认知/执行/知识摩擦；范式相变→UAS-AIOS | [AI_APPLICATION_PARADIGM_REPORT](../AI_APPLICATION_PARADIGM_REPORT.md) |
 | **价值闭环（7 步）** | 从问题输入到收益反哺的完整回路 | 讨论沉淀、本文 §二 |
+| **DIKW方法论** | 智慧↔数据双向回路；构建确认回路；可创造/可运行/可适应/可进化 | 本文 §4.4 |
 | **推动—反馈—反身螺旋** | 世界模型下的演化机制 | [AGI_WORLD_MODEL_UAS](./AGI_WORLD_MODEL_UAS.md) §2.3 |
 | **UAS Platform 标准** | 所有业务应用的技术与运行标准 | [UAS_PLATFORM_STANDARD](./UAS_PLATFORM_STANDARD.md) |
 | **ASUI Autonomous Agent 标准** | 知识层、运行时、执行层、工作流阶段的强制约定 | [ASUI_AUTONOMOUS_AGENT_STANDARD](./ASUI_AUTONOMOUS_AGENT_STANDARD.md) |
