@@ -143,8 +143,8 @@
         },
         "type": {
           "type": "string",
-          "enum": ["script", "llm", "conditional", "parallel"],
-          "description": "步骤类型：script=脚本执行, llm=LLM调用, conditional=条件分支, parallel=并行执行"
+          "enum": ["script", "llm", "conditional", "parallel", "human_review", "simulation"],
+          "description": "步骤类型：script=脚本执行, llm=LLM调用, conditional=条件分支, parallel=并行执行, human_review=人机协同等待用户输入, simulation=模拟/沙箱推演（占位）"
         },
         "description": {
           "type": "string",
@@ -213,6 +213,14 @@
             "max_attempts": { "type": "integer", "minimum": 1 },
             "delay_ms": { "type": "integer", "minimum": 0 }
           }
+        },
+        "feedback_path": {
+          "type": "string",
+          "description": "type=human_review 时，用户反馈写入路径，相对于 app_root，如 database/feedback/{topic_slug}.json"
+        },
+        "feedback_schema": {
+          "type": "object",
+          "description": "type=human_review 时，期望的用户反馈 JSON Schema"
         }
       }
     }

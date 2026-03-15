@@ -138,6 +138,8 @@ E  - 演化回路（Evolution）
 │   ├── THEORY_SYSTEM.md             # 理论体系总纲 ← 核心必读
 │   ├── AGI_WORLD_MODEL_UAS.md       # 世界模型与双轨AGI
 │   ├── ASUI_ARCHITECTURE.md         # ASUI架构
+│   ├── TEMPLATE_PROJECT_RELATIONSHIP.md  # 模板与项目关系（从运行逻辑推导）
+│   ├── UAS_ASUI_PROTOCOL_GAPS_AND_ROADMAP.md  # 协议化与智能化推演不足及改进路线图
 │   ├── 世界模型/
 │   │   └── 世界模型.md               # 法则编译器深度解析
 │   └── theory_system_visualization.html  # 理论可视化（浏览器打开）
@@ -160,7 +162,17 @@ E  - 演化回路（Evolution）
 7. 收益 → 效益反哺系统
 ```
 
-### 6.2 智能体任务执行（ASUI标准）
+### 6.2 交互命令
+
+| 命令 | 功能 |
+|------|------|
+| /start | 启动主工作流 |
+| /addQuest | 添加新题目/任务 |
+| /addData | 添加新数据 |
+| /createSubApp | 自主生产 UAS sub app（基于 command + agent skill） |
+| /evolveApply | 将 evolution 建议回写到 configs/skills，实现业务层进化 |
+
+### 6.3 智能体任务执行（ASUI标准）
 
 ```
 intent_activation → understanding → planning →
