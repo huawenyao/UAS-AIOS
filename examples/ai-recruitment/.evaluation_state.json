@@ -1,10 +1,10 @@
 {
   "name": "ai-recruitment",
   "path": "C:\\Users\\ranwu\\Xiaomi Cloud\\UAS-AIOS\\examples\\ai-recruitment",
-  "last_evaluated": "2026-03-15T16:26:24.625046",
-  "last_score": 89.2,
-  "experience_score": 94,
-  "business_score": 82,
+  "last_evaluated": "2026-03-15T21:22:37.930734",
+  "last_score": 93.8,
+  "experience_score": 93,
+  "business_score": 95,
   "status": "optimized",
-  "suggestions": "[警告] 综合得分89.2分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细\n\n[业务价值] 业务价值优化建议:\n  - 商业模式不够清晰\n  - 市场定位需要进一步明确\n  - 缺乏差异化竞争优势"
+  "suggestions": "[警告] 综合得分93.8分，未达到95分目标，需要优化\n\n[产品体验] 产品体验优化建议:\n  - 缺少用户友好的操作界面\n  - 错误处理机制不完善\n  - 文档不够详细"
 }

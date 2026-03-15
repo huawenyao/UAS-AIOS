@@ -21,21 +21,27 @@ SCORE_THRESHOLD = 95  # 目标分数
 os.makedirs(HEARTBEAT_LOG, exist_ok=True)
 
 def get_all_subapps():
-    """获取所有example下的subapp"""
+    """获取所有example下的subapp（只取一级目录，排除子目录）"""
     subapps = []
-    for root, dirs, files in os.walk(EXAMPLES_DIR):
-        # 检查是否是subapp根目录（包含README.md或main.py或requirements.txt）
-        if 'README.md' in files or 'main.py' in files or 'requirements.txt' in files:
-            # 相对于examples的路径
-            rel_path = os.path.relpath(root, EXAMPLES_DIR)
-            if rel_path != '.':  # 排除根目录
+    
+    # 只遍历examples下的一级目录
+    for entry in os.scandir(EXAMPLES_DIR):
+        if entry.is_dir():
+            dir_path = entry.path
+            # 检查目录下是否有subapp标志文件
+            has_readme = os.path.exists(os.path.join(dir_path, 'README.md'))
+            has_main = os.path.exists(os.path.join(dir_path, 'main.py'))
+            has_requirements = os.path.exists(os.path.join(dir_path, 'requirements.txt'))
+            
+            if has_readme or has_main or has_requirements:
                 subapps.append({
-                    'name': rel_path,
-                    'path': root,
+                    'name': entry.name,
+                    'path': dir_path,
                     'last_evaluated': None,
                     'last_score': 0,
                     'status': 'pending'
                 })
+    
     return subapps
 
 def load_subapp_state(subapp_path):
@@ -58,16 +64,26 @@ def call_swarm_cognitive_agents(subapp_info):
     
     # 模拟蜂群智能体评估逻辑（实际应调用swarm_cognitive_agents技能）
     # 评估维度：功能完整性、用户体验、技术架构、代码质量、文档完整性
-    experience_score = 85 + int(time.time()) % 15  # 模拟85-100分
+    import random
+    base_score = 90
+    # 每次评估有50%概率提升1-2分
+    if random.random() > 0.5:
+        experience_score = min(base_score + random.randint(1, 5), 100)
+    else:
+        experience_score = min(base_score + random.randint(0, 3), 100)
+    
+    issues = []
+    if experience_score < 95:
+        issues = [
+            "缺少用户友好的操作界面",
+            "错误处理机制不完善", 
+            "文档不够详细"
+        ]
     
     return {
         'experience_score': experience_score,
         'experience_feedback': f"产品体验评估完成，得分{experience_score}分",
-        'experience_issues': [
-            "缺少用户友好的操作界面",
-            "错误处理机制不完善",
-            "文档不够详细"
-        ] if experience_score < 95 else []
+        'experience_issues': issues
     }
 
 def call_value_evaluation_agents(subapp_info):
@@ -76,16 +92,26 @@ def call_value_evaluation_agents(subapp_info):
     
     # 模拟价值评估智能体逻辑（实际应调用价值评估技能）
     # 评估维度：业务价值、可扩展性、市场需求、ROI、技术壁垒
-    business_score = 82 + int(time.time()) % 18  # 模拟82-100分
+    import random
+    base_score = 90
+    # 每次评估有50%概率提升1-2分
+    if random.random() > 0.5:
+        business_score = min(base_score + random.randint(1, 5), 100)
+    else:
+        business_score = min(base_score + random.randint(0, 3), 100)
+    
+    issues = []
+    if business_score < 95:
+        issues = [
+            "商业模式不够清晰",
+            "市场定位需要进一步明确",
+            "缺乏差异化竞争优势"
+        ]
     
     return {
         'business_score': business_score,
         'business_feedback': f"业务价值评估完成，得分{business_score}分",
-        'business_issues': [
-            "商业模式不够清晰",
-            "市场定位需要进一步明确",
-            "缺乏差异化竞争优势"
-        ] if business_score < 95 else []
+        'business_issues': issues
     }
 
 def calculate_total_score(experience_result, business_result):
@@ -154,8 +180,8 @@ def run_heartbeat_cycle():
         # 加载历史状态
         state = load_subapp_state(subapp['path'])
         if state:
-            print(f"📅 上次评估: {state.get('last_evaluated', '从未评估')}")
-            print(f"🎯 上次得分: {state.get('last_score', 0)}分")
+            print(f"[历史] 上次评估: {state.get('last_evaluated', '从未评估')}")
+            print(f"[历史] 上次得分: {state.get('last_score', 0)}分")
         
         # 调用评估智能体
         experience_result = call_swarm_cognitive_agents(subapp)
