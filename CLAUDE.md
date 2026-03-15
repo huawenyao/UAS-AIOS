@@ -23,6 +23,8 @@
 └── docs/
     ├── ASUI_ARCHITECTURE.md  # 架构理论文档
     ├── THEORY_SYSTEM.md     # 理论体系总纲（方法论综合与关系图谱）
+    ├── TEMPLATE_PROJECT_RELATIONSHIP.md  # 模板与项目关系（从运行逻辑推导）
+    ├── UAS_ASUI_PROTOCOL_GAPS_AND_ROADMAP.md  # 协议化与智能化推演不足及改进路线图
     └── theory_system_visualization.html  # 理论体系可视化（浏览器打开）
 ```
 
@@ -33,13 +35,15 @@
 3. **执行协调**：AI 调用 scripts、database 等系统工具
 4. **结果反馈**：结构化输出写入数据库，生成报告
 
-## 交互命令（待扩展）
+## 交互命令
 
 | 命令 | 功能 |
 |------|------|
 | /start | 启动主工作流 |
 | /addQuest | 添加新题目/任务 |
 | /addData | 添加新数据 |
+| /createSubApp | 自主生产 UAS sub app（基于 command + agent skill） |
+| /evolveApply | 将 evolution 建议回写到 configs/skills，实现业务层进化 |
 
 ## 修改即生效
 

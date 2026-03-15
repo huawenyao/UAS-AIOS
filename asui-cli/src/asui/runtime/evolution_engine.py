@@ -16,6 +16,7 @@ class EvolutionEngine:
             "scripts/evaluate_evolution.py",
             "scripts/evaluate_iteration.py",
         ]
+        # evaluate_evolution.py 已支持四维打分（业务/产品/技术/运行效果），驱动自主进化
         for candidate in candidates:
             script_path = app_root / candidate
             if script_path.exists():

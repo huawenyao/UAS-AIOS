@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/world_model.schema.json",
+  "title": "UAS World Model",
+  "description": "世界模型配置占位：主体、客体、反馈通道、空间/时间约束。可选，用于主客体推演与推动/阻碍/连接评估。",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+    },
+    "subjects": {
+      "type": "array",
+      "description": "主体：能动者（人/组织/Agent）",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "role": { "type": "string" },
+          "stake": { "type": "string" },
+          "capability": { "type": "string" }
+        }
+      }
+    },
+    "objects": {
+      "type": "array",
+      "description": "客体：被操作与感知的对象",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "mutable": { "type": "boolean" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "feedback_channels": {
+      "type": "array",
+      "description": "反馈通道",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "delay": { "type": "string" },
+          "reliability": { "type": "string" }
+        }
+      }
+    },
+    "spatial_constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "空间约束"
+    },
+    "temporal_constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "时间约束"
+    }
+  }
+}

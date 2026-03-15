@@ -31,6 +31,7 @@ UAS_SUBAPP_TEMPLATE = {
 | `configs/runtime_config.json` | runtime 配置 |
 | `configs/governance_policy.json` | 审计治理与权限策略 |
 | `configs/evolution_policy.json` | 目标守恒与进化策略 |
+| `configs/evaluation_criteria.json` | 四维评价标准（业务/产品/技术/运行效果） |
 | `configs/system_registry.json` | 专业系统接入清单 |
 | `.claude/skills/*.md` | 项目知识与协议 |
 
@@ -139,6 +140,62 @@ UAS_SUBAPP_TEMPLATE = {
     "enabled": true,
     "require_validation_before_evolution": true,
     "default_loop": ["intent_activation", "governance_check", "evolution_plan"]
+  },
+  "evolution_phases": {
+    "drive": "intent_activation",
+    "feedback": ["step_outputs", "evaluation"],
+    "reflexivity": "evolution_plan"
+  },
+  "human_feedback_path": "database/feedback/{topic_slug}.json"
+}
+""",
+    "configs/evaluation_criteria.json": """{
+  "$schema": "https://asui.dev/schemas/evaluation_criteria.schema.json",
+  "version": "v1.0",
+  "evolution_threshold": 70,
+  "dimension_weights": {
+    "business": 0.25,
+    "product": 0.25,
+    "technology": 0.25,
+    "operational": 0.25
+  },
+  "dimensions": {
+    "business": {
+      "name": "业务",
+      "items": [
+        { "id": "goal_clarity", "name": "目标明确度", "max_score": 25 },
+        { "id": "value_loop", "name": "价值闭环", "max_score": 25 },
+        { "id": "stakeholder_coverage", "name": "主客体覆盖", "max_score": 25 },
+        { "id": "success_metrics", "name": "成功标准可量化", "max_score": 25 }
+      ]
+    },
+    "product": {
+      "name": "产品",
+      "items": [
+        { "id": "agent_fabric", "name": "Agent编织完整", "max_score": 25 },
+        { "id": "deliverable_clarity", "name": "交付物清晰", "max_score": 25 },
+        { "id": "evaluation_metrics", "name": "评估指标定义", "max_score": 25 },
+        { "id": "workflow_completeness", "name": "工作流闭环", "max_score": 25 }
+      ]
+    },
+    "technology": {
+      "name": "技术",
+      "items": [
+        { "id": "asui_compliance", "name": "ASUI技术底座", "max_score": 25 },
+        { "id": "autonomous_agent", "name": "autonomous_agent运行时", "max_score": 25 },
+        { "id": "governance_complete", "name": "治理完整", "max_score": 25 },
+        { "id": "knowledge_assets", "name": "知识资产完整", "max_score": 25 }
+      ]
+    },
+    "operational": {
+      "name": "运行效果",
+      "items": [
+        { "id": "run_completed", "name": "执行完成", "max_score": 25 },
+        { "id": "audit_trace", "name": "审计可追溯", "max_score": 25 },
+        { "id": "output_written", "name": "输出落盘", "max_score": 25 },
+        { "id": "evolution_ready", "name": "演化就绪", "max_score": 25 }
+      ]
+    }
   }
 }
 """,
@@ -442,52 +499,155 @@ if __name__ == "__main__":
     raise SystemExit(main())
 """,
     "scripts/evaluate_evolution.py": """#!/usr/bin/env python3
-\"\"\"评估 UAS sub app 是否满足平台标准。\"\"\"
+\"\"\"UAS sub app 四维评价：业务、产品、技术、运行效果，驱动自主进化。\"\"\"
 
 import json
 import sys
 from pathlib import Path
 
 
-def load_manifest() -> dict:
-    manifest_path = Path("configs") / "platform_manifest.json"
-    return json.loads(manifest_path.read_text(encoding="utf-8"))
+def load_json(path: Path) -> dict | None:
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def score_business(criteria: dict, payload: dict, app_root: Path) -> tuple[float, list[str]]:
+    score, suggestions = 0.0, []
+    intent = payload.get("intent_model") or payload.get("intent") or {}
+    if isinstance(intent, dict):
+        intent = intent.get("goal") or intent.get("topic") or intent
+    if intent or payload.get("goal") or payload.get("topic"):
+        score += 25
+    else:
+        suggestions.append("补充业务目标、约束与成功标准")
+    if payload.get("evolution_loop") or payload.get("evaluation_metrics"):
+        score += 25
+    else:
+        suggestions.append("完善 evolution_loop、验证指标与迭代路径")
+    if payload.get("target_audience") or (isinstance(payload.get("intent_model"), dict) and payload["intent_model"].get("target_audience")):
+        score += 25
+    else:
+        suggestions.append("明确目标对象与利益相关方")
+    if payload.get("success_metrics") or payload.get("evaluation_metrics"):
+        score += 25
+    else:
+        suggestions.append("定义可量化的成功指标")
+    return min(100, score), suggestions
+
+
+def score_product(criteria: dict, payload: dict, app_root: Path) -> tuple[float, list[str]]:
+    score, suggestions = 0.0, []
+    agents = payload.get("agent_fabric") or []
+    config_agents = load_json(app_root / "configs" / "swarm_agents.json")
+    if agents or (config_agents and config_agents.get("agents")):
+        score += 25
+    else:
+        suggestions.append("完善 swarm_agents 角色与交付物")
+    if payload.get("delivery_plan") or payload.get("knowledge_assets"):
+        score += 25
+    else:
+        suggestions.append("明确各步骤产出与报告格式")
+    if payload.get("evaluation_metrics"):
+        score += 25
+    else:
+        suggestions.append("补充 evaluation_metrics")
+    workflow = load_json(app_root / "configs" / "workflow_config.json")
+    steps = (workflow or {}).get("steps", [])
+    step_ids = [s.get("id", "") for s in steps]
+    if "intent_activation" in step_ids and "governance_check" in step_ids and ("evolution_plan" in step_ids or "render_report" in step_ids):
+        score += 25
+    else:
+        suggestions.append("确保 workflow 含 intent→governance→evolution→render")
+    return min(100, score), suggestions
+
+
+def score_technology(criteria: dict, payload: dict, app_root: Path) -> tuple[float, list[str]]:
+    score, suggestions = 0.0, []
+    manifest = load_json(app_root / "configs" / "platform_manifest.json")
+    if manifest and manifest.get("platform", {}).get("technical_base") == "ASUI":
+        score += 25
+    else:
+        suggestions.append("确保 technical_base 为 ASUI")
+    if manifest and manifest.get("platform", {}).get("runtime") == "autonomous_agent":
+        score += 25
+    else:
+        suggestions.append("确保 runtime 为 autonomous_agent")
+    governance = load_json(app_root / "configs" / "governance_policy.json")
+    if governance and governance.get("governance"):
+        score += 25
+    else:
+        suggestions.append("补充 governance_policy、审计与权限")
+    skills_dir = app_root / ".claude" / "skills"
+    configs = list((app_root / "configs").glob("*.json")) if (app_root / "configs").exists() else []
+    if (skills_dir.exists() and list(skills_dir.glob("*.md"))) or len(configs) >= 5:
+        score += 25
+    else:
+        suggestions.append("完善 configs 与 .claude/skills")
+    return min(100, score), suggestions
+
+
+def score_operational(criteria: dict, payload: dict, app_root: Path) -> tuple[float, list[str]]:
+    score, suggestions = 0.0, []
+    step_outputs = payload.get("step_outputs", {})
+    if step_outputs or payload.get("render_report_result") or payload.get("status") == "written":
+        score += 25
+    else:
+        suggestions.append("检查 workflow 步骤是否全部执行")
+    audit_dir = app_root / "database" / "audit"
+    if audit_dir.exists() and list(audit_dir.glob("*.jsonl")):
+        score += 25
+    else:
+        suggestions.append("确保 database/audit 有记录")
+    reports_dir = app_root / "reports"
+    db_plans = app_root / "database" / "plans"
+    if (reports_dir.exists() and list(reports_dir.glob("*.md"))) or (db_plans.exists() and list(db_plans.glob("*.json"))):
+        score += 25
+    else:
+        suggestions.append("确保 reports 或 database 有产出")
+    if payload.get("evaluation") or payload.get("evolution"):
+        score += 25
+    else:
+        suggestions.append("确保 cognitive_state 含 evolution 建议")
+    return min(100, score), suggestions
 
 
 def main() -> int:
-    manifest = load_manifest()
     payload = json.load(sys.stdin)
-
-    risks = []
-    suggestions = []
-
-    if manifest["platform"]["technical_base"] != "ASUI":
-        risks.append("技术底座不是ASUI")
-        suggestions.append("回退到平台清单，统一技术底座为ASUI")
-
-    if manifest["platform"]["runtime"] != "autonomous_agent":
-        risks.append("运行架构不是autonomous_agent")
-        suggestions.append("回退到runtime配置，统一运行时为autonomous_agent")
-
-    if not payload.get("governance_controls"):
-        risks.append("缺少治理控制设计")
-        suggestions.append("补充治理控制、审计、权限和高风险审批")
-
-    if not payload.get("evolution_loop"):
-        risks.append("缺少演化回路")
-        suggestions.append("补充验证指标、偏差检测和迭代路径")
-
-    status = "pass" if not risks else "needs_evolution"
-    print(json.dumps({"status": status, "risks": risks, "suggestions": suggestions or ["当前方案满足平台标准"]}, ensure_ascii=False, indent=2))
+    app_root = Path.cwd()
+    criteria = load_json(app_root / "configs" / "evaluation_criteria.json") or {}
+    dimensions_cfg = criteria.get("dimensions", {})
+    weights = criteria.get("dimension_weights") or {"business": 0.25, "product": 0.25, "technology": 0.25, "operational": 0.25}
+    threshold = criteria.get("evolution_threshold", 70)
+    scorers = {"business": score_business, "product": score_product, "technology": score_technology, "operational": score_operational}
+    scores = {}
+    all_suggestions = []
+    weighted_sum = 0.0
+    weight_total = 0.0
+    for dim_id, scorer in scorers.items():
+        dim_cfg = dimensions_cfg.get(dim_id, {})
+        dim_score, dim_suggestions = scorer(dim_cfg, payload, app_root)
+        scores[dim_id] = {"score": round(dim_score, 1), "name": dim_cfg.get("name", dim_id), "suggestions": dim_suggestions}
+        all_suggestions.extend(dim_suggestions)
+        w = weights.get(dim_id, 0.25)
+        weighted_sum += dim_score * w
+        weight_total += w
+    total_score = round(weighted_sum / weight_total if weight_total else 0, 1)
+    status = "pass" if total_score >= threshold else "needs_evolution"
+    risks = [f"{k}维度得分{scores[k]['score']}低于预期" for k, v in scores.items() if v["score"] < 60]
+    output = {"status": status, "total_score": total_score, "evolution_threshold": threshold, "dimension_scores": scores, "risks": risks, "suggestions": list(dict.fromkeys(all_suggestions)) or ["当前满足评价标准"]}
+    print(json.dumps(output, ensure_ascii=False, indent=2))
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
 """,
-    "database/README.md": "# 数据持久化\n\n- `database/plans/`：存放结构化 sub uas app 方案\n- `database/audit/`：存放运行时审计日志\n- `database/cognitive_state/`：存放认知状态快照\n- `database/capabilities/`：存放能力注册表快照\n",
+    "database/README.md": "# 数据持久化\n\n- `database/plans/`：存放结构化 sub uas app 方案\n- `database/audit/`：存放运行时审计日志\n- `database/cognitive_state/`：存放认知状态快照\n- `database/capabilities/`：存放能力注册表快照\n- `database/feedback/`：人机协同反馈（human_review 步骤写入）\n- `database/evolution_backups/`：演化回写前的配置备份\n",
     "database/audit/README.md": "# 审计目录\n\nRuntime 审计日志（如 `execution_log.jsonl`）会写入这里。\n",
     "database/cognitive_state/README.md": "# 认知状态目录\n\n每次运行的认知状态快照会写入这里。\n",
     "database/capabilities/README.md": "# 能力注册目录\n\n每个 sub uas app 的能力注册表快照会写入这里。\n",
+    "database/feedback/README.md": "# 人机协同反馈\n\nhuman_review 步骤等待用户将反馈写入此处。格式：{topic_slug}.json。\n",
+    "database/evolution_backups/README.md": "# 演化回写备份\n\n/evolveApply 执行前的 configs/skills 备份。\n",
     "reports/README.md": "# 报告目录\n\nMarkdown 版 sub uas app 方案会输出到这里。\n",
 }

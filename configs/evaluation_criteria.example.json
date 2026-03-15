@@ -1,0 +1,53 @@
+{
+  "$schema": "https://asui.dev/schemas/evaluation_criteria.schema.json",
+  "version": "v1.0",
+  "evolution_threshold": 70,
+  "dimension_weights": {
+    "business": 0.25,
+    "product": 0.25,
+    "technology": 0.25,
+    "operational": 0.25
+  },
+  "dimensions": {
+    "business": {
+      "name": "业务",
+      "weight": 0.25,
+      "items": [
+        { "id": "goal_clarity", "name": "目标明确度", "max_score": 25, "suggestion_template": "补充业务目标、约束与成功标准" },
+        { "id": "value_loop", "name": "价值闭环", "max_score": 25, "suggestion_template": "完善 evolution_loop、验证指标与迭代路径" },
+        { "id": "stakeholder_coverage", "name": "主客体覆盖", "max_score": 25, "suggestion_template": "明确目标对象与利益相关方" },
+        { "id": "success_metrics", "name": "成功标准可量化", "max_score": 25, "suggestion_template": "定义可量化的成功指标" }
+      ]
+    },
+    "product": {
+      "name": "产品",
+      "weight": 0.25,
+      "items": [
+        { "id": "agent_fabric", "name": "Agent编织完整", "max_score": 25, "suggestion_template": "完善 swarm_agents 角色与交付物" },
+        { "id": "deliverable_clarity", "name": "交付物清晰", "max_score": 25, "suggestion_template": "明确各步骤产出与报告格式" },
+        { "id": "evaluation_metrics", "name": "评估指标定义", "max_score": 25, "suggestion_template": "补充 evaluation_metrics" },
+        { "id": "workflow_completeness", "name": "工作流闭环", "max_score": 25, "suggestion_template": "确保 workflow 含 intent→governance→evolution→render" }
+      ]
+    },
+    "technology": {
+      "name": "技术",
+      "weight": 0.25,
+      "items": [
+        { "id": "asui_compliance", "name": "ASUI技术底座", "max_score": 25, "suggestion_template": "确保 technical_base 为 ASUI" },
+        { "id": "autonomous_agent", "name": "autonomous_agent运行时", "max_score": 25, "suggestion_template": "确保 runtime 为 autonomous_agent" },
+        { "id": "governance_complete", "name": "治理完整", "max_score": 25, "suggestion_template": "补充 governance_policy、审计与权限" },
+        { "id": "knowledge_assets", "name": "知识资产完整", "max_score": 25, "suggestion_template": "完善 configs 与 .claude/skills" }
+      ]
+    },
+    "operational": {
+      "name": "运行效果",
+      "weight": 0.25,
+      "items": [
+        { "id": "run_completed", "name": "执行完成", "max_score": 25, "suggestion_template": "检查 workflow 步骤是否全部执行" },
+        { "id": "audit_trace", "name": "审计可追溯", "max_score": 25, "suggestion_template": "确保 database/audit 有记录" },
+        { "id": "output_written", "name": "输出落盘", "max_score": 25, "suggestion_template": "确保 reports 或 database 有产出" },
+        { "id": "evolution_ready", "name": "演化就绪", "max_score": 25, "suggestion_template": "确保 cognitive_state 含 evolution 建议" }
+      ]
+    }
+  }
+}
