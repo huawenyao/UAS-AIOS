@@ -33,13 +33,14 @@
 3. **执行协调**：AI 调用 scripts、database 等系统工具
 4. **结果反馈**：结构化输出写入数据库，生成报告
 
-## 交互命令（待扩展）
+## 交互命令
 
 | 命令 | 功能 |
 |------|------|
 | /start | 启动主工作流 |
 | /addQuest | 添加新题目/任务 |
 | /addData | 添加新数据 |
+| /createSubApp | 自主生产 UAS sub app（基于 command + agent skill） |
 
 ## 修改即生效
 
