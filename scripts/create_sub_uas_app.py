@@ -20,8 +20,10 @@ def main() -> int:
     parser.add_argument("app_name", help="子应用名称，例如 ai-recruitment-os")
     parser.add_argument(
         "--target-root",
+        "--subapp-root",
+        dest="target_root",
         default="projects",
-        help="目标根目录，默认 projects",
+        help="sub app 根目录（与 run_uas_runtime_service --subapp-root 一致），默认 projects",
     )
     parser.add_argument(
         "--template",
@@ -42,6 +44,8 @@ def main() -> int:
     project_path = target_root / args.app_name
 
     success = run_init(project_path, template=args.template, force=args.force)
+    if success:
+        print(f"\n  运行发现: python3 scripts/run_uas_runtime_service.py list --projects-root {args.target_root}")
     return 0 if success else 1
 
 

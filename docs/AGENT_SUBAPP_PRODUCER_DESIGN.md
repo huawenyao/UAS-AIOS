@@ -276,7 +276,7 @@
 | `asui init` / `run_init` | 同上，通过 `create_sub_uas_app.py` 间接调用 |
 | `UAS_SUBAPP_TEMPLATE` | 作为默认模板，Agent 可在此基础上覆盖 |
 | `RuntimeManager` | 可选：生产工作流可作为「元工作流」在元项目运行，步骤中调用 produce 脚本 |
-| `UASRuntimeService` | 生产后通过 `list` 或 `registry` 发现新 sub app；需确保 projects_root 包含新路径 |
+| `UASRuntimeService` | 生产后通过 `list` 或 `registry` 发现新 sub app；创建与运行需使用相同 subapp_root（见 docs/TEMPLATE_PROJECT_RELATIONSHIP.md） |
 | `workflow_config.schema.json` | 方案中的 workflow 需符合 schema |
 | `platform_manifest.schema.json` | 生成的 platform_manifest.json 需通过 schema 校验 |
 

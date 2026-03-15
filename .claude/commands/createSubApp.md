@@ -15,7 +15,7 @@
 | 选项 | 说明 | 默认值 |
 |------|------|--------|
 | `--template` | 模板类型：uas-subapp, selfpaw-swarm, triadic-ideal-reality-swarm | 由 Agent 根据意图推断 |
-| `--target` | 目标根目录：projects 或 examples | projects |
+| `--target` | 目标根目录（即 subapp_root）：projects 或 examples；运行需用相同值 | projects |
 | `--name` | 子应用 ID（slug，如 ai-recruitment-os） | 由业务描述生成 |
 | `--force` | 覆盖已存在的目录/文件 | false |
 | `--dry-run` | 仅输出方案 JSON，不生成文件 | false |

@@ -24,7 +24,13 @@ def main() -> int:
     parser.add_argument("--topic-slug", help="认知状态文件的 slug")
     parser.add_argument("--payload-json", help="额外 JSON payload")
     parser.add_argument("--evaluate", action="store_true", help="运行后执行评估")
-    parser.add_argument("--projects-root", default="projects", help="sub uas app 根目录")
+    parser.add_argument(
+        "--projects-root",
+        "--subapp-root",
+        dest="projects_root",
+        default="projects",
+        help="sub app 根目录（与 create_sub_uas_app --target-root 一致），默认 projects",
+    )
     args = parser.parse_args()
 
     workspace_root, service_cls = load_service()

@@ -51,7 +51,7 @@
 **输出**：完整的 sub app 目录树
 
 **规则**：
-1. 调用 `python3 scripts/create_sub_uas_app.py <app_id> --target <target_root> --template <template_id>`
+1. 调用 `python3 scripts/create_sub_uas_app.py <app_id> --target-root <subapp_root> --template <template_id>`
 2. 根据方案覆盖/补充：
    - `configs/workflow_config.json`：步骤、agent、prompt 定制
    - `configs/swarm_agents.json`：agent 角色与使命定制
@@ -69,7 +69,7 @@
 
 ### 6. register（注册，可选）
 
-**规则**：若 target 为 examples 或 projects，确保新 sub app 可被 `run_uas_runtime_service.py list` 发现。必要时更新 `--projects-root` 或 registry 配置。
+**规则**：创建与运行必须使用相同的 subapp_root。创建到 `projects/` 则运行需 `--projects-root projects`；创建到 `examples/` 则运行需 `--projects-root examples`。二者为同一概念（见 docs/TEMPLATE_PROJECT_RELATIONSHIP.md）。
 
 ### 7. report（生产报告）
 

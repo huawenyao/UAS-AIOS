@@ -23,6 +23,7 @@
 └── docs/
     ├── ASUI_ARCHITECTURE.md  # 架构理论文档
     ├── THEORY_SYSTEM.md     # 理论体系总纲（方法论综合与关系图谱）
+    ├── TEMPLATE_PROJECT_RELATIONSHIP.md  # 模板与项目关系（从运行逻辑推导）
     └── theory_system_visualization.html  # 理论体系可视化（浏览器打开）
 ```
 
