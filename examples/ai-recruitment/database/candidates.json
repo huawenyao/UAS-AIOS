@@ -1,6 +1,6 @@
 [
   {
-    "candidate_id": "cand_1773562602_resume_pyt",
+    "candidate_id": "cand_1773768684_resume_pyt",
     "job_id": "job-1",
     "name": "李四",
     "scores": {
@@ -10,6 +10,18 @@
       "engineering_score": 10.0,
       "domain_score": 2,
       "potential_score": 5.0,
+      "matching": {
+        "ability_match_score": 72.0,
+        "context_match_score": 95.0,
+        "culture_fit_score": 60.0,
+        "growth_potential_score": 50.0,
+        "overall_match_score": 72.05
+      },
+      "intent": {
+        "intent_score": 50.0,
+        "communication_clarity_score": 50.0,
+        "motivation_fit_score": 50.0
+      },
       "total_score": 7.17
     },
     "decision": "recommend",
@@ -33,11 +45,11 @@
       "file_path": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/ai-recruitment/test_fixtures/resume_python_backend.txt"
     },
     "status": "screened",
-    "created_at": "2026-03-15T16:16:42.236069",
-    "updated_at": "2026-03-15T16:16:42.236069"
+    "created_at": "2026-03-18T01:31:24.379793",
+    "updated_at": "2026-03-18T01:31:24.379793"
   },
   {
-    "candidate_id": "cand_1773562602_resume_sam",
+    "candidate_id": "cand_1773768684_resume_sam",
     "job_id": "job-1",
     "name": "张三",
     "scores": {
@@ -47,6 +59,18 @@
       "engineering_score": 10.0,
       "domain_score": 6,
       "potential_score": 7.0,
+      "matching": {
+        "ability_match_score": 80.0,
+        "context_match_score": 95.0,
+        "culture_fit_score": 60.0,
+        "growth_potential_score": 70.0,
+        "overall_match_score": 78.25
+      },
+      "intent": {
+        "intent_score": 50.0,
+        "communication_clarity_score": 50.0,
+        "motivation_fit_score": 50.0
+      },
       "total_score": 7.77
     },
     "decision": "recommend",
@@ -70,11 +94,11 @@
       "file_path": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/ai-recruitment/test_fixtures/resume_sample.txt"
     },
     "status": "screened",
-    "created_at": "2026-03-15T16:16:42.236069",
-    "updated_at": "2026-03-15T16:16:42.236069"
+    "created_at": "2026-03-18T01:31:24.379793",
+    "updated_at": "2026-03-18T01:31:24.379793"
   },
   {
-    "candidate_id": "cand_1773562602_resume_pyt",
+    "candidate_id": "cand_1773768684_resume_pyt",
     "job_id": "job-ai-director",
     "name": "李四",
     "scores": {
@@ -84,6 +108,18 @@
       "engineering_score": 10.0,
       "domain_score": 2,
       "potential_score": 5.0,
+      "matching": {
+        "ability_match_score": 36.0,
+        "context_match_score": 95.0,
+        "culture_fit_score": 60.0,
+        "growth_potential_score": 50.0,
+        "overall_match_score": 57.65
+      },
+      "intent": {
+        "intent_score": 50.0,
+        "communication_clarity_score": 50.0,
+        "motivation_fit_score": 50.0
+      },
       "total_score": 5.08
     },
     "decision": "borderline",
@@ -107,11 +143,11 @@
       "file_path": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/ai-recruitment/test_fixtures/resume_python_backend.txt"
     },
     "status": "screened",
-    "created_at": "2026-03-15T16:16:42.236069",
-    "updated_at": "2026-03-15T16:16:42.236069"
+    "created_at": "2026-03-18T01:31:24.379793",
+    "updated_at": "2026-03-18T01:31:24.379793"
   },
   {
-    "candidate_id": "cand_1773562602_resume_sam",
+    "candidate_id": "cand_1773768684_resume_sam",
     "job_id": "job-ai-director",
     "name": "张三",
     "scores": {
@@ -121,6 +157,18 @@
       "engineering_score": 10.0,
       "domain_score": 6,
       "potential_score": 7.0,
+      "matching": {
+        "ability_match_score": 65.6,
+        "context_match_score": 95.0,
+        "culture_fit_score": 60.0,
+        "growth_potential_score": 70.0,
+        "overall_match_score": 72.49
+      },
+      "intent": {
+        "intent_score": 50.0,
+        "communication_clarity_score": 50.0,
+        "motivation_fit_score": 50.0
+      },
       "total_score": 6.93
     },
     "decision": "borderline",
@@ -149,7 +197,7 @@
       "file_path": "/mnt/c/Users/ranwu/Xiaomi Cloud/UAS-AIOS/examples/ai-recruitment/test_fixtures/resume_sample.txt"
     },
     "status": "screened",
-    "created_at": "2026-03-15T16:16:42.236069",
-    "updated_at": "2026-03-15T16:16:42.236069"
+    "created_at": "2026-03-18T01:31:24.379793",
+    "updated_at": "2026-03-18T01:31:24.379793"
   }
 ]

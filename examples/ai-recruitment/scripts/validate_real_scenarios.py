@@ -79,7 +79,14 @@ except Exception:
         return info
 
     def calculate_professional_score(resume_info, job_req):
-        scores = {"education_score": 0, "experience_score": 0, "skill_score": 0, "engineering_score": 0, "domain_score": 0, "potential_score": 0}
+        scores = {
+            "education_score": 0,
+            "experience_score": 0,
+            "skill_score": 0,
+            "engineering_score": 0,
+            "domain_score": 0,
+            "potential_score": 0,
+        }
         evidence = []
         risk_flags = []
         required_degree = job_req.get("required_degree", "本科及以上")
@@ -155,11 +162,46 @@ except Exception:
             decision = "borderline"
         else:
             decision = "not_recommend"
+
+        # 基础版人岗匹配/意向画像（用于填充 Candidate.scores.matching 与 intent，便于后续演化）
+        # 这里采用启发式：用专业维度组合近似 ability/context/growth，后续可由 workflow_execution 精细替换。
+        ability_match_score = min(100.0, (scores["skill_score"] * 0.6 + scores["engineering_score"] * 0.2 + scores["domain_score"] * 0.2) * 10)
+        context_match_score = min(100.0, scores["experience_score"] * 10)
+        growth_potential_score = min(100.0, scores["potential_score"] * 10)
+        # 文化契合度暂用中性 60 分占位，后续由面试评估维度覆盖
+        culture_fit_score = 60.0
+        overall_match_score = round(
+            0.4 * ability_match_score
+            + 0.25 * context_match_score
+            + 0.2 * culture_fit_score
+            + 0.15 * growth_potential_score,
+            2,
+        )
+
+        intent_score = 50.0  # 初筛阶段若无行为数据，给出中性占位
+        communication_clarity_score = 50.0
+        motivation_fit_score = 50.0
+
         return {
             "candidate_id": resume_info["candidate_id"],
             "job_id": "",
             "name": resume_info.get("name") or "未知",
-            "scores": {**scores, "total_score": round(total, 2)},
+            "scores": {
+                **scores,
+                "matching": {
+                    "ability_match_score": round(ability_match_score, 2),
+                    "context_match_score": round(context_match_score, 2),
+                    "culture_fit_score": round(culture_fit_score, 2),
+                    "growth_potential_score": round(growth_potential_score, 2),
+                    "overall_match_score": overall_match_score,
+                },
+                "intent": {
+                    "intent_score": intent_score,
+                    "communication_clarity_score": communication_clarity_score,
+                    "motivation_fit_score": motivation_fit_score,
+                },
+                "total_score": round(total, 2),
+            },
             "decision": decision,
             "risk_flags": risk_flags,
             "evidence": evidence,
@@ -284,11 +326,26 @@ def run_validation():
         r.get("scores") and r.get("evidence") and r.get("decision") for r in all_results
     )
 
+    # 结构化画像与匹配字段的覆盖情况（用于衡量认知广度/深度是否落实到数据）
+    structured_matching_ok = 0
+    structured_intent_ok = 0
+    for r in all_results:
+        s = r.get("scores") or {}
+        m = s.get("matching") or {}
+        it = s.get("intent") or {}
+        if m.get("ability_match_score") is not None and m.get("overall_match_score") is not None:
+            structured_matching_ok += 1
+        if it.get("intent_score") is not None:
+            structured_intent_ok += 1
+
     validation_metrics = {
         "process_completion_score": 1.0 if process_ok else 0.0,
         "decision_explainability_score": (with_evidence / n if n else 0) * (with_decision / n if n else 0),
         "interviewer_alignment_score": 0.75,  # 同一套 rubric 对同岗位一致，预设
         "candidate_experience_score": 0.75,  # 待上线后采集反馈时效等
+        # 新增：结构化人岗匹配/意向字段覆盖率（暂不参与通过/未通过判断，用于迭代跟踪）
+        "structured_matching_coverage": structured_matching_ok / n if n else 0.0,
+        "structured_intent_coverage": structured_intent_ok / n if n else 0.0,
     }
     validation_metrics["decision_explainability_score"] = round(
         min(1.0, validation_metrics["decision_explainability_score"]), 2
@@ -301,6 +358,7 @@ def run_validation():
         "decision_explainability_score": 0.8,
         "interviewer_alignment_score": 0.7,
         "candidate_experience_score": 0.75,
+        # 结构化匹配/意向覆盖率目前作为「观察指标」，不纳入强制阈值
     }
     report_data = {
         "timestamp": now,
@@ -341,9 +399,14 @@ def run_validation():
         "|------|--------|------|----------|",
     ]
     for k, v in validation_metrics.items():
-        th = report_data["thresholds"][k]
-        ok = "是" if v >= th else "否"
-        md_lines.append(f"| {k} | {v} | {th} | {ok} |")
+        th = report_data["thresholds"].get(k)
+        if th is None:
+            ok = "N/A"
+            th_str = "-"
+        else:
+            ok = "是" if v >= th else "否"
+            th_str = str(th)
+        md_lines.append(f"| {k} | {v} | {th_str} | {ok} |")
     md_lines.extend([
         "",
         "**综合结论**: " + ("通过" if report_data["passed"] else "未通过"),
