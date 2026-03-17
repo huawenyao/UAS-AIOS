@@ -1,0 +1,131 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v2.0-test",
+  "name": "智能客服优化 - DIKW机制验证测试",
+  "description": "验证UAS理论模型在客服场景下的DIKW流转与world model降维效果",
+  "topic": "电商平台智能客服系统优化：提升客户满意度同时降低人工客服成本",
+
+  "world_model": {
+    "reduction": {
+      "spatial": {
+        "dimensions": ["macro", "meso", "micro"],
+        "abstraction": [
+          {
+            "layer": "macro",
+            "focus": "customer_service_ecosystem",
+            "complexity": "high",
+            "entities": ["platform", "merchants", "customers", "service_providers"],
+            "relations": ["value_exchange", "information_flow", "trust_network"]
+          },
+          {
+            "layer": "meso",
+            "focus": "service_process_network",
+            "complexity": "medium",
+            "entities": ["inquiry_routing", "knowledge_base", "escalation_rules", "feedback_loops"],
+            "relations": ["sequential_flow", "conditional_branching", "feedback_cycles"]
+          },
+          {
+            "layer": "micro",
+            "focus": "interaction_instance",
+            "complexity": "low",
+            "entities": ["customer_query", "bot_response", "human_handoff", "resolution_action"],
+            "relations": ["trigger_response", "escalate_transfer", "confirm_resolve"]
+          }
+        ]
+      },
+      "temporal": {
+        "phases": 5,
+        "evolution": [
+          {
+            "phase": "purpose_activation",
+            "duration": "fixed",
+            "output": "activated_goals",
+            "dikw_stage": "Data→Information",
+            "mechanism": "场景数据归一化与目标结构化"
+          },
+          {
+            "phase": "triadic_decomposition",
+            "duration": "adaptive",
+            "output": "decomposed_views",
+            "dikw_stage": "Information→Knowledge",
+            "mechanism": "三维空间建模与关系提取"
+          },
+          {
+            "phase": "ideal_reality_confrontation",
+            "duration": "adaptive",
+            "output": "confronted_insights",
+            "dikw_stage": "Knowledge→Wisdom",
+            "mechanism": "理念现实对冲与因果推理"
+          },
+          {
+            "phase": "instantiation",
+            "duration": "fixed",
+            "output": "executable_plan",
+            "dikw_stage": "Wisdom→Action",
+            "mechanism": "智慧实例化为可执行方案"
+          },
+          {
+            "phase": "evolution",
+            "duration": "continuous",
+            "output": "validated_knowledge",
+            "dikw_stage": "Action→Wisdom→Data",
+            "mechanism": "执行反馈驱动的知识演化"
+          }
+        ]
+      }
+    },
+
+    "dikw_flow": {
+      "compression_loop": {
+        "enabled": true,
+        "trigger": "knowledge_saturation",
+        "mechanism": "wisdom_to_data_compression",
+        "output": "compressed_knowledge_packages",
+        "example": "客服最佳实践压缩为可复用模板"
+      },
+      "value_loop": {
+        "enabled": true,
+        "trigger": "business_outcome",
+        "mechanism": "data_to_wisdom_accumulation",
+        "output": "evolved_world_model",
+        "example": "客服交互数据累积为预测模型"
+      }
+    }
+  },
+
+  "swarm": {
+    "mode": "triadic-ideal-reality-swarm",
+    "agents": [
+      {"id": "purpose_activator", "dimension": "purpose", "mission": "激活客服优化核心目的：提升满意度+降低成本"},
+      {"id": "macro_ideal", "dimension": "macro", "stance": "ideal", "mission": "设计理想客服生态：全渠道无缝体验"},
+      {"id": "macro_reality", "dimension": "macro", "stance": "reality", "mission": "识别现实约束：技术债务、组织 silos、预算限制"},
+      {"id": "meso_ideal", "dimension": "meso", "stance": "ideal", "mission": "设计理想服务流程：智能路由、预测性服务"},
+      {"id": "meso_reality", "dimension": "meso", "stance": "reality", "mission": "映射现实流程：工单系统、升级规则、KPI冲突"},
+      {"id": "micro_ideal", "dimension": "micro", "stance": "ideal", "mission": "设计理想交互：自然语言理解、情感识别、个性化"},
+      {"id": "micro_reality", "dimension": "micro", "stance": "reality", "mission": "识别现实交互：查询复杂度、用户情绪波动、边缘案例"},
+      {"id": "instantiator", "dimension": "instantiation", "mission": "将客服优化方案实例化为可执行项目"},
+      {"id": "validator", "dimension": "validation", "mission": "验证方案满足满意度提升和成本降低双重目标"}
+    ],
+    "phases": [
+      {"name": "purpose_activation", "goal": "明确客服优化核心目的与约束"},
+      {"name": "triadic_decomposition", "goal": "三维理念现实独立分析"},
+      {"name": "ideal_reality_confrontation", "goal": "识别理想与现实差距"},
+      {"name": "instantiation", "goal": "生成可执行优化方案"},
+      {"name": "validation", "goal": "验证业务价值闭环"}
+    ]
+  },
+
+  "business_value": {
+    "metrics": {
+      "customer_satisfaction": {"current": 72, "target": 85, "weight": 0.4},
+      "cost_per_contact": {"current": 12.5, "target": 8.0, "weight": 0.3},
+      "first_contact_resolution": {"current": 65, "target": 80, "weight": 0.2},
+      "agent_utilization": {"current": 70, "target": 85, "weight": 0.1}
+    },
+    "feedback_triggers": {
+      "satisfaction_gap > 10": "深化微观交互设计",
+      "cost_reduction < 20": "重构中观流程",
+      "fcr_improvement < 10": "优化宏观路由策略"
+    }
+  }
+}

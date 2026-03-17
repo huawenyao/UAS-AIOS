@@ -1,0 +1,261 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "三维理念现实涌现蜂群工作流",
+  "description": "基于宏观/中观/微观与理念/现实对冲，并加入实例化、验证、评估与进化的闭环工作流",
+  "swarm": {
+    "mode": "triadic-ideal-reality-swarm",
+    "methodology": "macro-meso-micro-ideal-reality",
+    "decision_policy": "purpose_activated_emergence",
+    "agents": [
+      { "id": "purpose_anchor", "name": "目的激活智能体", "dimension": "purpose", "stance": "目的监督者" },
+      { "id": "macro_ideal", "name": "宏观理念智能体", "dimension": "macro", "stance": "生态应然设计者" },
+      { "id": "macro_reality", "name": "宏观现实智能体", "dimension": "macro", "stance": "生态实然观察者" },
+      { "id": "meso_ideal", "name": "中观理念智能体", "dimension": "meso", "stance": "价值回路设计者" },
+      { "id": "meso_reality", "name": "中观现实智能体", "dimension": "meso", "stance": "流程现实校验者" },
+      { "id": "micro_ideal", "name": "微观理念智能体", "dimension": "micro", "stance": "人-物-理念应然建模者" },
+      { "id": "micro_reality", "name": "微观现实智能体", "dimension": "micro", "stance": "人-物-信号实然观察者" },
+      { "id": "scene_instantiator", "name": "现实实例化智能体", "dimension": "instantiation", "stance": "抽象到实体映射者" },
+      { "id": "validation_evolution", "name": "验证进化智能体", "dimension": "validation", "stance": "验证与进化监督者" }
+    ],
+    "phases": [
+      {
+        "id": "purpose_activation",
+        "name": "目的激活",
+        "goal": "把基础目的绑定到具体场景与边界"
+      },
+      {
+        "id": "triadic_scan",
+        "name": "三维拆解",
+        "goal": "三维理念现实独立输出，不提前混合"
+      },
+      {
+        "id": "scene_instantiation",
+        "name": "现实实例化",
+        "goal": "把抽象结构映射为现实实体、流程、对象与接口"
+      },
+      {
+        "id": "cross_validation",
+        "name": "交叉验证",
+        "goal": "验证三维一致性、现实可执行性与评估闭环"
+      },
+      {
+        "id": "emergence",
+        "name": "涌现进化",
+        "goal": "把目的、维度、实体、验证结果综合成可进化方案"
+      }
+    ]
+  },
+  "global_config": {
+    "required_sections": [
+      "topic",
+      "purpose_anchor",
+      "macro_ecology",
+      "meso_value_loops",
+      "micro_object_matrix",
+      "instantiated_entity_map",
+      "ideal_reality_tensions",
+      "validation_matrix",
+      "product_definition",
+      "experience_blueprint",
+      "technical_choices",
+      "activation_plan",
+      "emergence_solution",
+      "operating_mode",
+      "key_entities",
+      "evaluation_metrics",
+      "iteration_loop",
+      "retrospective_triggers"
+    ]
+  },
+  "steps": [
+    {
+      "id": "intake",
+      "name": "议题归一化",
+      "type": "llm",
+      "description": "明确议题、场景、边界、目标对象与成功标准",
+      "prompt_template": "请把以下议题归一化为结构化输入，至少包含场景、目标对象、约束、当前现实、预期涌现结果。\n\n{{topic}}",
+      "swarm_mode": "topic_normalization"
+    },
+    {
+      "id": "purpose_activation",
+      "name": "目的激活",
+      "type": "llm",
+      "dependencies": ["intake"],
+      "agent_id": "purpose_anchor",
+      "agent_role": "基础目的与场景激活监督者",
+      "deliverable": "目的激活报告",
+      "prompt_template": "基于议题输入，提炼基础目的、场景激活条件、目的漂移风险与必须守住的底线。\n\n输入：{{intake}}"
+    },
+    {
+      "id": "triadic_scan",
+      "name": "三维拆解",
+      "type": "parallel",
+      "dependencies": ["purpose_activation"],
+      "description": "六个维度智能体并行独立输出",
+      "parallel_steps": [
+        "macro_ideal_report",
+        "macro_reality_report",
+        "meso_ideal_report",
+        "meso_reality_report",
+        "micro_ideal_report",
+        "micro_reality_report"
+      ]
+    },
+    {
+      "id": "macro_ideal_report",
+      "name": "宏观理念报告",
+      "type": "llm",
+      "agent_id": "macro_ideal",
+      "agent_role": "生态应然设计者",
+      "deliverable": "宏观理念报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在宏观理念层，提炼整体生态的目的结构、关键要素、作用机制、秩序原则与演化方向。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "macro_reality_report",
+      "name": "宏观现实报告",
+      "type": "llm",
+      "agent_id": "macro_reality",
+      "agent_role": "生态实然观察者",
+      "deliverable": "宏观现实报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在宏观现实层，识别真实生态中的参与者、资源、规则、外部变量、结构性约束与现实演化趋势。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "meso_ideal_report",
+      "name": "中观理念报告",
+      "type": "llm",
+      "agent_id": "meso_ideal",
+      "agent_role": "价值回路设计者",
+      "deliverable": "中观理念报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在中观理念层，设计价值回路、场景闭环流程、理想解决方案与应有工作方式。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "meso_reality_report",
+      "name": "中观现实报告",
+      "type": "llm",
+      "agent_id": "meso_reality",
+      "agent_role": "流程现实校验者",
+      "deliverable": "中观现实报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在中观现实层，还原真实流程、组织接口、工具链、数据流、瓶颈与断点。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "micro_ideal_report",
+      "name": "微观理念报告",
+      "type": "llm",
+      "agent_id": "micro_ideal",
+      "agent_role": "人-物-理念应然建模者",
+      "deliverable": "微观理念报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在微观理念层，刻画人、物、角色、理念对象的融合体，定义其应有状态、感知、动作与工作方式。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "micro_reality_report",
+      "name": "微观现实报告",
+      "type": "llm",
+      "agent_id": "micro_reality",
+      "agent_role": "人-物-信号实然观察者",
+      "deliverable": "微观现实报告",
+      "dependencies": ["purpose_activation"],
+      "prompt_template": "站在微观现实层，识别具体的人、物理对象、信号、动作链、限制条件与真实交互。\n\n目的激活：{{purpose_activation}}"
+    },
+    {
+      "id": "ideal_reality_debate",
+      "name": "理念现实对冲",
+      "type": "llm",
+      "dependencies": [
+        "macro_ideal_report",
+        "macro_reality_report",
+        "meso_ideal_report",
+        "meso_reality_report",
+        "micro_ideal_report",
+        "micro_reality_report"
+      ],
+      "description": "三维内部及跨维度完成理念现实对冲",
+      "swarm_mode": "cross_examination",
+      "prompt_template": "请组织三组理念现实对冲，并补充跨维度张力：\n1. 宏观理念 vs 宏观现实\n2. 中观理念 vs 中观现实\n3. 微观理念 vs 微观现实\n4. 目的激活是否被偏离\n\n宏观理念：{{macro_ideal_report}}\n\n宏观现实：{{macro_reality_report}}\n\n中观理念：{{meso_ideal_report}}\n\n中观现实：{{meso_reality_report}}\n\n微观理念：{{micro_ideal_report}}\n\n微观现实：{{micro_reality_report}}"
+    },
+    {
+      "id": "scene_instantiation",
+      "name": "现实实例化",
+      "type": "llm",
+      "dependencies": ["ideal_reality_debate", "purpose_activation"],
+      "agent_id": "scene_instantiator",
+      "agent_role": "抽象到实体映射者",
+      "deliverable": "现实实例化报告",
+      "prompt_template": "请把目的激活结果与三维对冲结果映射为现实世界中的实体、角色、工具、接口、对象、信号、流程节点与工作动作，形成实例化实体图谱。\n\n目的激活：{{purpose_activation}}\n\n对冲结果：{{ideal_reality_debate}}"
+    },
+    {
+      "id": "cross_validation",
+      "name": "交叉验证与评估",
+      "type": "llm",
+      "dependencies": ["scene_instantiation", "purpose_activation", "ideal_reality_debate"],
+      "agent_id": "validation_evolution",
+      "agent_role": "验证与进化监督者",
+      "deliverable": "验证进化报告",
+      "prompt_template": "请验证当前方案是否同时满足：\n1. 宏观/中观/微观一致\n2. 理念/现实闭环\n3. 现实可执行\n4. 可评估\n5. 可迭代\n并输出验证矩阵、评估指标与进化建议。\n\n目的激活：{{purpose_activation}}\n\n对冲结果：{{ideal_reality_debate}}\n\n实例化结果：{{scene_instantiation}}"
+    },
+    {
+      "id": "emergence_synthesis",
+      "name": "涌现综合",
+      "type": "llm",
+      "dependencies": ["cross_validation", "scene_instantiation", "purpose_activation"],
+      "description": "输出《三维理念现实涌现方案》",
+      "prompt_template": "基于目的激活、理念现实对冲、现实实例化与交叉验证结果，输出《三维理念现实涌现方案》。必须覆盖产品定义、体验蓝图、技术选择、运行机制、评估指标与进化回路。\n\n目的激活：{{purpose_activation}}\n\n实例化结果：{{scene_instantiation}}\n\n验证结果：{{cross_validation}}",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "topic": { "type": "string" },
+          "purpose_anchor": { "type": "array", "items": { "type": "string" } },
+          "macro_ecology": { "type": "array", "items": { "type": "string" } },
+          "meso_value_loops": { "type": "array", "items": { "type": "string" } },
+          "micro_object_matrix": { "type": "array", "items": { "type": "string" } },
+          "instantiated_entity_map": { "type": "array", "items": { "type": "string" } },
+          "ideal_reality_tensions": { "type": "array", "items": { "type": "string" } },
+          "validation_matrix": { "type": "array", "items": { "type": "string" } },
+          "product_definition": { "type": "array", "items": { "type": "string" } },
+          "experience_blueprint": { "type": "array", "items": { "type": "string" } },
+          "technical_choices": { "type": "array", "items": { "type": "string" } },
+          "activation_plan": { "type": "array", "items": { "type": "string" } },
+          "emergence_solution": { "type": "array", "items": { "type": "string" } },
+          "operating_mode": { "type": "array", "items": { "type": "string" } },
+          "key_entities": { "type": "array", "items": { "type": "string" } },
+          "evaluation_metrics": { "type": "array", "items": { "type": "string" } },
+          "iteration_loop": { "type": "array", "items": { "type": "string" } },
+          "retrospective_triggers": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "topic",
+          "purpose_anchor",
+          "macro_ecology",
+          "meso_value_loops",
+          "micro_object_matrix",
+          "instantiated_entity_map",
+          "ideal_reality_tensions",
+          "validation_matrix",
+          "product_definition",
+          "experience_blueprint",
+          "technical_choices",
+          "activation_plan",
+          "emergence_solution",
+          "operating_mode",
+          "key_entities",
+          "evaluation_metrics",
+          "iteration_loop",
+          "retrospective_triggers"
+        ]
+      }
+    },
+    {
+      "id": "render_report",
+      "name": "写入涌现报告",
+      "type": "script",
+      "dependencies": ["emergence_synthesis"],
+      "description": "将涌现输出落盘为 JSON 与 Markdown 报告",
+      "script": "scripts/render_emergence_report.py"
+    }
+  ]
+}
