@@ -1,3 +1,8 @@
+---
+name: evaluation-criteria-protocol
+description: 定义uas-subapp的四维评价标准与执行逻辑。用于：(1) 评估subapp质量 (2) 驱动自主进化 (3) 业务/产品/技术/运行效果打分 (4) 制定改进建议
+---
+
 # UAS Sub App 四维评价协议
 
 ## 技能定位

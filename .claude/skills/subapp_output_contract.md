@@ -1,3 +1,8 @@
+---
+name: subapp-output-contract
+description: 定义Agent在方案设计阶段必须输出的结构化JSON格式。用于：(1) 规范输出格式 (2) 与render脚本兼容 (3) 映射到configs配置 (4) 验证方案完整性
+---
+
 # UAS Sub App 方案输出契约
 
 ## 用途

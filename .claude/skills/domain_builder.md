@@ -1,3 +1,8 @@
+---
+name: domain-builder
+description: 基于世界模型理解业务领域，自主发现/创建/调度专业Agent，构建和评估UAS subapp。用于：(1) 构建新的业务领域应用 (2) 评估现有subapp (3) 领域分析 (4) Agent编排 (5) 业务问题诊断
+---
+
 # 领域构建评估技能
 
 > 实现世界模型对专业Agent的自主调度和按需创建/接入，用于构建和评估UAS subapp。

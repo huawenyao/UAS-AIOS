@@ -1,0 +1,17 @@
+{
+  "version": "v1.0",
+  "description": "事件类型与下游动作：完成状态、业务通知、评价的闭环",
+  "event_types": [
+    { "id": "screening_completed", "description": "简历初筛完成", "entity_status": { "Candidate": "screened" } },
+    { "id": "candidate_shortlisted", "description": "候选人进入面试名单", "entity_status": { "Candidate": "shortlisted" } },
+    { "id": "ai_interview_scheduled", "description": "AI 面试已排期", "entity_status": { "Task": "pending" } },
+    { "id": "ai_interview_completed", "description": "AI 面试完成", "entity_status": { "Task": "completed", "Candidate": "interview_completed" }, "triggers": ["create_evaluation", "notify_recruiter"] },
+    { "id": "human_interview_completed", "description": "人工面试完成", "triggers": ["create_evaluation", "notify_recruiter"] },
+    { "id": "evaluation_updated", "description": "评价已更新", "triggers": ["notify_hiring_manager"] }
+  ],
+  "triggers": {
+    "create_evaluation": { "action": "create_evaluation_record", "params": {} },
+    "notify_recruiter": { "action": "create_notification", "params": { "recipient_role": "hr_recruiter" } },
+    "notify_hiring_manager": { "action": "create_notification", "params": { "recipient_role": "hiring_manager" } }
+  }
+}

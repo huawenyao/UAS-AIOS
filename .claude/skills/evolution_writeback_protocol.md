@@ -1,3 +1,8 @@
+---
+name: evolution-writeback-protocol
+description: 将evolution产出的suggestions回写到知识资产。用于：(1) 应用改进建议 (2) 更新配置和技能 (3) 实现业务层无限进化 (4) 回滚操作 (5) 备份管理
+---
+
 # 演化回写协议
 
 ## 技能定位

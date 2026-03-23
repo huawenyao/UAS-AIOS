@@ -1,0 +1,21 @@
+project_name: ai-recruitment-world-model
+max_iterations: 6
+ci_timeout_seconds: 120
+model: cursor-default
+max_lines_per_file: 500
+acceptance_dir: acceptance
+editable_dirs:
+  - scripts
+  - docs
+  - configs
+branch_prefix: reqharness/
+auto_commit: false
+best_of_n: 1
+auto_pr: false
+pr_base_branch: main
+pr_title_prefix: reqharness-ai-recruitment
+max_retries_per_task: 1
+stagnation_window: 3
+learning_enabled: true
+verify_commands: []
+success_threshold: 1.0

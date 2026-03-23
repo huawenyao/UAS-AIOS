@@ -1,3 +1,8 @@
+---
+name: subapp-producer-protocol
+description: Agent自主生产UAS sub app的完整流程协议。用于：(1) 创建新的subapp (2) 生成业务应用框架 (3) 规范生产阶段 (4) 校验产出物
+---
+
 # UAS Sub App 生产协议
 
 ## 技能定位

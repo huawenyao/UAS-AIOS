@@ -1,3 +1,8 @@
+---
+name: value-loop-protocol
+description: 价值闭环7步与UAS-ASUI workflow步骤的显式映射协议。用于：(1) 理解价值闭环理论 (2) 工作流映射 (3) 推动-反馈-反身螺旋 (4) 待建设项识别
+---
+
 # 价值闭环协议
 
 ## 技能定位

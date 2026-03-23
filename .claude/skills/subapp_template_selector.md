@@ -1,3 +1,8 @@
+---
+name: subapp-template-selector
+description: 根据世界模型分析输出选择subapp模板。用于：(1) 确定合适的应用模板 (2) 理解模板能力差异 (3) 模板选择规则 (4) methodology信号解读
+---
+
 # UAS Sub App 模板选择逻辑
 
 ## 技能定位
