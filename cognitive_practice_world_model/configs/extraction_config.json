@@ -1,0 +1,138 @@
+{
+  "version": "1.0.0",
+  "description": "五维度世界模型数据提取配置",
+
+  "dimensions": {
+    "spatial": {
+      "enabled": true,
+      "extractors": [
+        {
+          "name": "position_encoding",
+          "source": "hidden_states",
+          "layer_range": [-4, -1]
+        },
+        {
+          "name": "attention_topology",
+          "source": "attention_heads",
+          "head_range": [0, 31],
+          "threshold": 0.1
+        }
+      ],
+      "output": {
+        "format": "json",
+        "embedding_dim": 768,
+        "distance_metric": "cosine"
+      }
+    },
+
+    "temporal": {
+      "enabled": true,
+      "extractors": [
+        {
+          "name": "causal_chain",
+          "source": "attention_patterns",
+          "method": "intervention"
+        },
+        {
+          "name": "event_order",
+          "source": "sequence",
+          "window_size": 1024
+        }
+      ],
+      "output": {
+        "format": "json",
+        "confidence_threshold": 0.7
+      }
+    },
+
+    "semantic": {
+      "enabled": true,
+      "extractors": [
+        {
+          "name": "nearest_neighbor",
+          "source": "embeddings",
+          "k_neighbors": 10
+        },
+        {
+          "name": "hierarchical_clustering",
+          "source": "embeddings",
+          "depth": 5,
+          "method": "agglomerative"
+        }
+      ],
+      "output": {
+        "format": "json",
+        "relation_types": ["is_a", "part_of", "similar_to"]
+      }
+    },
+
+    "causal": {
+      "enabled": true,
+      "extractors": [
+        {
+          "name": "intervention_experiment",
+          "source": "hidden_states",
+          "n_samples": 100
+        },
+        {
+          "name": "counterfactual",
+          "source": "generation",
+          "max_depth": 3
+        }
+      ],
+      "output": {
+        "format": "json",
+        "confidence_threshold": 0.8
+      }
+    },
+
+    "social": {
+      "enabled": true,
+      "extractors": [
+        {
+          "name": "role_extraction",
+          "source": "embeddings",
+          "role_types": ["provider", "consumer", "mediator", "authority"]
+        },
+        {
+          "name": "obligation_mining",
+          "source": "dialogue_contexts",
+          "pattern": "should|must|need|obligation"
+        }
+      ],
+      "output": {
+        "format": "json",
+        "relation_types": ["authority", "obligation", "dependency"]
+      }
+    }
+  },
+
+  "fusion": {
+    "enabled": true,
+    "alignment_method": "embedding_space",
+    "consistency_check": true,
+    "conflict_resolution": "confidence_weighted"
+  },
+
+  "model_sources": {
+    "openai": {
+      "models": ["gpt-4", "gpt-4-turbo"],
+      "endpoints": ["chat", "embeddings"]
+    },
+    "anthropic": {
+      "models": ["claude-3-opus", "claude-3-sonnet"],
+      "endpoints": ["chat", "embeddings"]
+    },
+    "local": {
+      "models": ["llama", "mistral"],
+      "endpoint": "http://localhost:11434"
+    }
+  },
+
+  "storage": {
+    "raw_data_path": "database/raw",
+    "processed_path": "database/processed",
+    "model_output_path": "database/models",
+    "format": "jsonl"
+  }
+}

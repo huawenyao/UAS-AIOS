@@ -460,3 +460,12 @@ PracticalModel ≝ {
 5. **核心特性**：有状态、可运行、可回溯、可预测、多视角
 
 这构成真正意义上的 **"活的世界模型"**，而非静态的知识库。
+
+---
+
+## 十、延伸阅读：体系化逻辑与产品栈
+
+将主客二元与工程模块 **形式化为可演绎堆栈**（L0–L5：快照与元对象 → 良构性 → 认识论包裹 → 动态操作演算 → 策略门控 → 度量与校准），并映射为 **产品能力与成熟度（WM-CMM）**，见：
+
+- [`wm_system_logic_and_product_stack.md`](./wm_system_logic_and_product_stack.md)（WM-SLPS）
+- [`wm_unit_agent_macro_brain.md`](./wm_unit_agent_macro_brain.md)：微观脑（LLM/token）与宏观脑（Unit Agent/认知体）范式及实现路径

@@ -1,0 +1,112 @@
+{
+  "version": "1.0.0",
+  "description": "世界模型产品配置",
+
+  "product_modes": {
+    "ontology_graph": {
+      "display_name": "本体图谱",
+      "data_model": "concepts + isa + part_of",
+      "visualization": {
+        "type": "hierarchical",
+        "layout": "force_directed",
+        "max_depth": 5
+      },
+      "interactions": {
+        "expand": true,
+        "collapse": true,
+        "filter": true,
+        "search": true
+      }
+    },
+
+    "event_chain": {
+      "display_name": "事件链",
+      "data_model": "events + causal_links + timeline",
+      "visualization": {
+        "type": "timeline",
+        "zoom": true,
+        "pan": true
+      },
+      "interactions": {
+        "zoom": true,
+        "select_event": true,
+        "view_cause": true
+      }
+    },
+
+    "spatio_temporal": {
+      "display_name": "时空图谱",
+      "data_model": "spatial_entities + temporal_evolution",
+      "visualization": {
+        "type": "geo_temporal",
+        "time_window": "24h"
+      },
+      "interactions": {
+        "time_slider": true,
+        "spatial_filter": true,
+        "trajectory": true
+      }
+    },
+
+    "knowledge_graph": {
+      "display_name": "知识图谱",
+      "data_model": "entities + relations + properties",
+      "visualization": {
+        "type": "graph",
+        "layout": "circular"
+      },
+      "interactions": {
+        "traverse": true,
+        "path_finding": true,
+        "centrality": true
+      }
+    },
+
+    "causal_graph": {
+      "display_name": "因果图谱",
+      "data_model": "cause + effect + mechanism",
+      "visualization": {
+        "type": "directed_graph",
+        "layout": "dagre"
+      },
+      "interactions": {
+        "intervention": true,
+        "what_if": true,
+        "simulation": true
+      }
+    }
+  },
+
+  "api": {
+    "host": "0.0.0.0",
+    "port": 8000,
+    "endpoints": {
+      "extract": "/api/v1/extract",
+      "query": "/api/v1/query",
+      "visualize": "/api/v1/visualize",
+      "feedback": "/api/v1/feedback"
+    },
+    "auth": {
+      "enabled": false,
+      "type": "api_key"
+    }
+  },
+
+  "ui": {
+    "theme": "dark",
+    "language": "zh-CN",
+    "default_mode": "knowledge_graph",
+    "features": {
+      "export": true,
+      "share": true,
+      "collaboration": false
+    }
+  },
+
+  "performance": {
+    "max_nodes": 10000,
+    "max_edges": 50000,
+    "query_timeout": 5000,
+    "cache_ttl": 3600
+  }
+}
