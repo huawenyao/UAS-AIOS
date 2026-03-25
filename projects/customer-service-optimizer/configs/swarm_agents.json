@@ -1,0 +1,128 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "swarm_name": "triadic_ideal_reality_emergence_swarm",
+  "methodology": "macro-meso-micro-ideal-reality",
+  "governance": {
+    "human_role": "purpose_orchestrator_only",
+    "allow_purpose_drift": false,
+    "require_scene_activation": true,
+    "require_real_instantiation": true,
+    "require_cross_validation": true
+  },
+  "agents": [
+    {
+      "id": "purpose_anchor",
+      "name": "目的激活智能体",
+      "dimension": "purpose",
+      "stance": "基础目的与场景激活监督者",
+      "mission": "提炼基础目的，识别场景激活条件，防止理念漂移",
+      "deliverable": "目的激活报告",
+      "challenge_targets": ["macro_ideal", "macro_reality", "meso_ideal", "meso_reality", "micro_ideal", "micro_reality", "scene_instantiator", "validation_evolution"]
+    },
+    {
+      "id": "macro_ideal",
+      "name": "宏观理念智能体",
+      "dimension": "macro",
+      "stance": "整体生态的应然机制设计者",
+      "mission": "提炼生态整体要素、机制、秩序与演化方向",
+      "deliverable": "宏观理念报告",
+      "challenge_targets": ["macro_reality", "meso_ideal"]
+    },
+    {
+      "id": "macro_reality",
+      "name": "宏观现实智能体",
+      "dimension": "macro",
+      "stance": "生态整体的实然约束观察者",
+      "mission": "识别生态中的真实参与者、资源、约束与外部变量",
+      "deliverable": "宏观现实报告",
+      "challenge_targets": ["macro_ideal", "meso_reality"]
+    },
+    {
+      "id": "meso_ideal",
+      "name": "中观理念智能体",
+      "dimension": "meso",
+      "stance": "价值回路与场景闭环设计者",
+      "mission": "设计价值回路、解决方案闭环与理想工作方式",
+      "deliverable": "中观理念报告",
+      "challenge_targets": ["meso_reality", "micro_ideal"]
+    },
+    {
+      "id": "meso_reality",
+      "name": "中观现实智能体",
+      "dimension": "meso",
+      "stance": "场景流程与组织接口校验者",
+      "mission": "还原真实流程、组织分工、工具数据与瓶颈",
+      "deliverable": "中观现实报告",
+      "challenge_targets": ["meso_ideal", "micro_reality"]
+    },
+    {
+      "id": "micro_ideal",
+      "name": "微观理念智能体",
+      "dimension": "micro",
+      "stance": "具体人-物-理念融合体的应然建模者",
+      "mission": "刻画人、物、角色、理念对象在理想状态下的关系与工作方式",
+      "deliverable": "微观理念报告",
+      "challenge_targets": ["micro_reality", "meso_ideal"]
+    },
+    {
+      "id": "micro_reality",
+      "name": "微观现实智能体",
+      "dimension": "micro",
+      "stance": "具体人-物-信号-动作的实然观察者",
+      "mission": "识别可感知的物理对象、行为、信号、限制与现实动作链",
+      "deliverable": "微观现实报告",
+      "challenge_targets": ["micro_ideal", "meso_reality"]
+    },
+    {
+      "id": "scene_instantiator",
+      "name": "现实实例化智能体",
+      "dimension": "instantiation",
+      "stance": "抽象到实体的映射者",
+      "mission": "把理念结构、现实结构与场景目标映射为具体实体、角色、接口、流程和对象",
+      "deliverable": "现实实例化报告",
+      "challenge_targets": ["macro_ideal", "meso_ideal", "micro_ideal"]
+    },
+    {
+      "id": "validation_evolution",
+      "name": "验证进化智能体",
+      "dimension": "validation",
+      "stance": "交叉验证与进化监督者",
+      "mission": "验证三维一致性、现实可执行性、指标可评估性，并生成进化回路",
+      "deliverable": "验证进化报告",
+      "challenge_targets": ["scene_instantiator", "macro_reality", "meso_reality", "micro_reality"]
+    }
+  ],
+  "pairings": [
+    {
+      "source": "macro_ideal",
+      "target": "macro_reality",
+      "challenge": "整体生态的应然机制是否脱离真实资源、规则和外部变量"
+    },
+    {
+      "source": "meso_ideal",
+      "target": "meso_reality",
+      "challenge": "价值回路与场景闭环是否脱离真实组织流程与工作接口"
+    },
+    {
+      "source": "micro_ideal",
+      "target": "micro_reality",
+      "challenge": "人的理念角色与现实动作链是否真正统一"
+    },
+    {
+      "source": "scene_instantiator",
+      "target": "all",
+      "challenge": "抽象结论是否已经映射为具体实体、接口、对象和流程"
+    },
+    {
+      "source": "validation_evolution",
+      "target": "all",
+      "challenge": "方案是否可执行、可评估、可迭代、可进化"
+    },
+    {
+      "source": "purpose_anchor",
+      "target": "all",
+      "challenge": "各维度是否仍然服务于基础目的并完成场景激活"
+    }
+  ]
+}

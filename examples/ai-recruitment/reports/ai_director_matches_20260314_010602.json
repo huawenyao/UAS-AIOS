@@ -1,0 +1,146 @@
+[
+  {
+    "name": "未知姓名",
+    "total_score": 11.7,
+    "detailed_scores": {
+      "skill_match": 30.625,
+      "experience_match": 0.0,
+      "education_match": 0.0,
+      "management_match": 20.0,
+      "industry_match": 0.0
+    },
+    "skills": [
+      "Python",
+      "Java",
+      "TensorFlow",
+      "PyTorch",
+      "LLM",
+      "CV",
+      "NLP"
+    ],
+    "experience_years": 0,
+    "management_experience": true,
+    "team_size": 0,
+    "core_advantages": [
+      "掌握技能: Python, Java, TensorFlow, PyTorch, LLM, CV, NLP",
+      "工作经验: 0年",
+      "管理经验: 有",
+      "团队规模: 未明确"
+    ],
+    "file_path": "C:\\Users\\ranwu\\Xiaomi Cloud\\aipos\\.venv-copaw\\Lib\\site-packages\\litellm\\llms\\huggingface\\huggingface_llms_metadata\\hf_text_generation_models.txt"
+  },
+  {
+    "name": "未知姓名",
+    "total_score": 11.7,
+    "detailed_scores": {
+      "skill_match": 30.625,
+      "experience_match": 0.0,
+      "education_match": 0.0,
+      "management_match": 20.0,
+      "industry_match": 0.0
+    },
+    "skills": [
+      "Python",
+      "Java",
+      "TensorFlow",
+      "PyTorch",
+      "LLM",
+      "CV",
+      "NLP"
+    ],
+    "experience_years": 0,
+    "management_experience": true,
+    "team_size": 0,
+    "core_advantages": [
+      "掌握技能: Python, Java, TensorFlow, PyTorch, LLM, CV, NLP",
+      "工作经验: 0年",
+      "管理经验: 有",
+      "团队规模: 未明确"
+    ],
+    "file_path": "C:\\Users\\ranwu\\Xiaomi Cloud\\aipos\\.venv-selfpaw\\Lib\\site-packages\\litellm\\llms\\huggingface\\huggingface_llms_metadata\\hf_text_generation_models.txt"
+  },
+  {
+    "name": "未知姓名",
+    "total_score": 11.7,
+    "detailed_scores": {
+      "skill_match": 30.625,
+      "experience_match": 0.0,
+      "education_match": 0.0,
+      "management_match": 20.0,
+      "industry_match": 0.0
+    },
+    "skills": [
+      "Python",
+      "Java",
+      "TensorFlow",
+      "PyTorch",
+      "LLM",
+      "CV",
+      "NLP"
+    ],
+    "experience_years": 0,
+    "management_experience": true,
+    "team_size": 0,
+    "core_advantages": [
+      "掌握技能: Python, Java, TensorFlow, PyTorch, LLM, CV, NLP",
+      "工作经验: 0年",
+      "管理经验: 有",
+      "团队规模: 未明确"
+    ],
+    "file_path": "C:\\Users\\ranwu\\Xiaomi Cloud\\aipos\\.venv-selfpaw-wsl\\lib\\python3.12\\site-packages\\litellm\\llms\\huggingface\\huggingface_llms_metadata\\hf_text_generation_models.txt"
+  },
+  {
+    "name": "未知姓名",
+    "total_score": 8.4,
+    "detailed_scores": {
+      "skill_match": 17.5,
+      "experience_match": 0.0,
+      "education_match": 0.0,
+      "management_match": 20.0,
+      "industry_match": 0.0
+    },
+    "skills": [
+      "Python",
+      "Java",
+      "LLM",
+      "CV"
+    ],
+    "experience_years": 0,
+    "management_experience": true,
+    "team_size": 0,
+    "core_advantages": [
+      "掌握技能: Python, Java, LLM, CV",
+      "工作经验: 0年",
+      "管理经验: 有",
+      "团队规模: 未明确"
+    ],
+    "file_path": "C:\\Users\\ranwu\\Xiaomi Cloud\\aipos\\.venv-copaw\\Lib\\site-packages\\copaw\\tokenizer\\merges.txt"
+  },
+  {
+    "name": "未知姓名",
+    "total_score": 8.4,
+    "detailed_scores": {
+      "skill_match": 17.5,
+      "experience_match": 0.0,
+      "education_match": 0.0,
+      "management_match": 20.0,
+      "industry_match": 0.0
+    },
+    "skills": [
+      "Python",
+      "Java",
+      "LLM",
+      "CV"
+    ],
+    "experience_years": 0,
+    "management_experience": true,
+    "team_size": 0,
+    "core_advantages": [
+      "掌握技能: Python, Java, LLM, CV",
+      "工作经验: 0年",
+      "管理经验: 有",
+      "团队规模: 未明确"
+    ],
+    "file_path": "C:\\Users\\ranwu\\Xiaomi Cloud\\aipos\\copaw-src\\src\\selfpaw\\tokenizer\\merges.txt"
+  }
+]

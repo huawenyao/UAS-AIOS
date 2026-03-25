@@ -1,5 +1,9 @@
 """ASUI 项目模板"""
 
+from .selfpaw_template import SELFPAW_SWARM_TEMPLATE
+from .triadic_template import TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE
+from .uas_subapp_template import UAS_SUBAPP_TEMPLATE
+
 # 默认模板
 DEFAULT_TEMPLATE = {
     "CLAUDE.md": """# ASUI 项目
@@ -284,5 +288,8 @@ def get_template(name: str) -> dict:
         "default": DEFAULT_TEMPLATE,
         "customer-service": CUSTOMER_SERVICE_TEMPLATE,
         "recruitment": RECRUITMENT_TEMPLATE,
+        "selfpaw-swarm": SELFPAW_SWARM_TEMPLATE,
+        "triadic-ideal-reality-swarm": TRIADIC_IDEAL_REALITY_SWARM_TEMPLATE,
+        "uas-subapp": UAS_SUBAPP_TEMPLATE,
     }
     return templates.get(name, DEFAULT_TEMPLATE)

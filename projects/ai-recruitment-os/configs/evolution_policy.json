@@ -1,0 +1,53 @@
+{
+  "version": "v1.0",
+  "goal_guard": {
+    "required_purpose_keywords": [
+      "匹配",
+      "效率",
+      "公平",
+      "体验",
+      "成本"
+    ],
+    "minimum_keyword_hits": 3,
+    "enabled": true,
+    "require_goal_statement": true,
+    "require_success_metrics": true
+  },
+  "iteration": {
+    "enabled": true,
+    "require_validation_before_evolution": true,
+    "default_loop": [
+      "intent_activation",
+      "governance_check",
+      "evolution_plan"
+    ]
+  },
+  "evaluation_thresholds": {
+    "candidate_experience_score": 0.75,
+    "decision_explainability_score": 0.8,
+    "interviewer_alignment_score": 0.7,
+    "process_completion_score": 0.85
+  },
+  "drift_rules": [
+    {
+      "id": "purpose_drift",
+      "condition": "missing_purpose_keywords",
+      "action": "return_to_purpose_activation"
+    },
+    {
+      "id": "experience_bias",
+      "condition": "candidate_experience_score_below_threshold",
+      "action": "rebuild_micro_experience"
+    },
+    {
+      "id": "decision_bias",
+      "condition": "decision_explainability_score_below_threshold",
+      "action": "rebuild_evaluation_rubric"
+    },
+    {
+      "id": "process_break",
+      "condition": "process_completion_score_below_threshold",
+      "action": "repair_meso_workflow"
+    }
+  ]
+}

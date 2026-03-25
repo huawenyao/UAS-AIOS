@@ -1,0 +1,46 @@
+{
+  "hypotheses": [
+    "Current implementation does not satisfy semantic contracts."
+  ],
+  "context_priorities": [
+    "semantic_contract_alignment"
+  ],
+  "recent_failures": [
+    "semantic: SC002: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "SC002: semantic statement not reflected",
+    "SC004: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "SC002: semantic statement not reflected",
+    "SC004: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "SC002: semantic statement not reflected",
+    "SC004: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "SC002: semantic statement not reflected",
+    "SC004: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "semantic: SC002: semantic statement not reflected",
+    "SC002: semantic statement not reflected",
+    "SC004: semantic statement not reflected"
+  ],
+  "iteration_notes": [
+    "iter=1 strategy=explore agent=codex",
+    "iter=2 strategy=safe_retry agent=codex",
+    "iter=3 strategy=narrow_fix agent=cursor",
+    "iter=4 strategy=narrow_fix agent=codex",
+    "iter=5 strategy=narrow_fix agent=cursor",
+    "iter=6 strategy=escalate_prepare agent=codex",
+    "iter=1 strategy=explore agent=codex",
+    "iter=2 strategy=safe_retry agent=codex",
+    "iter=3 strategy=narrow_fix agent=cursor",
+    "iter=4 strategy=narrow_fix agent=codex",
+    "iter=5 strategy=narrow_fix agent=cursor",
+    "iter=6 strategy=escalate_prepare agent=codex"
+  ],
+  "last_strategy_mode": "escalate_prepare",
+  "last_selected_agent": "codex"
+}

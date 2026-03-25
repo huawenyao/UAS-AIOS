@@ -1,0 +1,80 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "swarm_name": "selfpaw_native_cognitive_swarm",
+  "methodology": "negation-of-negation",
+  "governance": {
+    "human_role": "execution_orchestrator_only",
+    "allow_personal_override": false,
+    "observer_must_remain_neutral": true
+  },
+  "agents": [
+    {
+      "id": "user_view",
+      "name": "用户视角智能体",
+      "dimension": "user",
+      "stance": "终端用户/需求方",
+      "mission": "还原显性需求、隐性痛点、情绪偏好与拒绝理由",
+      "deliverable": "用户真实需求报告",
+      "challenge_targets": ["decision_core", "payer_value"]
+    },
+    {
+      "id": "obstacle_gate",
+      "name": "关卡障碍智能体",
+      "dimension": "gate",
+      "stance": "极致理性的风险把控者",
+      "mission": "拆解关卡、约束、失败场景与资源短板",
+      "deliverable": "关卡与风险清单",
+      "challenge_targets": ["decision_core", "observer_referee"]
+    },
+    {
+      "id": "decision_core",
+      "name": "核心决策智能体",
+      "dimension": "decision",
+      "stance": "目标达成与执行效率优先",
+      "mission": "制定初始执行路径并锚定核心目标",
+      "deliverable": "初始决策方案",
+      "challenge_targets": ["user_view", "obstacle_gate"]
+    },
+    {
+      "id": "payer_value",
+      "name": "买单价值智能体",
+      "dimension": "payer",
+      "stance": "投入产出与支付意愿守门人",
+      "mission": "评估价值兑现、成本边界与买单阈值",
+      "deliverable": "价值与成本评估",
+      "challenge_targets": ["decision_core", "user_view"]
+    },
+    {
+      "id": "observer_referee",
+      "name": "博弈观察智能体",
+      "dimension": "observer",
+      "stance": "中立第三方观察者",
+      "mission": "记录外部变量、多方博弈、共识与冲突，不直接站队",
+      "deliverable": "外部博弈格局",
+      "challenge_targets": ["user_view", "obstacle_gate", "decision_core", "payer_value"]
+    }
+  ],
+  "pairings": [
+    {
+      "source": "user_view",
+      "target": "decision_core",
+      "challenge": "方案是否忽视用户真实体验与采用门槛"
+    },
+    {
+      "source": "obstacle_gate",
+      "target": "decision_core",
+      "challenge": "方案是否掩盖执行障碍与失败风险"
+    },
+    {
+      "source": "payer_value",
+      "target": "decision_core",
+      "challenge": "方案是否超出价值兑现周期与成本阈值"
+    },
+    {
+      "source": "observer_referee",
+      "target": "all",
+      "challenge": "各方是否忽略外部博弈变量与动态变化"
+    }
+  ]
+}

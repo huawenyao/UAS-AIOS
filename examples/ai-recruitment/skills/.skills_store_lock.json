@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "self-improving-agent": {
+      "name": "self-improving-agent",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=self-improving-agent",
+      "source": "skillhub",
+      "version": "1.0.11"
+    },
+    "agent-browser": {
+      "name": "Agent Browser",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=agent-browser",
+      "source": "skillhub",
+      "version": "0.2.0"
+    },
+    "humanizer": {
+      "name": "Humanizer",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=humanizer",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "desktop-control": {
+      "name": "Desktop Control",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=desktop-control",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "marketing-mode": {
+      "name": "Marketing Mode",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=marketing-mode",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "opencode-controller": {
+      "name": "Opencode-controller",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=opencode-controller",
+      "source": "skillhub",
+      "version": "1.0.0"
+    }
+  }
+}

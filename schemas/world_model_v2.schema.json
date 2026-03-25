@@ -1,0 +1,553 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/world_model_v2.schema.json",
+  "title": "UAS World Model V2 - 可运行版",
+  "description": "世界模型可运行数据模型：本源法则、降维引擎、情景化映射、意图守恒、演化回路",
+  "type": "object",
+  "required": ["version", "meta", "laws", "reducer", "mappers", "runtime"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+    },
+    "meta": {
+      "$ref": "#/$defs/Meta"
+    },
+    "laws": {
+      "$ref": "#/$defs/LawLibrary"
+    },
+    "reducer": {
+      "$ref": "#/$defs/ReducerEngine"
+    },
+    "mappers": {
+      "$ref": "#/$defs/ScenarioMapperLibrary"
+    },
+    "runtime": {
+      "$ref": "#/$defs/RuntimeConfig"
+    },
+    "intent_guard": {
+      "$ref": "#/$defs/IntentGuard"
+    },
+    "evolution": {
+      "$ref": "#/$defs/EvolutionConfig"
+    }
+  },
+  "$defs": {
+    "Meta": {
+      "type": "object",
+      "description": "世界模型元信息",
+      "required": ["name", "domain", "created_at"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "世界模型名称"
+        },
+        "domain": {
+          "type": "string",
+          "description": "领域标识"
+        },
+        "description": {
+          "type": "string",
+          "description": "模型描述"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "LawLibrary": {
+      "type": "object",
+      "description": "本源法则库：存储不变的底层逻辑",
+      "required": ["categories"],
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LawCategory"
+          }
+        }
+      }
+    },
+    "LawCategory": {
+      "type": "object",
+      "required": ["id", "name", "laws"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "法则类别：physics/economics/biology/ethics/system"
+        },
+        "description": {
+          "type": "string"
+        },
+        "laws": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Law"
+          }
+        }
+      }
+    },
+    "Law": {
+      "type": "object",
+      "required": ["id", "name", "expression", "invariants"],
+      "description": "本源法则定义",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "法则唯一标识"
+        },
+        "name": {
+          "type": "string",
+          "description": "法则名称"
+        },
+        "description": {
+          "type": "string",
+          "description": "法则描述"
+        },
+        "expression": {
+          "type": "string",
+          "description": "法则表达式：可执行的逻辑/数学表达式"
+        },
+        "invariants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "不变量：法则必须满足的约束"
+        },
+        "applicability": {
+          "type": "object",
+          "description": "法则适用性条件",
+          "properties": {
+            "contexts": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "置信度"
+        }
+      }
+    },
+    "ReducerEngine": {
+      "type": "object",
+      "description": "降维引擎：将高维现实映射为低维表示",
+      "required": ["id", "strategy", "dimensions"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "strategy": {
+          "type": "string",
+          "enum": ["causal", "statistical", "symbolic", "hybrid"],
+          "description": "降维策略"
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dimension"
+          },
+          "description": "降维后的核心维度"
+        },
+        "encoding": {
+          "$ref": "#/$defs/EncodingConfig"
+        },
+        "mappings": {
+          "$ref": "#/$defs/HighDimToLowDimMappings"
+        }
+      }
+    },
+    "Dimension": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "维度名称：space/time/subject/object/feedback"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["continuous", "discrete", "categorical", "ordinal"]
+        },
+        "range": {
+          "type": "object",
+          "description": "取值范围"
+        },
+        "unit": {
+          "type": "string",
+          "description": "单位"
+        }
+      }
+    },
+    "EncodingConfig": {
+      "type": "object",
+      "description": "编码配置",
+      "properties": {
+        "vector_dim": {
+          "type": "integer",
+          "description": "向量维度"
+        },
+        "encoder_type": {
+          "type": "string",
+          "enum": ["embedding", "symbolic", "neural", "hybrid"]
+        },
+        "normalization": {
+          "type": "string",
+          "enum": ["l2", "minmax", "standard"]
+        }
+      }
+    },
+    "HighDimToLowDimMappings": {
+      "type": "object",
+      "description": "高维到低维的映射规则",
+      "properties": {
+        "feature_extraction": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "high_dim_feature": {
+                "type": "string"
+              },
+              "low_dim_dimension": {
+                "type": "string"
+              },
+              "transformation": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "abstraction_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "pattern": {
+                "type": "string"
+              },
+              "abstracted_concept": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ScenarioMapperLibrary": {
+      "type": "object",
+      "description": "情景化映射库：将法则应用到具体场景",
+      "required": ["mappers"],
+      "properties": {
+        "mappers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScenarioMapper"
+          }
+        }
+      }
+    },
+    "ScenarioMapper": {
+      "type": "object",
+      "description": "情景化映射器",
+      "required": ["id", "scenario_type", "law_bindings", "output_template"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "scenario_type": {
+          "type": "string",
+          "description": "场景类型"
+        },
+        "description": {
+          "type": "string"
+        },
+        "law_bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "law_id": {
+                "type": "string"
+              },
+              "mapping_function": {
+                "type": "string",
+                "description": "映射函数"
+              },
+              "parameters": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "output_template": {
+          "$ref": "#/$defs/OutputTemplate"
+        },
+        "validation_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "OutputTemplate": {
+      "type": "object",
+      "description": "输出模板",
+      "properties": {
+        "strategy_format": {
+          "type": "string",
+          "description": "策略输出格式"
+        },
+        "action_format": {
+          "type": "string",
+          "description": "动作输出格式"
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "RuntimeConfig": {
+      "type": "object",
+      "description": "运行时配置",
+      "required": ["execution_model", "state_machine"],
+      "properties": {
+        "execution_model": {
+          "type": "string",
+          "enum": ["synchronous", "asynchronous", "hybrid"],
+          "description": "执行模型"
+        },
+        "state_machine": {
+          "$ref": "#/$defs/StateMachine"
+        },
+        "max_iterations": {
+          "type": "integer",
+          "description": "最大迭代次数"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "description": "超时时间(毫秒)"
+        }
+      }
+    },
+    "StateMachine": {
+      "type": "object",
+      "description": "状态机定义",
+      "required": ["states", "initial_state", "transitions"],
+      "properties": {
+        "states": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/State"
+          }
+        },
+        "initial_state": {
+          "type": "string"
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Transition"
+          }
+        }
+      }
+    },
+    "State": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["idle", "processing", "waiting", "error", "complete"]
+        },
+        "context_schema": {
+          "type": "object",
+          "description": "状态上下文schema"
+        }
+      }
+    },
+    "Transition": {
+      "type": "object",
+      "required": ["from", "to", "event"],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "event": {
+          "type": "string"
+        },
+        "condition": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        }
+      }
+    },
+    "IntentGuard": {
+      "type": "object",
+      "description": "意图守恒校验器",
+      "required": ["enabled", "threshold", "checks"],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "意图相似度阈值"
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/IntentCheck"
+          }
+        },
+        "on_violation": {
+          "type": "string",
+          "enum": ["block", "warn", "log", "escalate"]
+        }
+      }
+    },
+    "IntentCheck": {
+      "type": "object",
+      "required": ["name", "type"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["semantic_similarity", "constraint_satisfaction", "goal_alignment", "value_consistency"]
+        },
+        "implementation": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number"
+        }
+      }
+    },
+    "EvolutionConfig": {
+      "type": "object",
+      "description": "演化回路配置",
+      "required": ["enabled", "triggers", "feedback_loop"],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "triggers": {
+          "$ref": "#/$defs/EvolutionTriggers"
+        },
+        "feedback_loop": {
+          "$ref": "#/$defs/FeedbackLoop"
+        },
+        "adaptation_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "condition": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "EvolutionTriggers": {
+      "type": "object",
+      "properties": {
+        "drift_detection": {
+          "type": "boolean",
+          "description": "是否启用漂移检测"
+        },
+        "confidence_threshold": {
+          "type": "number"
+        },
+        "max_error_rate": {
+          "type": "number"
+        },
+        "manual_trigger": {
+          "type": "boolean"
+        }
+      }
+    },
+    "FeedbackLoop": {
+      "type": "object",
+      "description": "反馈回路配置",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["positive", "negative", "cybernetics"]
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "delay_tolerance_ms": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

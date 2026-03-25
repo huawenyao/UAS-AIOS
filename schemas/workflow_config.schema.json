@@ -32,9 +32,101 @@
       "type": "object",
       "description": "全局配置，可被步骤引用",
       "additionalProperties": true
+    },
+    "swarm": {
+      "$ref": "#/$defs/SwarmConfig"
     }
   },
   "$defs": {
+    "SwarmAgent": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "description": "蜂群智能体唯一标识"
+        },
+        "name": {
+          "type": "string",
+          "description": "蜂群智能体名称"
+        },
+        "dimension": {
+          "type": "string",
+          "description": "智能体负责的核心维度"
+        },
+        "stance": {
+          "type": "string",
+          "description": "智能体立场"
+        },
+        "mission": {
+          "type": "string",
+          "description": "智能体使命"
+        },
+        "deliverable": {
+          "type": "string",
+          "description": "智能体交付物"
+        },
+        "challenge_targets": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "优先质询的对手盘"
+        }
+      }
+    },
+    "SwarmPhase": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "description": "阶段唯一标识"
+        },
+        "name": {
+          "type": "string",
+          "description": "阶段名称"
+        },
+        "goal": {
+          "type": "string",
+          "description": "阶段目标"
+        }
+      }
+    },
+    "SwarmConfig": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "蜂群运行模式"
+        },
+        "methodology": {
+          "type": "string",
+          "description": "方法论，如 negation-of-negation"
+        },
+        "decision_policy": {
+          "type": "string",
+          "description": "最终决策策略"
+        },
+        "agents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SwarmAgent"
+          },
+          "description": "蜂群智能体定义"
+        },
+        "phases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SwarmPhase"
+          },
+          "description": "蜂群阶段定义"
+        }
+      }
+    },
     "Step": {
       "type": "object",
       "required": ["id", "name", "type"],
@@ -51,8 +143,8 @@
         },
         "type": {
           "type": "string",
-          "enum": ["script", "llm", "conditional", "parallel"],
-          "description": "步骤类型：script=脚本执行, llm=LLM调用, conditional=条件分支, parallel=并行执行"
+          "enum": ["script", "llm", "conditional", "parallel", "human_review", "simulation"],
+          "description": "步骤类型：script=脚本执行, llm=LLM调用, conditional=条件分支, parallel=并行执行, human_review=人机协同等待用户输入, simulation=模拟/沙箱推演（占位）"
         },
         "description": {
           "type": "string",
@@ -93,6 +185,27 @@
           "items": { "type": "string" },
           "description": "type=parallel 时，可并行执行的步骤ID列表"
         },
+        "agent_id": {
+          "type": "string",
+          "description": "蜂群模式下绑定的智能体ID"
+        },
+        "agent_role": {
+          "type": "string",
+          "description": "蜂群模式下的智能体角色描述"
+        },
+        "deliverable": {
+          "type": "string",
+          "description": "蜂群模式下当前步骤的交付物"
+        },
+        "swarm_mode": {
+          "type": "string",
+          "description": "蜂群执行模式，如 topic_normalization、cross_examination"
+        },
+        "input_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "蜂群综合步骤引用的输入来源"
+        },
         "retry": {
           "type": "object",
           "description": "重试配置",
@@ -100,6 +213,14 @@
             "max_attempts": { "type": "integer", "minimum": 1 },
             "delay_ms": { "type": "integer", "minimum": 0 }
           }
+        },
+        "feedback_path": {
+          "type": "string",
+          "description": "type=human_review 时，用户反馈写入路径，相对于 app_root，如 database/feedback/{topic_slug}.json"
+        },
+        "feedback_schema": {
+          "type": "object",
+          "description": "type=human_review 时，期望的用户反馈 JSON Schema"
         }
       }
     }

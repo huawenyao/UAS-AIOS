@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UAS-AIOS · 面向投资人的产品愿景</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#020617;
+      --bg2:#020617;
+      --accent:#38bdf8;
+      --accent-soft:rgba(56,189,248,0.16);
+      --accent-strong:rgba(56,189,248,0.9);
+      --text:#e5e7eb;
+      --text-soft:#9ca3af;
+      --border:rgba(148,163,184,0.3);
+      --card-bg:rgba(15,23,42,0.92);
+      --muted:#6b7280;
+      --r:18px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{
+      width:100%;height:100%;overflow:hidden;
+      background:radial-gradient(circle at top,#111827 0%,#020617 55%,#020617 100%);
+      color:var(--text);
+      font-family:'Inter','Noto Sans SC',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    #bg{
+      position:fixed;inset:0;z-index:0;pointer-events:none;
+      opacity:.35;
+    }
+    canvas{display:block}
+
+    .deck{position:fixed;inset:0;z-index:1}
+    .slide{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      padding:48px 24px;
+      opacity:0;transform:translateX(48px);pointer-events:none;
+      transition:opacity .8s ease-out,transform .8s ease-out;
+    }
+    .slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+    .slide.exit-left{opacity:0;transform:translateX(-48px)}
+    .slide-inner{
+      width:100%;max-width:960px;
+      display:flex;flex-direction:column;gap:28px;
+    }
+
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 14px;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:rgba(15,23,42,0.8);
+      color:var(--text-soft);
+      font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    }
+    .tag-dot{
+      width:7px;height:7px;border-radius:999px;
+      background:var(--accent);
+      box-shadow:0 0 10px rgba(56,189,248,.7);
+    }
+    h1{
+      font-size:clamp(32px,4vw,44px);
+      font-weight:600;letter-spacing:-.02em;
+    }
+    h2{
+      font-size:clamp(24px,3vw,32px);
+      font-weight:600;letter-spacing:-.01em;
+    }
+    h3{
+      font-size:16px;font-weight:600;margin-bottom:6px;
+    }
+    .sub{
+      font-size:14px;line-height:1.8;
+      color:var(--text-soft);
+      max-width:720px;
+    }
+
+    .grad{
+      background:linear-gradient(135deg,#38bdf8,#22c55e);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .card-row{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:20px;
+    }
+    .card{
+      border-radius:var(--r);
+      background:var(--card-bg);
+      border:1px solid var(--border);
+      padding:18px 20px;
+    }
+    .card p{
+      font-size:13px;line-height:1.7;color:var(--text-soft);
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:3px 10px;border-radius:999px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.5);
+      font-size:11px;color:var(--text-soft);
+    }
+    .pill-dot{
+      width:6px;height:6px;border-radius:50%;background:var(--accent);
+    }
+    ul{list-style:none;margin:0;padding:0}
+    .dot-list li{
+      display:flex;gap:8px;font-size:13px;color:var(--text-soft);line-height:1.7;
+      margin-bottom:6px;
+    }
+    .dot-bullet{
+      width:6px;height:6px;border-radius:50%;
+      margin-top:7px;
+      background:rgba(148,163,184,0.8);
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+    }
+
+    .matrix{
+      width:100%;
+      border-radius:var(--r);
+      border:1px solid var(--border);
+      background:rgba(15,23,42,0.9);
+      padding:14px 16px;
+      font-size:12px;
+    }
+    .matrix table{
+      border-collapse:collapse;width:100%;
+    }
+    .matrix th,.matrix td{
+      border-bottom:1px solid rgba(31,41,55,0.9);
+      padding:8px 6px;
+      text-align:left;
+      color:var(--text-soft);
+    }
+    .matrix th{
+      font-size:11px;font-weight:600;color:#e5e7eb;
+    }
+    .matrix tr:last-child th,
+    .matrix tr:last-child td{border-bottom:none}
+    .matrix .ours{
+      color:var(--accent-strong);font-weight:600;
+    }
+
+    .timeline{
+      border-radius:var(--r);
+      border:1px solid var(--border);
+      background:rgba(15,23,42,0.9);
+      padding:16px 18px;
+      font-size:12.5px;
+    }
+    .phase{
+      display:flex;gap:12px;margin-bottom:10px;
+    }
+    .phase-badge{
+      min-width:72px;
+      padding:4px 10px;border-radius:999px;
+      font-size:11px;font-weight:600;
+      text-align:center;
+      background:rgba(15,23,42,1);
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .phase-body{
+      color:var(--text-soft);line-height:1.7;
+    }
+    .callout{
+      margin-top:6px;
+      padding:8px 10px;border-radius:10px;
+      background:rgba(15,23,42,0.9);
+      border:1px dashed rgba(148,163,184,0.7);
+      font-size:11.5px;color:var(--text-soft);
+    }
+
+    #nav{
+      position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+      display:flex;align-items:center;gap:16px;
+      z-index:10;
+    }
+    .nav-btn{
+      width:40px;height:40px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(15,23,42,0.9);
+      color:var(--text);font-size:18px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;
+      transition:.25s;
+      backdrop-filter:blur(10px);
+    }
+    .nav-btn:hover{
+      border-color:var(--accent);color:var(--accent);
+      box-shadow:0 0 18px rgba(56,189,248,0.5);
+    }
+    .nav-btn:focus{outline:2px solid var(--accent);outline-offset:2px}
+    .nav-btn:focus:not(:focus-visible){outline:none}
+    #dots{display:flex;gap:6px}
+    .dot{
+      width:6px;height:6px;border-radius:999px;
+      border:none;padding:0;margin:0;
+      background:rgba(148,163,184,0.6);
+      cursor:pointer;transition:.25s;
+    }
+    .dot.active{
+      width:22px;background:var(--accent);
+      box-shadow:0 0 10px rgba(56,189,248,0.7);
+    }
+    .dot:focus{outline:2px solid var(--accent);outline-offset:2px}
+    .dot:focus:not(:focus-visible){outline:none}
+    #page{
+      font-size:11px;color:var(--text-soft);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      min-width:60px;text-align:center;
+    }
+
+    @media (max-width:768px){
+      .slide{padding:32px 16px}
+      .slide-inner{gap:22px}
+      .card-row{grid-template-columns:1fr}
+      .two-col{grid-template-columns:1fr;gap:18px}
+      #nav{bottom:18px}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .slide{transition:none}
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<div class="deck">
+
+  <!-- 1. 封面：一句话定位 -->
+  <section class="slide active" id="p1">
+    <div class="slide-inner" style="align-items:flex-start">
+      <span class="tag"><span class="tag-dot"></span>UAS-AIOS · 投资人简报 · 2026</span>
+      <h1>把<span class="grad">企业知识与系统</span>，温和地变成一套 AI 操作系统</h1>
+      <p class="sub">
+        UAS-AIOS 的目标，不是再做一个 AI 工具，而是：在不打乱企业现有节奏的前提下，<br>
+        将「个人」「Agent」「业务系统」三者连接成一套可治理、可演化的智能底座。
+      </p>
+      <div class="card-row">
+        <div class="card">
+          <h3>我们在回答的核心问题</h3>
+          <p>
+            当 AGI 能力逐步普及，每一家企业都会面临同一个问题：<br>
+            <strong style="color:var(--text)">“如何在不重写一切的前提下，把零散 AI 能力，收拢成一套可控的操作系统？”</strong>
+          </p>
+        </div>
+        <div class="card">
+          <h3>一句话定位</h3>
+          <p>
+            <strong style="color:var(--accent-strong)">UAS-AIOS = 企业侧的「AI 操作系统」</strong>：<br>
+            在统一协议栈下，让用户意图、Agent 协作、业务系统，形成可审计、可演化的智能闭环。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 产品理念：从工具到“平静可控的神经系统” -->
+  <section class="slide" id="p2">
+    <div class="slide-inner">
+      <span class="tag"><span class="tag-dot"></span>产品理念 · WHY NOW</span>
+      <h2>不再堆 AI 工具，而是为企业搭一套<span class="grad">平静可控的神经系统</span></h2>
+      <p class="sub">
+        当前大多数 AI 项目，都停留在「一个个智能工具」。真正缺失的，是一套让企业管理层「安心」的中枢神经系统：
+      </p>
+      <div class="card-row">
+        <div class="card">
+          <h3>理念一：Human Above the Loop</h3>
+          <p>
+            AGI 可以帮企业完成越来越多决策与执行，但<strong style="color:var(--text)">最终责任和选择权，必须留在人手上</strong>。<br>
+            UAS-AIOS 把人放在决策环的「上方」——看见全局、设定边界、随时叫停。
+          </p>
+        </div>
+        <div class="card">
+          <h3>理念二：知识即代码 · 升级靠改文档</h3>
+          <p>
+            未来企业的核心资产不是一堆脚本，而是可以被 AGI 理解与执行的知识文档。<br>
+            在 UAS-AIOS 里，<strong style="color:var(--text)">改一份 SYSTEM/ASUI 文档，就像改代码一样升级系统能力</strong>。
+          </p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>理念三：零重构接入 · 不打扰现有业务节奏</h3>
+        <p>
+          我们不要求企业「推倒重来」，而是通过标准协议（UIP / A2A / MCP / ASUI）<br>
+          在原有 CRM / ERP / 工单系统之上，<strong style="color:var(--text)">缓慢地“长出”一套 AI OS</strong>，而不是一次性替换。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 用户与企业价值 -->
+  <section class="slide" id="p3">
+    <div class="slide-inner">
+      <span class="tag"><span class="tag-dot"></span>价值 · FOR WHOM</span>
+      <h2>从一线员工，到 CXO：各层都有<span class="grad">可感知的价值</span></h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>对一线与中层：更少解释，更少切换</h3>
+          <ul class="dot-list">
+            <li><span class="dot-bullet"></span><span>个人 AI 伴随账号跨应用：一次解释，长期记住你的偏好与工作风格。</span></li>
+            <li><span class="dot-bullet"></span><span>常见跨系统任务（报表、对账、汇总）由 Agent 承担，人只确认关键节点。</span></li>
+            <li><span class="dot-bullet"></span><span>界面不被「智能弹窗」打扰，AI 更多在后台 quietly 协助。</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>对管理层与 CIO：可控、可审计、可演化</h3>
+          <ul class="dot-list">
+            <li><span class="dot-bullet"></span><span>所有 AI 决策均有「知识依据 + 审计日志」，满足合规与风控要求。</span></li>
+            <li><span class="dot-bullet"></span><span>新场景落地主要靠「知识建模」而非「重写系统」，上线周期从数月降到数周 / 数天。</span></li>
+            <li><span class="dot-bullet"></span><span>可以按部门/BU 渐进式推进，不必一次性全员切换到新平台。</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pill">
+        <span class="pill-dot"></span>
+        投资视角：更低的实施摩擦 + 更高的复用率 = 更高的 LTV 与更低的 churn 风险
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 与 AGI 的关系：位置与护城河 -->
+  <section class="slide" id="p4">
+    <div class="slide-inner">
+      <span class="tag"><span class="tag-dot"></span>与 AGI 的关系</span>
+      <h2>不和 AGI 模型竞争，而是做<span class="grad">“企业侧的 AGI 中枢”</span></h2>
+      <div class="two-col">
+        <div>
+          <h3 style="margin-bottom:8px">我们所处的位置</h3>
+          <ul class="dot-list">
+            <li><span class="dot-bullet"></span><span>底层大模型快速演进（Claude / GPT / Gemini / 本地模型），价格持续下降。</span></li>
+            <li><span class="dot-bullet"></span><span>企业真正的痛点，从「有没有模型」转向「能不能放心让它接业务」。</span></li>
+            <li><span class="dot-bullet"></span><span><strong style="color:var(--text)">UAS-AIOS 把通用 AGI 能力，约束在企业可控的知识与权限边界内</strong>。</span></li>
+          </ul>
+          <div class="callout">
+            底层模型越来越像「电力公司」，而我们要做的是「企业内的配电与用电系统」——<br>
+            谁家用的电更稳定、更安全、更易扩展，谁就有更高的复利。
+          </div>
+        </div>
+        <div class="card">
+          <h3>我们的护城河更接近「系统习惯」</h3>
+          <p>
+            一旦一个大中型企业的核心业务流程、知识、权限，都在 UAS-AIOS 之上沉淀，<br>
+            <strong style="color:var(--text)">迁移成本将极高</strong>：就像从一种操作系统整体迁出，而不仅仅是换一个 SaaS 工具。<br><br>
+            这意味着：<strong style="color:var(--accent-strong)">每签下一家企业，都是一个长期、复利型的关系</strong>。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 竞品与差异化 -->
+  <section class="slide" id="p5">
+    <div class="slide-inner">
+      <span class="tag"><span class="tag-dot"></span>竞品 · DIFFERENTIATION</span>
+      <h2>不是再做一个「Copilot」，而是在<span class="grad">“操作系统层”</span>上占位</h2>
+      <div class="matrix">
+        <table>
+          <tr>
+            <th style="width:26%">维度</th>
+            <th>典型方案</th>
+            <th>UAS-AIOS</th>
+          </tr>
+          <tr>
+            <td>定位</td>
+            <td>ChatGPT / Claude：通用助手<br>各类 Copilot：应用内助手</td>
+            <td class="ours">企业级 AI OS · 连接所有应用与知识</td>
+          </tr>
+          <tr>
+            <td>与 AGI 关系</td>
+            <td>绑定单一模型，弱多模型策略</td>
+            <td class="ours">模型无关，多模型路由 · 聚焦协议与知识层</td>
+          </tr>
+          <tr>
+            <td>知识与系统</td>
+            <td>以 RAG / 插件形式零散接入</td>
+            <td class="ours">SYSTEM / ASUI 协议化，<br>知识即代码，可版本化回滚</td>
+          </tr>
+          <tr>
+            <td>人机关系</td>
+            <td>更多强调“替代”，接管具体动作</td>
+            <td class="ours">Human Above the Loop：<br>人决定边界，AI 在边界内主动</td>
+          </tr>
+          <tr>
+            <td>锁定与迁移</td>
+            <td>厂商锁定强，数据与模型绑定</td>
+            <td class="ours">通过开放协议栈接入，<br>企业资产可迁移，形成「习惯锁定」</td>
+          </tr>
+        </table>
+      </div>
+      <div class="pill">
+        <span class="pill-dot"></span>
+        投资视角：我们和大模型厂商是「强互补」，和单应用 Copilot 是「形态差异」，站位更靠近 OS 与中台。
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 商业模式与收入结构 -->
+  <section class="slide" id="p6">
+    <div class="slide-inner">
+      <span class="tag"><span class="tag-dot"></span>商业模式 · REVENUE</span>
+      <h2>三层收入结构：从项目制，到平台复利</h2>
+      <div class="card-row">
+        <div class="card">
+          <h3>1）企业订阅 + 项目实施</h3>
+          <ul class="dot-list">
+            <li><span class="dot-bullet"></span><span>年费订阅：按企业规模 & 使用深度定价（席位数 + 接入系统数）。</span></li>
+            <li><span class="dot-bullet"></span><span>实施费用：首年收取一次性实施与知识建模服务费。</span></li>
+            <li><span class="dot-bullet"></span><span>续费阶段实施成本显著下降，毛利率逐年提高。</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>2）平台抽成 + 生态分成</h3>
+          <ul class="dot-list">
+            <li><span class="dot-bullet"></span><span>开放 Agent / MCP / ASUI 模块市场，第三方开发者与咨询公司可发布资产。</span></li>
+            <li><span class="dot-bullet"></span><span>平台按交易额抽成，形成轻量却稳定的长期现金流。</span></li>
+            <li><span class="dot-bullet"></span><span>生态越大，企业迁移成本越高，平台粘性越强。</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <h3>3）知识与标准的长期价值</h3>
+        <p class="sub" style="max-width:none">
+          随着更多企业在 UAS-AIOS 上沉淀 ASUI / SYSTEM 资产，我们也在逐步积累一个「跨行业的知识执行库」。<br>
+          这部分资产的边际成本接近于 0，却可以通过标准授权、模板包、行业套件等方式，在未来多年持续释放价值。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 发展路线 -->
+  <section class="slide" id="p7">
+    <div class="slide-inner">
+      <span class="tag"><span class="tag-dot"></span>发展路线 · 18–36 个月</span>
+      <h2>先把协议和样板做扎实，再放大为<span class="grad">平台级机会</span></h2>
+      <div class="timeline">
+        <div class="phase">
+          <div class="phase-badge">Phase 1 · 0–6 个月</div>
+          <div class="phase-body">
+            完成协议与核心内核的 v1：UIP / A2A / MCP / ASUI 规范 + 参考实现。<br>
+            与 2–3 家中小型企业合作，打磨 end-to-end 样板案例。
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-badge">Phase 2 · 6–18 个月</div>
+          <div class="phase-body">
+            打开生态与集成面：提供 SDK / Studio / System Hub，<br>
+            与 5–10 家中大型企业共建行业模板（金融 / 制造 / 互联网等）。
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-badge">Phase 3 · 18–36 个月</div>
+          <div class="phase-body">
+            从产品走向平台：托管运行时 + 行业套件 + 开放市场，<br>
+            年经常性收入（ARR）突破首个百万级台阶，建立 OS 级品牌心智。
+          </div>
+        </div>
+        <div class="callout">
+          投资视角：前 12 个月更像「架构与标准公司」，随后 24 个月逐步显化为「平台与生态公司」。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 愿景收尾 -->
+  <section class="slide" id="p8">
+    <div class="slide-inner" style="align-items:flex-start">
+      <span class="tag"><span class="tag-dot"></span>愿景 · VISION</span>
+      <h2>当 AI 变成日常「背景电力」，我们希望 UAS-AIOS 是那一层<span class="grad">稳态操作系统</span></h2>
+      <p class="sub">
+        长期来看，我们相信：每一家有深度数字化的企业，迟早都会拥有一套自己的「AI 操作系统」。<br>
+        我们希望这套系统，是温和的、可控的、尊重人决策边界的 —— 而不是一台失控的自动化机器。
+      </p>
+      <div class="card">
+        <h3>我们想一起实现的画面</h3>
+        <ul class="dot-list">
+          <li><span class="dot-bullet"></span><span>一线员工把 AI 当成「熟悉的搭档」，而不是「随时可能出错的黑盒」。</span></li>
+          <li><span class="dot-bullet"></span><span>管理者可以在一个统一的中枢，看清 AI 对企业的所有决策与影响，并随时调整边界。</span></li>
+          <li><span class="dot-bullet"></span><span>当 AGI 一代代迭代，企业不需要重写系统，只需要持续更新自己的知识与原则。</span></li>
+        </ul>
+      </div>
+      <div class="pill">
+        <span class="pill-dot"></span>
+        如果你也认同「操作系统层的机会」，我们非常期待在下一次对话中，展开更细的技术与商业模型讨论。
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="nav">
+  <button type="button" class="nav-btn" id="prev" aria-label="上一页">‹</button>
+  <div id="dots"></div>
+  <span id="page">1 / 8</span>
+  <button type="button" class="nav-btn" id="next" aria-label="下一页">›</button>
+</div>
+
+<script>
+  // 背景粒子：更柔和、低频
+  (function(){
+    const c=document.getElementById('bg');
+    const ctx=c.getContext('2d');
+    let W,H,pts=[];
+    function resize(){
+      W=c.width=window.innerWidth;
+      H=c.height=window.innerHeight;
+      init();
+    }
+    function init(){
+      pts=Array.from({length:40},()=>({
+        x:Math.random()*W,
+        y:Math.random()*H,
+        vx:(Math.random()-.5)*.2,
+        vy:(Math.random()-.5)*.2,
+        r:Math.random()*1.4+.6
+      }));
+    }
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      for(let i=0;i<pts.length;i++){
+        for(let j=i+1;j<pts.length;j++){
+          const dx=pts[i].x-pts[j].x;
+          const dy=pts[i].y-pts[j].y;
+          const d=Math.sqrt(dx*dx+dy*dy);
+          if(d<110){
+            ctx.strokeStyle=`rgba(148,163,184,${.07*(1-d/110)})`;
+            ctx.lineWidth=.5;
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x,pts[i].y);
+            ctx.lineTo(pts[j].x,pts[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      pts.forEach(p=>{
+        ctx.fillStyle='rgba(148,163,184,.5)';
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>W)p.vx*=-1;
+        if(p.y<0||p.y>H)p.vy*=-1;
+      });
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize',resize);
+    resize();
+    draw();
+  })();
+
+  // 简单分页系统
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  let cur=0,anim=false;
+  const dotsWrap=document.getElementById('dots');
+  const pageLabel=document.getElementById('page');
+
+  function buildDots(){
+    dotsWrap.innerHTML='';
+    for(let i=0;i<total;i++){
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='dot'+(i===0?' active':'');
+      b.setAttribute('aria-label','跳转到第 '+(i+1)+' 页');
+      b.onclick=()=>go(i);
+      dotsWrap.appendChild(b);
+    }
+  }
+  function setPage(){
+    pageLabel.textContent=`${cur+1} / ${total}`;
+    [...dotsWrap.children].forEach((d,i)=>d.classList.toggle('active',i===cur));
+  }
+  function go(idx){
+    if(anim||idx===cur||idx<0||idx>=total)return;
+    anim=true;
+    const prev=cur;
+    const dir=idx>prev?1:-1;
+    slides[prev].classList.add(dir>0?'exit-left':'');
+    slides[prev].classList.remove('active');
+    setTimeout(()=>{
+      slides[prev].classList.remove('exit-left');
+      cur=idx;
+      slides[cur].classList.add('active');
+      setPage();
+      setTimeout(()=>anim=false,700);
+    },40);
+  }
+  function nav(delta){go(cur+delta);}
+
+  document.getElementById('prev').onclick=()=>nav(-1);
+  document.getElementById('next').onclick=()=>nav(1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') nav(1);
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp') nav(-1);
+  },{passive:true});
+
+  // 初始
+  buildDots();
+  setPage();
+</script>
+</body>
+</html>
+

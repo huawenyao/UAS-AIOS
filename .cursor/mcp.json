@@ -1,0 +1,93 @@
+{
+  "mcpServers": {
+    "cases-static": {
+      "name": "Cases 静态资源服务器",
+      "description": "部署在 /data/cases 的静态资源 MCP 服务器，支持文件列表、读取、写入、上传、删除等完整部署功能",
+      "baseUrl": "http://cases.wumaitech.com:8081",
+      "headers": {
+        "X-API-Key": "249e29ee68730d28ed32d229c448f16c"
+      },
+      "resources": {
+        "static": {
+          "path": "/",
+          "root": "/data/cases"
+        }
+      },
+      "tools": [
+        {
+          "name": "list_files",
+          "description": "列出静态目录中的文件",
+          "endpoint": "/api/list",
+          "parameters": {
+            "path": {
+              "type": "string",
+              "description": "要列出的目录路径，默认为 /",
+              "required": false
+            }
+          }
+        },
+        {
+          "name": "get_file",
+          "description": "获取指定文件内容",
+          "endpoint": "/api/file",
+          "parameters": {
+            "path": {
+              "type": "string",
+              "description": "要获取的文件路径",
+              "required": true
+            }
+          }
+        },
+        {
+          "name": "write_file",
+          "description": "写入文件内容到服务器（用于部署HTML等文本文件）",
+          "endpoint": "/api/write",
+          "method": "POST",
+          "parameters": {
+            "path": {
+              "type": "string",
+              "description": "要写入的文件路径，如 'my-page.html'",
+              "required": true
+            },
+            "content": {
+              "type": "string",
+              "description": "文件的完整内容",
+              "required": true
+            },
+            "overwrite": {
+              "type": "boolean",
+              "description": "是否覆盖已存在的文件，默认为 false",
+              "required": false
+            }
+          }
+        },
+        {
+          "name": "upload_file",
+          "description": "上传文件到服务器（用于部署图片、二进制文件）",
+          "endpoint": "/api/upload",
+          "method": "POST",
+          "parameters": {
+            "file": {
+              "type": "file",
+              "description": "要上传的文件对象",
+              "required": true
+            }
+          }
+        },
+        {
+          "name": "delete_file",
+          "description": "删除服务器上的文件",
+          "endpoint": "/api/delete",
+          "method": "DELETE",
+          "parameters": {
+            "path": {
+              "type": "string",
+              "description": "要删除的文件路径",
+              "required": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

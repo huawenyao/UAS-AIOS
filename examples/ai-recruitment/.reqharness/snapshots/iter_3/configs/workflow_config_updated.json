@@ -1,0 +1,94 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "AI 招聘工作流",
+  "description": "岗位解析→简历匹配→打分→报告生成",
+  "steps": [
+    {
+      "id": "parse_jd",
+      "name": "岗位解析",
+      "type": "llm",
+      "description": "从 JD 提取结构化要求",
+      "prompt_template": "解析以下岗位描述，提取：学历、工作经验、技能关键词、薪资范围。返回 JSON。\n\n{{job_description}}"
+    },
+    {
+      "id": "match_resume",
+      "name": "简历匹配（画像提取）",
+      "type": "llm",
+      "dependencies": ["parse_jd"],
+      "description": "根据岗位要求解析简历，抽取人才画像要素，供评分步骤使用",
+      "prompt_template": "你是专业的简历解析引擎。\\n\\n岗位要求（Job Profile）：\\n{{jd}}\\n\\n候选人简历：\\n{{resume}}\\n\\n请提取与岗位匹配相关的结构化信息，输出 JSON，字段包括（可根据内容补充，但不要删除）：\\n- education: 学历（最高学历、学校、专业）\\n- experience: 工作经历（公司、时间、岗位、职责、成果）\\n- skills: 技能与技术栈列表\\n- domains: 业务/行业领域\\n- engineering_practices: 工程实践（测试、CI/CD、Review、监控等）\\n- potential_signals: 成长与承担的信号（如快速晋升、主导重构等）"
+    },
+    {
+      "id": "score",
+      "name": "匹配打分（Agentic 简历评分）",
+      "type": "llm",
+      "dependencies": ["match_resume"],
+      "description": "调用简历评分 Skill（resume_scoring_agentic），输出结构化打分结果",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "candidate_id": {"type": "string"},
+          "job_id": {"type": "string"},
+          "scores": {
+            "type": "object",
+            "properties": {
+              "education_score": {"type": "number"},
+              "experience_score": {"type": "number"},
+              "skill_score": {"type": "number"},
+              "engineering_score": {"type": "number"},
+              "domain_score": {"type": "number"},
+              "potential_score": {"type": "number"},
+              "total_score": {"type": "number"}
+            },
+            "required": [
+              "education_score",
+              "experience_score",
+              "skill_score",
+              "total_score"
+            ]
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "strong_recommend",
+              "recommend",
+              "borderline",
+              "not_recommend"
+            ]
+          },
+          "risk_flags": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "evidence": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        },
+        "required": [
+          "candidate_id",
+          "job_id",
+          "scores",
+          "decision"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "name": "生成报告",
+      "type": "script",
+      "dependencies": ["score"],
+      "description": "生成可审计的推荐报告",
+      "script": "scripts/generate_report.py"
+    }
+  ]
+}
+{  
+  "shared_web": {  
+    "enabled": true,  
+    "project_id": "proj_8cfb81100d44",  
+    "allowed_scopes": ["ai_recruitment_candidate", "recruitment_candidate_view"],  
+    "default_ttl_hours": 168  
+  }  
+}  

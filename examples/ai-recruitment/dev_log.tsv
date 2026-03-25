@@ -1,0 +1,616 @@
+iteration	timestamp	acceptance_score	approach_summary	changed_files	test_output_snippet	status	strategy_mode	stage_note	gates
+0	2026-03-21T05:40:25.809675+00:00	0.0000	BASELINE		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002474BC7EC90>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002474BC7F3E0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	BASELINE	baseline	sense:model:decide baseline	
+0	2026-03-21T05:40:51.537461+00:00	0.0000	BASELINE		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000020294B3EF60>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000020294B3F920>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	BASELINE	baseline	sense:model:decide baseline	
+1	2026-03-21T05:40:52.495575+00:00	0.0000	cursor agent invoked (iteration=1)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000021F046CEF30>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000021F046CF8F0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.08s"	REVERT	explore	node=diagnose; graph=diagnose:pending:attempts=1; implement:pending:attempts=0; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:warn
+2	2026-03-21T05:40:53.460848+00:00	0.0000	cursor agent invoked (iteration=2)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001683EF0EEA0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001683EF0F890>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	safe_retry	node=implement; graph=diagnose:pending:attempts=0; implement:pending:attempts=1; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:warn
+3	2026-03-21T05:40:54.410535+00:00	0.0000	cursor agent invoked (iteration=3)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001B5C755EED0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001B5C755F860>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	narrow_fix	node=harden; graph=diagnose:pending:attempts=0; implement:pending:attempts=0; harden:failed:attempts=1	G4_LINT:pass; G7_ACCEPTANCE:warn
+4	2026-03-21T05:40:55.363859+00:00	0.0000	cursor agent invoked (iteration=4)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001788643EF90>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001788643F980>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	narrow_fix	node=diagnose; graph=diagnose:pending:attempts=1; implement:pending:attempts=0; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:warn
+5	2026-03-21T05:40:56.317231+00:00	0.0000	cursor agent invoked (iteration=5)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000023FB65BEF00>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000023FB65BF8F0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	narrow_fix	node=implement; graph=diagnose:pending:attempts=0; implement:pending:attempts=1; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:warn
+6	2026-03-21T05:40:57.311181+00:00	0.0000	cursor agent invoked (iteration=6)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001574C39EF60>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001574C39F920>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	escalate_prepare	node=harden; graph=diagnose:pending:attempts=0; implement:pending:attempts=0; harden:failed:attempts=1	G4_LINT:pass; G7_ACCEPTANCE:warn
+0	2026-03-21T05:41:14.241134+00:00	0.0000	BASELINE		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001AB275BEF30>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001AB275BF920>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.08s"	BASELINE	baseline	sense:model:decide baseline	
+1	2026-03-21T05:41:15.161701+00:00	0.0000	codex agent invoked (iteration=1)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001A26A63EF90>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001A26A63F980>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	explore	node=diagnose; graph=diagnose:done:attempts=1; implement:pending:attempts=0; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:warn
+2	2026-03-21T05:41:16.166024+00:00	0.0000	codex agent invoked (iteration=2)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001C3E6D3EFC0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001C3E6D3F9B0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	safe_retry	node=implement; graph=diagnose:pending:attempts=0; implement:done:attempts=1; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:warn
+3	2026-03-21T05:41:17.114763+00:00	0.0000	codex agent invoked (iteration=3)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001CCBE62EF60>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001CCBE62F950>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	narrow_fix	node=harden; graph=diagnose:pending:attempts=0; implement:pending:attempts=0; harden:done:attempts=1	G4_LINT:pass; G7_ACCEPTANCE:warn
+4	2026-03-21T05:41:18.037010+00:00	0.0000	codex agent invoked (iteration=4)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001A91939EF30>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001A91939F8F0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	narrow_fix	node=diagnose; graph=diagnose:done:attempts=1; implement:pending:attempts=0; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:warn
+5	2026-03-21T05:41:18.962301+00:00	0.0000	codex agent invoked (iteration=5)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002653D84EF30>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002653D84F8F0>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	narrow_fix	node=implement; graph=diagnose:pending:attempts=0; implement:done:attempts=1; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:warn
+6	2026-03-21T05:41:19.922870+00:00	0.0000	codex agent invoked (iteration=6)		"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001834C2EEF30>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\domain_world_model.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________________ test_closed_loop_orchestrator_contract ____________________
+
+    def test_closed_loop_orchestrator_contract() -> None:
+>       module = _load_module(
+            ROOT / ""scripts"" / ""recruitment_closed_loop.py"",
+            ""recruitment_closed_loop"",
+        )
+
+acceptance\test_world_model_closed_loop.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+acceptance\test_world_model_closed_loop.py:14: in _load_module
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000001834C2EF920>
+path = 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\examples\\ai-recruitment\\scripts\\recruitment_closed_loop.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED acceptance/test_world_model_closed_loop.py::test_world_model_doc_exists
+FAILED acceptance/test_world_model_closed_loop.py::test_domain_world_model_contract
+FAILED acceptance/test_world_model_closed_loop.py::test_closed_loop_orchestrator_contract
+3 failed in 0.07s"	REVERT	escalate_prepare	node=harden; graph=diagnose:pending:attempts=0; implement:pending:attempts=0; harden:done:attempts=1	G4_LINT:pass; G7_ACCEPTANCE:warn
+0	2026-03-21T05:42:22.314474+00:00	1.0000	BASELINE		"...                                                                      [100%]
+3 passed in 0.01s"	BASELINE	baseline	sense:model:decide baseline	
+0	2026-03-21T07:45:45.180121+00:00	1.0000	BASELINE		"...                                                                      [100%]
+3 passed in 0.02s"	BASELINE	baseline	sense:model:decide baseline	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+1	2026-03-21T07:45:46.045049+00:00	1.0000	codex agent invoked (iteration=1)		"...                                                                      [100%]
+3 passed in 0.01s"	REVERT	explore	node=diagnose; graph=diagnose:done:attempts=1; implement:pending:attempts=0; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+2	2026-03-21T07:45:46.928086+00:00	1.0000	codex agent invoked (iteration=2)		"...                                                                      [100%]
+3 passed in 0.01s"	REVERT	safe_retry	node=implement; graph=diagnose:pending:attempts=0; implement:done:attempts=1; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+3	2026-03-21T07:45:47.854364+00:00	1.0000	cursor agent invoked (iteration=3)		"...                                                                      [100%]
+3 passed in 0.01s"	REVERT	narrow_fix	node=harden; graph=diagnose:pending:attempts=0; implement:pending:attempts=0; harden:failed:attempts=1	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+4	2026-03-21T07:45:48.758268+00:00	1.0000	codex agent invoked (iteration=4)		"...                                                                      [100%]
+3 passed in 0.02s"	REVERT	narrow_fix	node=diagnose; graph=diagnose:done:attempts=1; implement:pending:attempts=0; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+5	2026-03-21T07:45:49.725763+00:00	1.0000	cursor agent invoked (iteration=5)		"...                                                                      [100%]
+3 passed in 0.01s"	REVERT	narrow_fix	node=implement; graph=diagnose:pending:attempts=0; implement:pending:attempts=1; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+6	2026-03-21T07:45:50.626615+00:00	1.0000	codex agent invoked (iteration=6)		"...                                                                      [100%]
+3 passed in 0.01s"	REVERT	escalate_prepare	node=harden; graph=diagnose:pending:attempts=0; implement:pending:attempts=0; harden:done:attempts=1	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+0	2026-03-21T08:07:28.217260+00:00	1.0000	BASELINE		"...                                                                      [100%]
+3 passed in 0.01s"	BASELINE	baseline	sense:model:decide baseline	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+1	2026-03-21T08:07:29.311878+00:00	1.0000	codex agent invoked (iteration=1)		"...                                                                      [100%]
+3 passed in 0.02s"	REVERT	explore	node=diagnose; graph=diagnose:done:attempts=1; implement:pending:attempts=0; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+2	2026-03-21T08:07:30.422391+00:00	1.0000	codex agent invoked (iteration=2)		"...                                                                      [100%]
+3 passed in 0.02s"	REVERT	safe_retry	node=implement; graph=diagnose:pending:attempts=0; implement:done:attempts=1; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+3	2026-03-21T08:07:31.568294+00:00	1.0000	cursor agent invoked (iteration=3)		"...                                                                      [100%]
+3 passed in 0.02s"	REVERT	narrow_fix	node=harden; graph=diagnose:pending:attempts=0; implement:pending:attempts=0; harden:failed:attempts=1	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+4	2026-03-21T08:07:32.655637+00:00	1.0000	codex agent invoked (iteration=4)		"...                                                                      [100%]
+3 passed in 0.02s"	REVERT	narrow_fix	node=diagnose; graph=diagnose:done:attempts=1; implement:pending:attempts=0; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+5	2026-03-21T08:07:33.871645+00:00	1.0000	cursor agent invoked (iteration=5)		"...                                                                      [100%]
+3 passed in 0.02s"	REVERT	narrow_fix	node=implement; graph=diagnose:pending:attempts=0; implement:pending:attempts=1; harden:pending:attempts=0	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn
+6	2026-03-21T08:07:35.029687+00:00	1.0000	codex agent invoked (iteration=6)		"...                                                                      [100%]
+3 passed in 0.02s"	REVERT	escalate_prepare	node=harden; graph=diagnose:pending:attempts=0; implement:pending:attempts=0; harden:done:attempts=1	G4_LINT:pass; G7_ACCEPTANCE:pass; G5_SEMANTIC:warn

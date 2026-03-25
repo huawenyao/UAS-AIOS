@@ -1,0 +1,213 @@
+{
+  "$schema": "https://asui.dev/schemas/entity_schemas.schema.json",
+  "version": "v1.0",
+  "description": "AI 招聘 UAS App 关键实体结构化管理，与 autonomous_agent runtime 的 task 级状态、审计与事件驱动对齐",
+  "entities": {
+    "Job": {
+      "id_field": "job_id",
+      "required": ["job_id", "created_at"],
+      "fields": {
+        "job_id": { "type": "string", "description": "岗位唯一标识" },
+        "raw_jd": { "type": "string", "description": "原始 JD 文本" },
+        "parsed_profile": {
+          "type": "object",
+          "description": "解析后的岗位画像（能力矩阵、业务情境、约束与量化指标）",
+          "properties": {
+            "capability_matrix": {
+              "type": "array",
+              "description": "能力矩阵：每一项为一个岗位能力要求",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "description": "能力名称，如 数据分析/AIGC/项目管理" },
+                  "category": { "type": "string", "description": "能力类别，如 must_have/nice_to_have" },
+                  "weight": { "type": "number", "description": "重要性权重，0-1 之间的小数" },
+                  "required_level": { "type": "integer", "description": "期望熟练度，1-5 档" }
+                }
+              }
+            },
+            "context": {
+              "type": "object",
+              "description": "岗位所在的业务情境与约束",
+              "properties": {
+                "business_line": { "type": "string", "description": "所属业务线/产品线" },
+                "stage": { "type": "string", "description": "业务阶段，如 startup/growth/mature" },
+                "kpis": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "关键 KPI 描述"
+                },
+                "team_structure": {
+                  "type": "string",
+                  "description": "团队结构/上下游协作对象概述"
+                }
+              }
+            },
+            "metrics": {
+              "type": "object",
+              "description": "岗位级量化指标",
+              "properties": {
+                "job_complexity_score": { "type": "number", "description": "岗位复杂度评分，0-10" },
+                "market_scarcity_score": { "type": "number", "description": "市场稀缺度评分，0-10" },
+                "internal_similarity_score": { "type": "number", "description": "与历史岗位画像的相似度，0-1" }
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "open", "paused", "closed"],
+          "default": "open"
+        },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "storage": "database/jobs.json"
+    },
+    "Candidate": {
+      "id_field": "candidate_id",
+      "required": ["candidate_id", "job_id", "created_at"],
+      "fields": {
+        "candidate_id": { "type": "string" },
+        "job_id": { "type": "string", "description": "关联岗位" },
+        "name": { "type": "string" },
+        "scores": {
+          "type": "object",
+          "description": "候选人的结构化量化评分（能力、潜力、匹配、意向等）",
+          "properties": {
+            "education_score": { "type": "number", "description": "学历匹配度 0-10" },
+            "experience_score": { "type": "number", "description": "经验匹配度 0-10" },
+            "skill_score": { "type": "number", "description": "技能匹配度 0-10" },
+            "engineering_score": { "type": "number", "description": "工程实践 0-10" },
+            "domain_score": { "type": "number", "description": "领域经验 0-10" },
+            "potential_score": { "type": "number", "description": "成长潜力 0-10" },
+            "matching": {
+              "type": "object",
+              "description": "人岗匹配相关评分",
+              "properties": {
+                "ability_match_score": { "type": "number", "description": "能力匹配分 0-100" },
+                "context_match_score": { "type": "number", "description": "业务情境匹配分 0-100" },
+                "culture_fit_score": { "type": "number", "description": "文化/团队融入度 0-100" },
+                "growth_potential_score": { "type": "number", "description": "在该岗位上的成长空间 0-100" },
+                "overall_match_score": { "type": "number", "description": "综合匹配分 0-100" }
+              }
+            },
+            "intent": {
+              "type": "object",
+              "description": "候选人意向与沟通质量相关评分",
+              "properties": {
+                "intent_score": { "type": "number", "description": "整体意向度 0-100" },
+                "communication_clarity_score": { "type": "number", "description": "沟通表达清晰度 0-100" },
+                "motivation_fit_score": { "type": "number", "description": "求职动机与岗位/公司匹配度 0-100" }
+              }
+            },
+            "total_score": { "type": "number", "description": "用于决策的综合推荐分 0-10" }
+          }
+        },
+        "decision": {
+          "type": "string",
+          "enum": ["strong_recommend", "recommend", "borderline", "not_recommend"]
+        },
+        "risk_flags": { "type": "array", "items": { "type": "string" } },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "用于支撑评分与决策的证据引用 ID 或摘要"
+        },
+        "basic_info": {
+          "type": "object",
+          "description": "简历解析后的基础信息（教育、经历、项目、技能等）"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "screened",
+            "shortlisted",
+            "interview_scheduled",
+            "interview_completed",
+            "offered",
+            "rejected"
+          ],
+          "default": "screened"
+        },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "storage": "database/candidates.json"
+    },
+    "Task": {
+      "id_field": "task_id",
+      "description": "与 runtime 的 state_isolation: task_level 对齐，每个 Task 为一次可审计的执行单元",
+      "required": ["task_id", "type", "status", "created_at"],
+      "fields": {
+        "task_id": { "type": "string" },
+        "type": { "type": "string", "enum": ["screening", "ai_interview", "human_interview", "evaluation_review"], "description": "任务类型" },
+        "status": { "type": "string", "enum": ["pending", "running", "completed", "failed", "cancelled"], "default": "pending" },
+        "job_id": { "type": "string" },
+        "candidate_id": { "type": "string" },
+        "payload": { "type": "object", "description": "任务输入/上下文" },
+        "result": { "type": "object", "description": "任务输出，完成后写入" },
+        "started_at": { "type": "string", "format": "date-time" },
+        "completed_at": { "type": "string", "format": "date-time" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "storage": "database/tasks.json"
+    },
+    "Event": {
+      "id_field": "event_id",
+      "description": "业务与运行时事件，驱动状态流转与审计",
+      "required": ["event_id", "event_type", "occurred_at"],
+      "fields": {
+        "event_id": { "type": "string" },
+        "event_type": { "type": "string", "description": "见 event_policy 中定义" },
+        "task_id": { "type": "string" },
+        "job_id": { "type": "string" },
+        "candidate_id": { "type": "string" },
+        "payload": { "type": "object" },
+        "occurred_at": { "type": "string", "format": "date-time" }
+      },
+      "storage": "database/events.json"
+    },
+    "Notification": {
+      "id_field": "notification_id",
+      "required": ["notification_id", "event_id", "created_at"],
+      "fields": {
+        "notification_id": { "type": "string" },
+        "event_id": { "type": "string" },
+        "channel": { "type": "string", "enum": ["in_app", "email", "webhook"], "default": "in_app" },
+        "recipient_role": { "type": "string", "description": "hr_recruiter | hiring_manager | candidate" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "sent", "failed"], "default": "pending" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "storage": "database/notifications.json"
+    },
+    "Evaluation": {
+      "id_field": "evaluation_id",
+      "required": ["evaluation_id", "candidate_id", "created_at"],
+      "fields": {
+        "evaluation_id": { "type": "string" },
+        "task_id": { "type": "string", "description": "关联的面试/评估任务" },
+        "candidate_id": { "type": "string" },
+        "job_id": { "type": "string" },
+        "scope": {
+          "type": "string",
+          "enum": ["screening", "ai_interview", "human_interview", "combined"],
+          "default": "ai_interview"
+        },
+        "dimensions": {
+          "type": "object",
+          "description": "多维度量化评价（如专业能力/沟通/逻辑/文化契合/潜力等得分）"
+        },
+        "summary": {
+          "type": "string",
+          "description": "对本次评估的自然语言总结与推荐结论"
+        },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "storage": "database/evaluations.json"
+    }
+  }
+}

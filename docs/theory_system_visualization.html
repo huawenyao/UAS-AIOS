@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UAS-AIOS 理论体系可视化</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --card: #1a2332;
+      --border: #2d3a4f;
+      --text: #e6edf3;
+      --dim: #8b949e;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --accent3: #d2a8ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 1.5rem;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      color: var(--dim);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    section h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    section h2:hover { background: rgba(255,255,255,0.03); }
+    section h2::after {
+      content: "▼";
+      font-size: 0.7rem;
+      color: var(--dim);
+      transition: transform 0.2s;
+    }
+    section.collapsed h2::after { transform: rotate(-90deg); }
+    section .content {
+      padding: 0 1rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+    section.collapsed .content { display: none; }
+    .diagram {
+      background: #161b22;
+      border-radius: 6px;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      overflow-x: auto;
+    }
+    .diagram .mermaid { display: flex; justify-content: center; }
+    .diagram-title {
+      font-size: 0.85rem;
+      color: var(--dim);
+      margin-bottom: 0.5rem;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--dim);
+      margin-bottom: 1rem;
+    }
+    .legend span { display: flex; align-items: center; gap: 0.35rem; }
+    .legend .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .legend .dot.philosophy { background: var(--accent3); }
+    .legend .dot.cognitive { background: var(--accent); }
+    .legend .dot.platform { background: var(--accent2); }
+    .legend .dot.agent { background: #f0883e; }
+    .legend .dot.paradigm { background: #db6b6b; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>UAS-AIOS 项目理论体系</h1>
+  <p class="subtitle">方法论综合与关系图谱 · 详见 <a href="THEORY_SYSTEM.md">THEORY_SYSTEM.md</a></p>
+
+  <div class="legend">
+    <span><span class="dot philosophy"></span> 哲学与价值</span>
+    <span><span class="dot cognitive"></span> 认知层</span>
+    <span><span class="dot platform"></span> 平台与架构</span>
+    <span><span class="dot agent"></span> 智能体形态</span>
+    <span><span class="dot paradigm"></span> 本质与范式</span>
+  </div>
+
+  <section>
+    <h2>1. 理论体系层级与依赖</h2>
+    <div class="content">
+      <div class="diagram">
+        <div class="diagram-title">哲学 → 认知 → 双轨 AGI → 平台 → 智能体形态 ← 范式</div>
+        <div class="mermaid">
+flowchart TB
+    subgraph 哲学与价值层
+        CP[认知实践论]
+        VC[价值闭环 7步]
+        CP --> VC
+    end
+
+    subgraph 认知层
+        WM[世界模型]
+        AGI[AGI = WM + Agent]
+        DFR[推动—反馈—反身螺旋]
+        WM --> AGI
+        WM --> DFR
+        VC --> WM
+    end
+
+    subgraph 双轨AGI
+        UA[User AGI = selfpaw]
+        BA[Business AGI = Πpaw]
+        AGI --> UA
+        AGI --> BA
+    end
+
+    subgraph 平台与架构层
+        UAS[UAS-AIOS]
+        ASUI[ASUI]
+        UAS --> ASUI
+        WM --> UAS
+    end
+
+    subgraph 智能体形态层
+        SW[蜂群 selfpaw]
+        TR[三维 triadic]
+        UA --> SW
+        BA --> TR
+    end
+
+    subgraph 本质与范式层
+        TS[三元张力 U/A/S]
+        PF[范式跃迁 → UAS-AIOS]
+        TS --> PF
+        ASUI --> TS
+    end
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 世界模型在 UAS-AIOS 中的融入</h2>
+    <div class="content">
+      <div class="diagram">
+        <div class="diagram-title">世界模型五维 → I,K,R,A,S,G,E 全面融入；E 通过推动—反馈—反身更新 WM</div>
+        <div class="mermaid">
+flowchart LR
+    subgraph 世界模型
+        S[空间]
+        T[时间]
+        Subj[主体]
+        Obj[客体]
+        F[感知—行动—反馈]
+    end
+
+    subgraph UAS["UAS-AIOS"]
+        I[I]
+        K[K]
+        R[R]
+        A[A]
+        S2[S]
+        G[G]
+        E[E]
+    end
+
+    世界模型 --> I
+    世界模型 --> K
+    世界模型 --> R
+    世界模型 --> A
+    世界模型 --> S2
+    世界模型 --> G
+    世界模型 --> E
+
+    E -->|推动—反馈—反身| 世界模型
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 推动—反馈—反身螺旋与价值闭环</h2>
+    <div class="content">
+      <div class="diagram">
+        <div class="diagram-title">价值闭环 7 步与演化螺旋的对应</div>
+        <div class="mermaid">
+flowchart LR
+    subgraph 价值闭环
+        V1[1.输入]
+        V2[2.模拟]
+        V3[3.生成]
+        V4[4.交互]
+        V5[5.进化]
+        V6[6.输出]
+        V7[7.收益]
+        V1 --> V2 --> V3 --> V4 --> V5 --> V6 --> V7
+        V7 -.反哺.-> V2
+    end
+
+    subgraph 演化螺旋
+        DR[推动]
+        FB[反馈]
+        RX[反身]
+        DR --> FB --> RX --> DR
+    end
+
+    V2 --> DR
+    V4 --> FB
+    V5 --> RX
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. 方法论应用关系（谁实现谁）</h2>
+    <div class="content">
+      <div class="diagram">
+        <div class="diagram-title">平台、世界模型、双轨 AGI、智能体形态、标准</div>
+        <div class="mermaid">
+flowchart TB
+    UAS[UAS-AIOS 平台]
+    WM[世界模型]
+    ASUI[ASUI 技术底座]
+
+    UAS --> WM
+    UAS --> ASUI
+
+    selfpaw[蜂群 selfpaw]
+    triadic[三维 triadic]
+    UA[User AGI]
+    BA[Business AGI]
+
+    UA --> selfpaw
+    BA --> triadic
+    UAS --> UA
+    UAS --> BA
+
+    WM --> UA
+    WM --> BA
+
+    STD1[UAS Platform 标准]
+    STD2[ASUI Autonomous Agent 标准]
+    UAS --> STD1
+    ASUI --> STD2
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. 文字关系总图</h2>
+    <div class="content">
+      <pre style="font-size: 0.75rem; color: var(--dim); overflow-x: auto; margin: 0;">
+认知实践论
+    ├─→ 价值闭环（7步）──→ 世界模型 + 推动—反馈—反身
+    └─→ 世界模型（反馈能力模型化）
+              ├─ 五维：空间/时间/主体/客体/感知—行动—反馈
+              ├─ 全面融入 UAS-AIOS
+              └─ 演化：推动 → 反馈 → 反身
+                        ↓
+              AGI = World Model + AI Agent
+                        ├─ User AGI = selfpaw (UAS-U)
+                        └─ Business AGI = Πpaw (UAS-S)
+                                    ↓
+              UAS-AIOS (I,K,R,A,S,G,E,Π)  ← K 默认 ASUI
+                        ├─ 蜂群 selfpaw
+                        ├─ 三维 triadic
+                        └─ 三元张力 → 范式跃迁
+      </pre>
+    </div>
+  </section>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      themeVariables: {
+        primaryColor: "#1a2332",
+        primaryTextColor: "#e6edf3",
+        primaryBorderColor: "#2d3a4f",
+        lineColor: "#8b949e",
+        secondaryColor: "#161b22",
+        tertiaryColor: "#0f1419"
+      }
+    });
+
+    document.querySelectorAll("section h2").forEach(function(h) {
+      h.addEventListener("click", function() {
+        h.closest("section").classList.toggle("collapsed");
+      });
+    });
+  </script>
+</body>
+</html>

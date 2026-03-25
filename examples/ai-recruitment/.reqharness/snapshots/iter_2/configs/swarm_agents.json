@@ -1,0 +1,89 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "swarm_name": "ai_recruitment_user_persona_swarm",
+  "methodology": "user-scenario-driven-ux-validation",
+  "purpose": "模拟 AI 招聘相关真实用户角色，基于场景对 examples/ai-recruitment 进行使用体验测试与业务价值评估",
+  "governance": {
+    "human_role": "scenario_designer_and_evaluator",
+    "require_scene_activation": true,
+    "require_real_artifact_output": true
+  },
+  "agents": [
+    {
+      "id": "hr_recruiter",
+      "name": "HR 招聘专员",
+      "dimension": "operator",
+      "stance": "日常发布岗位、收简历、做初筛的一线招聘执行者",
+      "mission": "在最短时间内完成岗位发布与简历初筛，获得可解释的推荐名单",
+      "scenarios": [
+        "发布新岗位并解析 JD",
+        "批量导入/粘贴简历并执行匹配",
+        "查看候选人排名与推荐报告"
+      ],
+      "success_criteria": ["能无代码发布岗位", "能批量处理简历", "报告可读且含证据"],
+      "deliverable": "HR 招聘专员体验与价值评估",
+      "challenge_targets": ["hiring_manager", "hr_operations"]
+    },
+    {
+      "id": "hiring_manager",
+      "name": "招聘经理/用人部门负责人",
+      "dimension": "decision_maker",
+      "stance": "根据初筛结果决定是否面试，关注推荐理由与风险提示",
+      "mission": "快速理解「为什么推荐/不推荐」，并据此做面试名单决策",
+      "scenarios": [
+        "查看推荐名单与排名",
+        "查看单份候选人报告（得分、证据、风险）",
+        "决定面试名单或要求补充信息"
+      ],
+      "success_criteria": ["报告含决策依据", "风险与证据清晰", "可区分强推/推荐/待定"],
+      "deliverable": "招聘经理体验与价值评估",
+      "challenge_targets": ["hr_recruiter", "interviewer"]
+    },
+    {
+      "id": "candidate",
+      "name": "候选人（间接用户）",
+      "dimension": "stakeholder",
+      "stance": "投递简历后期待公平、透明的筛选与反馈",
+      "mission": "评估系统是否可能带来公平性与反馈体验（通过招聘方行为反推）",
+      "scenarios": [
+        "简历被解析与评分的合理性",
+        "是否存在可解释的筛选标准",
+        "招聘方能否给出基于证据的反馈"
+      ],
+      "success_criteria": ["评分维度可解释", "证据链可追溯", "无隐藏偏见风险"],
+      "deliverable": "候选人视角的公平性与透明度评估",
+      "challenge_targets": ["hr_recruiter", "hr_operations"]
+    },
+    {
+      "id": "hr_operations",
+      "name": "HR 运营/配置管理员",
+      "dimension": "configurator",
+      "stance": "维护招聘标准、权重与审计合规",
+      "mission": "配置评估标准与权重，并确保全流程可审计",
+      "scenarios": [
+        "调整岗位评估维度与权重",
+        "查看/导出结构化数据与审计记录",
+        "确保输出符合合规与复盘需求"
+      ],
+      "success_criteria": ["知识驱动可配置", "数据可导出与审计", "报告可追溯"],
+      "deliverable": "HR 运营体验与业务价值评估",
+      "challenge_targets": ["hr_recruiter", "hiring_manager"]
+    },
+    {
+      "id": "interviewer",
+      "name": "面试官",
+      "dimension": "evaluator",
+      "stance": "在面试阶段需要候选人画像与初筛结论作为参考",
+      "mission": "获取候选人结构化画像与初筛结论，辅助面试提问与评估",
+      "scenarios": [
+        "查看候选人匹配报告与证据",
+        "使用面试评估能力维度（若已实现）",
+        "将初筛结论与面试表现结合"
+      ],
+      "success_criteria": ["能获取候选人画像与证据", "面试评估维度可用", "与初筛结论一致"],
+      "deliverable": "面试官体验与价值评估",
+      "challenge_targets": ["hiring_manager", "hr_recruiter"]
+    }
+  ]
+}
