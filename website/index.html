@@ -3,23 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Cognitive computing infrastructure. Making intelligence reflexive, giving organizations world models. The digital nervous system for human-machine co-evolution." />
+  <meta name="description" content="Neurospan — Cognitive Computing Infrastructure. Making intelligence reflexive, giving organizations world models. The digital nervous system for human-machine co-evolution." />
+  <meta name="theme-color" content="#07070a" />
   <title>Neurospan — Cognitive Computing Infrastructure</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
 
-  <header class="site-header">
+  <header class="site-header" id="site-header">
     <div class="wrap">
-      <a href="#" class="logo" aria-label="Home">Neurospan</a>
+      <a href="#" class="logo" aria-label="Home">
+        <span class="logo-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="14" r="5" fill="currentColor" opacity="0.6"/><path d="M14 2v6M14 20v6M2 14h6M20 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </span>
+        <span class="logo-text">Neurospan</span>
+      </a>
       <nav class="nav" aria-label="Main">
+        <a href="#about">About</a>
         <a href="#mission">Mission</a>
-        <a href="#vision">Vision</a>
+        <a href="#platform">Platform</a>
         <a href="#capabilities">Capabilities</a>
+        <a href="#vision">Vision</a>
         <a href="#contact" class="nav-cta">Contact</a>
       </nav>
       <button type="button" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -29,95 +37,292 @@
   </header>
 
   <main>
+    <!-- Hero -->
     <section class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="hero-orb hero-orb--1"></div>
+        <div class="hero-orb hero-orb--2"></div>
+      </div>
       <div class="wrap">
-        <p class="hero-label" data-i18n="hero.label"><span class="term">Cognitive Computing</span> Infrastructure</p>
-        <h1 class="hero-title">
-          <span class="line" data-i18n="hero.title1">Make intelligence</span>
-          <span class="line line-accent" data-i18n="hero.title2">reflexive.</span>
-        </h1>
-        <p class="hero-subtitle" data-i18n="hero.subtitle">
-          We build the infrastructure that gives organizations <span class="term">world models</span> and accelerates the paradigm shift for every individual and every enterprise.
-        </p>
-        <div class="hero-actions">
-          <a href="#mission" class="btn btn-primary" data-i18n="hero.cta">Explore our mission</a>
-          <a href="#vision" class="btn btn-ghost" data-i18n="hero.secondary">Our vision</a>
+        <div class="hero-content">
+          <p class="hero-label" data-i18n="hero.label">
+            <span class="hero-label-dot" aria-hidden="true"></span>
+            <span class="term">Cognitive Computing</span> Infrastructure
+          </p>
+          <h1 class="hero-title">
+            <span class="line" data-i18n="hero.title1">Make intelligence</span>
+            <span class="line line-accent" data-i18n="hero.title2">reflexive.</span>
+          </h1>
+          <p class="hero-subtitle" data-i18n="hero.subtitle">
+            We build the infrastructure that gives organizations <span class="term">world models</span> and accelerates the paradigm shift for every individual and every enterprise.
+          </p>
+          <div class="hero-actions">
+            <a href="#platform" class="btn btn-primary" data-i18n="hero.cta">
+              <span>Explore platform</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#vision" class="btn btn-ghost" data-i18n="hero.secondary">Our vision</a>
+          </div>
+          <div class="hero-metrics" aria-label="Key metrics">
+            <div class="hero-metric">
+              <span class="hero-metric-value" data-count="8">8</span>
+              <span class="hero-metric-label">Core Modules</span>
+            </div>
+            <div class="hero-metric">
+              <span class="hero-metric-value">5x</span>
+              <span class="hero-metric-label">Efficiency Gain</span>
+            </div>
+            <div class="hero-metric">
+              <span class="hero-metric-value">∞</span>
+              <span class="hero-metric-label">Evolving</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="hero-grid" aria-hidden="true"></div>
     </section>
 
+    <!-- About -->
+    <section id="about" class="section about">
+      <div class="wrap">
+        <div class="about-grid">
+          <div class="about-main">
+            <span class="section-label" data-i18n="about.label">About Neurospan</span>
+            <h2 class="section-title" data-i18n="about.title">Pioneering the era of <span class="term">cognitive computing</span>.</h2>
+            <p class="section-lead" data-i18n="about.lead">
+              Neurospan is a cognitive computing infrastructure company. We design and build the foundational systems that enable organizations to develop, deploy, and evolve <span class="term">world models</span> — structured representations of reality that power autonomous reasoning and action.
+            </p>
+            <p class="about-detail" data-i18n="about.detail">
+              Our technology bridges the gap between <span class="term">User AGI</span> — intelligence that amplifies individual capability — and <span class="term">Business AGI</span> — intelligence that transforms organizational decision-making. Together, they form the cognitive backbone of the next paradigm.
+            </p>
+          </div>
+          <aside class="about-stats">
+            <div class="stat-card">
+              <span class="stat-value">UAS</span>
+              <span class="stat-label">Architecture Standard</span>
+              <span class="stat-desc">I, K, R, A, S, G, E, Π</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value">ASUI</span>
+              <span class="stat-label">Integration Paradigm</span>
+              <span class="stat-desc">AI × System × UI</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value">AGI</span>
+              <span class="stat-label">Dual-Track Model</span>
+              <span class="stat-desc">User + Business</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission -->
     <section id="mission" class="section mission">
       <div class="wrap">
         <span class="section-label" data-i18n="mission.label">Mission</span>
-        <h2 class="section-title" data-i18n="mission.title">Let intelligence become reflexive.<br />Let organizations hold <span class="term">world models</span>.</h2>
+        <h2 class="section-title" data-i18n="mission.title">Let intelligence become reflexive.<br/>Let organizations hold <span class="term">world models</span>.</h2>
         <p class="section-lead" data-i18n="mission.lead">
           We are committed to building <span class="term">cognitive computing</span> infrastructure that accelerates the paradigm shift for human individuals (<span class="term">User AGI</span>) and business organizations (<span class="term">Business AGI</span>).
         </p>
         <ul class="mission-pillars">
-          <li>
+          <li class="reveal-item">
             <span class="pillar-num">01</span>
-            <h3 data-i18n="mission.pillar1.title">Reflexive intelligence</h3>
-            <p data-i18n="mission.pillar1.desc">Systems that observe, reason about, and improve their own cognition.</p>
+            <div class="pillar-content">
+              <h3 data-i18n="mission.pillar1.title">Reflexive Intelligence</h3>
+              <p data-i18n="mission.pillar1.desc">Systems that observe, reason about, and improve their own cognition — enabling continuous self-optimization through feedback loops.</p>
+            </div>
+            <div class="pillar-icon" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20 6a14 14 0 0 1 0 28 14 14 0 0 1 0-28z" stroke="currentColor" stroke-width="1.2"/><path d="M20 12a8 8 0 0 1 0 16 8 8 0 0 1 0-16z" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="3" fill="currentColor" opacity="0.5"/></svg>
+            </div>
           </li>
-          <li>
+          <li class="reveal-item">
             <span class="pillar-num">02</span>
-            <h3 data-i18n="mission.pillar2.title">Organizational <span class="term">world models</span></h3>
-            <p data-i18n="mission.pillar2.desc">Shared, updatable representations of reality that align teams and decisions.</p>
+            <div class="pillar-content">
+              <h3 data-i18n="mission.pillar2.title">Organizational <span class="term">World Models</span></h3>
+              <p data-i18n="mission.pillar2.desc">Shared, updatable representations of reality that align teams, decisions, and strategy across the entire organization.</p>
+            </div>
+            <div class="pillar-icon" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><rect x="22" y="8" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="22" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><rect x="22" y="22" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M18 13h4M18 27h4M13 18v4M27 18v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
           </li>
-          <li>
+          <li class="reveal-item">
             <span class="pillar-num">03</span>
-            <h3 data-i18n="mission.pillar3.title">Paradigm acceleration</h3>
-            <p data-i18n="mission.pillar3.desc">Infrastructure that shortens the path from intention to impact for people and enterprises.</p>
+            <div class="pillar-content">
+              <h3 data-i18n="mission.pillar3.title">Paradigm Acceleration</h3>
+              <p data-i18n="mission.pillar3.desc">Infrastructure that compresses the path from intention to impact — turning cognitive cycles into tangible value for people and enterprises.</p>
+            </div>
+            <div class="pillar-icon" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M10 30L20 10l10 20" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M15 24h10" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="10" r="2" fill="currentColor" opacity="0.5"/></svg>
+            </div>
           </li>
         </ul>
       </div>
     </section>
 
+    <!-- Platform -->
+    <section id="platform" class="section platform">
+      <div class="wrap">
+        <span class="section-label" data-i18n="platform.label">Platform</span>
+        <h2 class="section-title" data-i18n="platform.title">The <span class="term">UAS-AIOS</span> architecture.</h2>
+        <p class="section-lead" data-i18n="platform.lead">
+          A formally defined platform built from first principles — eight interdependent modules form a complete cognitive operating system.
+        </p>
+        <div class="platform-formula">
+          <code class="formula">UAS-Platform = (I, K, R, A, S, G, E, Π)</code>
+        </div>
+        <div class="platform-modules">
+          <div class="module-card">
+            <span class="module-letter">I</span>
+            <h3>Intent</h3>
+            <p>Natural-language intent understanding, constraint extraction, and goal decomposition.</p>
+          </div>
+          <div class="module-card">
+            <span class="module-letter">K</span>
+            <h3>Knowledge</h3>
+            <p>Hybrid knowledge base with entity graphs, vector retrieval, and rule engines.</p>
+          </div>
+          <div class="module-card">
+            <span class="module-letter">R</span>
+            <h3>Runtime</h3>
+            <p>Autonomous agent runtime with task lifecycle, cognitive state, and hot-swappable modules.</p>
+          </div>
+          <div class="module-card">
+            <span class="module-letter">A</span>
+            <h3>Agent Fabric</h3>
+            <p>Multi-agent orchestration, swarm coordination, and cognitive routing.</p>
+          </div>
+          <div class="module-card">
+            <span class="module-letter">S</span>
+            <h3>System Grid</h3>
+            <p>System-level integration mesh for services, data pipelines, and external connectors.</p>
+          </div>
+          <div class="module-card">
+            <span class="module-letter">G</span>
+            <h3>Governance</h3>
+            <p>Policy enforcement, audit trails, access control, and compliance frameworks.</p>
+          </div>
+          <div class="module-card">
+            <span class="module-letter">E</span>
+            <h3>Evolution</h3>
+            <p>Drift detection, knowledge evolution, feedback loops, and continuous optimization.</p>
+          </div>
+          <div class="module-card">
+            <span class="module-letter">Π</span>
+            <h3>Protocol</h3>
+            <p>Standardized interfaces, contract definitions, and interoperability specifications.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capabilities -->
+    <section id="capabilities" class="section capabilities">
+      <div class="wrap">
+        <div class="cap-layout">
+          <div class="cap-intro">
+            <span class="section-label" data-i18n="capabilities.label">Capabilities</span>
+            <h2 class="section-title" data-i18n="capabilities.title">Infrastructure for the next paradigm.</h2>
+            <p class="section-lead" data-i18n="capabilities.lead">
+              End-to-end cognitive infrastructure — from intent understanding to autonomous evolution.
+            </p>
+          </div>
+          <div class="cap-grid">
+            <div class="cap-card">
+              <div class="cap-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </div>
+              <h3 data-i18n="capabilities.card1.title"><span class="term">Cognitive Computing</span> Platforms</h3>
+              <p data-i18n="capabilities.card1.desc">Full-stack cognitive platforms with APIs for intent processing, planning, and knowledge management.</p>
+            </div>
+            <div class="cap-card">
+              <div class="cap-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <h3 data-i18n="capabilities.card2.title"><span class="term">World-Model</span> Systems</h3>
+              <p data-i18n="capabilities.card2.desc">Knowledge-layer systems that build, maintain, and evolve organizational representations of reality.</p>
+            </div>
+            <div class="cap-card">
+              <div class="cap-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M9 6h6M6 9v6M18 9v6M9 18h6" stroke="currentColor" stroke-width="1.5"/></svg>
+              </div>
+              <h3 data-i18n="capabilities.card3.title">Agent & Swarm Orchestration</h3>
+              <p data-i18n="capabilities.card3.desc">Multi-agent coordination, cognitive routing, and swarm intelligence at organizational scale.</p>
+            </div>
+            <div class="cap-card">
+              <div class="cap-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h3 data-i18n="capabilities.card4.title">Security & Governance</h3>
+              <p data-i18n="capabilities.card4.desc">Enterprise-grade security, policy enforcement, audit trails, and compliance frameworks built-in.</p>
+            </div>
+            <div class="cap-card">
+              <div class="cap-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </div>
+              <h3 data-i18n="capabilities.card5.title">Evolution Engine</h3>
+              <p data-i18n="capabilities.card5.desc">Continuous drift detection, knowledge graph evolution, and self-improving feedback loops.</p>
+            </div>
+            <div class="cap-card">
+              <div class="cap-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 17V9a8 8 0 0 1 16 0v8" stroke="currentColor" stroke-width="1.5"/><path d="M2 17a2 2 0 0 1 2-2h1v5H4a2 2 0 0 1-2-2zM19 15h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1v-4z" stroke="currentColor" stroke-width="1.5"/></svg>
+              </div>
+              <h3 data-i18n="capabilities.card6.title">Developer Experience</h3>
+              <p data-i18n="capabilities.card6.desc">CLI scaffolding, template system, and knowledge-as-configuration for rapid domain deployment.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision -->
     <section id="vision" class="section vision">
       <div class="wrap">
         <span class="section-label" data-i18n="vision.label">Vision</span>
         <h2 class="section-title" data-i18n="vision.title">The digital nervous system for human–machine co-evolution.</h2>
         <p class="section-lead" data-i18n="vision.lead">
-          We are moving toward a new era where swarm intelligence and individual awakening coexist—where collective wisdom and personal agency reinforce each other.
+          We are moving toward a new era where swarm intelligence and individual awakening coexist — where collective wisdom and personal agency reinforce each other.
         </p>
         <div class="vision-cards">
           <article class="vision-card">
             <div class="vision-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 4v24M4 16h24M8 8l16 16M24 8L8 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4v24M4 16h24M8 8l16 16M24 8L8 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             </div>
-            <h3 data-i18n="vision.card1.title">Swarm intelligence</h3>
-            <p data-i18n="vision.card1.desc">Distributed cognition that scales with the organization, not against it.</p>
+            <h3 data-i18n="vision.card1.title">Swarm Intelligence</h3>
+            <p data-i18n="vision.card1.desc">Distributed cognition that scales with the organization, not against it. Multiple specialized agents collaborate through cognitive routing to solve complex problems collectively.</p>
           </article>
           <article class="vision-card">
             <div class="vision-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M16 10v6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M16 10v6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             </div>
-            <h3 data-i18n="vision.card2.title">Individual awakening</h3>
-            <p data-i18n="vision.card2.desc">Tools that expand human agency and clarity, not replace judgment.</p>
+            <h3 data-i18n="vision.card2.title">Individual Awakening</h3>
+            <p data-i18n="vision.card2.desc">Tools that expand human agency and clarity, not replace judgment. Personal cognitive agents that augment individual capability and accelerate learning.</p>
+          </article>
+          <article class="vision-card vision-card--wide">
+            <div class="vision-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 16c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12S4 22.627 4 16z" stroke="currentColor" stroke-width="1.5"/><path d="M16 4c-3 4-4.5 8-4.5 12S13 28 16 28c3-4 4.5-8 4.5-12S19 4 16 4z" stroke="currentColor" stroke-width="1.5"/><path d="M4 16h24" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <h3 data-i18n="vision.card3.title">Cognitive Practice Theory</h3>
+            <p data-i18n="vision.card3.desc">Rooted in the principle that cognitive practice is the fundamental path of value creation — from intention to simulation, from interaction to evolution, and ultimately to real-world impact. The seven-step value loop drives continuous refinement.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="capabilities" class="section capabilities">
-      <div class="wrap">
-        <span class="section-label" data-i18n="capabilities.label">Capabilities</span>
-        <h2 class="section-title" data-i18n="capabilities.title">Infrastructure for the next paradigm.</h2>
-        <ul class="cap-list">
-          <li data-i18n="capabilities.item1"><span class="term">Cognitive computing</span> platforms and APIs</li>
-          <li data-i18n="capabilities.item2"><span class="term">World-model</span> and knowledge-layer systems</li>
-          <li data-i18n="capabilities.item3">Agent and swarm orchestration</li>
-          <li data-i18n="capabilities.item4">Enterprise-grade security and governance</li>
-        </ul>
-      </div>
-    </section>
-
+    <!-- CTA -->
     <section id="contact" class="section cta">
       <div class="wrap">
-        <h2 class="cta-title" data-i18n="cta.title">Build the future of reflexive intelligence.</h2>
-        <p class="cta-subtitle" data-i18n="cta.subtitle">Partner with us to deploy cognitive infrastructure at scale.</p>
-        <a href="mailto:contact@neurospan.io" class="btn btn-primary btn-large" data-i18n="cta.button">Get in touch</a>
+        <div class="cta-inner">
+          <h2 class="cta-title" data-i18n="cta.title">Build the future of<br/>reflexive intelligence.</h2>
+          <p class="cta-subtitle" data-i18n="cta.subtitle">Partner with us to deploy cognitive infrastructure at scale.</p>
+          <div class="cta-actions">
+            <a href="mailto:contact@neurospan.io" class="btn btn-primary btn-large" data-i18n="cta.button">
+              <span>Get in touch</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="https://github.com/ACA-protocol" class="btn btn-ghost" target="_blank" rel="noopener" data-i18n="cta.github">GitHub</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -125,27 +330,68 @@
   <footer class="site-footer">
     <div class="wrap">
       <div class="footer-top">
-        <a href="#" class="logo">Neurospan</a>
-        <nav class="footer-nav">
+        <a href="#" class="logo" aria-label="Home">
+          <span class="logo-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="14" r="5" fill="currentColor" opacity="0.6"/><path d="M14 2v6M14 20v6M2 14h6M20 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+          <span class="logo-text">Neurospan</span>
+        </a>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="#about">About</a>
           <a href="#mission">Mission</a>
-          <a href="#vision">Vision</a>
+          <a href="#platform">Platform</a>
           <a href="#capabilities">Capabilities</a>
+          <a href="#vision">Vision</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
       <div class="footer-bottom">
         <p class="copyright">© <span id="year"></span> Neurospan. All rights reserved.</p>
+        <p class="footer-tagline">Cognitive Computing Infrastructure</p>
       </div>
     </div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
     document.querySelector('.menu-toggle').addEventListener('click', function () {
       const nav = document.querySelector('.nav');
       const expanded = this.getAttribute('aria-expanded') === 'true';
       this.setAttribute('aria-expanded', !expanded);
       nav.classList.toggle('open', !expanded);
+    });
+
+    const header = document.getElementById('site-header');
+    let lastScroll = 0;
+    window.addEventListener('scroll', function () {
+      const y = window.scrollY;
+      header.classList.toggle('scrolled', y > 40);
+      lastScroll = y;
+    }, { passive: true });
+
+    const revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal-item, .module-card, .cap-card, .vision-card, .stat-card').forEach(function (el) {
+      revealObserver.observe(el);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function () {
+        const nav = document.querySelector('.nav');
+        const toggle = document.querySelector('.menu-toggle');
+        if (nav.classList.contains('open')) {
+          nav.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
     });
   </script>
 </body>

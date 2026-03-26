@@ -1,0 +1,36 @@
+[
+  {
+    "app_id": "ai-recruitment-os",
+    "app_root": "/workspace/projects/ai-recruitment-os",
+    "version": "v1.0",
+    "technical_base": "ASUI",
+    "runtime": "autonomous_agent",
+    "capability_tags": [
+      "agent:agent",
+      "agent:evolution",
+      "agent:governance",
+      "agent:intent",
+      "agent:knowledge",
+      "agent:macro",
+      "agent:meso",
+      "agent:micro",
+      "agent:runtime",
+      "agent:swarm",
+      "agent:system",
+      "system:asui_knowledge",
+      "system:candidate_source",
+      "system:interview_scheduling",
+      "system:onboarding_feedback",
+      "system:recruitment_tracking"
+    ],
+    "health": {
+      "status": "healthy",
+      "missing_assets": [],
+      "queue": {
+        "queued_jobs": 0,
+        "completed_jobs": 0
+      }
+    },
+    "updated_at": "2026-03-25T06:52:25.693047+00:00"
+  }
+]
