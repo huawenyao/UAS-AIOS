@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>集群涌现与协议数据流 · 认知超智能</title>
+  <link rel="stylesheet" href="assets/cognitive-hi.css" />
+  <style>
+    #ch-viz-svg .ch-edge {
+      stroke-linecap: round;
+    }
+    #ch-viz-svg text {
+      fill: var(--ch-text);
+      pointer-events: none;
+    }
+    #ch-viz-svg text.sec {
+      fill: var(--ch-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="ch-shell">
+    <header class="ch-topbar">
+      <a class="ch-brand" href="index.html">
+        认知超智能
+        <small>UniAgent 集群 · L3 数据流</small>
+      </a>
+      <nav class="ch-nav" aria-label="原型页面">
+        <a href="index.html">枢纽</a>
+        <a href="uniagent-layers.html">七层规范栈</a>
+        <a href="cognitive-model.html">三层认知模型</a>
+        <a href="cluster-emergence.html" aria-current="page">集群与协议流</a>
+      </nav>
+      <button type="button" class="ch-theme-toggle" data-theme-toggle aria-pressed="false">
+        浅色
+      </button>
+    </header>
+
+    <section class="ch-hero">
+      <h1>集群涌现 · 分析任务 · 协议数据流</h1>
+      <p class="ch-lead">
+        左栏为有向多重图上的<strong>消息包动画</strong>（L3 类型着色）；右下canvas为<strong>简易有序度涌现</strong>（粒子向心对齐，非严格仿真）。
+        分析任务场景按合同网与能力管道顺序递进；Gossip 场景模拟局域信念扩散；拓扑场景强调心跳与背压探测。
+      </p>
+      <div class="ch-pills">
+        <span class="ch-pill ch-pill--accent">NG1–NG5 边来源 · 禁止默认全连接</span>
+        <span class="ch-pill ch-pill--lens">L3 闭集消息类型</span>
+        <span class="ch-pill ch-pill--ember">L5 PROPOSAL 与 REWARD 横切</span>
+      </div>
+    </section>
+
+    <div class="ch-viz-layout">
+      <div class="ch-viz-panel">
+        <header>
+          <span>网络拓扑与数据包</span>
+          <div class="ch-viz-toolbar">
+            <label for="ch-scenario">场景</label>
+            <select id="ch-scenario" aria-label="可视化场景">
+              <option value="analysis" selected>分析任务（合同网 + propose）</option>
+              <option value="gossip">GOSSIP 共识扩散</option>
+              <option value="topology">拓扑 / 存活探测</option>
+            </select>
+            <button type="button" id="ch-play-toggle">暂停</button>
+          </div>
+        </header>
+        <div class="ch-viz-svg-wrap">
+          <svg
+            id="ch-viz-svg"
+            viewBox="0 0 1000 600"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-label="UniAgent 集群拓扑与消息流"
+          >
+            <defs>
+              <filter id="ch-glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2" result="b" />
+                <feMerge>
+                  <feMergeNode in="b" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <g id="ch-edges"></g>
+            <g id="ch-packets"></g>
+            <g id="ch-nodes"></g>
+          </svg>
+          <div class="ch-viz-emergence" aria-hidden="true">
+            <span>有序度</span>
+            <canvas id="ch-emergence" width="120" height="120"></canvas>
+            <span id="ch-emergence-val" style="position: absolute; right: 6px; bottom: 4px; font-size: 0.65rem; font-family: var(--ch-font-mono); color: var(--ch-accent)">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ch-viz-side">
+        <div class="ch-viz-panel">
+          <header>L3 消息类型（闭集节选）</header>
+          <div class="ch-viz-legend">
+            <h4>着色 = 载荷语义</h4>
+            <dl>
+              <dt>DIRECT</dt>
+              <dd>点对点请求/响应，幂等键</dd>
+              <dt>GOSSIP</dt>
+              <dd>TTL / hop_limit，去重窗口</dd>
+              <dt>PROPOSAL</dt>
+              <dd>世界模型修改提案</dd>
+              <dt>TASK_OFFER</dt>
+              <dd>合同网任务 + 经济参数</dd>
+              <dt>TASK_ACK</dt>
+              <dd>接受/拒绝与理由</dd>
+              <dt>REWARD</dt>
+              <dd>完成信号 → 适应引擎</dd>
+              <dt>HEARTBEAT</dt>
+              <dd>租约与分区检测</dd>
+            </dl>
+            <p class="ch-viz-protocol-note">
+              通用信封字段参见文稿 <code>§9.2</code>：<code>msg_id</code>、<code>vector_clock</code>、<code>ttl_ms</code>、<code>routing.hop_limit</code>、<code>economics</code>。
+            </p>
+          </div>
+          <div id="ch-viz-log" class="ch-viz-log" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ch-viz-pipeline">
+      <h4>分析任务视觉逻辑（与 §13.1 合同网 + 能力管道对齐）</h4>
+      <p class="ch-prose" style="margin: 0 0 0.75rem">
+        高亮步骤与主画布数据包同步轮播：先<strong>任务发现与认领</strong>，再<strong>接地感知与推理链</strong>，最后<strong>L5 提交与 REWARD 闭环</strong>。
+      </p>
+      <div id="ch-pipeline-steps" class="ch-viz-steps"></div>
+      <div class="ch-viz-meter" aria-hidden="true">
+        <i id="ch-viz-order-meter"></i>
+      </div>
+    </div>
+
+    <div class="ch-split" style="margin-top: 2rem">
+      <div class="ch-prose">
+        <p>
+          <strong>涌现解读：</strong>个体仅遵循局部消息规则与 L4 边约束，全局层面可出现任务分配模式、负载均衡与信念收敛（DeGroot / bandit 路由等需离线度量互信息、AoI、regret）。
+        </p>
+      </div>
+      <div class="ch-prose">
+        <p>
+          规范出处：<a href="../UACA_UniAgent_TOGAF_Architecture.md" style="color: var(--ch-accent)">UACA_UniAgent_TOGAF_Architecture.md</a>
+         （§9 L3、§12 群体网络、§13 交互机制、§14 适应引擎）。
+        </p>
+      </div>
+    </div>
+
+    <p class="ch-footnote">
+      复用：引入 <code>cluster-viz.js</code> 与 <code>cognitive-hi.css</code> 中 <code>.ch-viz-*</code>；替换 <code>NODES</code>/<code>EDGES</code> 即可映射你的真实拓扑快照。
+    </p>
+  </div>
+  <script src="assets/cognitive-hi.js" defer></script>
+  <script src="assets/cluster-viz.js" defer></script>
+</body>
+</html>

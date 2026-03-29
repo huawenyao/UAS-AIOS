@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>七层规范栈 · 认知超智能</title>
+  <link rel="stylesheet" href="assets/cognitive-hi.css" />
+</head>
+<body>
+  <div class="ch-shell">
+    <header class="ch-topbar">
+      <a class="ch-brand" href="index.html">
+        认知超智能
+        <small>UniAgent 标准化视图</small>
+      </a>
+      <nav class="ch-nav" aria-label="原型页面">
+        <a href="index.html">枢纽</a>
+        <a href="uniagent-layers.html" aria-current="page">七层规范栈</a>
+        <a href="cognitive-model.html">三层认知模型</a>
+        <a href="cluster-emergence.html">集群与协议流</a>
+      </nav>
+      <button type="button" class="ch-theme-toggle" data-theme-toggle aria-pressed="false">
+        浅色
+      </button>
+    </header>
+
+    <section class="ch-hero">
+      <h1>七层依赖与横切引擎</h1>
+      <p class="ch-lead">
+        上层依赖下层；通过下层一致性测试方可声称兼容。横切层贯穿全栈：适应、经济、可观测。展开每层查看规范要点与验收隐喻。
+      </p>
+      <div class="ch-pills">
+        <span class="ch-pill ch-pill--accent">L0–L5 载荷与 Schema</span>
+        <span class="ch-pill">刻意不标准化：内部推理与提示词</span>
+      </div>
+    </section>
+
+    <div class="ch-split">
+      <div class="ch-prose">
+        <p>
+          <strong>产品哲学对齐：</strong>标准化的是能力声明、状态外沿、消息语义与提交契约，使多智能体网络可替换、可测试、可审计——与「器」层实现解耦。
+        </p>
+      </div>
+      <div class="ch-prose">
+        <p>
+          完整规范与 JSON 示例见文稿
+          <a href="../UACA_UniAgent_TOGAF_Architecture.md" style="color: var(--ch-accent)">UACA_UniAgent_TOGAF_Architecture.md</a>。
+        </p>
+      </div>
+    </div>
+
+    <div class="ch-stack" role="list">
+      <details class="ch-layer ch-layer--l5" open>
+        <summary role="listitem">
+          <span>L5 · World Commit</span>
+          <span class="ch-layer-tag">共享图写入</span>
+        </summary>
+        <div class="ch-layer-body">
+          <code>propose → validate → commit/reject</code>；版本向量与
+          <code>grounding_chain</code>；接地一致性校验。唯一写共享世界的通道。
+        </div>
+      </details>
+      <details class="ch-layer ch-layer--l4">
+        <summary role="listitem">
+          <span>L4 · Network Policy</span>
+          <span class="ch-layer-tag">信任与隔离</span>
+        </summary>
+        <div class="ch-layer-body">
+          通信权限、速率、路由、隔离域；<code>trust_level</code> 约束；断路器状态机。
+        </div>
+      </details>
+      <details class="ch-layer ch-layer--l3">
+        <summary role="listitem">
+          <span>L3 · Messaging</span>
+          <span class="ch-layer-tag">语义与背压</span>
+        </summary>
+        <div class="ch-layer-body">
+          消息类型、超时、重试、幂等键、错误码；流控与协议一致性测试套件。
+        </div>
+      </details>
+      <details class="ch-layer ch-layer--l2">
+        <summary role="listitem">
+          <span>L2 · State Envelope</span>
+          <span class="ch-layer-tag">有界摘要</span>
+        </summary>
+        <div class="ch-layer-body">
+          有界状态摘要、信息价值与陈旧度；不含私有 LLM 全上下文；序列化 round-trip 与大小阈值。
+        </div>
+      </details>
+      <details class="ch-layer ch-layer--l1">
+        <summary role="listitem">
+          <span>L1 · Capability Manifest</span>
+          <span class="ch-layer-tag">类型化能力</span>
+        </summary>
+        <div class="ch-layer-body">
+          机器可读能力列表；<code>capability_pipeline</code> 组合约束；静态扫描与管道合法性。
+        </div>
+      </details>
+      <details class="ch-layer ch-layer--l0">
+        <summary role="listitem">
+          <span>L0 · Identity &amp; Lifecycle</span>
+          <span class="ch-layer-tag">时钟与生命周期</span>
+        </summary>
+        <div class="ch-layer-body">
+          <code>unit_id</code>、版本、心跳；混合物理/逻辑时钟；<code>lifecycle_state</code> 与信任级别。
+        </div>
+      </details>
+    </div>
+
+    <div class="ch-cross">
+      <h4>横切（★）</h4>
+      <ul>
+        <li><strong style="color: var(--ch-text)">Adaptation Engine</strong> — 在线学习与路由策略（如 bandit 选路）。</li>
+        <li><strong style="color: var(--ch-text)">Economics Engine</strong> — 信用、信誉、定价与防搭便车。</li>
+        <li><strong style="color: var(--ch-text)">Observability</strong> — 指标、告警、审计与归因。</li>
+      </ul>
+    </div>
+
+    <p class="ch-footnote">
+      复用：复制 <code>.ch-stack</code> 与 <code>.ch-layer*</code> 结构即可嵌入其他原型页；配色由 <code>--layer-accent</code> 控制。
+    </p>
+  </div>
+  <script src="assets/cognitive-hi.js" defer></script>
+</body>
+</html>

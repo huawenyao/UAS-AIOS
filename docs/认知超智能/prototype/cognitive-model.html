@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>三层认知模型 · 认知超智能</title>
+  <link rel="stylesheet" href="assets/cognitive-hi.css" />
+</head>
+<body>
+  <div class="ch-shell">
+    <header class="ch-topbar">
+      <a class="ch-brand" href="index.html">
+        认知超智能
+        <small>存在论 · 理想模型</small>
+      </a>
+      <nav class="ch-nav" aria-label="原型页面">
+        <a href="index.html">枢纽</a>
+        <a href="uniagent-layers.html">七层规范栈</a>
+        <a href="cognitive-model.html" aria-current="page">三层认知模型</a>
+        <a href="cluster-emergence.html">集群与协议流</a>
+      </nav>
+      <button type="button" class="ch-theme-toggle" data-theme-toggle aria-pressed="false">
+        浅色
+      </button>
+    </header>
+
+    <section class="ch-hero">
+      <h1>表征 · 执行 · 监控</h1>
+      <p class="ch-lead">
+        认知系统既是观察对象又是观察主体：三层并非简单堆叠，而是互相渗透的递归结构。本页将文稿中的嵌套关系转化为可扫视的布局，便于与工程分层对照讨论。
+      </p>
+      <div class="ch-pills">
+        <span class="ch-pill ch-pill--lens">感知—叙事四层表征</span>
+        <span class="ch-pill ch-pill--ember">符号 / 亚符号 / 具身 三编码</span>
+      </div>
+    </section>
+
+    <div class="ch-nested" aria-label="监控—执行—表征 嵌套">
+      <div class="ch-ring ch-ring--outer">
+        <strong>监控层 Monitor</strong>
+        <span>自我观察 · 误差检测 · 状态评估</span>
+        <div class="ch-ring ch-ring--mid" style="margin-top: 1rem; text-align: center">
+          <strong>执行层 Execute</strong>
+          <span>推理 · 决策 · 行动 · 问题求解</span>
+          <div class="ch-ring ch-ring--inner" style="margin-top: 1rem">
+            <strong>表征层 Represent</strong>
+            <span>知识编码 · 结构组织 · 意义锚定</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="ch-section-title">与 UACA 的直觉对照</h2>
+    <div class="ch-doc-grid">
+      <article class="ch-card" style="pointer-events: none; cursor: default">
+        <h4>表征 ↔ 世界可读视图</h4>
+        <p><code>world.query</code>、L2 状态包络、叙事与模型层表征共同回答「系统内部如何持有外部世界」。</p>
+        <span class="ch-meta">接地 · 证据 · 陈旧度</span>
+      </article>
+      <article class="ch-card" style="pointer-events: none; cursor: default">
+        <h4>执行 ↔ 能力与协调</h4>
+        <p><code>reason.*</code>、<code>act.*</code>、<code>coord.*</code> 在执行层显式化；关键约束：非经校验不得直写共享世界。</p>
+        <span class="ch-meta">L1 管道 · L5 提交</span>
+      </article>
+      <article class="ch-card" style="pointer-events: none; cursor: default">
+        <h4>监控 ↔ 可观测横切</h4>
+        <p>策略钩子、误差字段、指标与审计对应监控层的自我观察，与 UniAgent  observability 横切一致。</p>
+        <span class="ch-meta">归因 · 回放 · 合规</span>
+      </article>
+    </div>
+
+    <p class="ch-prose" style="margin-top: 1.5rem">
+      原文与论证见
+      <a href="../认知系统存在论.MD" style="color: var(--ch-accent)">认知系统存在论.MD</a>；
+      工程化路径可参考
+      <a href="../3个方向.MD" style="color: var(--ch-accent)">3个方向.MD</a>。
+    </p>
+
+    <p class="ch-footnote">
+      复用：<code>.ch-nested</code> 与 <code>.ch-ring*</code> 可单独拷贝到演示稿；配色继承 <code>cognitive-hi.css</code> 变量。
+    </p>
+  </div>
+  <script src="assets/cognitive-hi.js" defer></script>
+</body>
+</html>
