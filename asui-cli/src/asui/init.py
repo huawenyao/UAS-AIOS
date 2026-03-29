@@ -23,6 +23,6 @@ def run_init(project_path: Path, template: str = "default", force: bool = False)
         target.write_text(content, encoding="utf-8")
         print(f"  创建: {file_path}")
 
-    print(f"\n✅ ASUI 项目已初始化: {project_path}")
+    print(f"\n[OK] ASUI 项目已初始化: {project_path}")
     print("  下一步: 在 Cursor/Claude Code 中打开项目，编辑 CLAUDE.md 和 configs/workflow_config.json")
     return True

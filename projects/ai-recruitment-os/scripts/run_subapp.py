@@ -2,10 +2,26 @@
 """运行招聘智能OS sub uas app。"""
 
 import argparse
+import importlib.util
 import json
+import sys
 from pathlib import Path
 
-from asui.runtime.runtime_manager import RuntimeManager
+
+def _bootstrap_asui_path() -> None:
+    if importlib.util.find_spec("asui") is not None:
+        return
+    here = Path(__file__).resolve()
+    for i in range(2, min(12, len(here.parents))):
+        base = here.parents[i]
+        for candidate in (base / "asui-cli" / "src", base / "src"):
+            if (candidate / "asui" / "engine" / "runtime_manager.py").is_file():
+                sys.path.insert(0, str(candidate))
+                return
+
+
+_bootstrap_asui_path()
+from asui.engine.runtime_manager import RuntimeManager
 
 
 def main() -> int:

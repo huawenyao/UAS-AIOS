@@ -81,7 +81,7 @@ def execute_step_with_runtime_manager(step_id: str, context: dict) -> dict | Non
         if not asui_src.exists():
             return None
         sys.path.insert(0, str(asui_src))
-        from asui.runtime.runtime_manager import RuntimeManager
+        from asui.engine.runtime_manager import RuntimeManager
         manager = RuntimeManager(ROOT)
         topic = context.get("plan", {}).get("topic", "ai-full-cycle-recruitment-os")
         result = manager.run(topic, payload=None, evaluate=False)

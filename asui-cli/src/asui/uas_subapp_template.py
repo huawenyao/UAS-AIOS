@@ -1,5 +1,7 @@
 """UAS sub app 标准模板。"""
 
+from asui.protocol.platform import format_platform_manifest_json
+
 UAS_SUBAPP_TEMPLATE = {
     "CLAUDE.md": """# UAS Sub App
 
@@ -79,34 +81,6 @@ UAS_SUBAPP_TEMPLATE = {
 """,
     ".claude/agents/README.md": "# Agent 注册表\n\n项目智能体元数据统一维护在 `configs/swarm_agents.json`。\n",
     ".claude/commands/README.md": "# 交互命令\n\n- `/intent [议题]`\n- `/design [议题ID]`\n- `/validate [议题ID]`\n- `/evolve [议题ID]`\n",
-    "configs/platform_manifest.json": """{
-  "$schema": "https://asui.dev/schemas/uas_platform_manifest.schema.json",
-  "version": "v1.0",
-  "platform": {
-    "name": "UAS-Platform",
-    "formal_definition": ["I", "K", "R", "A", "S", "G", "E", "Π"],
-    "enterprise_agi_definition": "目标驱动 + 知识驱动 + Agent协作 + 系统执行 + 审计治理 + 演化闭环 的平台化统一",
-    "technical_base": "ASUI",
-    "runtime": "autonomous_agent"
-  },
-  "layers": {
-    "I": "Intent Layer",
-    "K": "Knowledge Substrate",
-    "R": "Autonomous Agent Runtime",
-    "A": "Agent Fabric",
-    "S": "System Mesh",
-    "G": "Governance Plane",
-    "E": "Evolution Loop",
-    "Π": "Protocol Stack"
-  },
-  "defaults": {
-    "subapp_root": "projects",
-    "require_governance": true,
-    "require_evolution": true,
-    "require_audit": true
-  }
-}
-""",
     "configs/runtime_config.json": """{
   "version": "v1.0",
   "runtime_name": "autonomous_agent_runtime",
@@ -409,10 +383,26 @@ UAS_SUBAPP_TEMPLATE = {
 \"\"\"运行 sub uas app。\"\"\"
 
 import argparse
+import importlib.util
 import json
+import sys
 from pathlib import Path
 
-from asui.runtime.runtime_manager import RuntimeManager
+
+def _bootstrap_asui_path() -> None:
+    if importlib.util.find_spec("asui") is not None:
+        return
+    here = Path(__file__).resolve()
+    for i in range(2, min(12, len(here.parents))):
+        base = here.parents[i]
+        for candidate in (base / "asui-cli" / "src", base / "src"):
+            if (candidate / "asui" / "engine" / "runtime_manager.py").is_file():
+                sys.path.insert(0, str(candidate))
+                return
+
+
+_bootstrap_asui_path()
+from asui.engine.runtime_manager import RuntimeManager
 
 
 def main() -> int:
@@ -651,3 +641,5 @@ if __name__ == "__main__":
     "database/evolution_backups/README.md": "# 演化回写备份\n\n/evolveApply 执行前的 configs/skills 备份。\n",
     "reports/README.md": "# 报告目录\n\nMarkdown 版 sub uas app 方案会输出到这里。\n",
 }
+
+UAS_SUBAPP_TEMPLATE["configs/platform_manifest.json"] = format_platform_manifest_json()

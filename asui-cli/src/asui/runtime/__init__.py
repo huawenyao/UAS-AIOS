@@ -1,10 +1,15 @@
-"""ASUI autonomous agent runtime."""
+"""兼容包：历史导入路径 ``asui.runtime``。
 
-from .runtime_manager import RuntimeManager
-from .service import UASRuntimeService
-from .cognitive_state_store import CognitiveStateStore
-from .capability_registry import CapabilityRegistry
-from .cognitive_router import CognitiveRouter
+新代码请使用 ``asui.engine``（R 层实现）与 ``asui.protocol``（Π 层契约）。
+"""
+
+from asui.engine import (
+    CapabilityRegistry,
+    CognitiveRouter,
+    CognitiveStateStore,
+    RuntimeManager,
+    UASRuntimeService,
+)
 
 __all__ = [
     "RuntimeManager",

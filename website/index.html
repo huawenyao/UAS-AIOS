@@ -43,6 +43,7 @@
         <div class="hero-grid"></div>
         <div class="hero-orb hero-orb--1"></div>
         <div class="hero-orb hero-orb--2"></div>
+        <canvas id="janus-canvas"></canvas>
       </div>
       <div class="wrap">
         <div class="hero-content">
@@ -51,8 +52,8 @@
             <span class="term">Cognitive Computing</span> Infrastructure
           </p>
           <h1 class="hero-title">
-            <span class="line" data-i18n="hero.title1">Make intelligence</span>
-            <span class="line line-accent" data-i18n="hero.title2">reflexive.</span>
+            <span class="line" data-i18n="hero.title1">Self-evolving</span>
+            <span class="line line-accent" data-i18n="hero.title2">cognition.</span>
           </h1>
           <p class="hero-subtitle" data-i18n="hero.subtitle">
             We build the infrastructure that gives organizations <span class="term">world models</span> and accelerates the paradigm shift for every individual and every enterprise.
@@ -211,6 +212,39 @@
             <span class="module-letter">Π</span>
             <h3>Protocol</h3>
             <p>Standardized interfaces, contract definitions, and interoperability specifications.</p>
+          </div>
+        </div>
+        <!-- Janus World Model Interactive Visualization -->
+        <div class="janus-visualization">
+          <div class="janus-description">
+            <h3>Janus <span class="term">World Model</span></h3>
+            <p>
+              Dual-face cognitive architecture: RepresentationalFace processes symbolic knowledge, 
+              while EnactiveFace executes perception-action coupling. Laws activate, crystallize, 
+              evaporate, and sublimate between both faces, forming a self-evolving cognitive loop.
+            </p>
+            <div class="janus-controls">
+              <button id="toggle-representational" class="janus-btn active">Representational</button>
+              <button id="toggle-enactive" class="janus-btn">Enactive</button>
+              <button id="toggle-both" class="janus-btn">Dual Coupling</button>
+            </div>
+          </div>
+          <div class="janus-canvas-container">
+            <canvas id="janus-interactive-canvas"></canvas>
+            <div class="janus-legend">
+              <div class="legend-item">
+                <span class="legend-dot law"></span>
+                <span>Law Particles</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot experience"></span>
+                <span>Experience Flow</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot phase"></span>
+                <span>Phase Nodes</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -393,6 +427,484 @@
         }
       });
     });
+
+    // Janus World Model Visualization
+    (function() {
+      const canvas = document.getElementById('janus-canvas');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = canvas.offsetWidth;
+      let height = canvas.height = canvas.offsetHeight;
+      
+      // 颜色定义
+      const colors = {
+        representational: '#22d3ee',
+        enactive: '#818cf8',
+        law: '#f472b6',
+        experience: '#34d399',
+        phase: '#fbbf24'
+      };
+      
+      // Janus 双环面参数
+      const torus = {
+        R: Math.min(width, height) * 0.15,
+        r: Math.min(width, height) * 0.06,
+        rotation: 0
+      };
+      
+      // 粒子系统
+      const particles = [];
+      
+      class Particle {
+        constructor(type) {
+          this.type = type;
+          this.angle = Math.random() * Math.PI * 2;
+          this.tubeAngle = Math.random() * Math.PI * 2;
+          this.speed = 0.002 + Math.random() * 0.005;
+          this.size = 1.5 + Math.random() * 1.5;
+          this.opacity = 0.3 + Math.random() * 0.4;
+          this.color = type === 'law' ? colors.law : colors.experience;
+          this.pulse = Math.random() * Math.PI * 2;
+          this.trail = [];
+          this.trailLength = 10;
+        }
+        
+        update() {
+          this.angle += this.speed;
+          this.tubeAngle += this.speed * 0.3;
+          this.pulse += 0.02;
+          
+          // 更新轨迹
+          const pos = this.getPosition();
+          const scale = 300 / (300 + pos.z);
+          const x2d = pos.x * scale + width / 2;
+          const y2d = pos.y * scale + height / 2;
+          
+          this.trail.push({ x: x2d, y: y2d });
+          if (this.trail.length > this.trailLength) {
+            this.trail.shift();
+          }
+        }
+        
+        getPosition() {
+          const x = (torus.R + torus.r * Math.cos(this.tubeAngle)) * Math.cos(this.angle);
+          const y = (torus.R + torus.r * Math.cos(this.tubeAngle)) * Math.sin(this.angle);
+          const z = torus.r * Math.sin(this.tubeAngle);
+          return { x, y, z };
+        }
+        
+        draw() {
+          const pos = this.getPosition();
+          const scale = 300 / (300 + pos.z);
+          const x2d = pos.x * scale + width / 2;
+          const y2d = pos.y * scale + height / 2;
+          
+          const alpha = this.opacity * scale;
+          const size = this.size * scale * (0.8 + Math.sin(this.pulse) * 0.2);
+          
+          // 绘制轨迹
+          if (this.trail.length > 1) {
+            ctx.beginPath();
+            ctx.moveTo(this.trail[0].x, this.trail[0].y);
+            
+            for (let i = 1; i < this.trail.length; i++) {
+              ctx.lineTo(this.trail[i].x, this.trail[i].y);
+            }
+            
+            ctx.strokeStyle = this.color;
+            ctx.globalAlpha = alpha * 0.3;
+            ctx.lineWidth = size * 0.5;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+          
+          // 绘制粒子
+          ctx.beginPath();
+          ctx.arc(x2d, y2d, size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.globalAlpha = alpha;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+      
+      // 初始化粒子
+      for (let i = 0; i < 40; i++) {
+        particles.push(new Particle('law'));
+      }
+      for (let i = 0; i < 25; i++) {
+        particles.push(new Particle('experience'));
+      }
+      
+      // 绘制双环面结构
+      function drawTorus() {
+        const centerX = width / 2;
+        const centerY = height / 2;
+        
+        // 表征面（外环）
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, torus.R + torus.r, 0, Math.PI * 2);
+        ctx.strokeStyle = colors.representational;
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = 0.15;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        
+        // 反表征面（内环）
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, torus.R - torus.r, 0, Math.PI * 2);
+        ctx.strokeStyle = colors.enactive;
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = 0.15;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        
+        // 连接线（耦合）
+        for (let i = 0; i < 6; i++) {
+          const angle = (i * Math.PI * 2) / 6 + torus.rotation;
+          const x1 = centerX + (torus.R - torus.r) * Math.cos(angle);
+          const y1 = centerY + (torus.R - torus.r) * Math.sin(angle);
+          const x2 = centerX + (torus.R + torus.r) * Math.cos(angle);
+          const y2 = centerY + (torus.R + torus.r) * Math.sin(angle);
+          
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.strokeStyle = `rgba(34, 211, 238, 0.05)`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+      
+      // 绘制中心核心
+      function drawCore() {
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const time = Date.now() * 0.001;
+        
+        // 核心光晕
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 60);
+        gradient.addColorStop(0, 'rgba(34, 211, 238, 0.15)');
+        gradient.addColorStop(0.5, 'rgba(34, 211, 238, 0.05)');
+        gradient.addColorStop(1, 'rgba(34, 211, 238, 0)');
+        
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 60, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        
+        // 核心脉冲
+        const pulse = Math.sin(time * 2) * 0.5 + 0.5;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 15 + pulse * 8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(34, 211, 238, ${0.1 + pulse * 0.15})`;
+        ctx.fill();
+      }
+      
+      // 动画循环
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        
+        // 更新旋转
+        torus.rotation += 0.003;
+        
+        // 绘制双环面
+        drawTorus();
+        
+        // 更新并绘制粒子
+        particles.forEach(particle => {
+          particle.update();
+          particle.draw();
+        });
+        
+        // 绘制中心核心
+        drawCore();
+        
+        requestAnimationFrame(animate);
+      }
+      
+      // 窗口大小调整
+      window.addEventListener('resize', () => {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+        torus.R = Math.min(width, height) * 0.15;
+        torus.r = Math.min(width, height) * 0.06;
+      });
+      
+      // 鼠标交互（微妙吸引）
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        
+        particles.forEach(particle => {
+          const pos = particle.getPosition();
+          const scale = 300 / (300 + pos.z);
+          const x2d = pos.x * scale + width / 2;
+          const y2d = pos.y * scale + height / 2;
+          
+          const dx = mouseX - x2d;
+          const dy = mouseY - y2d;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 80) {
+            particle.angle += dx * 0.00005;
+            particle.tubeAngle += dy * 0.00005;
+          }
+        });
+      });
+      
+      // 开始动画
+      animate();
+    })();
+
+    // Interactive Janus Visualization (Platform Section)
+    (function() {
+      const canvas = document.getElementById('janus-interactive-canvas');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = canvas.offsetWidth;
+      let height = canvas.height = canvas.offsetHeight;
+      
+      // 颜色定义
+      const colors = {
+        representational: '#22d3ee',
+        enactive: '#818cf8',
+        law: '#f472b6',
+        experience: '#34d399',
+        phase: '#fbbf24'
+      };
+      
+      // 状态
+      let currentView = 'representational'; // 'representational', 'enactive', 'both'
+      
+      // Janus 双环面参数
+      const torus = {
+        R: Math.min(width, height) * 0.25,
+        r: Math.min(width, height) * 0.1,
+        rotation: 0
+      };
+      
+      // 粒子系统
+      const particles = [];
+      
+      class Particle {
+        constructor(type) {
+          this.type = type;
+          this.angle = Math.random() * Math.PI * 2;
+          this.tubeAngle = Math.random() * Math.PI * 2;
+          this.speed = 0.003 + Math.random() * 0.006;
+          this.size = 2 + Math.random() * 2;
+          this.opacity = 0.4 + Math.random() * 0.4;
+          this.color = type === 'law' ? colors.law : colors.experience;
+          this.pulse = Math.random() * Math.PI * 2;
+          this.trail = [];
+          this.trailLength = 12;
+        }
+        
+        update() {
+          this.angle += this.speed;
+          this.tubeAngle += this.speed * 0.4;
+          this.pulse += 0.03;
+          
+          // 更新轨迹
+          const pos = this.getPosition();
+          const scale = 300 / (300 + pos.z);
+          const x2d = pos.x * scale + width / 2;
+          const y2d = pos.y * scale + height / 2;
+          
+          this.trail.push({ x: x2d, y: y2d });
+          if (this.trail.length > this.trailLength) {
+            this.trail.shift();
+          }
+        }
+        
+        getPosition() {
+          const x = (torus.R + torus.r * Math.cos(this.tubeAngle)) * Math.cos(this.angle);
+          const y = (torus.R + torus.r * Math.cos(this.tubeAngle)) * Math.sin(this.angle);
+          const z = torus.r * Math.sin(this.tubeAngle);
+          return { x, y, z };
+        }
+        
+        draw() {
+          const pos = this.getPosition();
+          const scale = 300 / (300 + pos.z);
+          const x2d = pos.x * scale + width / 2;
+          const y2d = pos.y * scale + height / 2;
+          
+          const alpha = this.opacity * scale;
+          const size = this.size * scale * (0.8 + Math.sin(this.pulse) * 0.2);
+          
+          // 绘制轨迹
+          if (this.trail.length > 1) {
+            ctx.beginPath();
+            ctx.moveTo(this.trail[0].x, this.trail[0].y);
+            
+            for (let i = 1; i < this.trail.length; i++) {
+              ctx.lineTo(this.trail[i].x, this.trail[i].y);
+            }
+            
+            ctx.strokeStyle = this.color;
+            ctx.globalAlpha = alpha * 0.25;
+            ctx.lineWidth = size * 0.6;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+          
+          // 绘制粒子
+          ctx.beginPath();
+          ctx.arc(x2d, y2d, size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.globalAlpha = alpha;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+      
+      // 初始化粒子
+      for (let i = 0; i < 60; i++) {
+        particles.push(new Particle('law'));
+      }
+      for (let i = 0; i < 40; i++) {
+        particles.push(new Particle('experience'));
+      }
+      
+      // 绘制双环面结构
+      function drawTorus() {
+        const centerX = width / 2;
+        const centerY = height / 2;
+        
+        // 表征面（外环）
+        if (currentView === 'representational' || currentView === 'both') {
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, torus.R + torus.r, 0, Math.PI * 2);
+          ctx.strokeStyle = colors.representational;
+          ctx.lineWidth = 2;
+          ctx.globalAlpha = 0.3;
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+        
+        // 反表征面（内环）
+        if (currentView === 'enactive' || currentView === 'both') {
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, torus.R - torus.r, 0, Math.PI * 2);
+          ctx.strokeStyle = colors.enactive;
+          ctx.lineWidth = 2;
+          ctx.globalAlpha = 0.3;
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+        
+        // 连接线（耦合）
+        if (currentView === 'both') {
+          for (let i = 0; i < 8; i++) {
+            const angle = (i * Math.PI * 2) / 8 + torus.rotation;
+            const x1 = centerX + (torus.R - torus.r) * Math.cos(angle);
+            const y1 = centerY + (torus.R - torus.r) * Math.sin(angle);
+            const x2 = centerX + (torus.R + torus.r) * Math.cos(angle);
+            const y2 = centerY + (torus.R + torus.r) * Math.sin(angle);
+            
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = `rgba(34, 211, 238, 0.1)`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+      
+      // 绘制中心核心
+      function drawCore() {
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const time = Date.now() * 0.001;
+        
+        // 核心光晕
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 80);
+        gradient.addColorStop(0, 'rgba(34, 211, 238, 0.2)');
+        gradient.addColorStop(0.5, 'rgba(34, 211, 238, 0.05)');
+        gradient.addColorStop(1, 'rgba(34, 211, 238, 0)');
+        
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 80, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        
+        // 核心脉冲
+        const pulse = Math.sin(time * 2) * 0.5 + 0.5;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 20 + pulse * 12, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(34, 211, 238, ${0.15 + pulse * 0.2})`;
+        ctx.fill();
+        
+        // 核心文字
+        ctx.font = '12px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#22d3ee';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('COGNITIVE ENGINE', centerX, centerY);
+      }
+      
+      // 动画循环
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        
+        // 更新旋转
+        torus.rotation += 0.004;
+        
+        // 绘制双环面
+        drawTorus();
+        
+        // 更新并绘制粒子
+        particles.forEach(particle => {
+          particle.update();
+          particle.draw();
+        });
+        
+        // 绘制中心核心
+        drawCore();
+        
+        requestAnimationFrame(animate);
+      }
+      
+      // 窗口大小调整
+      window.addEventListener('resize', () => {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+        torus.R = Math.min(width, height) * 0.25;
+        torus.r = Math.min(width, height) * 0.1;
+      });
+      
+      // 控制按钮
+      document.getElementById('toggle-representational').addEventListener('click', function() {
+        currentView = 'representational';
+        updateButtons(this);
+      });
+      
+      document.getElementById('toggle-enactive').addEventListener('click', function() {
+        currentView = 'enactive';
+        updateButtons(this);
+      });
+      
+      document.getElementById('toggle-both').addEventListener('click', function() {
+        currentView = 'both';
+        updateButtons(this);
+      });
+      
+      function updateButtons(activeBtn) {
+        document.querySelectorAll('.janus-btn').forEach(btn => btn.classList.remove('active'));
+        activeBtn.classList.add('active');
+      }
+      
+      // 开始动画
+      animate();
+    })();
   </script>
 </body>
 </html>

@@ -23,8 +23,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..', 'as
 
 # 尝试导入UAS运行时
 try:
-    from asui.runtime.runtime_manager import RuntimeManager
-    from asui.runtime.cognitive_state_store import CognitiveStateStore
+    from asui.engine.runtime_manager import RuntimeManager
+    from asui.engine.cognitive_state_store import CognitiveStateStore
     UAS_AVAILABLE = True
 except ImportError as e:
     print("警告: 无法导入UAS运行时模块: {}".format(e))

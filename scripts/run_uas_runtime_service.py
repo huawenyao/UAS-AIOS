@@ -11,7 +11,7 @@ def load_service():
     workspace_root = Path(__file__).resolve().parents[1]
     asui_src = workspace_root / "asui-cli" / "src"
     sys.path.insert(0, str(asui_src))
-    from asui.runtime import UASRuntimeService
+    from asui.engine import UASRuntimeService
 
     return workspace_root, UASRuntimeService
 

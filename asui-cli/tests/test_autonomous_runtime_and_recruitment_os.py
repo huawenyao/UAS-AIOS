@@ -1,16 +1,26 @@
 import json
+import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
-import shutil
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WORKSPACE_ROOT = PROJECT_ROOT.parent
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
+
+def _asui_subprocess_env() -> dict:
+    env = os.environ.copy()
+    src = str(WORKSPACE_ROOT / "asui-cli" / "src")
+    prev = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = src if not prev else f"{src}{os.pathsep}{prev}"
+    env["PYTHONIOENCODING"] = "utf-8"
+    return env
+
 from asui.init import run_init
-from asui.runtime.runtime_manager import RuntimeManager
-from asui.runtime.service import UASRuntimeService
+from asui.engine.runtime_manager import RuntimeManager
+from asui.engine.service import UASRuntimeService
 
 
 def test_runtime_manager_executes_uas_subapp(tmp_path):
@@ -75,10 +85,13 @@ def test_ai_recruitment_os_conforms_and_runs(tmp_path):
     ]
 
     result = subprocess.run(
-        [sys.executable, str(app_root / "scripts" / "run_subapp.py"), "AI全流程招聘智能OS", "--evaluate"],
+        [sys.executable, str(app_root / "scripts" / "run_subapp.py"), "ai-recruitment-fullstack-os", "--evaluate"],
         text=True,
+        encoding="utf-8",
+        errors="replace",
         capture_output=True,
         cwd=app_root,
+        env=_asui_subprocess_env(),
         check=True,
     )
     output = json.loads(result.stdout)
