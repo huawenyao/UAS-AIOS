@@ -1,83 +1,233 @@
-<<<<<<< cursor/asui-fa59
-# ACA-protocol / ASUI
+<div align="center">
 
-APP AGENT contract，build by tech protocol
+# UAS-AIOS
 
-## ASUI 架构
+**Cognitive Computing Infrastructure — Make Intelligence Reflexive**
 
-ASUI（AI-System-UI Integration）是一种以显式知识为驱动、实现 AI 能力与系统执行深度融合的智能系统架构模式。
+[![License: MIT](https://img.shields.io/badge/License-MIT-22d3ee.svg)](LICENSE)
+[![Python 3.8+](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](#testing)
 
-## 项目结构
+*A knowledge-driven platform for building autonomous AI systems with world models, multi-agent orchestration, and continuous evolution.*
+
+[Architecture](#architecture) · [Quick Start](#quick-start) · [Documentation](#documentation) · [Examples](#examples) · [Contributing](CONTRIBUTING.md)
+
+</div>
+
+---
+
+## What is UAS-AIOS?
+
+UAS-AIOS is a cognitive computing platform that enables organizations to build, deploy, and evolve **world-model-powered AI systems**. Instead of treating AI as a stateless tool, UAS-AIOS provides infrastructure for AI that _understands_ its domain, _plans_ autonomously, and _evolves_ through feedback.
+
+**Core Principles:**
+- **Knowledge as Configuration** — Business rules live in config files, not code. Change a config, change the behavior.
+- **Build = Run** — No compilation or deployment step. Knowledge updates take effect immediately.
+- **Incremental Evolution** — Systems improve continuously through the push → feedback → reflexivity loop.
+
+### Key Components
+
+| Component | Description |
+|-----------|-------------|
+| **World Model Engine** | Intent understanding, dynamic planning, system modeling, and drift detection |
+| **Autonomous Runtime** | Config-driven workflow execution with cognitive state tracking |
+| **Agent Orchestration** | Multi-agent coordination, swarm intelligence, and cognitive routing |
+| **Evolution Engine** | Automated drift detection, knowledge evolution, and feedback loops |
+| **ASUI CLI** | Scaffolding tool to bootstrap new domain projects in seconds |
+
+---
+
+## Architecture
 
 ```
-├── whitepaper/          # ASUI 架构白皮书
-├── schemas/             # workflow_config JSON Schema
-├── asui-cli/            # asui init 脚手架
-├── examples/            # 领域验证项目
-│   ├── customer-service/   # 智能客服
-│   └── ai-recruitment/    # AI 全自动招聘
-└── docs/                # 战略分析文档
+UAS-Platform = (I, K, R, A, S, G, E, Π)
+
+I — Intent          Natural-language intent understanding and goal decomposition
+K — Knowledge       Hybrid knowledge base (graphs + vectors + rules), ASUI standard
+R — Runtime         Autonomous agent runtime with cognitive state management
+A — Agent Fabric    Multi-agent orchestration, swarm coordination
+S — System Grid     Service integration mesh and data pipelines
+G — Governance      Policy enforcement, audit trails, access control
+E — Evolution       Drift detection, feedback loops, continuous optimization
+Π — Protocol        Standardized interfaces and interoperability contracts
 ```
 
-## 快速开始
+**Dual-Track AGI Architecture:**
 
-### 1. 安装 asui 脚手架
+| Track | Purpose | Implementation |
+|-------|---------|----------------|
+| **User AGI** | Personal cognitive agent | `selfpaw` — swarm intelligence with five specialized agents |
+| **Business AGI** | Organizational intelligence | `Πpaw` — multi-professional agent orchestration |
+
+> See [docs/THEORY_SYSTEM.md](docs/THEORY_SYSTEM.md) for the complete theoretical framework.
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- Python 3.8+
+- pip
+
+### 1. Install the ASUI CLI
 
 ```bash
-cd asui-cli && pip install -e .
+cd asui-cli && pip install -e ".[dev]"
 ```
 
-### 2. 初始化项目
+### 2. Scaffold a New Project
 
 ```bash
-# 默认模板
-asui init my-project
+# Default UAS sub-app template
+asui init my-project -t uas-subapp
 
-# 智能客服模板
-asui init customer-service-demo -t customer-service
-
-# AI 招聘模板
+# AI recruitment template
 asui init recruitment-demo -t recruitment
+
+# Swarm intelligence template
+asui init swarm-demo -t selfpaw-swarm
 ```
 
-### 3. 运行领域验证
+### 3. Run the World Model Demo
 
-在 Cursor/Claude Code 中打开 `examples/customer-service` 或 `examples/ai-recruitment`，按照各自 README 执行验证。
-
-## 文档
-
-- [ASUI 架构白皮书](whitepaper/ASUI_WHITEPAPER_CN.md)
-- [战略分析 2025](docs/ASUI_STRATEGIC_ANALYSIS_2025.md)
-- [技术附录](docs/ASUI_TECHNICAL_APPENDIX.md)
-=======
-# ACA-protocol
-
-APP AGENT contract，build by tech protocol
-
-## 架构范式：ASUI
-
-本项目采用 **ASUI**（AI-System-UI Integration）架构范式：
-
-- **知识驱动**：CLAUDE.md + configs 定义业务规则，修改即生效
-- **构建即运行**：无需编译/部署，知识更新后立即可用
-- **增量演化**：通过添加知识文件持续扩展系统能力
-
-## 项目结构
-
-```
-├── CLAUDE.md          # 系统操作手册（AI 自动加载）
-├── .claude/
-│   ├── skills/        # 功能模块知识
-│   ├── agents/        # 场景化 Agent 配置
-│   └── commands/      # 交互命令定义
-├── configs/           # 业务规则配置
-├── scripts/           # 执行工具脚本
-├── database/          # 数据持久化
-└── docs/
-    └── ASUI_ARCHITECTURE.md  # 架构理论文档
+```bash
+python3 uas_world_model/demo.py
 ```
 
-## 文档
+This demonstrates the cognitive engine's core capabilities: intent understanding, dynamic planning, system modeling, and drift detection.
 
-- [ASUI 架构理论分析](./docs/ASUI_ARCHITECTURE.md) - 从第一性原理出发的体系化分析
->>>>>>> main
+### 4. Run the UAS Runtime Service
+
+```bash
+# List all discovered sub-apps
+python3 scripts/run_uas_runtime_service.py list
+
+# Run a sub-app with a business topic
+python3 scripts/run_uas_runtime_service.py run \
+  --app-id ai-recruitment-os \
+  --topic "Evaluate candidates for senior engineer position"
+```
+
+### 5. View the Neurospan Website
+
+```bash
+cd website && python3 -m http.server 8080
+# Open http://localhost:8080
+```
+
+---
+
+## Project Structure
+
+```
+.
+├── asui-cli/                  # ASUI scaffolding CLI tool
+│   ├── src/asui/              # CLI source + runtime modules
+│   └── tests/                 # Pytest test suite
+├── uas_world_model/           # World Model cognitive engine
+│   ├── core/                  # Intent, knowledge, planning, evolution modules
+│   ├── demo.py                # Interactive demo
+│   └── tests/                 # Unit tests
+├── scripts/                   # Platform utility scripts
+├── projects/                  # Deployed UAS sub-apps
+│   └── ai-recruitment-os/     # AI recruitment system (fully operational)
+├── examples/                  # Example applications
+│   ├── ai-recruitment/        # AI recruitment domain validation
+│   ├── selfpaw-cognitive-swarm/   # User AGI swarm intelligence
+│   └── triadic-ideal-reality-swarm/ # Ideal-reality analysis
+├── docs/                      # Theory, architecture, and strategy docs
+├── configs/                   # Business rule configurations
+├── whitepaper/                # ASUI architecture whitepaper
+├── website/                   # Neurospan static website
+└── CLAUDE.md                  # System operations manual (AI-readable)
+```
+
+---
+
+## Testing
+
+```bash
+# ASUI CLI tests (pytest)
+cd asui-cli && python3 -m pytest tests/ -v
+
+# World Model tests (unittest)
+python3 -m unittest uas_world_model/tests/test_core.py -v
+
+# Lint
+ruff check .
+black --check asui-cli/src/ uas_world_model/ scripts/
+```
+
+---
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Theory System](docs/THEORY_SYSTEM.md) | Complete theoretical framework and methodology |
+| [World Model Deep Dive](docs/世界模型/世界模型.md) | World model as "law compiler" — core philosophy |
+| [AGI & World Model](docs/AGI_WORLD_MODEL_UAS.md) | Dual-track AGI architecture and evolution roadmap |
+| [ASUI Architecture](docs/ASUI_ARCHITECTURE.md) | AI-System-UI Integration paradigm |
+| [ASUI Whitepaper](whitepaper/ASUI_WHITEPAPER_CN.md) | Architecture whitepaper |
+| [Platform Standard](docs/UAS_PLATFORM_STANDARD.md) | UAS platform technical standard |
+| [Cognitive Superintelligence](docs/认知超智能.md) | Representation–Enaction unification theory |
+| [Documentation Index](docs/README.md) | Full documentation directory |
+
+---
+
+## Examples
+
+### AI Recruitment System
+
+A fully operational domain application demonstrating the ASUI architecture:
+
+```bash
+# Run the recruitment workflow
+python3 scripts/run_uas_runtime_service.py run \
+  --app-id ai-recruitment-os \
+  --topic "Screen candidates for backend engineer role"
+```
+
+See [examples/ai-recruitment/README.md](examples/ai-recruitment/README.md) for detailed usage.
+
+### Swarm Intelligence (selfpaw)
+
+Five-agent cognitive swarm for multi-perspective analysis:
+
+See [examples/selfpaw-cognitive-swarm/README.md](examples/selfpaw-cognitive-swarm/README.md).
+
+### Triadic Ideal-Reality Analysis
+
+Macro/meso/micro ideal-reality dialectical synthesis:
+
+See [examples/triadic-ideal-reality-swarm/README.md](examples/triadic-ideal-reality-swarm/README.md).
+
+---
+
+## Roadmap
+
+- [x] ASUI architecture and CLI scaffolding
+- [x] World Model cognitive engine (intent, planning, evolution)
+- [x] Autonomous agent runtime with cognitive state
+- [x] Multi-agent swarm intelligence (selfpaw)
+- [x] UAS platform standard and sub-app ecosystem
+- [ ] Janus World Model — unified representation + enaction architecture
+- [ ] Phase transition engine (crystallization, activation, evaporation, sublimation)
+- [ ] Cross-domain law discovery and transfer
+- [ ] Real-time perception and continuous learning
+
+---
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+- Email: contact@neurospan.io
+- GitHub: [ACA-protocol](https://github.com/ACA-protocol)
