@@ -26,9 +26,9 @@ def main():
     init_parser.add_argument(
         "-t",
         "--template",
-        choices=["default", "customer-service", "recruitment", "selfpaw-swarm", "triadic-ideal-reality-swarm", "uas-subapp"],
+        choices=["default", "customer-service", "recruitment", "selfpaw-swarm", "triadic-ideal-reality-swarm", "uas-subapp", "enterprise"],
         default="default",
-        help="项目模板（default/customer-service/recruitment/selfpaw-swarm/triadic-ideal-reality-swarm/uas-subapp）",
+        help="项目模板（default/customer-service/recruitment/selfpaw-swarm/triadic-ideal-reality-swarm/uas-subapp/enterprise）",
     )
     init_parser.add_argument(
         "-f",

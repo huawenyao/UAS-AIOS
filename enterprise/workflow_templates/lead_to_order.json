@@ -1,0 +1,115 @@
+{
+  "template_id": "lead_to_order",
+  "name": "线索→签单流程模板",
+  "version": "1.0.0",
+  "domain": "b2b_sales",
+  "description": "B2B 销售从线索获取到合同签署的完整流程",
+  "applicable_industries": ["SaaS", "Enterprise Software", "Consulting"],
+  "sla_default_hours": 72,
+  "steps": [
+    {
+      "step_id": "lead_capture",
+      "name": "线索获取",
+      "type": "inbound_event",
+      "agent": "l3_sales_agent",
+      "inputs": ["source", "company", "contact", "budget_usd", "pain_score"],
+      "outputs": ["lead_id"],
+      "sla_hours": 1,
+      "on_success": "lead_qualification"
+    },
+    {
+      "step_id": "lead_qualification",
+      "name": "线索资格判断",
+      "type": "agent_decision",
+      "agent": "l3_sales_agent",
+      "cs_calls": ["cs.customer.qualify_lead"],
+      "inputs": ["lead_id", "budget_usd", "decision_maker", "timeline_months", "pain_score"],
+      "outputs": ["qualified", "score", "opp_id"],
+      "sla_hours": 2,
+      "on_success": "needs_analysis",
+      "on_failure": "nurture_sequence"
+    },
+    {
+      "step_id": "needs_analysis",
+      "name": "需求诊断",
+      "type": "agent_interaction",
+      "agent": "l3_sales_agent",
+      "inputs": ["opp_id", "meeting_notes"],
+      "outputs": ["pain_points", "desired_outcomes", "technical_requirements"],
+      "sla_hours": 48,
+      "on_success": "proposal_creation"
+    },
+    {
+      "step_id": "proposal_creation",
+      "name": "报价单生成",
+      "type": "agent_execution",
+      "agent": "l3_sales_agent",
+      "cs_calls": ["cs.finance.create_quote", "cs.approval.create"],
+      "inputs": ["opp_id", "line_items", "discount_pct"],
+      "outputs": ["quote_id", "net_amount", "approval_id"],
+      "sla_hours": 4,
+      "on_success": "compliance_review",
+      "compliance_check": true
+    },
+    {
+      "step_id": "compliance_review",
+      "name": "合规审查(G6)",
+      "type": "compliance_gate",
+      "agent": "l2_compliance_agent",
+      "inputs": ["quote_id", "discount_pct", "amount"],
+      "outputs": ["compliance_passed", "violations"],
+      "sla_hours": 2,
+      "on_success": "approval_routing",
+      "on_failure": "compliance_remediation"
+    },
+    {
+      "step_id": "approval_routing",
+      "name": "审批路由",
+      "type": "approval_workflow",
+      "agent": "cs.approval",
+      "inputs": ["approval_id", "amount", "discount_pct"],
+      "outputs": ["approval_status", "approval_level"],
+      "sla_hours": 4,
+      "on_success": "contract_preparation",
+      "on_failure": "proposal_revision"
+    },
+    {
+      "step_id": "contract_preparation",
+      "name": "合同准备",
+      "type": "agent_execution",
+      "agent": "l2_compliance_agent",
+      "cs_calls": ["cs.bpm.start"],
+      "inputs": ["opp_id", "quote_id", "customer_id"],
+      "outputs": ["contract_id", "process_id"],
+      "sla_hours": 24
+    },
+    {
+      "step_id": "contract_signing",
+      "name": "合同签署",
+      "type": "human_in_loop",
+      "inputs": ["contract_id"],
+      "outputs": ["signed_contract", "effective_date"],
+      "sla_hours": 72,
+      "on_success": "order_fulfillment"
+    },
+    {
+      "step_id": "order_fulfillment",
+      "name": "订单履约启动",
+      "type": "agent_execution",
+      "agent": "l3_sales_agent",
+      "cs_calls": ["cs.bpm.start"],
+      "inputs": ["opp_id", "contract_id"],
+      "outputs": ["onboarding_id"],
+      "sla_hours": 2
+    }
+  ],
+  "events_emitted": [
+    "opportunity.created",
+    "opportunity.qualified",
+    "opportunity.needs_analyzed",
+    "opportunity.quote_created",
+    "opportunity.approved",
+    "opportunity.closed_won"
+  ],
+  "kpi_tracking": ["time_to_close", "win_rate", "deal_size", "discount_rate"]
+}

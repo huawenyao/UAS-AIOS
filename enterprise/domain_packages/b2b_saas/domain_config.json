@@ -1,0 +1,82 @@
+{
+  "package_id": "b2b_saas",
+  "name": "B2B SaaS 行业 Domain 包",
+  "version": "1.0.0",
+  "description": "B2B SaaS 企业的完整 Ontology + 合规规则 + 话术 + 审批矩阵",
+  "industry": "B2B SaaS",
+  "ontology": {
+    "entities": [
+      {"name": "Lead", "attributes": ["company", "industry", "budget_usd", "decision_maker", "pain_score", "timeline_months"]},
+      {"name": "Opportunity", "attributes": ["stage", "amount", "probability", "close_date", "owner"]},
+      {"name": "Quote", "attributes": ["line_items", "subtotal", "discount_pct", "net_amount", "valid_days"]},
+      {"name": "Contract", "attributes": ["value", "term_months", "start_date", "sla_tier", "payment_terms"]},
+      {"name": "Customer", "attributes": ["health_score", "arr", "lifecycle_stage", "nps", "csm_owner"]},
+      {"name": "Invoice", "attributes": ["amount", "invoice_type", "due_date", "status"]},
+      {"name": "Renewal", "attributes": ["renewal_date", "risk_level", "nrr", "expansion_opportunities"]}
+    ],
+    "relationships": [
+      {"from": "Lead", "to": "Opportunity", "type": "converts_to"},
+      {"from": "Opportunity", "to": "Quote", "type": "has_quote"},
+      {"from": "Opportunity", "to": "Contract", "type": "results_in"},
+      {"from": "Contract", "to": "Customer", "type": "creates"},
+      {"from": "Customer", "to": "Invoice", "type": "receives"},
+      {"from": "Customer", "to": "Renewal", "type": "faces"}
+    ],
+    "funnel_stages": [
+      {"stage": "acquire", "steps": ["lead_capture", "lead_scoring", "qualification"]},
+      {"stage": "convert", "steps": ["needs_analysis", "proposal", "negotiation", "legal_review", "signing"]},
+      {"stage": "serve", "steps": ["onboarding", "adoption", "expansion", "support"]},
+      {"stage": "retain", "steps": ["renewal_review", "qbr", "upsell", "advocacy"]}
+    ]
+  },
+  "compliance_rules": [
+    {"rule_id": "SAAS_DISCOUNT_MAX", "description": "SaaS 产品折扣不超过30%", "severity": "block", "expression": "discount_pct <= 30", "remedy": "申请CFO特批"},
+    {"rule_id": "SAAS_MIN_TERM", "description": "最短合同期12个月（标准SaaS）", "severity": "warn", "expression": "term_months >= 12", "remedy": "非标合同需报批"},
+    {"rule_id": "SAAS_PAYMENT_TERMS", "description": "账期不超过60天", "severity": "warn", "expression": "payment_days <= 60", "remedy": "超账期需财务批准"}
+  ],
+  "sales_playbook": {
+    "qualification_framework": "BANT",
+    "discovery_questions": [
+      "您目前在这个领域面临的最大挑战是什么？",
+      "如果这个问题不解决，会对业务产生什么影响？",
+      "您预期的解决时间是什么？",
+      "决策流程中涉及哪些人？"
+    ],
+    "objection_handlers": {
+      "price_too_high": "我理解价格是重要考量，让我们一起测算ROI，通常客户在6个月内实现回报。",
+      "not_right_time": "现在正是最佳时机，因为[市场动态/竞争变化]。我们可以先从小规模试点开始。",
+      "using_competitor": "很好，我们很多客户都有这样的迁移经历，主要差异体现在[核心优势]。"
+    }
+  },
+  "approval_matrix": {
+    "quote_levels": [
+      {"condition": "amount < 30000", "required_level": 0, "description": "销售自主"},
+      {"condition": "amount >= 30000 and amount < 100000", "required_level": 1, "approver": "sales_manager"},
+      {"condition": "amount >= 100000 and amount < 500000", "required_level": 2, "approver": "regional_director"},
+      {"condition": "amount >= 500000", "required_level": 3, "approver": "vp_sales"}
+    ],
+    "discount_levels": [
+      {"condition": "discount_pct <= 5", "required_level": 0, "description": "AE自主"},
+      {"condition": "discount_pct > 5 and discount_pct <= 15", "required_level": 1, "approver": "sales_manager"},
+      {"condition": "discount_pct > 15 and discount_pct <= 25", "required_level": 2, "approver": "regional_director"},
+      {"condition": "discount_pct > 25", "required_level": 3, "approver": "cfo"}
+    ]
+  },
+  "kpi_definitions": {
+    "sales": ["arr_new", "pipeline_coverage", "win_rate", "sales_cycle_days", "avg_deal_size"],
+    "customer_success": ["nrr", "churn_rate", "health_score_avg", "nps", "time_to_value"],
+    "finance": ["dso", "arr", "mrr", "cac", "ltv"]
+  },
+  "available_cs_services": [
+    "cs.customer.qualify_lead",
+    "cs.customer.get_profile",
+    "cs.customer.health_score",
+    "cs.finance.create_quote",
+    "cs.finance.kpi_attribution",
+    "cs.approval.create",
+    "cs.approval.approve",
+    "cs.invoice.create",
+    "cs.invoice.record_payment",
+    "cs.bpm.start"
+  ]
+}

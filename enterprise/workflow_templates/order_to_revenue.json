@@ -1,0 +1,93 @@
+{
+  "template_id": "order_to_revenue",
+  "name": "签单→回款流程模板",
+  "version": "1.0.0",
+  "domain": "finance_ops",
+  "description": "合同签署后从开票到回款到KPI归因的完整流程",
+  "sla_default_hours": 48,
+  "steps": [
+    {
+      "step_id": "invoice_creation",
+      "name": "发票申请",
+      "type": "agent_execution",
+      "agent": "l2_finance_agent",
+      "cs_calls": ["cs.invoice.create", "cs.invoice.submit"],
+      "inputs": ["order_id", "customer_id", "amount", "invoice_type"],
+      "outputs": ["invoice_id", "total_amount"],
+      "sla_hours": 2,
+      "on_success": "payment_collection"
+    },
+    {
+      "step_id": "invoice_issuance",
+      "name": "开票（财务操作）",
+      "type": "human_in_loop",
+      "agent": "l2_finance_agent",
+      "cs_calls": ["cs.invoice.issue"],
+      "inputs": ["invoice_id"],
+      "outputs": ["invoice_number", "issued_date"],
+      "sla_hours": 4,
+      "on_success": "payment_collection"
+    },
+    {
+      "step_id": "payment_collection",
+      "name": "回款跟进",
+      "type": "agent_monitoring",
+      "agent": "l2_finance_agent",
+      "cs_calls": ["cs.invoice.ar_summary"],
+      "inputs": ["invoice_id", "customer_id"],
+      "outputs": ["payment_status", "days_outstanding"],
+      "sla_hours": 720,
+      "escalation_on_overdue": true
+    },
+    {
+      "step_id": "payment_recording",
+      "name": "回款登记",
+      "type": "agent_execution",
+      "agent": "l2_finance_agent",
+      "cs_calls": ["cs.invoice.record_payment"],
+      "inputs": ["invoice_id", "amount", "bank_flow_id"],
+      "outputs": ["payment_id", "invoice_status"],
+      "sla_hours": 1,
+      "on_success": "revenue_recognition"
+    },
+    {
+      "step_id": "revenue_recognition",
+      "name": "收入确认",
+      "type": "agent_execution",
+      "agent": "l2_finance_agent",
+      "cs_calls": ["cs.finance.recognize_revenue"],
+      "inputs": ["order_id", "customer_id", "amount", "revenue_type"],
+      "outputs": ["revenue_record_id"],
+      "sla_hours": 2,
+      "on_success": "kpi_attribution"
+    },
+    {
+      "step_id": "kpi_attribution",
+      "name": "KPI归因",
+      "type": "agent_execution",
+      "agent": "l2_finance_agent",
+      "cs_calls": ["cs.finance.kpi_attribution"],
+      "inputs": ["order_id", "ae_id", "csm_id", "revenue_type", "amount"],
+      "outputs": ["ae_attribution", "csm_attribution"],
+      "sla_hours": 1,
+      "on_success": "changeset_evolution"
+    },
+    {
+      "step_id": "changeset_evolution",
+      "name": "ChangeSet 演化",
+      "type": "evolution_trigger",
+      "agent": "evolution_engine",
+      "inputs": ["pipeline_metrics", "kpi_results", "process_timing"],
+      "outputs": ["changeset_proposals"],
+      "sla_hours": 24
+    }
+  ],
+  "events_emitted": [
+    "invoice.created",
+    "invoice.issued",
+    "payment.received",
+    "revenue.recognized",
+    "kpi.attributed",
+    "evolution.changeset_created"
+  ]
+}
