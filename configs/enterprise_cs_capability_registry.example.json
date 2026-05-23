@@ -1,0 +1,140 @@
+{
+  "$schema": "https://asui.dev/schemas/enterprise_cs_capability_registry.schema.json",
+  "version": "2026-05-1",
+  "description": "企业语义能力服务 cs.* 注册表示例；Agent 仅可调用此处声明的 capability，由 S-Grid 适配器实现。",
+  "capabilities": [
+    {
+      "id": "cs.lead.capture",
+      "domain": "lead",
+      "verb": "capture",
+      "execution_mode": "deterministic",
+      "description": "捕获外部留资并写入租户线索池",
+      "implements_backend": ["backend_crm", "backend_webhook"],
+      "required_scopes": ["lead:write"],
+      "audit_level": "full"
+    },
+    {
+      "id": "cs.lead.qualify",
+      "domain": "lead",
+      "verb": "qualify",
+      "execution_mode": "deterministic",
+      "description": "资格判断（规则引擎终裁，LLM 仅提供特征摘要）",
+      "implements_backend": ["backend_crm"],
+      "required_scopes": ["lead:write"],
+      "policy_bundles": ["qualification_rules_v2"],
+      "audit_level": "full"
+    },
+    {
+      "id": "cs.customer.search",
+      "domain": "customer",
+      "verb": "search",
+      "execution_mode": "assisted",
+      "description": "按权限范围内检索客户",
+      "implements_backend": ["backend_crm", "backend_mdm"],
+      "required_scopes": ["customer:read"],
+      "audit_level": "metadata_only"
+    },
+    {
+      "id": "cs.quote.create",
+      "domain": "quote",
+      "verb": "create",
+      "execution_mode": "assisted",
+      "description": "创建报价草案，提交审批前须 G 策略通过",
+      "implements_backend": ["backend_crm", "backend_erp"],
+      "required_scopes": ["quote:write"],
+      "policy_bundles": ["pricing_v4", "credit_policy_v3"],
+      "audit_level": "full"
+    },
+    {
+      "id": "cs.approval.submit",
+      "domain": "approval",
+      "verb": "submit",
+      "execution_mode": "deterministic",
+      "description": "提交审批流程",
+      "implements_backend": ["backend_bpm"],
+      "required_scopes": ["approval:submit"],
+      "audit_level": "full"
+    },
+    {
+      "id": "cs.compliance.review",
+      "domain": "compliance",
+      "verb": "review",
+      "execution_mode": "deterministic",
+      "description": "合规红线审查（G6）",
+      "implements_backend": ["backend_policy_engine"],
+      "required_scopes": ["compliance:review"],
+      "policy_bundles": ["compliance_redlines_v1"],
+      "audit_level": "full"
+    },
+    {
+      "id": "cs.invoice.issue",
+      "domain": "invoice",
+      "verb": "issue",
+      "execution_mode": "deterministic",
+      "description": "开具发票",
+      "implements_backend": ["backend_finance"],
+      "required_scopes": ["invoice:issue"],
+      "audit_level": "full"
+    },
+    {
+      "id": "cs.analytics.attribute",
+      "domain": "analytics",
+      "verb": "attribute",
+      "execution_mode": "deterministic",
+      "description": "KPI 归因，驱动 E 层 ChangeSet",
+      "implements_backend": ["backend_bi"],
+      "required_scopes": ["analytics:read"],
+      "audit_level": "metadata_only"
+    }
+  ],
+  "backends": [
+    {
+      "id": "backend_crm",
+      "type": "crm",
+      "never_expose_to_agent": true,
+      "adapter": "adapters/crm_adapter.py"
+    },
+    {
+      "id": "backend_bpm",
+      "type": "bpm",
+      "never_expose_to_agent": true,
+      "adapter": "adapters/bpm_adapter.py"
+    },
+    {
+      "id": "backend_finance",
+      "type": "erp_finance",
+      "never_expose_to_agent": true,
+      "adapter": "adapters/finance_adapter.py"
+    },
+    {
+      "id": "backend_mdm",
+      "type": "mdm",
+      "never_expose_to_agent": true,
+      "adapter": "adapters/mdm_adapter.py"
+    },
+    {
+      "id": "backend_policy_engine",
+      "type": "governance",
+      "never_expose_to_agent": true,
+      "adapter": "adapters/policy_engine_adapter.py"
+    },
+    {
+      "id": "backend_bi",
+      "type": "analytics",
+      "never_expose_to_agent": true,
+      "adapter": "adapters/bi_adapter.py"
+    },
+    {
+      "id": "backend_webhook",
+      "type": "ingress",
+      "never_expose_to_agent": true,
+      "adapter": "adapters/webhook_adapter.py"
+    },
+    {
+      "id": "backend_erp",
+      "type": "erp",
+      "never_expose_to_agent": true,
+      "adapter": "adapters/erp_adapter.py"
+    }
+  ]
+}

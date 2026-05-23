@@ -199,6 +199,7 @@ UAS-AIOS 不把世界模型当作「可选插件」，而是**核心一级公民
 - 在 **UAS_AIOS_ARCHITECTURE.md** 中可引用本文，将「企业 AGI」显式写成 **Business AGI = Πpaw(UAS-S)**，并注明 User AGI = selfpaw(UAS-U)。
 - 在 **configs / schemas** 中可增加 **world_model** 相关配置与 schema，区分 byte 与 physical、理念与现实的建模范围。
 - **selfpaw** 与 **triadic** 模板可作为 User AGI 与「理念—现实」一体化 Agent 的参考实现，与本文的阶段 1 与阶段 3 对齐。
+- **企业级数字人生态**（DH-L1/L2/L3、SelfPaw 企业版 × ΠPaw、cs.* 语义能力、主权数据平面）见 [ENTERPRISE_DIGITAL_HUMAN_L1_L3_ECOSYSTEM.md](./ENTERPRISE_DIGITAL_HUMAN_L1_L3_ECOSYSTEM.md)。
 
 ---
 

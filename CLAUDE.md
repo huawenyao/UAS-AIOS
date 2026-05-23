@@ -200,6 +200,8 @@ execution → monitoring → render_report → evaluation
 | 蜂群智能体实现 | examples/selfpaw-cognitive-swarm/ |
 | 三维理念现实 | examples/triadic-ideal-reality-swarm/ |
 | 领域构建评估技能 | .claude/skills/domain_builder.md |
+| 企业数字人 L1–L3 生态（DH 层级·cs.*·商业闭环） | docs/ENTERPRISE_DIGITAL_HUMAN_L1_L3_ECOSYSTEM.md |
+| 企业语义能力服务 cs.* 协议 | docs/ENTERPRISE_CS_CAPABILITY_PROTOCOL.md |
 | Agent注册表 | .claude/agents/domain_agent_registry.json |
 
 ---

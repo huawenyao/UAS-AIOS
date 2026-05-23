@@ -1,0 +1,38 @@
+{
+  "$schema": "https://asui.dev/schemas/enterprise_data_plane_manifest.schema.json",
+  "version": "2026-05-1",
+  "description": "企业主权数据平面占位：租户、主数据、事件流、审计链",
+  "tenant": {
+    "isolation": "logical",
+    "required_fields": ["tenant_id", "region", "data_residency_policy_id"]
+  },
+  "master_data": {
+    "domains": ["customer", "product", "org_unit", "employee"],
+    "resolution_capability": "cs.mdm.resolve",
+    "source_of_record_per_domain": {
+      "customer": "backend_crm",
+      "employee": "backend_hr"
+    }
+  },
+  "event_stream": {
+    "topics": [
+      "intent.created",
+      "intent.escalated",
+      "cs.invoked",
+      "cs.completed",
+      "approval.state_changed",
+      "evolution.changeset_applied"
+    ],
+    "retention_days": 365
+  },
+  "audit_chain": {
+    "store": "append_only",
+    "required_on": ["cs.invoked", "G6.decision", "evolution.apply"],
+    "fields": ["audit_id", "tenant_id", "actor", "capability", "request_id", "policy_bundle_id", "timestamp"]
+  },
+  "sovereignty": {
+    "agent_direct_external_api": false,
+    "model_training_on_tenant_data": "opt_in_only",
+    "cross_tenant_learning": false
+  }
+}

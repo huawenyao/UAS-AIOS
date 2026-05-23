@@ -1,0 +1,128 @@
+{
+  "$schema": "https://asui.dev/schemas/enterprise_digital_human_tiers.schema.json",
+  "version": "2026-05-1",
+  "description": "企业数字人三层 DH-L1/L2/L3 与双轨 AGI 映射示例",
+  "tiers": {
+    "DH-L1": {
+      "label": "个人数字分身",
+      "track": "SelfPaw Enterprise",
+      "uas_track": "UAS-U",
+      "scenarios": ["write", "query", "execute_in_scope", "summarize_up"],
+      "modules": [
+        "org_identity_binding",
+        "intent_hub",
+        "role_domain_pack",
+        "authorized_execution",
+        "personal_swarm_decision",
+        "rollup_to_pipaw"
+      ],
+      "default_agents": ["selfpaw_personal_react", "selfpaw_cognitive_swarm"],
+      "data_scope": "personal_grant_union_role_grant",
+      "escalation_targets": ["DH-L2", "DH-L3"]
+    },
+    "DH-L2": {
+      "label": "职能数字人",
+      "track": "PiPaw Workbench",
+      "uas_track": "UAS-S",
+      "scenarios": ["cross_department_orchestration", "compliance", "finance", "scheduling"],
+      "role_agents": [
+        {
+          "id": "pipaw_hr",
+          "domain_pack": "hr_recruitment",
+          "allowed_capabilities_prefix": ["cs.", "mdm."],
+          "kpi": ["time_to_fill", "quality_of_hire"]
+        },
+        {
+          "id": "pipaw_finance",
+          "domain_pack": "finance",
+          "allowed_capabilities": [
+            "cs.invoice.issue",
+            "cs.analytics.attribute",
+            "cs.approval.submit"
+          ],
+          "kpi": ["dso", "invoice_accuracy"]
+        },
+        {
+          "id": "pipaw_compliance",
+          "domain_pack": "compliance",
+          "allowed_capabilities": ["cs.compliance.review", "cs.approval.submit"],
+          "kpi": ["policy_violation_rate"]
+        },
+        {
+          "id": "pipaw_scheduler",
+          "domain_pack": "operations",
+          "allowed_capabilities": ["cs.workflow.start", "cs.workflow.signal"],
+          "kpi": ["sla_breach_count"]
+        }
+      ],
+      "data_scope": "organization_by_role",
+      "escalation_targets": ["G6_human", "DH-L3"]
+    },
+    "DH-L3": {
+      "label": "经营数字人",
+      "track": "PiPaw Outward",
+      "uas_track": "UAS-S",
+      "scenarios": ["acquire", "convert", "serve", "retain"],
+      "outward_formula": "reach_x_fulfill_x_decide_x_dispatch",
+      "role_agents": [
+        {
+          "id": "pipaw_sales_advisor",
+          "direction": "outward",
+          "allowed_capabilities": [
+            "cs.lead.capture",
+            "cs.lead.qualify",
+            "cs.quote.create",
+            "cs.customer.search"
+          ],
+          "kpi": ["qualified_pipeline", "win_rate"]
+        },
+        {
+          "id": "pipaw_customer_success",
+          "direction": "outward_inward",
+          "allowed_capabilities": ["cs.case.open", "cs.case.update", "cs.workflow.signal"],
+          "kpi": ["nps", "sla_met"]
+        },
+        {
+          "id": "pipaw_bid_compliance",
+          "direction": "outward_inward",
+          "allowed_capabilities": ["cs.compliance.review", "cs.quote.create"],
+          "kpi": ["bid_win_rate", "redline_hits"]
+        },
+        {
+          "id": "pipaw_channel_partner",
+          "direction": "outward",
+          "allowed_capabilities": ["cs.lead.assign", "cs.customer.search"],
+          "kpi": ["partner_sourced_revenue"]
+        }
+      ],
+      "ingress": {
+        "outward_gateway": {
+          "description": "对外客户入口；脱敏、限流、租户路由",
+          "never_bind_internal_mdm_full": true
+        }
+      },
+      "data_scope": "organization_customer_facing",
+      "escalation_targets": ["G6_human"]
+    }
+  },
+  "escalation_rules": [
+    {
+      "when": "intent_type in ['quote_approval', 'contract', 'refund']",
+      "from": "DH-L1",
+      "to": "DH-L3:pipaw_sales_advisor",
+      "require": ["intent_record", "evidence_bundle", "swarm_memo_optional"]
+    },
+    {
+      "when": "sla_breach or cross_department_block",
+      "from": "DH-L1",
+      "to": "DH-L2:pipaw_scheduler",
+      "require": ["intent_record", "cs_call_trace"]
+    },
+    {
+      "when": "compliance_redline",
+      "from": "*",
+      "to": "G6_human",
+      "require": ["full_reasoning_chain", "audit_id"]
+    }
+  ]
+}
