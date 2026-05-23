@@ -1022,6 +1022,8 @@ infrastructure:
 
 ### 10.1 UAS-AIOS的三种产品形态
 
+企业级数字人生态可进一步拆为 **L1 个人数字分身、L2 职能数字人、L3 经营数字人**，用于把 U 层个人智能与 S 层业务执行接成组织级闭环；详见 [UAS-AIOS L1-L3 企业级 Agent 生态体系](./docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md)。
+
 #### 形态1：个人AI助手（U层产品）
 
 ```
