@@ -1,6 +1,9 @@
 # 企业数字人生态 L1–L3 构建技能
 
-> 父文档：`docs/ENTERPRISE_DIGITAL_HUMAN_L1_L3_ECOSYSTEM.md`  
+> 标准总纲：`docs/ENTERPRISE_PLATFORM_STANDARD.md`  
+> 战略架构：`docs/ENTERPRISE_DIGITAL_HUMAN_L1_L3_ECOSYSTEM.md`  
+> 产品规格：`docs/ENTERPRISE_PRODUCT_FUNCTIONAL_SPEC.md`  
+> 技术模块：`docs/ENTERPRISE_TECHNICAL_MODULE_SPEC.md`  
 > cs 协议：`docs/ENTERPRISE_CS_CAPABILITY_PROTOCOL.md`
 
 ## 何时使用
@@ -51,6 +54,12 @@
 - `configs/enterprise_cs_capability_registry.example.json`  
 - `configs/enterprise_digital_human_tiers.example.json`  
 - `configs/enterprise_data_plane_manifest.example.json`  
+- `configs/schemas/enterprise_*.schema.json`  
+
+## 需求与模块编号
+
+- 产品功能：`FR-<模块>-<序号>`（见 ENTERPRISE_PRODUCT_FUNCTIONAL_SPEC）  
+- 技术模块：`TM-<Name>`（见 ENTERPRISE_TECHNICAL_MODULE_SPEC）  
 
 ## 命令衔接
 

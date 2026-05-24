@@ -1,0 +1,29 @@
+# 能力卡片示例 — 见 ENTERPRISE_CS_CAPABILITY_CATALOG_STANDARD.md
+id: cs.quote.create
+capability_version: "2026.05.1"
+domain: quote
+verb: create
+business_definition: 在信用与定价法则约束下创建报价草案；提交审批前不具法律效力
+execution_mode: assisted
+required_scopes:
+  - quote:write
+policy_bundles:
+  - pricing_v4
+  - credit_policy_v3
+audit_level: full
+implements_backend:
+  - backend_crm
+  - backend_erp
+status: published
+owner:
+  product: 销售云
+  engineering: platform-cs
+sla:
+  timeout_ms: 30000
+  retry: 2
+escalation_on_failure:
+  target: DH-L2:pipaw_finance
+  reason: credit_or_pricing_block
+kpi_attribution:
+  - pipeline_value
+  - quote_cycle_time

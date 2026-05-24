@@ -4,7 +4,7 @@
 > **定位**：在 UAS-AIOS 理论体系（道德势术器、世界模型五维、UAS 八元组、双轨 AGI、ASUI）之上，将「企业级 Agent 生态」从工具叙事推进为**契合组织内在逻辑**的数字人生态——并给出可配置、可审计、可商业化的闭环。  
 > **命名约定**：本文 **DH-L1 / DH-L2 / DH-L3** 指**企业数字人层级**（Digital Human Tier），与认知文献中的 Cognitive Agent L1–L3、世界模型逻辑层 L1–L3 **不同义**，避免混读。
 
-**关联文档**：[THEORY_SYSTEM.md](./THEORY_SYSTEM.md) · [AGI_WORLD_MODEL_UAS.md](./AGI_WORLD_MODEL_UAS.md) · [UAS_PLATFORM_STANDARD.md](./UAS_PLATFORM_STANDARD.md) · [ASUI_ARCHITECTURE.md](./ASUI_ARCHITECTURE.md) · [ENTERPRISE_CS_CAPABILITY_PROTOCOL.md](./ENTERPRISE_CS_CAPABILITY_PROTOCOL.md) · [UAS_STRATEGIC_ROADMAP_OPENSOURCE_VS_COMMERCIAL.md](./UAS_STRATEGIC_ROADMAP_OPENSOURCE_VS_COMMERCIAL.md)
+**关联文档**：[ENTERPRISE_PLATFORM_STANDARD.md](./ENTERPRISE_PLATFORM_STANDARD.md)（**产品/技术标准总索引 EPS-00**） · [THEORY_SYSTEM.md](./THEORY_SYSTEM.md) · [AGI_WORLD_MODEL_UAS.md](./AGI_WORLD_MODEL_UAS.md) · [UAS_PLATFORM_STANDARD.md](./UAS_PLATFORM_STANDARD.md) · [ASUI_ARCHITECTURE.md](./ASUI_ARCHITECTURE.md) · [ENTERPRISE_CS_CAPABILITY_PROTOCOL.md](./ENTERPRISE_CS_CAPABILITY_PROTOCOL.md) · [UAS_STRATEGIC_ROADMAP_OPENSOURCE_VS_COMMERCIAL.md](./UAS_STRATEGIC_ROADMAP_OPENSOURCE_VS_COMMERCIAL.md)
 
 ---
 
@@ -348,9 +348,13 @@ E（演化）: KPI 归因 → ChangeSet → 法则包/话术/流程参数热更�
 
 | 文件 | 用途 |
 |------|------|
+| [docs/ENTERPRISE_PLATFORM_STANDARD.md](./ENTERPRISE_PLATFORM_STANDARD.md) | 企业标准总纲（EPS-00～07） |
+| [docs/ENTERPRISE_PRODUCT_FUNCTIONAL_SPEC.md](./ENTERPRISE_PRODUCT_FUNCTIONAL_SPEC.md) | 产品功能规格（FR-*） |
+| [docs/ENTERPRISE_TECHNICAL_MODULE_SPEC.md](./ENTERPRISE_TECHNICAL_MODULE_SPEC.md) | 技术模块规格（TM-*） |
 | [configs/enterprise_cs_capability_registry.example.json](../configs/enterprise_cs_capability_registry.example.json) | cs.* 能力与 S-Grid 映射示例 |
 | [configs/enterprise_digital_human_tiers.example.json](../configs/enterprise_digital_human_tiers.example.json) | DH-L1/L2/L3 岗位与升级策略 |
 | [configs/enterprise_data_plane_manifest.example.json](../configs/enterprise_data_plane_manifest.example.json) | 租户/主数据/审计链占位 |
+| [configs/schemas/](../configs/schemas/) | Intent / Evidence / cs.invoke JSON Schema |
 | [.claude/skills/enterprise_digital_human_ecosystem.md](../.claude/skills/enterprise_digital_human_ecosystem.md) | Agent 构建/评估技能入口 |
 
 **验证现有 Business 轨**：
