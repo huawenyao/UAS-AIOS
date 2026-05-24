@@ -1,6 +1,7 @@
 # UAS-AIOS 企业级产品蓝图：产品方案、功能清单、工程架构与模块设计
 
 > 本文将 [UAS-AIOS L1-L3 企业级 Agent 生态体系](./UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md) 收敛为可落地的产品方案：明确产品边界、功能模块、技术工程架构、数据与能力合约、MVP 切入和验收标准。
+> B2B 线索到报价审批 MVP 的开发规约见 [Enterprise Sales OS MVP 开发规约包](./enterprise-sales-os/README.md)。
 
 ---
 
@@ -426,6 +427,8 @@ result_contract:
 | 可演化 | 至少输出一条可审查的 ChangeSet 建议 |
 | 可复用 | 新增另一个销售场景时复用 70% 以上模块与合约 |
 
+开发前置规约已拆分为：[领域模型](./enterprise-sales-os/DOMAIN_MODEL.md)、[能力服务合约](./enterprise-sales-os/CAPABILITY_CONTRACTS.md)、[治理矩阵](./enterprise-sales-os/GOVERNANCE_MATRIX.md)、[状态机](./enterprise-sales-os/WORKFLOW_STATE_MACHINE.md)、[世界模型配置](./enterprise-sales-os/WORLD_MODEL_CONFIG.md)、[反馈与 ChangeSet](./enterprise-sales-os/FEEDBACK_CHANGESET.md)、[验收用例](./enterprise-sales-os/MVP_ACCEPTANCE_CASES.md)。
+
 ---
 
 ## 8. 工程目录建议
@@ -460,6 +463,12 @@ projects/enterprise-sales-os/
 ├── docs/
 │   ├── PRODUCT_BLUEPRINT.md
 │   ├── DOMAIN_MODEL.md
+│   ├── CAPABILITY_CONTRACTS.md
+│   ├── GOVERNANCE_MATRIX.md
+│   ├── WORKFLOW_STATE_MACHINE.md
+│   ├── WORLD_MODEL_CONFIG.md
+│   ├── FEEDBACK_CHANGESET.md
+│   ├── MVP_ACCEPTANCE_CASES.md
 │   └── RUNBOOK.md
 └── reports/
 ```
@@ -481,7 +490,7 @@ projects/enterprise-sales-os/
 | 版本 | 目标 | 关键产物 |
 |------|------|----------|
 | **v0.1 文档蓝图** | 产品、架构、合约、模块边界明确 | 本文 + 生态总纲 |
-| **v0.2 配置原型** | enterprise-sales-os subapp 可被 runtime 发现 | configs + mock scripts |
+| **v0.2 配置原型** | enterprise-sales-os subapp 可被 runtime 发现 | 开发规约包 + configs + mock scripts |
 | **v0.3 闭环 MVP** | lead→quote→approval→audit 可运行 | 运行报告 + 审计链 |
 | **v0.4 治理增强** | G0-G4、字段级 scope、审批矩阵 | policy tests |
 | **v0.5 Pack 化** | Domain/Workflow/Law/Agent/Connector Pack 可复用 | pack registry |
