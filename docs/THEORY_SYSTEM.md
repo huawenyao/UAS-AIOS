@@ -31,6 +31,7 @@ UAS-AIOS 以**世界模型**为认知内核、以**双轨 AGI**（User / Busines
 | **推动—反馈—反身螺旋** | 世界模型下的演化机制 | [AGI_WORLD_MODEL_UAS](./AGI_WORLD_MODEL_UAS.md) §2.3 |
 | **UAS Platform 标准** | 所有业务应用的技术与运行标准 | [UAS_PLATFORM_STANDARD](./UAS_PLATFORM_STANDARD.md) |
 | **企业级 Agent 生态 L1-L3** | 个人数字分身、职能数字人、经营数字人的产品化闭环 | [UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3](./UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md) |
+| **企业级产品蓝图** | UAS Enterprise 的产品方案、功能清单、工程架构、模块设计与 MVP | [UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT](./UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md) |
 | **ASUI Autonomous Agent 标准** | 知识层、运行时、执行层、工作流阶段的强制约定 | [ASUI_AUTONOMOUS_AGENT_STANDARD](./ASUI_AUTONOMOUS_AGENT_STANDARD.md) |
 
 ---
@@ -762,6 +763,7 @@ flowchart TB
 | AI 应用范式与三元张力 | [AI_APPLICATION_PARADIGM_REPORT.md](../AI_APPLICATION_PARADIGM_REPORT.md) |
 | UAS 平台标准 | [docs/UAS_PLATFORM_STANDARD.md](./UAS_PLATFORM_STANDARD.md) |
 | 企业级 Agent 生态 L1-L3 | [docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md](./UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md) |
+| 企业级产品蓝图 | [docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md](./UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md) |
 | ASUI 自主 Agent 标准 | [docs/ASUI_AUTONOMOUS_AGENT_STANDARD.md](./ASUI_AUTONOMOUS_AGENT_STANDARD.md) |
 | 蜂群协议 | examples/selfpaw-cognitive-swarm/.claude/skills/swarm_protocol.md |
 | 三维协议 | examples/triadic-ideal-reality-swarm/.claude/skills/triadic_protocol.md |

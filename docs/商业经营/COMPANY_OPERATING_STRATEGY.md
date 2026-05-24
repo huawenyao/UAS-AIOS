@@ -40,7 +40,7 @@
 
 **产品本质一句话**：在「认知摩擦、执行摩擦、知识摩擦」三元张力下，提供**知识驱动型 AI 操作系统协议与实现**，使个人与组织具备可审计、可演化的世界模型与执行能力。
 
-企业级数字人生态的产品分层可进一步落为 **L1 SelfPaw Enterprise（个人数字分身）→ L2 ΠPaw Workbench（职能数字人）→ L3 ΠPaw Growth & Service（经营数字人）**，详见 `docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md`。
+企业级数字人生态的产品分层可进一步落为 **L1 SelfPaw Enterprise（个人数字分身）→ L2 ΠPaw Workbench（职能数字人）→ L3 ΠPaw Growth & Service（经营数字人）**，详见 `docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md`；产品方案、功能清单、工程架构与模块设计见 `docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md`。
 
 ---
 
@@ -229,6 +229,7 @@
 - 范式与行业：`AI_APPLICATION_PARADIGM_REPORT.md`
 - 场景与客户：`docs/AI_RECRUITMENT_TRIADIC_SWARM_PLAN.md`、`docs/CROSS_BORDER_AD_AGENT_SWARM_PLAN.md`、`docs/AGI_WORLD_MODEL_UAS.md`
 - 企业级 Agent 生态：`docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md`
+- 企业级产品蓝图：`docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md`
 
 ---
 

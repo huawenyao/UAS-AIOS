@@ -202,6 +202,7 @@ ASUI Autonomous Agent 标准要求阶段顺序：
 4. **双轨 AGI 实现范围说明**  
    - 在 THEORY_SYSTEM、UAS_AIOS_ARCHITECTURE、AGI_WORLD_MODEL 中统一加一句：**当前代码与运行时仅覆盖 Business AGI（UAS-S/Πpaw）；User AGI（UAS-U/selfpaw）为方法论与模板级，平台级 U 层未实现。**
    - 企业级 L1-L3 产品化分层与“已实现/规划态”边界见 [UAS-AIOS L1-L3 企业级 Agent 生态体系](./UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md)。
+   - 具体产品模块、工程服务拆分、数据模型与 MVP 边界见 [UAS-AIOS 企业级产品蓝图](./UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md)。
 
 5. **平台能力（Studio/Hub/Evolution Center）标注**  
    - 在 UAS_PLATFORM_STANDARD 中为 Studio、System Hub、Evolution Center 注明“规划中”或“部分实现（Runtime 已实现）”，避免与现有 CLI/runtime 混淆。

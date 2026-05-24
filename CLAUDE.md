@@ -140,6 +140,7 @@ E  - 演化回路（Evolution）
 │   ├── ASUI_ARCHITECTURE.md         # ASUI架构
 │   ├── TEMPLATE_PROJECT_RELATIONSHIP.md  # 模板与项目关系（从运行逻辑推导）
 │   ├── UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md  # 企业级Agent生态L1-L3
+│   ├── UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md  # 企业级产品方案与工程蓝图
 │   ├── UAS_ASUI_PROTOCOL_GAPS_AND_ROADMAP.md  # 协议化与智能化推演不足及改进路线图
 │   ├── 世界模型/
 │   │   └── 世界模型.md               # 法则编译器深度解析
@@ -199,6 +200,7 @@ execution → monitoring → render_report → evaluation
 | 道德势术器详解 | docs/THEORY_SYSTEM.md §二 |
 | ASUI技术细节 | docs/ASUI_ARCHITECTURE.md |
 | 企业级Agent生态L1-L3 | docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md |
+| 企业级产品方案与模块设计 | docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md |
 | 蜂群智能体实现 | examples/selfpaw-cognitive-swarm/ |
 | 三维理念现实 | examples/triadic-ideal-reality-swarm/ |
 | 领域构建评估技能 | .claude/skills/domain_builder.md |
