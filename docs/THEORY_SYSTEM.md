@@ -764,6 +764,7 @@ flowchart TB
 | UAS 平台标准 | [docs/UAS_PLATFORM_STANDARD.md](./UAS_PLATFORM_STANDARD.md) |
 | 企业级 Agent 生态 L1-L3 | [docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md](./UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md) |
 | 企业级产品蓝图 | [docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md](./UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md) |
+| 企业级可视化蓝图 | [docs/UAS_AIOS_ENTERPRISE_VISUAL_BLUEPRINT.md](./UAS_AIOS_ENTERPRISE_VISUAL_BLUEPRINT.md) |
 | Enterprise Sales OS MVP 开发规约 | [docs/enterprise-sales-os/README.md](./enterprise-sales-os/README.md) |
 | ASUI 自主 Agent 标准 | [docs/ASUI_AUTONOMOUS_AGENT_STANDARD.md](./ASUI_AUTONOMOUS_AGENT_STANDARD.md) |
 | 蜂群协议 | examples/selfpaw-cognitive-swarm/.claude/skills/swarm_protocol.md |

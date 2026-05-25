@@ -2,6 +2,7 @@
 
 > 本文将 [UAS-AIOS L1-L3 企业级 Agent 生态体系](./UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md) 收敛为可落地的产品方案：明确产品边界、功能模块、技术工程架构、数据与能力合约、MVP 切入和验收标准。
 > B2B 线索到报价审批 MVP 的开发规约见 [Enterprise Sales OS MVP 开发规约包](./enterprise-sales-os/README.md)。
+> 图形化总览见 [UAS-AIOS 企业级可视化蓝图](./UAS_AIOS_ENTERPRISE_VISUAL_BLUEPRINT.md)。
 
 ---
 

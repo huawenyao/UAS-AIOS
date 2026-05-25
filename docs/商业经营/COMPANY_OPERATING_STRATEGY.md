@@ -230,6 +230,7 @@
 - 场景与客户：`docs/AI_RECRUITMENT_TRIADIC_SWARM_PLAN.md`、`docs/CROSS_BORDER_AD_AGENT_SWARM_PLAN.md`、`docs/AGI_WORLD_MODEL_UAS.md`
 - 企业级 Agent 生态：`docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md`
 - 企业级产品蓝图：`docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md`
+- 企业级可视化蓝图：`docs/UAS_AIOS_ENTERPRISE_VISUAL_BLUEPRINT.md`
 - Enterprise Sales OS MVP：`docs/enterprise-sales-os/README.md`
 
 ---
