@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uas-aios.local/schemas/chr_state_machine.schema.json",
+  "title": "CHR State Machine",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["states", "initial_state", "transitions"],
+  "properties": {
+    "states": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "DRAFT",
+          "REJECT_TESTABILITY",
+          "REJECT_LOGICAL",
+          "REJECT_HISTORICAL",
+          "EXPERIMENT_PENDING",
+          "PROVISIONAL_COMMIT",
+          "COMMITTED_FACT",
+          "REVOKED"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "initial_state": {
+      "type": "string",
+      "const": "DRAFT"
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "event", "to"],
+        "properties": {
+          "from": { "$ref": "#/$defs/state" },
+          "event": { "type": "string", "minLength": 1 },
+          "to": { "$ref": "#/$defs/state" },
+          "guard": { "type": "string" },
+          "action": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "state": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "REJECT_TESTABILITY",
+        "REJECT_LOGICAL",
+        "REJECT_HISTORICAL",
+        "EXPERIMENT_PENDING",
+        "PROVISIONAL_COMMIT",
+        "COMMITTED_FACT",
+        "REVOKED"
+      ]
+    }
+  }
+}

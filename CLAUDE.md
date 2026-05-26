@@ -201,6 +201,8 @@ execution → monitoring → render_report → evaluation
 | 三维理念现实 | examples/triadic-ideal-reality-swarm/ |
 | 领域构建评估技能 | .claude/skills/domain_builder.md |
 | Agent注册表 | .claude/agents/domain_agent_registry.json |
+| Server·CLI·AI 统一架构（× AIPOS × SelfPaw） | docs/strategic/UAS_AIPOS_SelfPaw_Integrated_Product_Tech_Architecture.md |
+| 企业级数字人生态 · SelfPaw/ΠPaw 产品定义 | docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md |
 
 ---
 

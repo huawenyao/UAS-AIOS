@@ -2,7 +2,8 @@
 
 > **目标**：明确 Unit Agent 标准、群体网络构建与交互机制；算法只借用有文献/工程共识的模型（消息传递、共识、任务分配、共享状态并发控制、控制论反馈、多臂赌博机、合同网、信息论度量、经济机制设计）。
 
-> **世界模型**：wm_unit_agent_macro_brain.md、wm_system_logic_and_product_stack.md。
+> **世界模型**：wm_unit_agent_macro_brain.md、wm_system_logic_and_product_stack.md。  
+> **因果可靠性**：[`CHR_Protocol.md`](./CHR_Protocol.md)（含 Schema 与样例）。
 > **TOGAF**：见附录；正文不以其为主线。
 
 ---

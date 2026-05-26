@@ -1,0 +1,22 @@
+{
+  "hypothesis_id": "ch_20260406_001",
+  "stage_results": {
+    "gate0_testability": "PASS",
+    "stage1_logical": "PASS",
+    "stage2_historical": "PASS",
+    "stage3_experiment": "PASS"
+  },
+  "adjusted_confidence": 0.18,
+  "decision": "REVOKED",
+  "reason_codes": [
+    "FALSIFIER_TRIGGERED",
+    "ROLLBACK_EXECUTED"
+  ],
+  "review_required": true,
+  "metrics": {
+    "direction_agreement": 0.27,
+    "magnitude_error": 0.31,
+    "sample_size": 41
+  },
+  "timestamp": "2026-04-06T10:46:11Z"
+}

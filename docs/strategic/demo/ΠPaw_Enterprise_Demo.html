@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ΠPaw 世界级企业智能经营系统 Demo</title>
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#722ED1',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        info: '#86909C',
+                        text1: '#1D2129',
+                        text2: '#4E5969',
+                        text3: '#86909C',
+                        border: '#C9CDD4',
+                        bg1: '#F2F3F5',
+                        bg2: '#F7F8FA'
+                    },
+                    fontFamily: {
+                        sans: ['PingFang SC', 'Microsoft YaHei', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义样式 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-shadow {
+                box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+            }
+            .modal-shadow {
+                box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.12);
+            }
+            .float-shadow {
+                box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.16);
+            }
+            .content-auto {
+                content-visibility: auto;
+            }
+            .action-btn {
+                @apply px-2 py-1 text-xs rounded-md hover:bg-bg1 transition-all cursor-pointer;
+            }
+            .primary-btn {
+                @apply px-3 py-1.5 text-xs bg-primary text-white rounded-md hover:bg-primary/90 transition-all cursor-pointer;
+            }
+            .tag {
+                @apply text-xs px-1.5 py-0.5 rounded;
+            }
+        }
+
+        /* 暗黑模式样式 */
+        .dark {
+            color-scheme: dark;
+            --color-primary: #3B82F6;
+            --color-secondary: '#8B5CF6';
+            --color-success: '#10B981';
+            --color-warning: '#F59E0B';
+            --color-danger: '#EF4444';
+            --color-info: '#6B7280';
+            --color-text1: '#F3F4F6';
+            --color-text2: '#D1D5DB';
+            --color-text3: '#9CA3AF';
+            --color-border: '#374151';
+            --color-bg1: '#1F2937';
+            --color-bg2: '#111827';
+        }
+
+        /* 全局暗黑模式适配 */
+        .dark body {
+            background-color: var(--color-bg2);
+            color: var(--color-text1);
+        }
+        .dark .bg-white {
+            background-color: #1F2937;
+        }
+        .dark .bg-bg1 {
+            background-color: #374151;
+        }
+        .dark .bg-bg2 {
+            background-color: #111827;
+        }
+        .dark .border-border {
+            border-color: #374151;
+        }
+        .dark .text-text1 {
+            color: #F3F4F6;
+        }
+        .dark .text-text2 {
+            color: #D1D5DB;
+        }
+        .dark .text-text3 {
+            color: #9CA3AF;
+        }
+        .dark .shadow-sm {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        }
+        .dark .card-shadow {
+            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+        }
+        .dark .modal-shadow {
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+        }
+        .dark input, .dark select, .dark textarea {
+            background-color: #374151;
+            border-color: #4B5563;
+            color: #F3F4F6;
+        }
+        .dark input:focus, .dark select:focus, .dark textarea:focus {
+            border-color: #3B82F6;
+        }
+    </style>
+</head>
+<body class="bg-bg2 text-text1 min-h-screen transition-colors duration-300">
+    <!-- 模态框（隐藏） -->
+    <div id="modal" class="fixed inset-0 bg-black/30 z-50 hidden flex items-center justify-center transition-opacity duration-300">
+        <div class="bg-white rounded-lg w-[500px] p-0 overflow-hidden modal-shadow transform transition-transform duration-300 scale-95 opacity-0" id="modalContentWrapper">
+            <div class="p-4 border-b border-border flex items-center justify-between">
+                <div class="font-medium" id="modalTitle">督办任务</div>
+                <button onclick="closeModal()" class="text-text3 hover:text-text1 transition-colors"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="p-4" id="modalContent">
+                <div class="space-y-4">
+                    <div>
+                        <div class="text-sm font-medium mb-1">任务内容</div>
+                        <div class="border border-border rounded-md p-3 text-sm bg-bg1" id="modalTaskContent">
+                            华东区Q2营收缺口2.3亿，需制定攻坚方案，6月15日前完成
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-sm font-medium mb-1">处理人</div>
+                        <select class="w-full border border-border rounded-md p-2 text-sm focus:outline-none focus:border-primary transition-colors">
+                            <option>张三（华东区销售总监）</option>
+                            <option>李四（销售VP）</option>
+                            <option>王五（客户成功总监）</option>
+                        </select>
+                    </div>
+                    <div>
+                        <div class="text-sm font-medium mb-1">要求完成时间</div>
+                        <input type="date" class="w-full border border-border rounded-md p-2 text-sm focus:outline-none focus:border-primary transition-colors" value="2025-06-15">
+                    </div>
+                    <div>
+                        <div class="text-sm font-medium mb-1">优先级</div>
+                        <div class="flex space-x-2">
+                            <label class="flex items-center text-sm cursor-pointer">
+                                <input type="radio" name="priority" class="mr-1" checked> 高
+                            </label>
+                            <label class="flex items-center text-sm cursor-pointer">
+                                <input type="radio" name="priority" class="mr-1"> 中
+                            </label>
+                            <label class="flex items-center text-sm cursor-pointer">
+                                <input type="radio" name="priority" class="mr-1"> 低
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-border flex justify-end space-x-2">
+                <button onclick="closeModal()" class="px-3 py-1.5 text-sm border border-border rounded-md hover:bg-bg1 transition-all">取消</button>
+                <button onclick="sendSupervision()" class="primary-btn">确认发送</button>
+            </div>
+        </div>
+    </div>
+    <!-- Toast 提示 -->
+    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300 flex items-center bg-white card-shadow rounded-lg px-4 py-3 max-w-sm">
+        <i id="toastIcon" class="fa fa-check-circle text-success text-xl mr-3"></i>
+        <div class="flex-1">
+            <div id="toastTitle" class="text-sm font-medium text-text1">操作成功</div>
+            <div id="toastMessage" class="text-xs text-text2">督办任务已发送，相关责任人已收到通知</div>
+        </div>
+        <button onclick="hideToast()" class="ml-3 text-text3 hover:text-text1">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <!-- 通知中心面板 -->
+    <div id="notificationPanel" class="fixed top-16 right-4 w-80 bg-white rounded-lg card-shadow z-40 hidden transform transition-all duration-300 opacity-0 translate-y-2">
+        <div class="p-4 border-b border-border flex items-center justify-between">
+            <div class="font-medium">消息通知</div>
+            <div class="flex items-center space-x-2">
+                <button class="text-xs text-primary hover:text-primaryHover transition-colors">全部已读</button>
+                <button onclick="toggleNotificationPanel()" class="text-text3 hover:text-text1 transition-colors">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="max-h-[400px] overflow-y-auto">
+            <div class="p-3 border-b border-border hover:bg-bg1/50 transition-colors cursor-pointer bg-primary/5">
+                <div class="flex items-start">
+                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-2 flex-shrink-0">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-text1">生产线A故障告警</div>
+                            <span class="text-xs text-text3">刚刚</span>
+                        </div>
+                        <div class="text-xs text-text2">生产线A电机异响，温度过高，已自动停机，请尽快处理</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 border-b border-border hover:bg-bg1/50 transition-colors cursor-pointer bg-primary/5">
+                <div class="flex items-start">
+                    <div class="w-8 h-8 rounded-full bg-warning/10 flex items-center justify-center text-warning mr-2 flex-shrink-0">
+                        <i class="fa fa-bell"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-text1">新的督办任务</div>
+                            <span class="text-xs text-text3">10分钟前</span>
+                        </div>
+                        <div class="text-xs text-text2">你收到新的督办任务：华东区Q2营收缺口攻坚方案制定</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 border-b border-border hover:bg-bg1/50 transition-colors cursor-pointer">
+                <div class="flex items-start">
+                    <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center text-success mr-2 flex-shrink-0">
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-text1">任务完成通知</div>
+                            <span class="text-xs text-text3">1小时前</span>
+                        </div>
+                        <div class="text-xs text-text2">你负责的《原材料涨价应对方案》任务已通过审核</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 border-b border-border hover:bg-bg1/50 transition-colors cursor-pointer">
+                <div class="flex items-start">
+                    <div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mr-2 flex-shrink-0">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-sm font-medium text-text1">会议提醒</div>
+                            <span class="text-xs text-text3">2小时前</span>
+                        </div>
+                        <div class="text-xs text-text2">《Q2季度经营分析会》将于今天14:00开始，请提前准备材料</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 border-t border-border text-center">
+            <button class="text-xs text-primary hover:text-primaryHover transition-colors">查看全部通知</button>
+        </div>
+    </div>
+
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="text-primary text-2xl font-bold">ΠPaw</div>
+                <div class="text-text3 text-sm">世界级企业智能经营系统</div>
+            </div>
+
+            <!-- 角色切换tab -->
+            <div class="flex space-x-1 bg-bg1 rounded-lg p-1">
+                <button id="tab1" onclick="switchTab(1)" class="px-2 md:px-4 py-1.5 rounded-md text-sm font-medium bg-white card-shadow text-primary">
+                    <i class="fa fa-sitemap mr-0 md:mr-1"></i>
+                    <span class="hidden md:inline">战略决策层</span>
+                </button>
+                <button id="tab2" onclick="switchTab(2)" class="px-2 md:px-4 py-1.5 rounded-md text-sm font-medium text-text2 hover:bg-white/50 transition-all">
+                    <i class="fa fa-users mr-0 md:mr-1"></i>
+                    <span class="hidden md:inline">管理执行层</span>
+                </button>
+                <button id="tab3" onclick="switchTab(3)" class="px-2 md:px-4 py-1.5 rounded-md text-sm font-medium text-text2 hover:bg-white/50 transition-all">
+                    <i class="fa fa-user-circle-o mr-0 md:mr-1"></i>
+                    <span class="hidden md:inline">一线操作层</span>
+                </button>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <!-- 全局搜索框 -->
+                <div class="relative hidden md:block">
+                    <input type="text" placeholder="搜索任务、SOP、通知..." class="w-64 pl-10 pr-4 py-1.5 rounded-lg border border-border bg-bg1 text-sm focus:outline-none focus:border-primary transition-colors">
+                    <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-text3"></i>
+                </div>
+                <!-- 导出按钮 -->
+                <button class="text-text2 hover:text-primary transition-all px-2 py-1 rounded hover:bg-bg1" onclick="showToast('info', '导出功能', '正在准备导出数据，请稍候...')">
+                    <i class="fa fa-download text-lg"></i>
+                </button>
+                <!-- 收藏夹按钮 -->
+                <button class="text-text2 hover:text-primary transition-all px-2 py-1 rounded hover:bg-bg1" onclick="showToast('success', '收藏夹', '已打开收藏夹')">
+                    <i class="fa fa-star-o text-lg"></i>
+                </button>
+                <!-- 暗黑模式切换 -->
+                <button id="darkModeToggle" class="text-text2 hover:text-primary transition-all px-2 py-1 rounded hover:bg-bg1" onclick="toggleDarkMode()">
+                    <i class="fa fa-moon-o text-lg"></i>
+                </button>
+                <!-- 通知按钮 -->
+                <button class="text-text2 hover:text-primary transition-all relative px-2 py-1 rounded hover:bg-bg1" onclick="toggleNotificationPanel()">
+                    <i class="fa fa-bell-o text-lg"></i>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-danger text-white text-[10px] rounded-full flex items-center justify-center">3</span>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium">管</div>
+                    <span class="text-sm font-medium">管理员</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 内容区域 -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- 页面1：战略决策层（董事长/CEO/高管） -->
+        <div id="page1" class="space-y-6">
+            <!-- 层级说明卡片 -->
+            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-4 mb-2">
+                <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary mr-3 flex-shrink-0">
+                        <i class="fa fa-compass text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-medium mb-1">战略决策层 · 核心关注要素</div>
+                        <div class="grid grid-cols-5 gap-4 mt-2">
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-check-circle text-success mr-1"></i> 核心经营结果（营收/利润/现金流）
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-line-chart text-primary mr-1"></i> 战略目标落地进度
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-exclamation-triangle text-warning mr-1"></i> 外部机会与风险
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-cubes text-secondary mr-1"></i> 核心资源ROI与配置
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-heart text-danger mr-1"></i> 组织能力健康度
+                            </div>
+                        </div>
+                        <div class="text-xs text-text2 mt-2">
+                            核心理念：做正确的事 → 找机会、控风险、配资源、拿结果
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 核心经营结果 -->
+            <div class="bg-white rounded-lg p-5 card-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="font-medium flex items-center">
+                        <i class="fa fa-bar-chart text-primary mr-2"></i> 核心经营结果
+                    </div>
+                    <div class="text-xs text-text2">
+                        数据更新时间：2025-06-01 08:00 <span class="text-success ml-2">自动同步中</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-5 gap-4">
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-primary/5 to-primary/10 hover:from-primary/10 hover:to-primary/15 transition-all">
+                        <div class="text-text3 text-sm mb-2">年度营收</div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-2xl font-bold">12.5亿</div>
+                            <div class="text-success text-sm"><i class="fa fa-arrow-up mr-1"></i>8.2%</div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between">
+                            <div class="text-xs text-success bg-success/10 tag">目标完成率 78%</div>
+                            <div class="flex space-x-1">
+                                <button class="action-btn text-primary" title="查看明细" onclick="drillDown('revenue')">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button class="action-btn text-primary" title="创建专项">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-danger/5 to-danger/10 hover:from-danger/10 hover:to-danger/15 transition-all">
+                        <div class="text-text3 text-sm mb-2">净利润</div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-2xl font-bold">2.3亿</div>
+                            <div class="text-danger text-sm"><i class="fa fa-arrow-down mr-1"></i>2.1%</div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between">
+                            <div class="text-xs text-danger bg-danger/10 tag">低于目标 5%</div>
+                            <div class="flex space-x-1">
+                                <button class="action-btn text-primary" title="查看明细" onclick="drillDown('profit')">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button class="action-btn text-warning" title="创建督办" onclick="openModal('利润目标缺口督办','针对净利润低于目标5%的问题，需组织相关负责人分析原因，制定改进方案')">
+                                    <i class="fa fa-exclamation-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-info/5 to-info/10 hover:from-info/10 hover:to-info/15 transition-all">
+                        <div class="text-text3 text-sm mb-2">现金流</div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-2xl font-bold">1.8亿</div>
+                            <div class="text-text3 text-sm"><i class="fa fa-arrows-h mr-1"></i>0.3%</div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between">
+                            <div class="text-xs text-success bg-success/10 tag">健康水平</div>
+                            <div class="flex space-x-1">
+                                <button class="action-btn text-primary" title="查看明细">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-secondary/5 to-secondary/10 hover:from-secondary/10 hover:to-secondary/15 transition-all">
+                        <div class="text-text3 text-sm mb-2">人均效能</div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-2xl font-bold">68万/人</div>
+                            <div class="text-success text-sm"><i class="fa fa-arrow-up mr-1"></i>12.5%</div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between">
+                            <div class="text-xs text-success bg-success/10 tag">行业Top 10%</div>
+                            <div class="flex space-x-1">
+                                <button class="action-btn text-primary" title="查看明细">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button class="action-btn text-primary" title="对比分析">
+                                    <i class="fa fa-exchange"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gradient-to-br from-warning/5 to-warning/10 hover:from-warning/10 hover:to-warning/15 transition-all">
+                        <div class="text-text3 text-sm mb-2">目标达成率</div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-2xl font-bold">78%</div>
+                            <div class="text-danger text-sm"><i class="fa fa-arrow-down mr-1"></i>5%</div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between">
+                            <div class="text-xs text-warning bg-warning/10 tag">需加快进度</div>
+                            <div class="flex space-x-1">
+                                <button class="action-btn text-primary" title="查看进度">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button class="action-btn text-primary" title="召开目标对齐会" onclick="alert('已自动发起会议邀请，相关参会人已收到通知')">
+                                    <i class="fa fa-video-camera"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 战略目标进度 + 外部机会风险 -->
+            <div class="grid grid-cols-3 gap-4">
+                <!-- 战略目标跟踪 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="font-medium flex items-center">
+                            <i class="fa fa-bullseye text-primary mr-2"></i> 战略目标落地进度
+                        </div>
+                        <button class="text-xs text-primary hover:text-primaryHover">战略地图</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium">1. 营收100亿</span>
+                                <span class="text-xs text-text2">整体完成率 78%</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-success rounded-full" style="width: 78%"></div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 mt-2">
+                                <div class="text-center">
+                                    <div class="text-xs text-text2">华东区</div>
+                                    <div class="text-xs text-success">82%</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-text2">华南区</div>
+                                    <div class="text-xs text-warning">70% <i class="fa fa-arrow-down text-danger"></i></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-text2">华北区</div>
+                                    <div class="text-xs text-warning">72% <i class="fa fa-arrow-down text-danger"></i></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-end mt-1">
+                                <button class="text-xs text-primary hover:text-primaryHover action-btn" onclick="openModal('华东区营收缺口督办','华东区Q2营收缺口2.3亿，需在6月30日前完成缺口填补，制定详细攻坚方案')">
+                                    <i class="fa fa-send-o mr-1"></i> 督办
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium">2. 新业务占比30%</span>
+                                <span class="text-xs text-text2">整体完成率 25%</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-warning rounded-full" style="width: 25%"></div>
+                            </div>
+                            <div class="flex justify-end mt-1">
+                                <button class="text-xs text-primary hover:text-primaryHover action-btn">
+                                    <i class="fa fa-lightbulb-o mr-1"></i> 智能分析
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium">3. 成本降低10%</span>
+                                <span class="text-xs text-text2">整体完成率 65%</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-success rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-border">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-sm font-medium">战略解码健康度</div>
+                            <div class="text-xs text-success">92% 优秀</div>
+                        </div>
+                        <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                            <div class="h-full bg-primary rounded-full" style="width: 92%"></div>
+                        </div>
+                        <div class="flex justify-end mt-2">
+                            <button class="text-xs text-primary hover:text-primaryHover">查看解码详情 →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 外部机会与风险 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="font-medium flex items-center">
+                            <i class="fa fa-balance-scale text-warning mr-2"></i> 外部机会与风险
+                        </div>
+                        <button class="text-xs text-primary hover:text-primaryHover">AI推演</button>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-success/5 border border-success/20 rounded-md">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="text-success mr-2">🟢 机会</span>
+                                    <span class="text-sm font-medium">新能源行业政策红利，预计带来3亿新增订单</span>
+                                </div>
+                                <span class="text-xs text-text3">1小时前</span>
+                            </div>
+                            <div class="text-xs text-text2 mt-1">
+                                国家出台新能源行业补贴政策，我们的相关产品线匹配度85%，预计下半年可新增3亿订单。
+                            </div>
+                            <div class="flex justify-end mt-2 space-x-2">
+                                <button class="text-xs action-btn text-success" onclick="alert('已自动创建专项项目，相关负责人已收到通知')">
+                                    <i class="fa fa-rocket mr-1"></i> 启动专项
+                                </button>
+                                <button class="text-xs action-btn text-primary">查看分析报告</button>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-danger/5 border border-danger/20 rounded-md">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="text-danger mr-2">🔴 高风险</span>
+                                    <span class="text-sm font-medium">原材料价格预计上涨15%，影响利润5000万</span>
+                                </div>
+                                <span class="text-xs text-text3">2小时前</span>
+                            </div>
+                            <div class="text-xs text-text2 mt-1">
+                                大宗商品价格持续上涨，预计未来3个月原材料成本上涨15%，直接影响净利润约5000万。
+                            </div>
+                            <div class="flex justify-end mt-2 space-x-2">
+                                <button class="text-xs action-btn text-danger" onclick="openModal('原材料涨价应对督办','成立专项小组，1周内提出成本优化方案，降低原材料涨价影响')">
+                                    <i class="fa fa-send-o mr-1"></i> 督办
+                                </button>
+                                <button class="text-xs action-btn text-primary">查看应对预案</button>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-warning/5 border border-warning/20 rounded-md">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="text-warning mr-2">🟠 中风险</span>
+                                    <span class="text-sm font-medium">竞品推出革命性新产品，可能抢占10%市场份额</span>
+                                </div>
+                                <span class="text-xs text-text3">1天前</span>
+                            </div>
+                            <div class="text-xs text-text2 mt-1">
+                                主要竞争对手发布新一代产品，性能提升30%，价格下降15%，预计可能抢占我们10%的市场份额。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 组织能力健康度 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="font-medium flex items-center">
+                            <i class="fa fa-heartbeat text-secondary mr-2"></i> 组织能力健康度
+                        </div>
+                        <button class="text-xs text-primary hover:text-primaryHover">行业对标</button>
+                    </div>
+                    <div id="healthChart" class="w-full h-[200px]"></div>
+                    <div class="grid grid-cols-2 gap-3 mt-4">
+                        <div class="p-2 rounded bg-bg1">
+                            <div class="text-xs text-text2 mb-1">人均效能</div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-base font-medium text-success">68万/人</div>
+                                <div class="text-xs text-success">↑12.5%</div>
+                            </div>
+                        </div>
+                        <div class="p-2 rounded bg-bg1">
+                            <div class="text-xs text-text2 mb-1">人才流失率</div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-base font-medium text-warning">8%</div>
+                                <div class="text-xs text-warning">↑2%</div>
+                            </div>
+                        </div>
+                        <div class="p-2 rounded bg-bg1">
+                            <div class="text-xs text-text2 mb-1">员工满意度</div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-base font-medium text-success">86分</div>
+                                <div class="text-xs text-success">↑3分</div>
+                            </div>
+                        </div>
+                        <div class="p-2 rounded bg-bg1">
+                            <div class="text-xs text-text2 mb-1">组织敏捷度</div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-base font-medium text-warning">72分</div>
+                                <div class="text-xs text-warning">↓5分</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 经营看板穿透分析 -->
+            <div class="bg-white rounded-lg p-5 card-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="font-medium flex items-center">
+                        <i class="fa fa-search text-primary mr-2"></i>
+                        <span id="drillTitle">营收全链路穿透分析</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-text2">当前层级：</span>
+                        <div class="flex items-center space-x-1 text-xs">
+                            <span class="text-primary font-medium">公司层</span>
+                            <span class="text-text3">→</span>
+                            <span class="cursor-pointer hover:text-primary" id="level2" onclick="setDrillLevel(2)">业务线</span>
+                            <span class="text-text3">→</span>
+                            <span class="cursor-pointer hover:text-primary" id="level3" onclick="setDrillLevel(3)">部门</span>
+                            <span class="text-text3">→</span>
+                            <span class="cursor-pointer hover:text-primary" id="level4" onclick="setDrillLevel(4)">个人</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="drillChart" class="w-full h-[400px]"></div>
+                <div class="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                    <div class="text-sm font-medium mb-1 text-primary">AI智能分析结论</div>
+                    <div class="text-sm text-text2">
+                        营收低于目标主要原因是华南区大客户流失3个，影响营收1.2亿，其次是新业务上线滞后2个月，影响营收8000万。
+                        建议1. 对华南区安排资源攻坚，追回流失客户；2. 加快新业务上线进度，协调研发资源优先支持。
+                    </div>
+                    <div class="flex justify-end mt-2 space-x-2">
+                        <button class="primary-btn">采纳建议，自动督办</button>
+                        <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all">查看详细分析报告</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面2：管理执行层（部门负责人/业务线leader/总监） -->
+        <div id="page2" class="space-y-6 hidden">
+            <!-- 层级说明卡片 -->
+            <div class="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-lg p-4 mb-2">
+                <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center text-secondary mr-3 flex-shrink-0">
+                        <i class="fa fa-tasks text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-medium mb-1">管理执行层 · 核心关注要素</div>
+                        <div class="grid grid-cols-5 gap-4 mt-2">
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-bullseye text-primary mr-1"></i> 承接目标进度对齐
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-random text-secondary mr-1"></i> 核心业务流程效率
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-users text-success mr-1"></i> 团队效能与能力
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-exclamation-circle text-warning mr-1"></i> 异常风险闭环处理
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-link text-info mr-1"></i> 跨部门协同卡点
+                            </div>
+                        </div>
+                        <div class="text-xs text-text2 mt-2">
+                            核心理念：把事做正确 → 对齐目标、带好团队、提效降本、拿到结果
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 目标&待办总览 -->
+            <div class="grid grid-cols-3 gap-4">
+                <!-- 目标总览 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-flag text-primary mr-2"></i> 承接目标总览
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm">Q2部门营收目标</span>
+                                <span class="text-xs text-success">完成率 82%</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-success rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm">客户满意度≥90%</span>
+                                <span class="text-xs text-warning">当前 87%</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-warning rounded-full" style="width: 87%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm">成本降低10%</span>
+                                <span class="text-xs text-success">完成率 75%</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-success rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-border">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-sm font-medium">目标健康度</div>
+                            <div class="text-xs text-warning">2个风险项</div>
+                        </div>
+                        <button class="w-full py-1.5 text-xs text-center bg-primary/10 text-primary rounded-md hover:bg-primary/20 transition-all">
+                            查看目标拆解详情
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 待办任务 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-list-ul text-warning mr-2"></i> 待办任务
+                        <span class="ml-2 text-xs bg-danger text-white rounded-full px-1.5 py-0.5">8个</span>
+                    </div>
+                    <div class="space-y-2 max-h-[250px] overflow-y-auto pr-2">
+                        <div class="p-3 bg-danger/5 rounded-md border border-danger/20 flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">解决生产线A频繁故障问题</div>
+                                <div class="text-xs text-text3">截止时间：今天 18:00 | 优先级：高</div>
+                            </div>
+                            <button class="action-btn text-primary ml-2">处理</button>
+                        </div>
+                        <div class="p-3 bg-warning/5 rounded-md border border-warning/20 flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">准备Q2季度汇报材料</div>
+                                <div class="text-xs text-text3">截止时间：6月10日 | 优先级：中</div>
+                            </div>
+                            <button class="action-btn text-primary ml-2">处理</button>
+                        </div>
+                        <div class="p-3 bg-bg1 rounded-md flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">评审新业务流程方案</div>
+                                <div class="text-xs text-text3">截止时间：6月12日 | 优先级：中</div>
+                            </div>
+                            <button class="action-btn text-primary ml-2">处理</button>
+                        </div>
+                        <div class="p-3 bg-bg1 rounded-md flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">半年度人才盘点</div>
+                                <div class="text-xs text-text3">截止时间：6月20日 | 优先级：低</div>
+                            </div>
+                            <button class="action-btn text-primary ml-2">处理</button>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-border flex justify-between">
+                        <button class="text-xs text-primary hover:text-primaryHover">查看全部待办</button>
+                        <button class="text-xs text-primary hover:text-primaryHover" onclick="alert('已自动生成待办优先级排序，已同步到您的日程')">
+                            <i class="fa fa-magic mr-1"></i> 智能排序
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 团队效能 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-users text-success mr-2"></i> 团队效能总览
+                    </div>
+                    <div id="teamChart" class="w-full h-[120px] mb-4"></div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="text-center p-2 bg-bg1 rounded-md">
+                            <div class="text-lg font-bold text-success">92%</div>
+                            <div class="text-xs text-text2">任务完成率</div>
+                        </div>
+                        <div class="text-center p-2 bg-bg1 rounded-md">
+                            <div class="text-lg font-bold text-primary">85%</div>
+                            <div class="text-xs text-text2">准时交付率</div>
+                        </div>
+                        <div class="text-center p-2 bg-bg1 rounded-md">
+                            <div class="text-lg font-bold text-warning">78%</div>
+                            <div class="text-xs text-text2">人效达标率</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-border">
+                        <div class="text-xs text-text2 mb-2">提升建议</div>
+                        <div class="text-xs text-text1 bg-primary/5 p-2 rounded-md border border-primary/10">
+                            <i class="fa fa-lightbulb-o text-primary mr-1"></i>
+                            团队近两周加班时长增加20%，交付延迟率上升8%，建议补充2名编制，或者调整部分非紧急项目排期。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 业务流程监控 + 异常闭环处理 -->
+            <div class="grid grid-cols-2 gap-4">
+                <!-- 核心业务流程监控 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="font-medium flex items-center">
+                            <i class="fa fa-random text-secondary mr-2"></i> 核心业务流程监控
+                        </div>
+                        <div class="text-xs text-text2">近7天数据</div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="text-sm font-medium">销售LTC流程</div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs text-success">平均周期：18天 ↓3天</span>
+                                    <span class="text-xs bg-success/10 text-success tag">健康</span>
+                                </div>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-success rounded-full" style="width: 90%"></div>
+                            </div>
+                            <div class="text-xs text-text2 mt-1">卡点环节：合同审批环节平均耗时3天，建议优化审批流</div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="text-sm font-medium">生产OTD流程</div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs text-warning">平均周期：25天 ↑5天</span>
+                                    <span class="text-xs bg-warning/10 text-warning tag">需关注</span>
+                                </div>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-warning rounded-full" style="width: 70%"></div>
+                            </div>
+                            <div class="text-xs text-text2 mt-1">卡点环节：原材料采购到货延迟率20%，是主要瓶颈</div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="text-sm font-medium">客户服务ITR流程</div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs text-danger">平均解决时间：48小时 ↑12小时</span>
+                                    <span class="text-xs bg-danger/10 text-danger tag">异常</span>
+                                </div>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-danger rounded-full" style="width: 55%"></div>
+                            </div>
+                            <div class="text-xs text-text2 mt-1">卡点环节：一线解决率只有60%，大量问题升级到二线，建议加强一线培训</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button class="primary-btn" onclick="alert('已自动发起流程优化专项，相关负责人已收到通知')">
+                            优化流程
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 异常风险闭环处理 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="font-medium flex items-center">
+                            <i class="fa fa-exclamation-triangle text-danger mr-2"></i> 异常风险闭环处理
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-danger/10 text-danger tag">待处理：3个</span>
+                            <span class="text-xs bg-warning/10 text-warning tag">处理中：5个</span>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[500px]">
+                            <thead>
+                                <tr class="bg-bg1">
+                                    <th class="text-left p-2 text-xs font-medium text-text2 rounded-l-lg">等级</th>
+                                    <th class="text-left p-2 text-xs font-medium text-text2">异常内容</th>
+                                    <th class="text-left p-2 text-xs font-medium text-text2">责任人</th>
+                                    <th class="text-left p-2 text-xs font-medium text-text2">截止时间</th>
+                                    <th class="text-left p-2 text-xs font-medium text-text2">状态</th>
+                                    <th class="text-left p-2 text-xs font-medium text-text2 rounded-r-lg">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-border">
+                                <tr class="hover:bg-bg1/50 transition-all">
+                                    <td class="p-2 text-xs">🔴 高</td>
+                                    <td class="p-2 text-xs">生产线A故障频发，本月已停产3次</td>
+                                    <td class="p-2 text-xs">张工</td>
+                                    <td class="p-2 text-xs text-danger">今天 18:00</td>
+                                    <td class="p-2 text-xs"><span class="tag bg-danger/10 text-danger">待处理</span></td>
+                                    <td class="p-2 text-xs">
+                                        <button class="text-xs text-primary hover:text-primaryHover">跟进</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-bg1/50 transition-all">
+                                    <td class="p-2 text-xs">🟠 中</td>
+                                    <td class="p-2 text-xs">原材料库存预警，仅剩3天用量</td>
+                                    <td class="p-2 text-xs">李主管</td>
+                                    <td class="p-2 text-xs">明天 12:00</td>
+                                    <td class="p-2 text-xs"><span class="tag bg-warning/10 text-warning">处理中</span></td>
+                                    <td class="p-2 text-xs">
+                                        <button class="text-xs text-primary hover:text-primaryHover">跟进</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-bg1/50 transition-all">
+                                    <td class="p-2 text-xs">🟠 中</td>
+                                    <td class="p-2 text-xs">客户投诉量上升20%，满意度下降到87%</td>
+                                    <td class="p-2 text-xs">王经理</td>
+                                    <td class="p-2 text-xs">6月10日</td>
+                                    <td class="p-2 text-xs"><span class="tag bg-warning/10 text-warning">处理中</span></td>
+                                    <td class="p-2 text-xs">
+                                        <button class="text-xs text-primary hover:text-primaryHover">跟进</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <button class="text-xs text-primary hover:text-primaryHover">查看全部异常</button>
+                        <div class="flex space-x-2">
+                            <button class="text-xs px-3 py-1 border border-border rounded-md hover:bg-bg1 transition-all">导出报表</button>
+                            <button class="primary-btn">批量督办</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PDCA管理循环看板 -->
+            <div class="bg-white rounded-lg p-5 card-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="font-medium flex items-center">
+                        <i class="fa fa-refresh text-secondary mr-2"></i> PDCA管理循环看板
+                    </div>
+                    <div class="text-xs text-text2">持续改进 · 闭环管理</div>
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="p-4 rounded-lg bg-blue-50 border border-blue-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="text-sm font-medium text-blue-700">P 计划阶段</div>
+                            <span class="tag bg-blue-100 text-blue-700">5个</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-white rounded text-xs">
+                                <div class="font-medium mb-1">新业务流程制定</div>
+                                <div class="text-text3">负责人：张经理 | 截止：6月10日</div>
+                            </div>
+                            <div class="p-2 bg-white rounded text-xs">
+                                <div class="font-medium mb-1">Q3季度目标拆解</div>
+                                <div class="text-text3">负责人：李总监 | 截止：6月15日</div>
+                            </div>
+                        </div>
+                        <button class="w-full mt-3 text-xs py-1 border border-blue-200 rounded text-blue-700 hover:bg-blue-100 transition-all">
+                            新增计划
+                        </button>
+                    </div>
+                    <div class="p-4 rounded-lg bg-green-50 border border-green-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="text-sm font-medium text-green-700">D 执行阶段</div>
+                            <span class="tag bg-green-100 text-green-700">8个</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-white rounded text-xs">
+                                <div class="font-medium mb-1">华南区营收攻坚</div>
+                                <div class="text-text3">进度：70% | 截止：6月30日</div>
+                            </div>
+                            <div class="p-2 bg-white rounded text-xs">
+                                <div class="font-medium mb-1">生产线升级改造</div>
+                                <div class="text-text3">进度：40% | 截止：7月15日</div>
+                            </div>
+                        </div>
+                        <button class="w-full mt-3 text-xs py-1 border border-green-200 rounded text-green-700 hover:bg-green-100 transition-all">
+                            查看全部
+                        </button>
+                    </div>
+                    <div class="p-4 rounded-lg bg-orange-50 border border-orange-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="text-sm font-medium text-orange-700">C 检查阶段</div>
+                            <span class="tag bg-orange-100 text-orange-700">3个</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-white rounded text-xs">
+                                <div class="font-medium mb-1">Q2绩效评估</div>
+                                <div class="text-text3">负责人：HRBP | 截止：6月20日</div>
+                            </div>
+                            <div class="p-2 bg-white rounded text-xs">
+                                <div class="font-medium mb-1">流程优化效果检查</div>
+                                <div class="text-text3">负责人：运营部 | 截止：6月25日</div>
+                            </div>
+                        </div>
+                        <button class="w-full mt-3 text-xs py-1 border border-orange-200 rounded text-orange-700 hover:bg-orange-100 transition-all">
+                            安排检查
+                        </button>
+                    </div>
+                    <div class="p-4 rounded-lg bg-purple-50 border border-purple-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="text-sm font-medium text-purple-700">A 处理阶段</div>
+                            <span class="tag bg-purple-100 text-purple-700">2个</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-white rounded text-xs">
+                                <div class="font-medium mb-1">生产流程标准化</div>
+                                <div class="text-text3">状态：待发布 | 截止：6月30日</div>
+                            </div>
+                            <div class="p-2 bg-white rounded text-xs">
+                                <div class="font-medium mb-1">最佳实践案例沉淀</div>
+                                <div class="text-text3">状态：进行中 | 截止：7月5日</div>
+                            </div>
+                        </div>
+                        <button class="w-full mt-3 text-xs py-1 border border-purple-200 rounded text-purple-700 hover:bg-purple-100 transition-all">
+                            总结沉淀
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-4 p-3 bg-secondary/5 rounded-lg border border-secondary/20">
+                    <div class="text-sm font-medium mb-1 text-secondary">管理改进建议</div>
+                    <div class="text-sm text-text2">
+                        近3个季度PDCA循环完成率85%，优秀实践沉淀率60%，建议加强A阶段的组织级沉淀，把优秀实践转化为SOP，在全公司推广，预计可提升整体效率15%。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面3：一线操作层（员工/主管/一线经理） -->
+        <div id="page3" class="space-y-6 hidden">
+            <!-- 层级说明卡片 -->
+            <div class="bg-gradient-to-r from-success/10 to-primary/10 rounded-lg p-4 mb-2">
+                <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center text-success mr-3 flex-shrink-0">
+                        <i class="fa fa-user-o text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-medium mb-1">一线操作层 · 核心关注要素</div>
+                        <div class="grid grid-cols-5 gap-4 mt-2">
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-check-square-o text-primary mr-1"></i> 待办任务清晰可执行
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-book text-secondary mr-1"></i> 操作标准与SOP指引
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-exclamation-circle text-warning mr-1"></i> 异常告警及时处理
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-line-chart text-success mr-1"></i> 个人绩效进度清晰
+                            </div>
+                            <div class="bg-white/50 rounded p-2 text-sm">
+                                <i class="fa fa-life-ring text-danger mr-1"></i> 所需资源可快速获取
+                            </div>
+                        </div>
+                        <div class="text-xs text-text2 mt-2">
+                            核心理念：正确的做事 → 标准清晰、资源到位、执行高效、拿到结果
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 个人工作面板 -->
+            <div class="grid grid-cols-3 gap-4">
+                <!-- 今日待办 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-calendar-check-o text-primary mr-2"></i> 今日待办任务
+                        <span class="ml-2 text-xs bg-danger text-white rounded-full px-1.5 py-0.5">6个</span>
+                    </div>
+                    <div class="space-y-2 max-h-[280px] overflow-y-auto pr-2">
+                        <div class="p-3 border-l-4 border-danger bg-danger/5 rounded-r-md flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">维修生产线A故障 <span class="text-xs bg-danger/10 text-danger tag ml-1">紧急</span></div>
+                                <div class="text-xs text-text3">预计耗时：2小时 | 要求：今天18:00前完成</div>
+                            </div>
+                            <input type="checkbox" class="w-4 h-4 ml-2">
+                        </div>
+                        <div class="p-3 border-l-4 border-warning bg-warning/5 rounded-r-md flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">提交上月设备维护报告 <span class="text-xs bg-warning/10 text-warning tag ml-1">重要</span></div>
+                                <div class="text-xs text-text3">预计耗时：1小时 | 要求：今天12:00前完成</div>
+                            </div>
+                            <input type="checkbox" class="w-4 h-4 ml-2">
+                        </div>
+                        <div class="p-3 border-l-4 border-success bg-success/5 rounded-r-md flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">参加10:00生产部门周会</div>
+                                <div class="text-xs text-text3">预计耗时：1小时 | 会议号：123456</div>
+                            </div>
+                            <input type="checkbox" class="w-4 h-4 ml-2">
+                        </div>
+                        <div class="p-3 border-l-4 border-border rounded-r-md flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">巡检生产线B设备状态</div>
+                                <div class="text-xs text-text3">预计耗时：30分钟 | 要求：今天16:00前完成</div>
+                            </div>
+                            <input type="checkbox" class="w-4 h-4 ml-2">
+                        </div>
+                        <div class="p-3 border-l-4 border-border rounded-r-md flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">提交本周采购申请</div>
+                                <div class="text-xs text-text3">预计耗时：30分钟 | 要求：今天17:00前完成</div>
+                            </div>
+                            <input type="checkbox" class="w-4 h-4 ml-2">
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-border flex justify-between items-center">
+                        <div class="text-xs text-text2">今日完成率：0%</div>
+                        <div class="flex space-x-2">
+                            <button class="text-xs action-btn text-primary">
+                                <i class="fa fa-magic mr-1"></i> AI排程
+                            </button>
+                            <button class="text-xs action-btn text-primary">同步日历</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 绩效进度 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-line-chart text-success mr-2"></i> 个人绩效进度
+                    </div>
+                    <div id="personalChart" class="w-full h-[120px] mb-4"></div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm">设备完好率≥99%</span>
+                                <span class="text-xs text-success">当前：99.2%</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-success rounded-full" style="width: 99.2%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm">故障响应时间≤30分钟</span>
+                                <span class="text-xs text-success">当前：22分钟</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-success rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm">维修及时率≥98%</span>
+                                <span class="text-xs text-warning">当前：95%</span>
+                            </div>
+                            <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
+                                <div class="h-full bg-warning rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-border">
+                        <div class="text-xs text-text2 mb-2">提升建议</div>
+                        <div class="text-xs text-text1 bg-success/5 p-2 rounded-md border border-success/10">
+                            <i class="fa fa-lightbulb-o text-success mr-1"></i>
+                            维修及时率略低于目标，主要原因是备件出库时间长，建议提前备齐常用备件，预计可提升效率30%。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 快捷工具入口 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-th text-warning mr-2"></i> 工作快捷入口
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="p-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-all cursor-pointer text-center">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-2">
+                                <i class="fa fa-file-text-o text-lg"></i>
+                            </div>
+                            <div class="text-xs">提交工单</div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-secondary/5 hover:bg-secondary/10 transition-all cursor-pointer text-center">
+                            <div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mx-auto mb-2">
+                                <i class="fa fa-book text-lg"></i>
+                            </div>
+                            <div class="text-xs">SOP查询</div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-success/5 hover:bg-success/10 transition-all cursor-pointer text-center">
+                            <div class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center text-success mx-auto mb-2">
+                                <i class="fa fa-search text-lg"></i>
+                            </div>
+                            <div class="text-xs">问题搜索</div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-warning/5 hover:bg-warning/10 transition-all cursor-pointer text-center">
+                            <div class="w-10 h-10 rounded-full bg-warning/10 flex items-center justify-center text-warning mx-auto mb-2">
+                                <i class="fa fa-users text-lg"></i>
+                            </div>
+                            <div class="text-xs">联系专家</div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-danger/5 hover:bg-danger/10 transition-all cursor-pointer text-center">
+                            <div class="w-10 h-10 rounded-full bg-danger/10 flex items-center justify-center text-danger mx-auto mb-2">
+                                <i class="fa fa-life-ring text-lg"></i>
+                            </div>
+                            <div class="text-xs">求助支持</div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-info/5 hover:bg-info/10 transition-all cursor-pointer text-center">
+                            <div class="w-10 h-10 rounded-full bg-info/10 flex items-center justify-center text-info mx-auto mb-2">
+                                <i class="fa fa-lightbulb-o text-lg"></i>
+                            </div>
+                            <div class="text-xs">最佳实践</div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-border">
+                        <div class="text-sm font-medium mb-2">最近使用</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">设备维修记录</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">备件申请单</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">巡检记录表</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">故障处理SOP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工作区 -->
+            <div class="grid grid-cols-3 gap-4">
+                <!-- 任务执行区 -->
+                <div class="bg-white rounded-lg p-5 card-shadow col-span-2">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="font-medium flex items-center">
+                            <i class="fa fa-play-circle text-primary mr-2"></i> 【当前任务】维修生产线A故障
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-warning/10 text-warning tag">剩余时间：4小时</span>
+                            <button class="primary-btn text-xs">完成提交</button>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-bg1 rounded-lg mb-4">
+                        <div class="text-sm font-medium mb-2">任务详情</div>
+                        <div class="text-sm text-text2 space-y-1">
+                            <div><span class="font-medium text-text1">故障现象：</span>生产线A电机异响，温度过高，已自动停机</div>
+                            <div><span class="font-medium text-text1">发生时间：</span>2025-06-01 08:30</div>
+                            <div><span class="font-medium text-text1">影响范围：</span>生产线A停产，每小时损失约5万</div>
+                            <div><span class="font-medium text-text1">历史处理记录：</span>本月已发生2次同类故障，上次更换轴承后恢复</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-sm font-medium mb-2">维修步骤指引 <span class="text-xs text-primary ml-2">(自动匹配SOP)</span></div>
+                            <div class="space-y-2">
+                                <div class="p-2 border border-border rounded-md flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" class="mr-2 w-4 h-4" checked>
+                                        <span class="text-sm">1. 切断设备主电源，悬挂维修警示牌</span>
+                                    </div>
+                                    <i class="fa fa-check-circle text-success"></i>
+                                </div>
+                                <div class="p-2 border border-border rounded-md flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" class="mr-2 w-4 h-4" checked>
+                                        <span class="text-sm">2. 拆卸电机防护罩，检查轴承和线圈状态</span>
+                                    </div>
+                                    <i class="fa fa-check-circle text-success"></i>
+                                </div>
+                                <div class="p-2 border border-primary rounded-md bg-primary/5 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" class="mr-2 w-4 h-4">
+                                        <span class="text-sm text-primary font-medium">3. 检查发现轴承磨损严重，需要更换</span>
+                                    </div>
+                                    <span class="text-xs bg-primary/10 text-primary tag">当前步骤</span>
+                                </div>
+                                <div class="p-2 border border-border rounded-md flex items-center justify-between opacity-50">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" class="mr-2 w-4 h-4" disabled>
+                                        <span class="text-sm">4. 更换新轴承，添加润滑油</span>
+                                    </div>
+                                </div>
+                                <div class="p-2 border border-border rounded-md flex items-center justify-between opacity-50">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" class="mr-2 w-4 h-4" disabled>
+                                        <span class="text-sm">5. 试机运行，检查是否正常，清理现场</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium mb-2">所需资源 <span class="text-xs text-success ml-2">(已自动匹配)</span></div>
+                            <div class="space-y-2">
+                                <div class="p-2 border border-success rounded-md bg-success/5 flex items-center justify-between">
+                                    <div class="text-sm">
+                                        <i class="fa fa-wrench text-success mr-1"></i> 维修工具包
+                                    </div>
+                                    <span class="tag bg-success/10 text-success">已领取</span>
+                                </div>
+                                <div class="p-2 border border-success rounded-md bg-success/5 flex items-center justify-between">
+                                    <div class="text-sm">
+                                        <i class="fa fa-cubes text-success mr-1"></i> 型号6205轴承备件
+                                    </div>
+                                    <span class="tag bg-success/10 text-success">库存充足，已预留</span>
+                                </div>
+                                <div class="p-2 border border-warning rounded-md bg-warning/5 flex items-center justify-between">
+                                    <div class="text-sm">
+                                        <i class="fa fa-user text-warning mr-1"></i> 需要协助：电工班配合断电
+                                    </div>
+                                    <button class="text-xs px-2 py-0.5 bg-warning text-white rounded-md hover:bg-warning/90 transition-all">已通知</button>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="text-sm font-medium mb-2">相关知识推荐</div>
+                                <div class="space-y-1">
+                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
+                                        <span class="text-xs">《电机常见故障处理手册》</span>
+                                        <i class="fa fa-external-link text-text3"></i>
+                                    </div>
+                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
+                                        <span class="text-xs">《轴承更换标准作业SOP》</span>
+                                        <i class="fa fa-external-link text-text3"></i>
+                                    </div>
+                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
+                                        <span class="text-xs">同类故障案例分析-2025年5月</span>
+                                        <i class="fa fa-external-link text-text3"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-border">
+                        <div class="text-sm font-medium mb-2">异常求助</div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
+                                <i class="fa fa-video-camera mr-1"></i> 远程连线专家
+                            </button>
+                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
+                                <i class="fa fa-picture-o mr-1"></i> 上传故障照片
+                            </button>
+                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
+                                <i class="fa fa-comment-o mr-1"></i> 发起群聊求助
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 智能助手 -->
+                <div class="bg-white rounded-lg p-5 card-shadow">
+                    <div class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-robot text-secondary mr-2"></i> 个人智能助手
+                    </div>
+                    <div class="h-[350px] overflow-y-auto pr-2 space-y-3 mb-4">
+                        <div class="flex justify-start">
+                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
+                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
+                                <div class="text-sm">
+                                    您好，我是您的个人智能助手，看到您正在处理生产线A的电机故障，我已经为您准备好了相关的SOP和备件信息，还有什么可以帮您的吗？
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <div class="bg-primary text-white rounded-lg p-2.5 rounded-tr-none max-w-[90%]">
+                                <div class="text-xs text-white/80 mb-1">我</div>
+                                <div class="text-sm">更换轴承需要注意什么？</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-start">
+                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
+                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
+                                <div class="text-sm space-y-1.5">
+                                    <div>更换轴承需要注意以下几点：</div>
+                                    <div>1. 安装前要检查新轴承是否完好，型号是否匹配</div>
+                                    <div>2. 安装时要使用专用工具，禁止直接敲击轴承外圈</div>
+                                    <div>3. 轴承要安装到位，和轴肩贴合无间隙</div>
+                                    <div>4. 添加适量的专用润滑油，不要加过多</div>
+                                    <div>5. 安装后要手动转动检查是否灵活，有无异响</div>
+                                    <div class="mt-1">
+                                        <button class="text-xs text-primary hover:text-primaryHover">查看详细操作视频 →</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <div class="bg-primary text-white rounded-lg p-2.5 rounded-tr-none max-w-[90%]">
+                                <div class="text-xs text-white/80 mb-1">我</div>
+                                <div class="text-sm">有没有快速检查轴承是否合格的方法？</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-start">
+                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
+                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
+                                <div class="text-sm">
+                                    快速检查轴承的方法：
+                                    1. 看：外观有无裂纹、磕碰、锈蚀
+                                    2. 转：用手转动轴承，看是否转动灵活，有无卡顿异响
+                                    3. 晃：用手晃动轴承外圈，看是否有过大的间隙
+                                    4. 测：用游标卡尺测量轴承内径和外径，确认和旧轴承一致。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center">
+                            <input type="text" placeholder="输入问题，直接对话..." class="flex-1 border border-border rounded-l-md px-3 py-2 text-sm focus:outline-none focus:border-primary">
+                            <button class="bg-primary text-white px-3 py-2 rounded-r-md text-sm hover:bg-primaryHover transition-all">
+                                发送
+                            </button>
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-1">
+                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">查看历史故障记录</span>
+                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">生成维修报告模板</span>
+                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">下一步该做什么？</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t border-border py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-text3 text-xs">
+            © 2025 ΠPaw 智能经营系统 · 基于世界级管理最佳实践 · 帮助企业实现管理数字化、智能化
+        </div>
+    </footer>
+
+    <!-- JS脚本 -->
+    <script>
+        // 模态框操作
+        function openModal(title, content) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalTaskContent').innerText = content;
+            document.getElementById('modal').classList.remove('hidden');
+            // 添加动画效果
+            setTimeout(() => {
+                document.getElementById('modalContentWrapper').classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+        function closeModal() {
+            // 先播放关闭动画
+            document.getElementById('modalContentWrapper').classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                document.getElementById('modal').classList.add('hidden');
+            }, 300);
+        }
+
+        // Toast 提示功能
+        function showToast(type, title, message) {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+
+            // 设置图标和颜色
+            if (type === 'success') {
+                toastIcon.className = 'fa fa-check-circle text-success text-xl mr-3';
+            } else if (type === 'error') {
+                toastIcon.className = 'fa fa-times-circle text-danger text-xl mr-3';
+            } else if (type === 'warning') {
+                toastIcon.className = 'fa fa-exclamation-triangle text-warning text-xl mr-3';
+            } else if (type === 'info') {
+                toastIcon.className = 'fa fa-info-circle text-primary text-xl mr-3';
+            }
+
+            toastTitle.innerText = title;
+            toastMessage.innerText = message;
+
+            // 显示Toast
+            toast.classList.remove('translate-x-full');
+
+            // 3秒后自动隐藏
+            setTimeout(() => {
+                hideToast();
+            }, 3000);
+        }
+        function hideToast() {
+            document.getElementById('toast').classList.add('translate-x-full');
+        }
+
+        // 发送督办任务
+        function sendSupervision() {
+            closeModal();
+            showToast('success', '督办成功', '督办任务已发送，相关责任人已收到通知，系统将自动跟踪进度');
+        }
+
+        // 通知面板切换
+        function toggleNotificationPanel() {
+            const panel = document.getElementById('notificationPanel');
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                setTimeout(() => {
+                    panel.classList.remove('opacity-0', 'translate-y-2');
+                }, 10);
+            } else {
+                panel.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    panel.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // 暗黑模式切换
+        function toggleDarkMode() {
+            const body = document.body;
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const icon = darkModeToggle.querySelector('i');
+
+            if (body.classList.contains('dark')) {
+                body.classList.remove('dark');
+                icon.className = 'fa fa-moon-o text-lg';
+                showToast('success', '显示模式', '已切换到亮色模式');
+            } else {
+                body.classList.add('dark');
+                icon.className = 'fa fa-sun-o text-lg';
+                showToast('success', '显示模式', '已切换到暗黑模式');
+            }
+        }
+
+        // 切换Tab
+        function switchTab(index) {
+            // 隐藏所有页面
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.add('hidden');
+
+            // 重置所有tab样式
+            const tabs = document.querySelectorAll('[id^="tab"]');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-white', 'card-shadow', 'text-primary');
+                tab.classList.add('text-text2', 'hover:bg-white/50');
+            });
+
+            // 显示对应页面，激活对应tab
+            document.getElementById('page' + index).classList.remove('hidden');
+            document.getElementById('tab' + index).classList.add('bg-white', 'card-shadow', 'text-primary');
+            document.getElementById('tab' + index).classList.remove('text-text2', 'hover:bg-white/50');
+
+            // 初始化对应页面的图表
+            if (index === 1) {
+                initRevenueChart();
+                initHealthChart();
+                initDrillChart(1);
+            } else if (index === 2) {
+                initTeamChart();
+            } else if (index === 3) {
+                initPersonalChart();
+            }
+        }
+
+        // 穿透分析层级切换
+        function setDrillLevel(level) {
+            const titles = ['', '公司层', '业务线', '部门', '个人'];
+            document.getElementById('drillTitle').innerText = titles[level] + '营收全链路穿透分析';
+            initDrillChart(level);
+        }
+        function drillDown(type) {
+            if (type === 'revenue') {
+                setDrillLevel(2);
+            } else if (type === 'profit') {
+                alert('正在穿透利润明细数据...');
+            }
+        }
+
+        // 营收趋势图
+        function initRevenueChart() {
+            const chartDom = document.getElementById('revenueChart');
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {
+                    data: ['实际营收', '目标营收', '去年同期']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '营收（亿）'
+                },
+                series: [
+                    {
+                        name: '实际营收',
+                        type: 'line',
+                        smooth: true,
+                        data: [0.85, 0.98, 1.1, 1.05, 1.2, 1.32, 1.4, 1.52, 1.48, null, null, null],
+                        lineStyle: {
+                            color: '#165DFF',
+                            width: 3
+                        },
+                        itemStyle: {
+                            color: '#165DFF'
+                        },
+                        markPoint: {
+                            data: [
+                                {x: 3, y: 1.05, name: '3月', value: '下滑原因：大客户合同到期', symbolSize: 1}
+                            ],
+                            label: {
+                                show: true,
+                                position: 'top',
+                                color: '#F53F3F',
+                                fontSize: 12
+                            }
+                        }
+                    },
+                    {
+                        name: '目标营收',
+                        type: 'line',
+                        smooth: true,
+                        lineStyle: {
+                            type: 'dashed',
+                            color: '#86909C'
+                        },
+                        data: [0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9]
+                    },
+                    {
+                        name: '去年同期',
+                        type: 'line',
+                        smooth: true,
+                        lineStyle: {
+                            color: '#00B42A'
+                        },
+                        data: [0.7, 0.8, 0.88, 0.95, 1.0, 1.1, 1.15, 1.2, 1.3, 1.35, 1.45, 1.55]
+                    }
+                ]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        }
+
+        // 组织健康度图表
+        function initHealthChart() {
+            const chartDom = document.getElementById('healthChart');
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                radar: {
+                    indicator: [
+                        { name: '人均效能', max: 100 },
+                        { name: '人才留存', max: 100 },
+                        { name: '组织敏捷', max: 100 },
+                        { name: '员工满意', max: 100 },
+                        { name: '文化认同', max: 100 },
+                        { name: '管理成熟', max: 100 }
+                    ],
+                    splitArea: {
+                        show: true,
+                        areaStyle: {
+                            color: ['rgba(220,220,220,0.1)', 'rgba(220,220,220,0.2)']
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '组织健康度',
+                        type: 'radar',
+                        data: [
+                            {
+                                value: [85, 70, 72, 86, 80, 78],
+                                name: '当前',
+                                itemStyle: {
+                                    color: '#722ED1'
+                                },
+                                areaStyle: {
+                                    color: 'rgba(114, 46, 209, 0.2)'
+                                }
+                            },
+                            {
+                                value: [75, 72, 77, 83, 78, 75],
+                                name: '行业平均',
+                                itemStyle: {
+                                    color: '#86909C'
+                                },
+                                areaStyle: {
+                                    color: 'rgba(134, 144, 156, 0.2)'
+                                }
+                            }
+                        ]
+                    }
+                ]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        }
+
+        // 穿透分析图表
+        function initDrillChart(level) {
+            const chartDom = document.getElementById('drillChart');
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+
+            let xAxisData = [];
+            let actualData = [];
+            let targetData = [];
+            let diffData = [];
+
+            if (level === 1) { // 公司层
+                xAxisData = ['华东区', '华南区', '华北区', '西南区', '西北区'];
+                actualData = [1.3, 1.05, 1.1, 0.78, 0.5];
+                targetData = [1.2, 1.5, 1.2, 0.8, 0.6];
+            } else if (level === 2) { // 业务线
+                xAxisData = ['消费电子', '新能源', '工业制造', '医疗健康', '其他'];
+                actualData = [2.0, 1.5, 0.9, 0.18, 0.15];
+                targetData = [1.8, 1.2, 1.0, 0.3, 0.2];
+            } else if (level === 3) { // 部门
+                xAxisData = ['销售一部', '销售二部', '销售三部', '销售四部', '销售五部'];
+                actualData = [0.5, 0.48, 0.42, 0.35, 0.28];
+                targetData = [0.45, 0.5, 0.45, 0.4, 0.3];
+            } else if (level === 4) { // 个人
+                xAxisData = ['张三', '李四', '王五', '赵六', '钱七', '孙八'];
+                actualData = [120, 115, 95, 90, 85, 70];
+                targetData = [100, 100, 100, 100, 100, 100];
+            }
+
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {
+                    data: ['实际完成', '目标值', '完成率']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: xAxisData
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '营收（万）'
+                    },
+                    {
+                        type: 'value',
+                        name: '完成率',
+                        min: 0,
+                        max: 200,
+                        axisLabel: {
+                            formatter: '{value}%'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: '实际完成',
+                        type: 'bar',
+                        data: actualData,
+                        itemStyle: {
+                            color: '#165DFF'
+                        }
+                    },
+                    {
+                        name: '目标值',
+                        type: 'bar',
+                        data: targetData,
+                        itemStyle: {
+                            color: '#C9CDD4'
+                        }
+                    },
+                    {
+                        name: '完成率',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        data: actualData.map((v, i) => Math.round(v / targetData[i] * 100)),
+                        itemStyle: {
+                            color: '#F53F3F'
+                        },
+                        lineStyle: {
+                            width: 3
+                        },
+                        label: {
+                            show: true,
+                            formatter: '{c}%',
+                            position: 'top'
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        }
+
+        // 团队效能图表
+        function initTeamChart() {
+            const chartDom = document.getElementById('teamChart');
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true,
+                    y: 10
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周']
+                },
+                yAxis: {
+                    type: 'value',
+                    max: 120
+                },
+                series: [
+                    {
+                        name: '任务完成率',
+                        type: 'line',
+                        smooth: true,
+                        data: [95, 92, 88, 85, 89, 92],
+                        lineStyle: {
+                            color: '#00B42A',
+                            width: 2
+                        },
+                        itemStyle: {
+                            color: '#00B42A'
+                        }
+                    },
+                    {
+                        name: '准时交付率',
+                        type: 'line',
+                        smooth: true,
+                        data: [90, 92, 87, 82, 83, 85],
+                        lineStyle: {
+                            color: '#165DFF',
+                            width: 2
+                        },
+                        itemStyle: {
+                            color: '#165DFF'
+                        }
+                    },
+                    {
+                        name: '人效达标率',
+                        type: 'line',
+                        smooth: true,
+                        data: [85, 82, 80, 78, 77, 78],
+                        lineStyle: {
+                            color: '#FF7D00',
+                            width: 2
+                        },
+                        itemStyle: {
+                            color: '#FF7D00'
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        }
+
+        // 个人绩效图表
+        function initPersonalChart() {
+            const chartDom = document.getElementById('personalChart');
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true,
+                    y: 10
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月']
+                },
+                yAxis: {
+                    type: 'value',
+                    max: 120
+                },
+                series: [
+                    {
+                        name: '目标完成率',
+                        type: 'line',
+                        smooth: true,
+                        data: [85, 92, 95, 88, 97, 95],
+                        lineStyle: {
+                            color: '#165DFF',
+                            width: 3
+                        },
+                        itemStyle: {
+                            color: '#165DFF'
+                        },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                { offset: 0, color: 'rgba(22, 93, 255, 0.3)' },
+                                { offset: 1, color: 'rgba(22, 93, 255, 0.05)' }
+                            ])
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        }
+
+        // 点击外部关闭通知面板
+        document.addEventListener('click', function(e) {
+            const notificationPanel = document.getElementById('notificationPanel');
+            const notificationButton = e.target.closest('button')?.querySelector('i.fa-bell-o') ||
+                                      e.target.closest('i.fa-bell-o');
+
+            if (!notificationPanel.classList.contains('hidden') &&
+                !notificationPanel.contains(e.target) &&
+                !notificationButton) {
+                toggleNotificationPanel();
+            }
+        });
+
+        // 初始化页面
+        window.onload = function() {
+            switchTab(1);
+        };
+    </script>
+</body>
+</html>

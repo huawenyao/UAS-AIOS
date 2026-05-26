@@ -1,7 +1,7 @@
 [
   {
     "app_id": "ai-recruitment-os",
-    "app_root": "/workspace/projects/ai-recruitment-os",
+    "app_root": "C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\projects\\ai-recruitment-os",
     "version": "v1.0",
     "technical_base": "ASUI",
     "runtime": "autonomous_agent",
@@ -31,6 +31,6 @@
         "completed_jobs": 0
       }
     },
-    "updated_at": "2026-03-25T06:52:25.693047+00:00"
+    "updated_at": "2026-05-23T06:43:07.292176+00:00"
   }
 ]

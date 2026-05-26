@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uas-aios.local/schemas/chr_validation_result.schema.json",
+  "title": "CHR Validation Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "hypothesis_id",
+    "stage_results",
+    "adjusted_confidence",
+    "decision",
+    "reason_codes",
+    "review_required"
+  ],
+  "properties": {
+    "hypothesis_id": { "type": "string", "minLength": 1 },
+    "stage_results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gate0_testability",
+        "stage1_logical",
+        "stage2_historical",
+        "stage3_experiment"
+      ],
+      "properties": {
+        "gate0_testability": { "$ref": "#/$defs/stageStatus" },
+        "stage1_logical": { "$ref": "#/$defs/stageStatus" },
+        "stage2_historical": { "$ref": "#/$defs/stageStatus" },
+        "stage3_experiment": { "$ref": "#/$defs/stageStatus" }
+      }
+    },
+    "adjusted_confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "REJECTED",
+        "EXPERIMENT_PENDING",
+        "PROVISIONAL_COMMIT",
+        "COMMITTED_FACT",
+        "ESCALATE_REVIEW",
+        "REVOKED"
+      ]
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "review_required": { "type": "boolean" },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "direction_agreement": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "magnitude_error": {
+          "type": "number",
+          "minimum": 0
+        },
+        "sample_size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "timestamp": { "type": "string" }
+  },
+  "$defs": {
+    "stageStatus": {
+      "type": "string",
+      "enum": ["PASS", "CAUTION", "FAIL", "SKIP", "PENDING"]
+    }
+  }
+}

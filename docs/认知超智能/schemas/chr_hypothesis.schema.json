@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uas-aios.local/schemas/chr_hypothesis.schema.json",
+  "title": "CHR Causal Hypothesis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "hypothesis_id",
+    "claim",
+    "scope",
+    "confidence",
+    "evidence",
+    "falsifier",
+    "proposer",
+    "base_world_version"
+  ],
+  "properties": {
+    "hypothesis_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cause",
+        "effect",
+        "direction"
+      ],
+      "properties": {
+        "cause": { "type": "string", "minLength": 1 },
+        "effect": { "type": "string", "minLength": 1 },
+        "direction": {
+          "type": "string",
+          "enum": ["increase", "decrease", "no_change"]
+        },
+        "magnitude": { "type": "number" },
+        "time_to_effect_s": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain", "env"],
+      "properties": {
+        "domain": { "type": "string", "minLength": 1 },
+        "env": { "type": "string", "minLength": 1 },
+        "time_window": { "type": "string" },
+        "risk_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        }
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "source_id"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "human_signed",
+              "tool_callback_hash",
+              "external_api_idempotent",
+              "log_ref",
+              "llm_with_span",
+              "llm_without_span"
+            ]
+          },
+          "source_id": { "type": "string", "minLength": 1 },
+          "span": { "type": "string" },
+          "hash": { "type": "string" },
+          "timestamp": { "type": "string" }
+        }
+      }
+    },
+    "falsifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition", "window_s"],
+      "properties": {
+        "condition": { "type": "string", "minLength": 1 },
+        "window_s": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "abort_action": {
+          "type": "string",
+          "enum": ["rollback", "escalate", "degrade", "noop"]
+        }
+      }
+    },
+    "proposer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit_id", "model", "version"],
+      "properties": {
+        "unit_id": { "type": "string", "minLength": 1 },
+        "model": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "base_world_version": { "type": "string", "minLength": 1 },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}
