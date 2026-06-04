@@ -6,6 +6,8 @@
 
 ## 核心命令
 
+- `python run_batch.py [--resume-dir DIR] [--feedback]` - **P0 一键批次**（扫描→报告→价值摘要→推荐名单）
+- `python run_interactive.py` - 交互式菜单（HR 友好）
 - `/start` - 启动招聘流程
 - `/addJob [岗位描述]` - 添加岗位并解析 JD
 - `/match [岗位ID] [简历]` - 简历匹配打分
@@ -30,6 +32,9 @@
 | .claude/skills/evaluation_criteria.md | 评估标准 |
 | docs/entity_event_model.md | 实体与事件闭环、与 agent runtime 叠合说明 |
 | docs/产品价值感设计.md | 业务目标、场景痛点、解决度与价值感设计（让用户明显感知价值） |
+| docs/路线图_P0-P2_实施规格.md | P0–P2 交付清单与接口契约 |
+| docs/竞品洞察与系统定位.md | 行业竞品与本品差异化定位 |
+| scripts/value_summary.py | 批次价值摘要（headline、可解释率、预估节省） |
 
 ## 验证标准
 

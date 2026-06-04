@@ -117,6 +117,15 @@ def render_recommendation_html(data: dict) -> str:
         d = c.get('decision', 'unknown')
         decisions[d] = decisions.get(d, 0) + 1
 
+    value_banner_html = ""
+    try:
+        from value_summary import build_value_summary, render_value_banner_html
+
+        vs = build_value_summary(candidates, valid_count=total)
+        value_banner_html = render_value_banner_html(vs)
+    except Exception:
+        pass
+
     stats_html = f'''
     <div class="stats">
         <div class="stat-item">
@@ -302,6 +311,31 @@ def render_recommendation_html(data: dict) -> str:
             color: #86868b;
             font-size: 13px;
         }}
+        .value-banner {{
+            background: linear-gradient(135deg, #0071e3 0%, #34c759 100%);
+            color: #fff;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0,113,227,0.25);
+        }}
+        .value-headline {{
+            margin: 0 0 12px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+        }}
+        .value-metrics {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            font-size: 14px;
+            opacity: 0.95;
+        }}
+        .value-metrics strong {{
+            font-size: 18px;
+            font-weight: 600;
+        }}
     </style>
 </head>
 <body>
@@ -310,6 +344,8 @@ def render_recommendation_html(data: dict) -> str:
             <h1>📋 推荐名单</h1>
             <p>AI 智能匹配结果，按综合得分排序</p>
         </header>
+
+        {value_banner_html}
 
         {stats_html}
 

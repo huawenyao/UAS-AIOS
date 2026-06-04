@@ -1,0 +1,26 @@
+project_name: edh-ecosystem
+harness_root: harness
+max_iterations: 8
+ci_timeout_seconds: 180
+acceptance_dir: harness/acceptance
+editable_dirs:
+  - configs
+  - schemas
+  - scripts
+  - harness
+  - docs/strategic
+branch_prefix: reqharness/edh-
+auto_commit: false
+verify_commands:
+  - python harness/invariants/run-all.py
+  - python scripts/validate_capability_registry.py validate
+  - python scripts/validate_enterprise_policy.py validate
+  - python scripts/validate_connectors.py validate
+success_threshold: 1.0
+current_sprint: sprint-edh-001
+priority_requirements:
+  - REQ-EDH-PL-007
+  - REQ-EDH-SP-003
+  - REQ-EDH-PP-001
+  - REQ-EDH-SP-003
+  - REQ-EDH-PP-001

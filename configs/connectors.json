@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "connectors": [
+    {
+      "id": "connector.crm.sandbox",
+      "type": "crm",
+      "implementation": "mock",
+      "enabled": true,
+      "secret_ref": "env:EDH_CRM_MOCK_KEY",
+      "supported_services": ["cs.customer", "cs.lead"]
+    },
+    {
+      "id": "connector.oa.sandbox",
+      "type": "oa",
+      "implementation": "mock",
+      "enabled": true,
+      "secret_ref": "env:EDH_OA_MOCK_KEY",
+      "supported_services": ["cs.approval", "cs.notify"]
+    },
+    {
+      "id": "connector.itsm.sandbox",
+      "type": "itsm",
+      "implementation": "mock",
+      "enabled": true,
+      "secret_ref": "env:EDH_ITSM_MOCK_KEY",
+      "supported_services": ["cs.ticket"]
+    },
+    {
+      "id": "connector.bpm.sandbox",
+      "type": "bpm",
+      "implementation": "mock",
+      "enabled": true,
+      "secret_ref": "env:EDH_BPM_MOCK_KEY",
+      "supported_services": ["cs.process"]
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/enterprise_tenant.schema.json",
+  "title": "Enterprise Tenant & Organization Catalog",
+  "description": "多租户与组织目录模型；tenant_id 必须贯穿数据、能力调用与审计。",
+  "type": "object",
+  "required": ["version", "tenants"],
+  "properties": {
+    "version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "tenants": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/tenant" }
+    }
+  },
+  "definitions": {
+    "tenantId": {
+      "type": "string",
+      "pattern": "^t-[a-z0-9-]+$"
+    },
+    "orgUnit": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["company", "division", "department", "team"] },
+        "parent_id": { "type": ["string", "null"] }
+      }
+    },
+    "position": {
+      "type": "object",
+      "required": ["id", "code", "name", "domain_id"],
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "name": { "type": "string" },
+        "domain_id": {
+          "type": "string",
+          "description": "绑定的岗位 Domain，如 domain.sales"
+        },
+        "default_product_track": {
+          "type": "string",
+          "enum": ["selfpaw", "pipaw", "both"]
+        }
+      }
+    },
+    "tenant": {
+      "type": "object",
+      "required": ["tenant_id", "name", "status", "org_units", "positions"],
+      "properties": {
+        "tenant_id": { "$ref": "#/definitions/tenantId" },
+        "name": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "suspended"] },
+        "identity_provider": {
+          "type": "string",
+          "enum": ["feishu", "dingtalk", "ad", "oidc", "mock"]
+        },
+        "org_units": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/orgUnit" }
+        },
+        "positions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/position" }
+        }
+      }
+    },
+    "enterpriseUserContext": {
+      "type": "object",
+      "description": "SSO 登录后注入 RuntimeContext 的企业用户上下文",
+      "required": ["tenant_id", "user_id", "product_track"],
+      "properties": {
+        "tenant_id": { "$ref": "#/definitions/tenantId" },
+        "user_id": { "type": "string" },
+        "display_name": { "type": "string" },
+        "org_unit_id": { "type": "string" },
+        "position_id": { "type": "string" },
+        "role_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "product_track": {
+          "type": "string",
+          "enum": ["selfpaw", "pipaw"],
+          "description": "当前会话产品轨道"
+        },
+        "data_scopes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/dataScope" }
+        }
+      }
+    },
+    "dataScope": {
+      "type": "object",
+      "required": ["type", "value"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["self", "dept", "dept_tree", "tenant", "project", "custom"]
+        },
+        "value": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "entities": {
+    "UASKernel": {
+      "type": "platform",
+      "description": "UAS 基础操作系统：I,K,R,A,S,G,E,Π 八元组",
+      "depends_on": [],
+      "files": [
+        "asui-cli/src/asui/engine/service.py",
+        "scripts/run_uas_runtime_service.py",
+        "CLAUDE.md"
+      ]
+    },
+    "EnterpriseDataPlane": {
+      "type": "platform",
+      "description": "企业数据平面：租户隔离、主数据、事件流、审计链",
+      "depends_on": ["UASKernel"],
+      "files": [
+        "schemas/enterprise_tenant.schema.json",
+        "schemas/enterprise_permission.schema.json",
+        "configs/tenant_catalog.sample.json",
+        "configs/enterprise_rbac_template.json",
+        "scripts/validate_enterprise_policy.py"
+      ],
+      "status": "baseline"
+    },
+    "CapabilityService": {
+      "type": "interface",
+      "description": "业务能力服务化单元 cs.*，Agent 唯一业务执行入口",
+      "depends_on": ["EnterpriseDataPlane", "SystemConnector"],
+      "files": [],
+      "operations_pattern": "cs.{domain}.{action}"
+    },
+    "CapabilityServiceRegistry": {
+      "type": "service",
+      "description": "能力服务注册中心：契约、版本、权限映射、审计",
+      "depends_on": ["CapabilityService"],
+      "files": [
+        "schemas/capability_service.schema.json",
+        "configs/capability_registry.json",
+        "scripts/validate_capability_registry.py",
+        "harness/knowledge/technical/capability-service-registry-api.md"
+      ],
+      "status": "baseline"
+    },
+    "SystemConnector": {
+      "type": "adapter",
+      "description": "S-Grid 连接器：CRM/BPM/财务/ERP/OA 适配",
+      "depends_on": ["EnterpriseDataPlane"],
+      "files": [
+        "asui-cli/src/asui/connectors/router.py",
+        "configs/connectors.json",
+        "scripts/validate_connectors.py"
+      ],
+      "connectors": ["crm", "bpm", "finance", "oa", "itsm"]
+    },
+    "DigitalFoundation": {
+      "type": "platform",
+      "description": "数字基础：流程语义 API、动态表单、RBAC/ABAC、数据实体 API",
+      "depends_on": ["EnterpriseDataPlane"],
+      "files": []
+    },
+    "OutwardGateway": {
+      "type": "service",
+      "description": "经营向外统一触达：官网/IM/邮件/Webhook",
+      "depends_on": ["PiPawBusinessAGI", "CapabilityServiceRegistry"],
+      "files": [],
+      "status": "planned"
+    },
+    "SelfPawEnterprise": {
+      "type": "product",
+      "description": "User AGI 企业版：员工数字分身",
+      "depends_on": ["UASKernel", "CapabilityServiceRegistry", "EnterpriseDataPlane"],
+      "files": [],
+      "reference_repo": "../aipos/copaw-src"
+    },
+    "PiPawBusinessAGI": {
+      "type": "product",
+      "description": "Business AGI：经营数字岗位体系",
+      "depends_on": ["UASKernel", "CapabilityServiceRegistry", "OutwardGateway"],
+      "files": [
+        "docs/strategic/demo/ΠPaw_Enterprise_Demo.html"
+      ]
+    },
+    "Domain": {
+      "type": "concept",
+      "description": "行业/岗位认知包：Ontology + Constraints + Capability Bundle",
+      "depends_on": ["UASKernel"],
+      "files": [
+        ".claude/skills/domain_builder.md"
+      ],
+      "aipos_mapping": "copaw-src/src/selfpaw/domains/"
+    },
+    "Project": {
+      "type": "concept",
+      "description": "长期目标容器：Goal Contract + Resource Boundary",
+      "depends_on": ["Domain"],
+      "files": [
+        "projects/ai-recruitment-os/configs/platform_manifest.json"
+      ]
+    },
+    "WorkingTask": {
+      "type": "concept",
+      "description": "单次执行单元，桥接 Domain/Project 与 Task Panel",
+      "depends_on": ["Project"],
+      "files": []
+    },
+    "BusinessAgentRoster": {
+      "type": "concept",
+      "description": "ΠPaw 岗位 Agent 编制：销售/客服/合规/调度等",
+      "depends_on": ["Domain", "PiPawBusinessAGI"],
+      "files": []
+    },
+    "IntentHub": {
+      "type": "service",
+      "description": "SelfPaw 意图工作台：分类、升级 ΠPaw",
+      "depends_on": ["SelfPawEnterprise", "WorkingTask"],
+      "files": [
+        "schemas/intent_object.schema.json",
+        "asui-cli/src/asui/intent_hub.py",
+        "harness/knowledge/technical/intent-escalation-api.md"
+      ]
+    },
+    "RuntimeContext": {
+      "type": "data-model",
+      "description": "系统态上下文：租户/岗位/执行平面/协作策略",
+      "depends_on": ["EnterpriseDataPlane"],
+      "aipos_mapping": "copaw-src/src/selfpaw/aee/runtime_context.py"
+    },
+    "AEE": {
+      "type": "engine",
+      "description": "Agent 执行引擎：Plan/Trace/Gate/ChangeSet",
+      "depends_on": ["UASKernel"],
+      "aipos_mapping": "copaw-src/src/selfpaw/aee/"
+    },
+    "ChangeSet": {
+      "type": "contract",
+      "description": "智能体变更契约，驱动 E 层演化",
+      "depends_on": ["AEE"],
+      "files": [
+        "scripts/evolve_apply.py"
+      ]
+    },
+    "Gate": {
+      "type": "policy",
+      "description": "门禁 G1-G7 + L1/L2/L3 执行分级",
+      "depends_on": ["UASKernel"],
+      "files": [
+        "projects/ai-recruitment-os/configs/governance_policy.json"
+      ]
+    }
+  },
+  "dependencies": {
+    "SelfPawEnterprise_to_PiPaw": {
+      "from": "SelfPawEnterprise",
+      "to": "PiPawBusinessAGI",
+      "via": "IntentHub",
+      "contract": "intent_escalation_with_evidence"
+    },
+    "Agent_to_CapabilityService": {
+      "from": ["SelfPawEnterprise", "PiPawBusinessAGI"],
+      "to": "CapabilityService",
+      "rule": "禁止直连 CRM/BPM，必须经 cs.*"
+    },
+    "PiPaw_to_Outward": {
+      "from": "PiPawBusinessAGI",
+      "to": "OutwardGateway",
+      "rule": "对外会话全量审计"
+    }
+  },
+  "product_capability_ids": {
+    "platform": ["PL-01", "PL-02", "PL-03", "PL-04", "PL-06", "PL-07", "PL-08", "PL-10"],
+    "selfpaw": ["SP-01", "SP-02", "SP-03", "SP-04", "SP-07"],
+    "pipaw": ["PP-01", "PP-02", "PP-03", "PP-05", "PP-07", "PP-08"]
+  }
+}

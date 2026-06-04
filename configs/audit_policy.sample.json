@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "tenant_id": "t-acme-demo",
+  "retention_days": 365,
+  "pii_redaction": true,
+  "required_fields": ["audit_id", "tenant_id", "timestamp", "event_type", "actor", "outcome"],
+  "partition_by": ["tenant_id", "event_type", "date"],
+  "export_formats": ["jsonl", "parquet"],
+  "alert_on": [
+    "TENANT_ISOLATION_VIOLATION",
+    "OPERATION_DENIED",
+    "L3_BLOCKED"
+  ]
+}

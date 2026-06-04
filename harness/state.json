@@ -1,0 +1,152 @@
+{
+  "project": {
+    "name": "edh-ecosystem",
+    "version": "0.1.0",
+    "description": "企业级数字人生态（SelfPaw User AGI × ΠPaw Business AGI × UAS Kernel）",
+    "started_at": "2026-05-23T00:00:00Z",
+    "phase": "Phase-0",
+    "strategic_docs": [
+      "docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md",
+      "docs/strategic/UAS_AIPOS_SelfPaw_Integrated_Product_Tech_Architecture.md",
+      "docs/strategic/UAS-AIOS_Delivery_Form_And_Product_Design.md"
+    ],
+    "implementation_repos": {
+      "uas_aios": ".",
+      "selfpaw_reference": "../aipos/copaw-src"
+    }
+  },
+  "modules": {
+    "harness_baseline": {
+      "status": "completed",
+      "description": "reqharness 世界模型基线：state / entity-map / knowledge / requirements / invariants",
+      "invariants": {
+        "harness_structure": "passed",
+        "strategic_docs_linked": "passed",
+        "entity_map_consistency": "passed"
+      },
+      "requirements": ["REQ-EDH-BASE-001"]
+    },
+    "enterprise_data_plane": {
+      "status": "completed",
+      "description": "企业数据平面：租户 · 主数据 · 事件流 · 审计链（Phase-0 契约）",
+      "invariants": {
+        "tenant_model_spec": "passed",
+        "enterprise_policy": "passed",
+        "audit_chain_spec": "passed"
+      },
+      "requirements": ["REQ-EDH-PL-001", "REQ-EDH-PL-002", "REQ-EDH-PL-006"],
+      "artifacts": [
+        "schemas/enterprise_tenant.schema.json",
+        "schemas/enterprise_permission.schema.json",
+        "schemas/audit_record.schema.json",
+        "configs/tenant_catalog.sample.json",
+        "configs/enterprise_rbac_template.json",
+        "configs/audit_policy.sample.json",
+        "scripts/validate_enterprise_policy.py",
+        "harness/knowledge/technical/enterprise-audit-chain-spec.md"
+      ]
+    },
+    "capability_services": {
+      "status": "completed",
+      "description": "业务能力服务化层 cs.* 注册中心与语义契约 + mock 连接器",
+      "invariants": {
+        "catalog_schema": "passed",
+        "min_services_count": "passed",
+        "capability_registry": "passed"
+      },
+      "requirements": ["REQ-EDH-PL-003", "REQ-EDH-PL-007"],
+      "artifacts": [
+        "schemas/capability_service.schema.json",
+        "configs/capability_registry.json",
+        "scripts/validate_capability_registry.py",
+        "harness/knowledge/technical/capability-service-registry-api.md",
+        "asui-cli/src/asui/connectors/",
+        "scripts/validate_connectors.py"
+      ]
+    },
+    "digital_foundation": {
+      "status": "planning",
+      "description": "数字基础能力：流程 · 表单 · 权限 · 数据语义 API",
+      "invariants": {
+        "process_semantic_api": "pending",
+        "permission_scope": "pending"
+      },
+      "requirements": ["REQ-EDH-PL-004", "REQ-EDH-PL-005"]
+    },
+    "system_connectors": {
+      "status": "completed",
+      "description": "S-Grid 业务连接器：CRM · BPM · 财务 · OA（Phase-0 mock）",
+      "invariants": {
+        "connector_adapter_interface": "passed",
+        "system_connectors": "passed"
+      },
+      "requirements": ["REQ-EDH-PL-007"],
+      "artifacts": [
+        "configs/connectors.json",
+        "asui-cli/src/asui/connectors/",
+        "scripts/validate_connectors.py"
+      ]
+    },
+    "selfpaw_enterprise": {
+      "status": "in_progress",
+      "description": "SelfPaw 企业版：组织身份 · Intent Hub · 岗位 Domain · 升级 ΠPaw",
+      "invariants": {
+        "org_identity_binding": "pending",
+        "intent_escalation_contract": "passed"
+      },
+      "requirements": ["REQ-EDH-SP-001", "REQ-EDH-SP-002", "REQ-EDH-SP-003"],
+      "artifacts": [
+        "schemas/intent_object.schema.json",
+        "schemas/working_task.schema.json",
+        "configs/intent_escalation_policy.sample.json",
+        "asui-cli/src/asui/intent_hub.py",
+        "harness/knowledge/technical/intent-escalation-api.md",
+        "scripts/validate_intent_escalation.py"
+      ]
+    },
+    "pipaw_business": {
+      "status": "planning",
+      "description": "ΠPaw 经营 AGI：岗位 Agent · 对外通道 · 经营流程 · KPI 闭环",
+      "invariants": {
+        "agent_roster_spec": "pending",
+        "outward_gateway_spec": "pending"
+      },
+      "requirements": ["REQ-EDH-PP-001", "REQ-EDH-PP-002", "REQ-EDH-PP-003"]
+    },
+    "uas_kernel_integration": {
+      "status": "in_progress",
+      "description": "UAS Kernel 对齐：八元组 · ASUI 运行时 · 治理 · 演化",
+      "invariants": {
+        "subapp_health": "passed",
+        "runtime_service_list": "passed"
+      },
+      "requirements": ["REQ-EDH-K-001", "REQ-EDH-K-002"]
+    }
+  },
+  "current_sprint": {
+    "id": "sprint-edh-001",
+    "name": "数字人生态 Phase-0：项目基线与平台契约",
+    "start_date": "2026-05-23",
+    "end_date": "2026-08-23",
+    "goals": [
+      "建立 harness 世界模型与实体图谱（可计算、可追踪）",
+      "冻结 Phase-0 需求与验收标准（PL/SP/PP/K）",
+      "输出 cs.* 能力服务目录与 OpenAPI 契约骨架",
+      "对齐 SelfPaw 参考实现与 UAS-AIOS 内核边界"
+    ]
+  },
+  "metrics": {
+    "phase_0_exit": {
+      "capability_services_min": 5,
+      "connectors_min": 2,
+      "requirements_completed_ratio": 0.45,
+      "invariants_pass_ratio": 1.0
+    },
+    "phase_12_month": {
+      "capability_services_min": 15,
+      "connectors_min": 5,
+      "selfpaw_wau_target": 0.6,
+      "pipaw_auto_resolve_cs_target": 0.4
+    }
+  }
+}

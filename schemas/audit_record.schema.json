@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/audit_record.schema.json",
+  "title": "Enterprise Audit Record",
+  "description": "能力调用、权限变更、跨产品升级的统一审计记录。",
+  "type": "object",
+  "required": [
+    "audit_id",
+    "tenant_id",
+    "timestamp",
+    "event_type",
+    "actor",
+    "outcome"
+  ],
+  "properties": {
+    "audit_id": { "type": "string" },
+    "tenant_id": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "capability.denied",
+        "permission.changeset",
+        "intent.escalate",
+        "agent.session",
+        "outward.message"
+      ]
+    },
+    "actor": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "enum": ["user", "agent", "system"] },
+        "user_id": { "type": "string" },
+        "agent_id": { "type": "string" },
+        "session_id": { "type": "string" },
+        "product_track": { "type": "string", "enum": ["selfpaw", "pipaw"] }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "properties": {
+        "operation_ref": { "type": "string" },
+        "service_id": { "type": "string" },
+        "changeset_id": { "type": "string" },
+        "working_task_id": { "type": "string" }
+      }
+    },
+    "input_hash": { "type": "string", "description": "敏感 input 的哈希，非明文" },
+    "outcome": {
+      "type": "string",
+      "enum": ["ok", "denied", "error"]
+    },
+    "deny_reason": { "type": "string" },
+    "gates_evaluated": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

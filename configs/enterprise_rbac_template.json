@@ -1,0 +1,114 @@
+{
+  "version": "1.0.0",
+  "tenant_id": "t-acme-demo",
+  "updated_at": "2026-05-23T14:00:00Z",
+  "approval_gate_mapping": {
+    "L1": {
+      "description": "自动执行：只读与低风险写",
+      "gates": ["G1", "G4"],
+      "human_confirm": false
+    },
+    "L2": {
+      "description": "需用户或主管确认后执行",
+      "gates": ["G1", "G4", "G6"],
+      "human_confirm": true
+    },
+    "L3": {
+      "description": "禁止 Agent 自主执行或需双人审批",
+      "gates": ["G6", "G7"],
+      "human_confirm": true,
+      "dual_control": true
+    }
+  },
+  "roles": [
+    {
+      "role_id": "role.employee",
+      "name": "普通员工（SelfPaw）",
+      "product_track": "selfpaw",
+      "allowed_operations": [
+        "cs.customer.get_profile",
+        "cs.customer.query",
+        "cs.lead.list",
+        "cs.approval.submit",
+        "cs.notify.send_im",
+        "cs.process.start"
+      ],
+      "denied_operations": ["cs.approval.approve"],
+      "default_data_scopes": [{ "type": "self" }, { "type": "dept" }]
+    },
+    {
+      "role_id": "role.sales_rep",
+      "name": "销售代表",
+      "product_track": "selfpaw",
+      "allowed_operations": [
+        "cs.customer.get_profile",
+        "cs.customer.query",
+        "cs.lead.qualify_lead",
+        "cs.lead.list",
+        "cs.notify.send_email",
+        "cs.process.advance"
+      ],
+      "default_data_scopes": [{ "type": "self" }, { "type": "dept_tree" }]
+    },
+    {
+      "role_id": "role.cs_agent",
+      "name": "客服数字岗位（ΠPaw）",
+      "product_track": "pipaw",
+      "allowed_operations": [
+        "cs.customer.get_profile",
+        "cs.ticket.create",
+        "cs.ticket.escalate",
+        "cs.approval.submit",
+        "cs.notify.send_im"
+      ],
+      "default_data_scopes": [{ "type": "tenant" }]
+    },
+    {
+      "role_id": "role.cs_lead",
+      "name": "客服主管",
+      "product_track": "pipaw",
+      "allowed_operations": [
+        "cs.customer.get_profile",
+        "cs.customer.query",
+        "cs.ticket.create",
+        "cs.ticket.escalate",
+        "cs.process.advance",
+        "cs.notify.send_im",
+        "cs.notify.send_email"
+      ],
+      "default_data_scopes": [{ "type": "tenant" }]
+    },
+    {
+      "role_id": "role.compliance",
+      "name": "合规官",
+      "product_track": "shared",
+      "allowed_operations": ["cs.customer.query", "cs.approval.approve"],
+      "default_data_scopes": [{ "type": "tenant" }]
+    }
+  ],
+  "scope_rules": [
+    {
+      "service_id": "cs.customer",
+      "operation": "query",
+      "filter": {
+        "tenant_id": "{{tenant_id}}",
+        "org_unit_ids": "{{user.dept_tree_ids}}"
+      }
+    },
+    {
+      "service_id": "cs.lead",
+      "operation": "list",
+      "filter": {
+        "tenant_id": "{{tenant_id}}",
+        "owner_user_id": "{{user.id}}"
+      }
+    },
+    {
+      "service_id": "cs.ticket",
+      "operation": "create",
+      "filter": {
+        "tenant_id": "{{tenant_id}}"
+      }
+    }
+  ]
+}

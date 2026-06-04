@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/system_connector.schema.json",
+  "title": "System Connector Configuration",
+  "description": "S-Grid 业务系统连接器配置；密钥仅引用 secret_ref，不落明文。",
+  "type": "object",
+  "required": ["version", "connectors"],
+  "properties": {
+    "version": { "type": "string" },
+    "connectors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/connector" }
+    }
+  },
+  "definitions": {
+    "connector": {
+      "type": "object",
+      "required": ["id", "type", "implementation", "enabled"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^connector\\.[a-z0-9_.]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["crm", "oa", "bpm", "itsm", "finance", "erp"]
+        },
+        "implementation": {
+          "type": "string",
+          "enum": ["mock", "http", "sdk"]
+        },
+        "enabled": { "type": "boolean" },
+        "base_url": { "type": "string" },
+        "secret_ref": {
+          "type": "string",
+          "description": "如 env:CRM_API_KEY 或 file:.secret/crm.json"
+        },
+        "supported_services": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "cs.* 服务 ID 列表"
+        }
+      }
+    }
+  }
+}

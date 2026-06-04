@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/enterprise_permission.schema.json",
+  "title": "Enterprise RBAC/ABAC Permission Policy",
+  "description": "角色→cs.* operation 权限；数据 scope 过滤；L1/L2/L3 与 Gate 映射。",
+  "type": "object",
+  "required": ["version", "tenant_id", "roles", "approval_gate_mapping"],
+  "properties": {
+    "version": { "type": "string" },
+    "tenant_id": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "roles": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/role" }
+    },
+    "approval_gate_mapping": {
+      "$ref": "#/definitions/approvalGateMapping"
+    },
+    "scope_rules": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/scopeRule" }
+    }
+  },
+  "definitions": {
+    "operationRef": {
+      "type": "string",
+      "pattern": "^cs\\.[a-z][a-z0-9_.]+\\.[a-z][a-z0-9_]*$",
+      "description": "如 cs.lead.qualify_lead"
+    },
+    "role": {
+      "type": "object",
+      "required": ["role_id", "name", "product_track", "allowed_operations"],
+      "properties": {
+        "role_id": { "type": "string" },
+        "name": { "type": "string" },
+        "product_track": {
+          "type": "string",
+          "enum": ["selfpaw", "pipaw", "shared"]
+        },
+        "allowed_operations": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/operationRef" }
+        },
+        "denied_operations": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/operationRef" }
+        },
+        "default_data_scopes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["self", "dept", "dept_tree", "tenant", "project"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "approvalGateMapping": {
+      "type": "object",
+      "required": ["L1", "L2", "L3"],
+      "properties": {
+        "L1": {
+          "type": "object",
+          "properties": {
+            "description": { "type": "string" },
+            "gates": { "type": "array", "items": { "type": "string" } },
+            "human_confirm": { "type": "boolean", "default": false }
+          }
+        },
+        "L2": {
+          "type": "object",
+          "properties": {
+            "description": { "type": "string" },
+            "gates": { "type": "array", "items": { "type": "string" } },
+            "human_confirm": { "type": "boolean", "default": true }
+          }
+        },
+        "L3": {
+          "type": "object",
+          "properties": {
+            "description": { "type": "string" },
+            "gates": { "type": "array", "items": { "type": "string" } },
+            "human_confirm": { "type": "boolean", "default": true },
+            "dual_control": { "type": "boolean", "default": true }
+          }
+        }
+      }
+    },
+    "scopeRule": {
+      "type": "object",
+      "required": ["service_id", "operation", "filter"],
+      "properties": {
+        "service_id": { "type": "string" },
+        "operation": { "type": "string" },
+        "filter": {
+          "type": "object",
+          "description": "ABAC 过滤表达式占位；实现期可换 CEL/JSONLogic",
+          "properties": {
+            "tenant_id": { "const": "{{tenant_id}}" },
+            "org_unit_ids": { "type": "array", "items": { "type": "string" } },
+            "owner_user_id": { "type": "string" }
+          }
+        }
+      }
+    },
+    "permissionChangeSet": {
+      "type": "object",
+      "required": ["changeset_id", "tenant_id", "actor", "changes"],
+      "properties": {
+        "changeset_id": { "type": "string" },
+        "tenant_id": { "type": "string" },
+        "actor": { "type": "string" },
+        "changes": { "type": "array" },
+        "gates_passed": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

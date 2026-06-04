@@ -1,0 +1,211 @@
+{
+  "campaign": {
+    "id": "search-platform-sbe",
+    "title": "Senior Backend Engineer",
+    "team": "Search Platform",
+    "business_goal": "Reduce search latency by 40% in 2 quarters",
+    "team_context": "Ranking infrastructure team owns high-traffic APIs and incident recovery.",
+    "success_horizon": "180 days"
+  },
+  "roleSuccessModel": {
+    "title": "Senior Backend Engineer",
+    "team": "Search Platform",
+    "business_outcome": "Reduce search latency by 40% in 2 quarters",
+    "success_horizon": "180 days",
+    "must_prove": [
+      "Designed and operated high-traffic distributed services",
+      "Diagnosed production incidents with clear tradeoffs",
+      "Owned cross-team delivery beyond local implementation"
+    ],
+    "risk_counterexamples": [
+      "Only local optimization without production ownership",
+      "High confidence without evidence for incident recovery"
+    ],
+    "interview_evidence": [
+      "Architecture case",
+      "Failure review",
+      "Peer collaboration story"
+    ],
+    "confirmed_by": [
+      "recruiter",
+      "hiring_manager"
+    ],
+    "status": "confirmed"
+  },
+  "candidates": [
+    {
+      "candidate_id": "lin-chen",
+      "name": "Lin Chen",
+      "recommendation": "strong",
+      "score": 96,
+      "top_evidence": "Led ranking migration for 1.2B daily queries",
+      "risk": "Needs people-lead validation",
+      "human_confirmation_required": true
+    },
+    {
+      "candidate_id": "maya-patel",
+      "name": "Maya Patel",
+      "recommendation": "caution",
+      "score": 61,
+      "top_evidence": "Reduced incident recovery time by 35%",
+      "risk": "Less search-domain depth",
+      "human_confirmation_required": true
+    },
+    {
+      "candidate_id": "jonas-weber",
+      "name": "Jonas Weber",
+      "recommendation": "caution",
+      "score": 59,
+      "top_evidence": "Designed event-driven services for commerce workflows",
+      "risk": "Recent roles lack delivery evidence",
+      "human_confirmation_required": true
+    }
+  ],
+  "interview": {
+    "candidate_id": "lin-chen",
+    "evidence_captured": 7,
+    "evidence_required": 7,
+    "notes": [
+      "Explained ranking migration tradeoffs clearly",
+      "Connected rollback strategy to monitoring and product impact",
+      "Needs one leadership calibration question"
+    ],
+    "score_suggestion": 91
+  },
+  "scorecard": {
+    "round": "technical_system_design",
+    "dimensions": [
+      {
+        "id": "system_design",
+        "weight": 0.35
+      },
+      {
+        "id": "incident_recovery",
+        "weight": 0.25
+      },
+      {
+        "id": "ownership",
+        "weight": 0.25
+      },
+      {
+        "id": "collaboration",
+        "weight": 0.15
+      }
+    ],
+    "questions": [
+      "Describe a high-traffic service decision you owned end to end.",
+      "Walk through an incident where your first diagnosis was wrong.",
+      "Which alternative architecture did you reject, and why?"
+    ]
+  },
+  "decision": {
+    "recommendation": "advance_to_final",
+    "candidate_id": "lin-chen",
+    "reason": "Strongest evidence for search ranking, incident recovery, and ownership.",
+    "unresolved_risk": "People-lead validation",
+    "human_confirmation_required": true
+  },
+  "candidateUpdate": {
+    "candidate_id": "lin-chen",
+    "stage": "technical_interview",
+    "message": "Your technical interview is scheduled. Focus on architecture tradeoffs, incident recovery, and ownership stories."
+  },
+  "fairnessReview": {
+    "risk": "medium",
+    "flags": [
+      "Review caution candidates for missing-evidence bias"
+    ],
+    "required_human_action": true
+  },
+  "evolutionReport": {
+    "model_update_proposal": [
+      "Increase reliability evidence weight by 8%",
+      "Add incident rollback drill to technical interview"
+    ],
+    "basis": "Improved incident recovery playbook and reduced ranking rollback time.",
+    "requires_approval": true
+  },
+  "agentRunLog": [
+    {
+      "agent": "mission_guard",
+      "capability": "cs.role.create_success_model",
+      "confirmation": true
+    },
+    {
+      "agent": "mission_guard",
+      "capability": "cs.role.update_success_model",
+      "confirmation": true
+    },
+    {
+      "agent": "talent_evidence_agent",
+      "capability": "cs.candidate.parse_profile",
+      "confirmation": false
+    },
+    {
+      "agent": "talent_evidence_agent",
+      "capability": "cs.candidate.build_evidence_card",
+      "confirmation": false
+    },
+    {
+      "agent": "shortlist_agent",
+      "capability": "cs.candidate.rank_shortlist",
+      "confirmation": true
+    },
+    {
+      "agent": "interview_copilot_agent",
+      "capability": "cs.interview.generate_scorecard",
+      "confirmation": false
+    },
+    {
+      "agent": "interview_copilot_agent",
+      "capability": "cs.interview.capture_evidence",
+      "confirmation": false
+    },
+    {
+      "agent": "calibration_agent",
+      "capability": "cs.decision.compare_candidates",
+      "confirmation": true
+    },
+    {
+      "agent": "calibration_agent",
+      "capability": "cs.audit.record_decision_basis",
+      "confirmation": false
+    },
+    {
+      "agent": "candidate_experience_agent",
+      "capability": "cs.candidate.send_stage_update",
+      "confirmation": true
+    },
+    {
+      "agent": "candidate_experience_agent",
+      "capability": "cs.candidate.generate_feedback",
+      "confirmation": true
+    },
+    {
+      "agent": "fairness_compliance_agent",
+      "capability": "cs.audit.run_fairness_review",
+      "confirmation": true
+    },
+    {
+      "agent": "fairness_compliance_agent",
+      "capability": "cs.audit.freeze_high_risk_action",
+      "confirmation": true
+    },
+    {
+      "agent": "learning_loop_agent",
+      "capability": "cs.feedback.collect_post_hire_signal",
+      "confirmation": true
+    },
+    {
+      "agent": "learning_loop_agent",
+      "capability": "cs.feedback.update_recruitment_world_model",
+      "confirmation": true
+    }
+  ],
+  "metrics": {
+    "qualifiedShortlist": "1 / 3",
+    "evidenceCoverage": "100%",
+    "hmSatisfaction": "92%",
+    "biasRisk": "Medium"
+  }
+}

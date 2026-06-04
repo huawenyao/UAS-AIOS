@@ -1,0 +1,48 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-05-23T14:00:00Z",
+  "tenants": [
+    {
+      "tenant_id": "t-acme-demo",
+      "name": "ACME 演示企业",
+      "status": "active",
+      "identity_provider": "feishu",
+      "org_units": [
+        { "id": "ou-root", "name": "ACME集团", "type": "company", "parent_id": null },
+        { "id": "ou-sales", "name": "销售中心", "type": "department", "parent_id": "ou-root" },
+        { "id": "ou-cs", "name": "客户成功部", "type": "department", "parent_id": "ou-root" },
+        { "id": "ou-hr", "name": "人力资源部", "type": "department", "parent_id": "ou-root" }
+      ],
+      "positions": [
+        {
+          "id": "pos-sales-rep",
+          "code": "SALES_REP",
+          "name": "销售代表",
+          "domain_id": "domain.sales",
+          "default_product_track": "selfpaw"
+        },
+        {
+          "id": "pos-cs-agent",
+          "code": "CS_AGENT",
+          "name": "客服专员",
+          "domain_id": "domain.customer_service",
+          "default_product_track": "pipaw"
+        },
+        {
+          "id": "pos-cs-lead",
+          "code": "CS_LEAD",
+          "name": "客服主管",
+          "domain_id": "domain.customer_service",
+          "default_product_track": "pipaw"
+        },
+        {
+          "id": "pos-hr",
+          "code": "HR_GENERALIST",
+          "name": "HR 专员",
+          "domain_id": "domain.hr",
+          "default_product_track": "selfpaw"
+        }
+      ]
+    }
+  ]
+}

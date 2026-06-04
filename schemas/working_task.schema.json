@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/working_task.schema.json",
+  "title": "WorkingTask",
+  "description": "ΠPaw 执行单元；可由 SelfPaw Intent 升级创建，在指挥席/Task Board 可见。",
+  "type": "object",
+  "required": [
+    "task_id",
+    "tenant_id",
+    "source_intent_id",
+    "product_track",
+    "position_id",
+    "domain_id",
+    "title",
+    "status",
+    "priority",
+    "evidence_refs"
+  ],
+  "properties": {
+    "task_id": { "type": "string", "pattern": "^wt-[a-z0-9-]+$" },
+    "tenant_id": { "type": "string", "pattern": "^t-[a-z0-9-]+$" },
+    "source_intent_id": { "type": "string" },
+    "source": {
+      "type": "string",
+      "enum": ["selfpaw_escalation", "outward_gateway", "pipaw_manual", "system_event"],
+      "default": "selfpaw_escalation"
+    },
+    "product_track": { "type": "string", "const": "pipaw" },
+    "position_id": { "type": "string" },
+    "domain_id": { "type": "string" },
+    "assignee_role_id": { "type": "string" },
+    "title": { "type": "string", "minLength": 1 },
+    "goal": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["open", "in_progress", "blocked", "done", "cancelled"]
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "normal", "high", "critical"]
+    },
+    "sla_due_at": { "type": "string", "format": "date-time" },
+    "business_context": { "type": "object" },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/evidenceRef" }
+    },
+    "audit_id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "definitions": {
+    "evidenceRef": {
+      "type": "object",
+      "required": ["evidence_id", "type", "summary"],
+      "properties": {
+        "evidence_id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["chat_transcript", "email", "ticket", "document", "crm_record", "other"]
+        },
+        "ref_id": { "type": "string" },
+        "summary": { "type": "string", "minLength": 1 },
+        "uri": { "type": "string" }
+      }
+    }
+  }
+}

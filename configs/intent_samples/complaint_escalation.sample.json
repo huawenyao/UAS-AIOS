@@ -1,0 +1,35 @@
+{
+  "intent_id": "int-complaint-demo-001",
+  "tenant_id": "t-acme-demo",
+  "source": "selfpaw_intent_hub",
+  "intent_class": "business_outward",
+  "goal": "处理 VIP 客户交付延期投诉并协调客服跟进",
+  "summary": "客户 C-1001 反馈交付延期 3 天，要求今日内回复",
+  "urgency": "high",
+  "actor": {
+    "user_id": "u-employee-1001",
+    "display_name": "张三",
+    "org_unit_id": "ou-sales",
+    "position_id": "pos-sales-rep",
+    "product_track": "selfpaw"
+  },
+  "business_context": {
+    "customer_id": "C-1001",
+    "channel": "im"
+  },
+  "escalation_target": {
+    "product_track": "pipaw",
+    "position_id": "pos-cs-agent",
+    "domain_id": "domain.customer_service",
+    "role_id": "role.cs_agent"
+  },
+  "evidence_refs": [
+    {
+      "evidence_id": "ev-chat-001",
+      "type": "chat_transcript",
+      "ref_id": "chat-thread-88",
+      "summary": "客户 IM：交付已延期 3 天，请今日回复处理方案"
+    }
+  ],
+  "status": "active"
+}

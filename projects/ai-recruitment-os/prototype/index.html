@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Recruitment OS Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar" aria-label="Recruitment OS navigation">
+      <div class="brand">
+        <div class="mark">AR</div>
+        <div>
+          <strong>AI Recruitment OS</strong>
+          <span>用证据招对人</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#mission" class="active">Hiring Mission</a>
+        <a href="#role">Role Success Model</a>
+        <a href="#shortlist">Evidence Shortlist</a>
+        <a href="#interview">Interview Workspace</a>
+        <a href="#calibration">Calibration Room</a>
+        <a href="#candidate">Candidate Portal</a>
+        <a href="#loop">Learning Loop</a>
+      </nav>
+      <div class="guardrail">
+        <span class="status-dot"></span>
+        Human confirmed decisions
+      </div>
+    </aside>
+
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Recruitment campaign</p>
+          <h1>Senior Backend Engineer · Search Platform</h1>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button" title="Run fairness review">FR</button>
+          <button id="run-agent-journey" class="primary-button">Run agent journey</button>
+        </div>
+      </header>
+
+      <section class="metric-strip" aria-label="Hiring value metrics">
+        <div>
+          <span>Qualified shortlist</span>
+          <strong id="metric-qualified-shortlist">8 / 126</strong>
+        </div>
+        <div>
+          <span>Evidence coverage</span>
+          <strong id="metric-evidence-coverage">87%</strong>
+        </div>
+        <div>
+          <span>HM satisfaction</span>
+          <strong id="metric-hm-satisfaction">92%</strong>
+        </div>
+        <div>
+          <span>Bias risk</span>
+          <strong id="metric-bias-risk" class="safe">Low</strong>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <article id="mission" class="panel mission-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Step 1</p>
+            <h2>Hiring Mission</h2>
+          </div>
+          <div class="mission-grid">
+            <div class="mission-block">
+              <span>Business outcome</span>
+              <strong>Reduce search latency by 40% in 2 quarters</strong>
+            </div>
+            <div class="mission-block">
+              <span>Role reason</span>
+              <strong>Own ranking service reliability and feature velocity</strong>
+            </div>
+            <div class="mission-block">
+              <span>Success horizon</span>
+              <strong>180-day measurable impact</strong>
+            </div>
+          </div>
+          <div class="prompt-box">
+            <strong>AI clarification</strong>
+            <p>Which failure matters more: slow incident recovery, weak distributed systems depth, or missing ownership across teams?</p>
+          </div>
+        </article>
+
+        <article id="role" class="panel">
+          <div class="section-heading">
+            <p class="eyebrow">Step 2</p>
+            <h2>Role Success Model</h2>
+          </div>
+          <div class="success-layout">
+            <div class="radar" aria-label="Role capability visualization">
+              <div class="radar-ring ring-1"></div>
+              <div class="radar-ring ring-2"></div>
+              <div class="radar-ring ring-3"></div>
+              <div class="radar-shape"></div>
+              <span class="axis axis-top">System design</span>
+              <span class="axis axis-right">Ownership</span>
+              <span class="axis axis-bottom">Reliability</span>
+              <span class="axis axis-left">Collaboration</span>
+            </div>
+            <div class="criteria-list">
+              <div><b>Must prove</b><span>Designed and operated high-traffic services</span></div>
+              <div><b>Must prove</b><span>Incident diagnosis with clear tradeoffs</span></div>
+              <div><b>Risk signal</b><span>Only local optimization, weak cross-team ownership</span></div>
+              <div><b>Interview evidence</b><span>Architecture case, failure review, peer collaboration story</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article id="shortlist" class="panel wide">
+          <div class="section-heading">
+            <p class="eyebrow">Step 3</p>
+            <h2>Evidence Shortlist</h2>
+          </div>
+          <div id="candidate-list" class="candidate-table">
+            <div class="candidate-row header">
+              <span>Candidate</span>
+              <span>Recommendation</span>
+              <span>Evidence</span>
+              <span>Risk</span>
+              <span>Action</span>
+            </div>
+            <div class="candidate-row">
+              <span><b>Lin Chen</b><small>Search infra lead</small></span>
+              <span class="badge strong">Strong</span>
+              <span>Owned ranking migration; 99.95% SLA</span>
+              <span>Needs people-lead validation</span>
+              <button>Advance</button>
+            </div>
+            <div class="candidate-row">
+              <span><b>Maya Patel</b><small>Platform engineer</small></span>
+              <span class="badge review">Review</span>
+              <span>Strong reliability history</span>
+              <span>Less search-domain depth</span>
+              <button>Compare</button>
+            </div>
+            <div class="candidate-row">
+              <span><b>Jonas Weber</b><small>Backend architect</small></span>
+              <span class="badge caution">Caution</span>
+              <span>Deep systems background</span>
+              <span>Recent roles lack delivery evidence</span>
+              <button>Ask info</button>
+            </div>
+          </div>
+        </article>
+
+        <article id="interview" class="panel">
+          <div class="section-heading">
+            <p class="eyebrow">Step 4</p>
+            <h2>Interview Workspace</h2>
+          </div>
+          <div class="interview-card">
+            <div>
+              <span class="mini-label">This round validates</span>
+              <h3>Distributed system judgment</h3>
+              <p>Ask for a past architecture decision, rejected alternatives, rollout risk, and monitoring plan.</p>
+            </div>
+            <div class="score-box">
+              <span>Evidence captured</span>
+              <strong>6 / 7</strong>
+            </div>
+          </div>
+          <div class="notes">
+            <b>Bias reminder</b>
+            <p>Current notes emphasize confidence and speed. Add evidence for recovery depth before scoring.</p>
+          </div>
+        </article>
+
+        <article id="calibration" class="panel">
+          <div class="section-heading">
+            <p class="eyebrow">Step 5</p>
+            <h2>Calibration Room</h2>
+          </div>
+          <div class="comparison">
+            <div><span>Lin</span><meter min="0" max="100" value="91"></meter><b>91</b></div>
+            <div><span>Maya</span><meter min="0" max="100" value="82"></meter><b>82</b></div>
+            <div><span>Jonas</span><meter min="0" max="100" value="71"></meter><b>71</b></div>
+          </div>
+          <div class="decision-box">
+            <strong>Decision recommendation</strong>
+            <p>Advance Lin to final HM interview. Ask one leadership calibration question before offer planning.</p>
+          </div>
+        </article>
+
+        <article id="candidate" class="panel">
+          <div class="section-heading">
+            <p class="eyebrow">Candidate value</p>
+            <h2>Candidate Portal</h2>
+          </div>
+          <ol class="timeline">
+            <li class="done">Application received</li>
+            <li class="done">Role fit reviewed with evidence</li>
+            <li class="current">Technical interview scheduled</li>
+            <li>Decision within 48 hours</li>
+          </ol>
+          <div class="candidate-note">
+            <strong>Candidate sees</strong>
+            <p>Clear stage, preparation focus, reschedule path, and respectful feedback language.</p>
+          </div>
+        </article>
+
+        <article id="loop" class="panel wide">
+          <div class="section-heading">
+            <p class="eyebrow">Step 6</p>
+            <h2>Learning Loop</h2>
+          </div>
+          <div class="loop-grid">
+            <div><span>Post-hire signal</span><strong>90-day impact review</strong></div>
+            <div><span>Model update</span><strong>Reliability weight +8%</strong></div>
+            <div><span>Process update</span><strong>Add incident review question</strong></div>
+            <div><span>Audit output</span><strong>Decision chain complete</strong></div>
+          </div>
+          <div class="agent-log-wrap">
+            <div class="section-heading compact">
+              <p class="eyebrow">Agent execution</p>
+              <h3>Governed capability run log</h3>
+            </div>
+            <div id="agent-run-log" class="agent-run-log" aria-live="polite"></div>
+          </div>
+        </article>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>

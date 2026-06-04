@@ -1,0 +1,362 @@
+{
+  "version": "1.0.0",
+  "registry_id": "edh-platform-default",
+  "updated_at": "2026-05-23T12:00:00Z",
+  "defaults": {
+    "audit_required": true,
+    "retry_max": 2,
+    "timeout_ms": 30000
+  },
+  "services": [
+    {
+      "id": "cs.customer",
+      "domain": "customer",
+      "description": "客户主数据查询与画像",
+      "source_system": "crm",
+      "connector_id": "connector.crm.sandbox",
+      "uas_layer": "S",
+      "enabled": true,
+      "operations": [
+        {
+          "name": "get_profile",
+          "description": "按 customer_id 获取客户画像与关键字段",
+          "input": {
+            "type": "object",
+            "required": ["customer_id"],
+            "properties": {
+              "customer_id": { "type": "string" },
+              "tenant_id": { "type": "string" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "required": ["customer_id", "name"],
+            "properties": {
+              "customer_id": { "type": "string" },
+              "name": { "type": "string" },
+              "segment": { "type": "string" },
+              "evidence": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "approval_level": "L1",
+          "audit_required": true,
+          "gates": ["G1", "G6"],
+          "side_effects": [],
+          "idempotent": true,
+          "agent_visible": true
+        },
+        {
+          "name": "query",
+          "description": "按条件检索客户列表（分页）",
+          "input": {
+            "type": "object",
+            "properties": {
+              "filter": { "type": "object" },
+              "limit": { "type": "integer", "maximum": 100 }
+            }
+          },
+          "output": {
+            "type": "object",
+            "properties": {
+              "items": { "type": "array" },
+              "total": { "type": "integer" }
+            }
+          },
+          "approval_level": "L1",
+          "audit_required": true,
+          "gates": ["G1", "G6"],
+          "agent_visible": true
+        }
+      ]
+    },
+    {
+      "id": "cs.lead",
+      "domain": "lead",
+      "description": "销售线索资格判断与列表",
+      "source_system": "crm",
+      "connector_id": "connector.crm.sandbox",
+      "enabled": true,
+      "operations": [
+        {
+          "name": "qualify_lead",
+          "description": "对线索进行资格评分与是否合格判定",
+          "input": {
+            "type": "object",
+            "required": ["lead_id"],
+            "properties": {
+              "lead_id": { "type": "string" },
+              "criteria_ref": { "type": "string" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "required": ["qualified", "score"],
+            "properties": {
+              "qualified": { "type": "boolean" },
+              "score": { "type": "number" },
+              "evidence": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "approval_level": "L1",
+          "audit_required": true,
+          "gates": ["G4", "G6"],
+          "side_effects": ["event.lead.qualified"],
+          "agent_visible": true
+        },
+        {
+          "name": "list",
+          "description": "列出待跟进线索",
+          "input": {
+            "type": "object",
+            "properties": {
+              "owner_id": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "properties": {
+              "items": { "type": "array" }
+            }
+          },
+          "approval_level": "L1",
+          "audit_required": true,
+          "gates": ["G1"],
+          "agent_visible": true
+        }
+      ]
+    },
+    {
+      "id": "cs.ticket",
+      "domain": "ticket",
+      "description": "客服工单创建、更新与升级",
+      "source_system": "itsm",
+      "connector_id": "connector.itsm.sandbox",
+      "enabled": true,
+      "operations": [
+        {
+          "name": "create",
+          "description": "创建客服工单",
+          "input": {
+            "type": "object",
+            "required": ["subject", "customer_id"],
+            "properties": {
+              "subject": { "type": "string" },
+              "customer_id": { "type": "string" },
+              "priority": { "type": "string", "enum": ["low", "normal", "high", "urgent"] }
+            }
+          },
+          "output": {
+            "type": "object",
+            "required": ["ticket_id"],
+            "properties": {
+              "ticket_id": { "type": "string" },
+              "sla_due_at": { "type": "string" }
+            }
+          },
+          "approval_level": "L2",
+          "audit_required": true,
+          "gates": ["G1", "G4", "G6"],
+          "side_effects": ["event.ticket.created"],
+          "agent_visible": true
+        },
+        {
+          "name": "escalate",
+          "description": "将工单升级至人工或 ΠPaw 指挥席",
+          "input": {
+            "type": "object",
+            "required": ["ticket_id", "reason"],
+            "properties": {
+              "ticket_id": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "properties": {
+              "escalation_id": { "type": "string" },
+              "assigned_to": { "type": "string" }
+            }
+          },
+          "approval_level": "L2",
+          "audit_required": true,
+          "gates": ["G6"],
+          "side_effects": ["event.ticket.escalated"],
+          "agent_visible": true
+        }
+      ]
+    },
+    {
+      "id": "cs.approval",
+      "domain": "approval",
+      "description": "通用审批流提交与裁决",
+      "source_system": "oa",
+      "connector_id": "connector.oa.sandbox",
+      "enabled": true,
+      "operations": [
+        {
+          "name": "submit",
+          "description": "提交审批单",
+          "input": {
+            "type": "object",
+            "required": ["template_id", "payload"],
+            "properties": {
+              "template_id": { "type": "string" },
+              "payload": { "type": "object" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "required": ["approval_id"],
+            "properties": {
+              "approval_id": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          },
+          "approval_level": "L2",
+          "audit_required": true,
+          "gates": ["G1", "G4", "G6"],
+          "side_effects": ["event.approval.submitted"],
+          "agent_visible": true
+        },
+        {
+          "name": "approve",
+          "description": "批准审批单（需人工或 L3 策略）",
+          "input": {
+            "type": "object",
+            "required": ["approval_id"],
+            "properties": {
+              "approval_id": { "type": "string" },
+              "comment": { "type": "string" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "properties": {
+              "status": { "type": "string" }
+            }
+          },
+          "approval_level": "L3",
+          "audit_required": true,
+          "gates": ["G6", "G7"],
+          "agent_visible": false
+        }
+      ]
+    },
+    {
+      "id": "cs.notify",
+      "domain": "notify",
+      "description": "企业 IM / 邮件通知",
+      "source_system": "oa",
+      "connector_id": "connector.oa.sandbox",
+      "enabled": true,
+      "operations": [
+        {
+          "name": "send_im",
+          "description": "发送企业 IM 消息",
+          "input": {
+            "type": "object",
+            "required": ["recipient_id", "body"],
+            "properties": {
+              "recipient_id": { "type": "string" },
+              "body": { "type": "string" },
+              "channel": { "type": "string", "enum": ["feishu", "dingtalk", "wecom"] }
+            }
+          },
+          "output": {
+            "type": "object",
+            "properties": {
+              "message_id": { "type": "string" }
+            }
+          },
+          "approval_level": "L2",
+          "audit_required": true,
+          "gates": ["G6"],
+          "side_effects": ["event.notify.sent"],
+          "agent_visible": true
+        },
+        {
+          "name": "send_email",
+          "description": "发送邮件（对外须额外合规检查）",
+          "input": {
+            "type": "object",
+            "required": ["to", "subject", "body"],
+            "properties": {
+              "to": { "type": "array", "items": { "type": "string" } },
+              "subject": { "type": "string" },
+              "body": { "type": "string" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "properties": {
+              "message_id": { "type": "string" }
+            }
+          },
+          "approval_level": "L2",
+          "audit_required": true,
+          "gates": ["G6"],
+          "agent_visible": true
+        }
+      ]
+    },
+    {
+      "id": "cs.process",
+      "domain": "process",
+      "description": "BPM 流程启动、推进与异常升级",
+      "source_system": "bpm",
+      "connector_id": "connector.bpm.sandbox",
+      "enabled": true,
+      "operations": [
+        {
+          "name": "start",
+          "description": "按流程模板启动实例",
+          "input": {
+            "type": "object",
+            "required": ["template_id", "business_key"],
+            "properties": {
+              "template_id": { "type": "string" },
+              "business_key": { "type": "string" },
+              "variables": { "type": "object" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "required": ["process_instance_id"],
+            "properties": {
+              "process_instance_id": { "type": "string" }
+            }
+          },
+          "approval_level": "L2",
+          "audit_required": true,
+          "gates": ["G1", "G4"],
+          "side_effects": ["event.process.started"],
+          "agent_visible": true
+        },
+        {
+          "name": "advance",
+          "description": "推进流程至下一节点",
+          "input": {
+            "type": "object",
+            "required": ["process_instance_id", "action"],
+            "properties": {
+              "process_instance_id": { "type": "string" },
+              "action": { "type": "string" }
+            }
+          },
+          "output": {
+            "type": "object",
+            "properties": {
+              "current_node": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          },
+          "approval_level": "L2",
+          "audit_required": true,
+          "gates": ["G4"],
+          "agent_visible": true
+        }
+      ]
+    }
+  ]
+}

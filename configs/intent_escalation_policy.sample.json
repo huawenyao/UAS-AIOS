@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-05-23T16:00:00Z",
+  "rules": [
+    {
+      "intent_class": "personal",
+      "allow_escalate": false,
+      "reason": "个人效率类意图在 SelfPaw 内闭环"
+    },
+    {
+      "intent_class": "collaboration",
+      "allow_escalate": true,
+      "requires_evidence": false,
+      "default_target": {
+        "product_track": "pipaw",
+        "position_id": "pos-cs-lead",
+        "domain_id": "domain.customer_service",
+        "role_id": "role.cs_lead"
+      }
+    },
+    {
+      "intent_class": "business_outward",
+      "allow_escalate": true,
+      "requires_evidence": true,
+      "min_evidence_count": 1,
+      "default_target": {
+        "product_track": "pipaw",
+        "position_id": "pos-cs-agent",
+        "domain_id": "domain.customer_service",
+        "role_id": "role.cs_agent"
+      }
+    }
+  ],
+  "e2e_scenarios": [
+    {
+      "id": "employee_complaint_to_cs_task",
+      "description": "员工提交客诉 → ΠPaw 客服 Working Task 可见",
+      "intent_sample": "configs/intent_samples/complaint_escalation.sample.json"
+    }
+  ]
+}

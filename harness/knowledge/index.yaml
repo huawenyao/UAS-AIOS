@@ -1,0 +1,28 @@
+product:
+  - file: product/digital-human-ecosystem-vision.md
+    title: 数字人生态产品愿景与双轨定位
+technical:
+  - file: technical/edh-platform-baseline.md
+    title: 平台+模型架构与 Phase-0 技术基线
+  - file: technical/capability-service-catalog-baseline.md
+    title: cs.* 能力服务目录与契约骨架
+  - file: technical/capability-service-registry-api.md
+    title: 能力服务注册中心 API 草案 v0
+  - file: technical/enterprise-tenant-org-api.md
+    title: 多租户与组织目录 API 草案
+  - file: technical/enterprise-rbac-abac-spec.md
+    title: RBAC/ABAC 与数据 Scope 规格
+  - file: technical/enterprise-audit-chain-spec.md
+    title: 企业审计链规格
+  - file: technical/system-connector-spec.md
+    title: SystemConnector 与密钥分区
+  - file: technical/intent-escalation-api.md
+    title: Intent Hub 与升级 ΠPaw API 草案
+domain:
+  - file: domain/glossary.md
+    title: 数字人生态术语表
+constraints:
+  - file: constraints/adr-edh-001-dual-track-boundary.md
+    title: ADR-EDH-001 SelfPaw 与 ΠPaw 双轨边界
+  - file: constraints/adr-edh-002-capability-before-agent.md
+    title: ADR-EDH-002 先能力服务化再挂 Agent 岗位

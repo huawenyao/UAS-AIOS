@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/intent_object.schema.json",
+  "title": "IntentObject",
+  "description": "SelfPaw Intent Hub 标准意图单；经营类可带 Evidence 升级 ΠPaw（ADR-EDH-001）。",
+  "type": "object",
+  "required": [
+    "intent_id",
+    "tenant_id",
+    "source",
+    "intent_class",
+    "goal",
+    "actor",
+    "status"
+  ],
+  "properties": {
+    "intent_id": { "type": "string", "pattern": "^int-[a-z0-9-]+$" },
+    "tenant_id": { "type": "string", "pattern": "^t-[a-z0-9-]+$" },
+    "source": {
+      "type": "string",
+      "enum": ["selfpaw_intent_hub", "outward_gateway", "system_event", "manual"]
+    },
+    "intent_class": {
+      "type": "string",
+      "enum": ["personal", "collaboration", "business_outward"],
+      "description": "personal=个人效率；collaboration=部门协同；business_outward=经营/对外须升级 ΠPaw"
+    },
+    "goal": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string" },
+    "urgency": {
+      "type": "string",
+      "enum": ["low", "normal", "high", "critical"],
+      "default": "normal"
+    },
+    "actor": { "$ref": "#/definitions/intentActor" },
+    "business_context": {
+      "type": "object",
+      "properties": {
+        "customer_id": { "type": "string" },
+        "ticket_id": { "type": "string" },
+        "lead_id": { "type": "string" },
+        "channel": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "escalation_target": { "$ref": "#/definitions/escalationTarget" },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/evidenceRef" },
+      "default": []
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "active", "escalated", "closed"]
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "definitions": {
+    "intentActor": {
+      "type": "object",
+      "required": ["user_id", "product_track"],
+      "properties": {
+        "user_id": { "type": "string" },
+        "display_name": { "type": "string" },
+        "org_unit_id": { "type": "string" },
+        "position_id": { "type": "string" },
+        "product_track": { "type": "string", "enum": ["selfpaw", "pipaw"] }
+      }
+    },
+    "escalationTarget": {
+      "type": "object",
+      "required": ["product_track", "position_id", "domain_id"],
+      "properties": {
+        "product_track": { "type": "string", "const": "pipaw" },
+        "position_id": { "type": "string" },
+        "domain_id": { "type": "string" },
+        "role_id": { "type": "string" }
+      }
+    },
+    "evidenceRef": {
+      "type": "object",
+      "required": ["evidence_id", "type", "summary"],
+      "properties": {
+        "evidence_id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["chat_transcript", "email", "ticket", "document", "crm_record", "other"]
+        },
+        "ref_id": { "type": "string" },
+        "summary": { "type": "string", "minLength": 1 },
+        "uri": { "type": "string" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "intent_class": { "const": "business_outward" } },
+        "required": ["intent_class"]
+      },
+      "then": {
+        "required": ["escalation_target", "evidence_refs"],
+        "properties": {
+          "evidence_refs": { "minItems": 1 }
+        }
+      }
+    }
+  ]
+}

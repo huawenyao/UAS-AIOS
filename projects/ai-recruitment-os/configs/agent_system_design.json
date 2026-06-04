@@ -1,0 +1,272 @@
+{
+  "version": "v1.0",
+  "platform_model": "UAS-Platform",
+  "product": "AI Recruitment OS",
+  "north_star": "quality_adjusted_hiring_success_rate",
+  "user_value": [
+    "更快找到对的人",
+    "更少招错人",
+    "用证据招对人",
+    "让候选人体验清楚、及时、公平",
+    "让招聘过程可解释、可追责、可复盘"
+  ],
+  "decision_policy": "human_confirmed_high_impact_decisions",
+  "runtime": {
+    "mode": "autonomous_agent_runtime",
+    "context_injection": true,
+    "state_isolation": "hiring_campaign_and_candidate_level",
+    "audit_chain": true,
+    "rollback": true,
+    "human_checkpoints": [
+      "candidate_rejection",
+      "final_interview_decision",
+      "offer_recommendation",
+      "fairness_risk_detected",
+      "model_evolution_apply"
+    ]
+  },
+  "world_model": {
+    "objects": [
+      "organization_goal",
+      "role_success_model",
+      "candidate_evidence_card",
+      "interview_scorecard",
+      "offer_strategy",
+      "post_hire_feedback"
+    ],
+    "subjects": [
+      "recruiter",
+      "hiring_manager",
+      "interviewer",
+      "candidate",
+      "ta_lead",
+      "compliance_owner"
+    ],
+    "feedback_channels": [
+      "shortlist_acceptance",
+      "interview_score_conflict",
+      "candidate_nps",
+      "offer_acceptance",
+      "ninety_day_performance",
+      "retention_signal"
+    ]
+  },
+  "agents": [
+    {
+      "id": "mission_guard",
+      "name": "招聘意图守恒 Agent",
+      "primary_user": "hiring_manager",
+      "mission": "把业务用人诉求归一化为岗位成功画像，防止招聘目标漂移。",
+      "inputs": ["business_goal", "team_context", "success_horizon"],
+      "outputs": ["role_success_model", "must_have_criteria", "risk_counterexamples"],
+      "capabilities": ["cs.role.create_success_model", "cs.role.update_success_model"],
+      "calls_capabilities_only": true,
+      "audit_required": true
+    },
+    {
+      "id": "talent_evidence_agent",
+      "name": "候选人证据 Agent",
+      "primary_user": "recruiter",
+      "mission": "把简历、作品、面试记录转为可追溯证据卡，并生成短名单解释。",
+      "inputs": ["resume", "profile_link", "role_success_model"],
+      "outputs": ["candidate_evidence_card", "match_explanation", "missing_information"],
+      "capabilities": ["cs.candidate.parse_profile", "cs.candidate.build_evidence_card"],
+      "calls_capabilities_only": true,
+      "audit_required": true
+    },
+    {
+      "id": "shortlist_agent",
+      "name": "短名单推荐 Agent",
+      "primary_user": "recruiter",
+      "mission": "基于证据和风险生成可复核短名单，不自动淘汰候选人。",
+      "inputs": ["candidate_evidence_card", "role_success_model"],
+      "outputs": ["ranked_shortlist", "advance_reason", "review_reason", "reject_risk"],
+      "capabilities": ["cs.candidate.rank_shortlist", "cs.audit.record_decision_basis"],
+      "calls_capabilities_only": true,
+      "audit_required": true
+    },
+    {
+      "id": "interview_copilot_agent",
+      "name": "结构化面试 Agent",
+      "primary_user": "interviewer",
+      "mission": "为每轮面试生成问题、追问、评分卡，并捕获证据。",
+      "inputs": ["role_success_model", "candidate_evidence_card", "interview_round"],
+      "outputs": ["interview_card", "evidence_notes", "score_suggestion"],
+      "capabilities": ["cs.interview.generate_scorecard", "cs.interview.capture_evidence"],
+      "calls_capabilities_only": true,
+      "audit_required": true
+    },
+    {
+      "id": "calibration_agent",
+      "name": "校准决策 Agent",
+      "primary_user": "hiring_manager",
+      "mission": "汇总多面试官证据，识别评分冲突，辅助人工做出录用决策。",
+      "inputs": ["interview_scores", "evidence_notes", "role_success_model"],
+      "outputs": ["candidate_comparison", "conflict_summary", "decision_brief"],
+      "capabilities": ["cs.decision.compare_candidates", "cs.audit.record_decision_basis"],
+      "calls_capabilities_only": true,
+      "audit_required": true
+    },
+    {
+      "id": "candidate_experience_agent",
+      "name": "候选人体验 Agent",
+      "primary_user": "candidate",
+      "mission": "让候选人获得清楚流程、准备方向、及时通知和体面反馈。",
+      "inputs": ["candidate_stage", "interview_plan", "decision_status"],
+      "outputs": ["candidate_update", "prep_guidance", "feedback_message"],
+      "capabilities": ["cs.candidate.send_stage_update", "cs.candidate.generate_feedback"],
+      "calls_capabilities_only": true,
+      "audit_required": true
+    },
+    {
+      "id": "fairness_compliance_agent",
+      "name": "公平合规 Agent",
+      "primary_user": "compliance_owner",
+      "mission": "检查偏差、黑箱决策、权限越界和高风险自动化行为。",
+      "inputs": ["shortlist", "decision_brief", "audit_chain"],
+      "outputs": ["fairness_review", "risk_flags", "required_human_action"],
+      "capabilities": ["cs.audit.run_fairness_review", "cs.audit.freeze_high_risk_action"],
+      "calls_capabilities_only": true,
+      "audit_required": true
+    },
+    {
+      "id": "learning_loop_agent",
+      "name": "招聘后验演化 Agent",
+      "primary_user": "ta_lead",
+      "mission": "把入职、试用期、绩效和留存反馈回流到岗位模型与评估标准。",
+      "inputs": ["post_hire_feedback", "candidate_evidence_card", "role_success_model"],
+      "outputs": ["model_update_proposal", "process_update", "evolution_report"],
+      "capabilities": ["cs.feedback.collect_post_hire_signal", "cs.feedback.update_recruitment_world_model"],
+      "calls_capabilities_only": true,
+      "audit_required": true
+    }
+  ],
+  "capability_services": [
+    {
+      "id": "cs.role.create_success_model",
+      "owner": "mission_guard",
+      "description": "Create a role success model from business goals, team context, and success horizon.",
+      "risk_level": "medium",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.role.update_success_model",
+      "owner": "mission_guard",
+      "description": "Revise role criteria after recruiter and hiring manager confirmation.",
+      "risk_level": "medium",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.candidate.parse_profile",
+      "owner": "talent_evidence_agent",
+      "description": "Parse candidate documents into structured skills, history, claims, and missing fields.",
+      "risk_level": "low",
+      "human_confirmation": false
+    },
+    {
+      "id": "cs.candidate.build_evidence_card",
+      "owner": "talent_evidence_agent",
+      "description": "Build a candidate evidence card tied to role criteria and source references.",
+      "risk_level": "medium",
+      "human_confirmation": false
+    },
+    {
+      "id": "cs.candidate.rank_shortlist",
+      "owner": "shortlist_agent",
+      "description": "Rank candidates with evidence and risk labels; never auto-reject.",
+      "risk_level": "high",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.candidate.send_stage_update",
+      "owner": "candidate_experience_agent",
+      "description": "Send stage status and preparation guidance to candidates.",
+      "risk_level": "medium",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.candidate.generate_feedback",
+      "owner": "candidate_experience_agent",
+      "description": "Draft respectful candidate feedback based on approved decision reasons.",
+      "risk_level": "high",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.interview.generate_scorecard",
+      "owner": "interview_copilot_agent",
+      "description": "Generate interview questions, rubrics, and evidence requirements.",
+      "risk_level": "medium",
+      "human_confirmation": false
+    },
+    {
+      "id": "cs.interview.capture_evidence",
+      "owner": "interview_copilot_agent",
+      "description": "Capture interview evidence and map it to scorecard dimensions.",
+      "risk_level": "medium",
+      "human_confirmation": false
+    },
+    {
+      "id": "cs.decision.compare_candidates",
+      "owner": "calibration_agent",
+      "description": "Compare candidates across evidence, scorecards, and unresolved risks.",
+      "risk_level": "high",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.audit.record_decision_basis",
+      "owner": "calibration_agent",
+      "description": "Write decision basis, evidence links, reviewer, and timestamp to audit chain.",
+      "risk_level": "medium",
+      "human_confirmation": false
+    },
+    {
+      "id": "cs.audit.run_fairness_review",
+      "owner": "fairness_compliance_agent",
+      "description": "Review shortlist, scoring, and rejection patterns for bias and missing evidence.",
+      "risk_level": "high",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.audit.freeze_high_risk_action",
+      "owner": "fairness_compliance_agent",
+      "description": "Block high-impact actions until authorized human review is complete.",
+      "risk_level": "high",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.feedback.collect_post_hire_signal",
+      "owner": "learning_loop_agent",
+      "description": "Collect 30/90/180-day performance, retention, and manager feedback signals.",
+      "risk_level": "medium",
+      "human_confirmation": true
+    },
+    {
+      "id": "cs.feedback.update_recruitment_world_model",
+      "owner": "learning_loop_agent",
+      "description": "Propose updates to role success criteria, interview rubrics, and risk heuristics.",
+      "risk_level": "high",
+      "human_confirmation": true
+    }
+  ],
+  "experience_surfaces": [
+    "Hiring Mission",
+    "Role Success Model",
+    "Evidence Shortlist",
+    "Interview Workspace",
+    "Calibration Room",
+    "Candidate Portal",
+    "Learning Loop"
+  ],
+  "metrics": {
+    "north_star": "quality_adjusted_hiring_success_rate",
+    "inputs": [
+      "time_to_qualified_shortlist",
+      "hiring_manager_shortlist_acceptance",
+      "Evidence coverage rate",
+      "Candidate NPS",
+      "interviewer_score_conflict_rate",
+      "offer_acceptance_rate",
+      "ninety_day_success_rate"
+    ]
+  }
+}
