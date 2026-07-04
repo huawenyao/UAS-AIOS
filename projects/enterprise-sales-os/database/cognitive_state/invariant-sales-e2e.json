@@ -1,0 +1,528 @@
+{
+  "topic": "invariant-sales-e2e",
+  "intent": {
+    "topic": "invariant-sales-e2e",
+    "payload": {
+      "governance_controls": [
+        "audit",
+        "approval"
+      ],
+      "sales_case_id": "CASE-001"
+    }
+  },
+  "knowledge": {
+    "configs": [
+      "cs_law_pack.sample",
+      "evolution_policy",
+      "governance_policy",
+      "platform_manifest",
+      "runtime_config",
+      "swarm_agents",
+      "system_registry",
+      "workflow_config",
+      "world_model"
+    ],
+    "skills": [],
+    "docs": [],
+    "capability_registry": {
+      "agents": [
+        {
+          "id": "sales_intent",
+          "name": "销售意图智能体",
+          "dimension": null,
+          "stance": null,
+          "mission": null,
+          "deliverable": null
+        },
+        {
+          "id": "quote_agent",
+          "name": "报价智能体",
+          "dimension": null,
+          "stance": null,
+          "mission": null,
+          "deliverable": null
+        },
+        {
+          "id": "governance_guard",
+          "name": "治理守门人",
+          "dimension": null,
+          "stance": null,
+          "mission": null,
+          "deliverable": null
+        }
+      ],
+      "systems": [
+        {
+          "id": "mock_crm",
+          "type": "crm",
+          "mode": "mock"
+        },
+        {
+          "id": "mock_oa",
+          "type": "oa",
+          "mode": "mock"
+        },
+        {
+          "id": "capability_registry",
+          "type": "asui_knowledge",
+          "mode": "native"
+        }
+      ],
+      "workflow_capabilities": [
+        {
+          "step_id": "intent_activation",
+          "type": "llm",
+          "agent_id": "sales_intent"
+        },
+        {
+          "step_id": "governance_check",
+          "type": "llm",
+          "agent_id": "governance_guard"
+        },
+        {
+          "step_id": "sales_execute",
+          "type": "script",
+          "agent_id": null
+        },
+        {
+          "step_id": "simulation_snapshot",
+          "type": "simulation",
+          "agent_id": null
+        },
+        {
+          "step_id": "render_report",
+          "type": "script",
+          "agent_id": null
+        }
+      ]
+    }
+  },
+  "routes": [
+    {
+      "step_id": "intent_activation",
+      "step_type": "llm",
+      "target_agent_id": "sales_intent",
+      "reason": "根据 step=intent_activation、能力注册表与当前认知状态进行路由",
+      "uncertainty": "medium",
+      "intent_keywords": []
+    },
+    {
+      "step_id": "governance_check",
+      "step_type": "llm",
+      "target_agent_id": "governance_guard",
+      "reason": "根据 step=governance_check、能力注册表与当前认知状态进行路由",
+      "uncertainty": "medium",
+      "intent_keywords": []
+    },
+    {
+      "step_id": "sales_execute",
+      "step_type": "script",
+      "target_agent_id": null,
+      "reason": "根据 step=sales_execute、能力注册表与当前认知状态进行路由",
+      "uncertainty": "medium",
+      "intent_keywords": []
+    },
+    {
+      "step_id": "simulation_snapshot",
+      "step_type": "simulation",
+      "target_agent_id": null,
+      "reason": "根据 step=simulation_snapshot、能力注册表与当前认知状态进行路由",
+      "uncertainty": "medium",
+      "intent_keywords": []
+    },
+    {
+      "step_id": "render_report",
+      "step_type": "script",
+      "target_agent_id": null,
+      "reason": "根据 step=render_report、能力注册表与当前认知状态进行路由",
+      "uncertainty": "medium",
+      "intent_keywords": []
+    }
+  ],
+  "step_outputs": {
+    "intent_activation": {
+      "topic": "invariant-sales-e2e",
+      "intent_model": [
+        "围绕“invariant-sales-e2e”生成的业务意图与成功标准"
+      ]
+    },
+    "governance_check": {
+      "governance_controls": [
+        "audit",
+        "approval"
+      ]
+    },
+    "sales_execute": {
+      "sales_case_id": "CASE-001",
+      "sales_result": {
+        "case_id": "CASE-001",
+        "passed": true,
+        "business_code": null,
+        "intent": {
+          "intent_id": "intent-CASE-001",
+          "actor": "sales_rep",
+          "business_object": "lead",
+          "risk_level": "G2"
+        },
+        "audit": [
+          {
+            "event": "intent",
+            "case_id": "CASE-001"
+          },
+          {
+            "event": "policy",
+            "risk_level": "G2",
+            "g4_reason": false
+          },
+          {
+            "event": "capability",
+            "name": "cs.lead.qualify"
+          },
+          {
+            "event": "result",
+            "qualification": "qualified"
+          }
+        ],
+        "report": {
+          "case_id": "CASE-001",
+          "conclusion": "quote_draft_ready",
+          "next_step": "internal_review_only",
+          "external_send_forbidden": true
+        },
+        "world_model_view": {
+          "subjects": [
+            "sales_rep"
+          ],
+          "objects": [
+            "lead",
+            "quote"
+          ],
+          "drive": [
+            "审批流程慢",
+            "客户跟进不可追溯"
+          ],
+          "blockers": [],
+          "connectors": [
+            "mock_crm"
+          ]
+        },
+        "state": {
+          "qualification": "qualified",
+          "final": "report_rendered",
+          "tasks": []
+        },
+        "approval": "not_required",
+        "required_roles": [],
+        "errors": []
+      },
+      "governance_controls": [
+        "audit",
+        "approval"
+      ],
+      "evolution_loop": [
+        "intent_activation",
+        "governance_check",
+        "sales_execute"
+      ],
+      "mvp_cases_passed": true,
+      "intent_model": [
+        "围绕“invariant-sales-e2e”生成的业务意图与成功标准"
+      ],
+      "final_state": "report_rendered",
+      "audit_path": "database\\audit\\runtime_CASE-001.json"
+    },
+    "simulation_snapshot": {
+      "simulation_status": "completed",
+      "value_loop_steps": {
+        "simulate": "completed",
+        "revenue": "snapshot"
+      },
+      "metrics": {
+        "cycle_time_minutes": 0,
+        "approval_pass_rate": 1.0,
+        "evidence_block_rate": 0.0,
+        "mvp_passed": true
+      },
+      "revenue_feedback": {
+        "recorded_at": "2026-06-04T14:32:01.503725+00:00",
+        "topic": "invariant-sales-e2e",
+        "metrics": {
+          "cycle_time_minutes": 0,
+          "approval_pass_rate": 1.0,
+          "evidence_block_rate": 0.0,
+          "mvp_passed": true
+        },
+        "revenue_feedback_ready": true,
+        "note": "收益反哺 evolution 可读 value_metrics.sample.json"
+      }
+    },
+    "render_report": {
+      "status": "written",
+      "report_path": "reports\\invariant-sales-e2e.md",
+      "data_path": "database\\runs\\invariant-sales-e2e.json"
+    }
+  },
+  "tensions": [],
+  "evaluation": {
+    "status": "pass",
+    "risks": [],
+    "suggestions": [
+      "满足 v0.2 标准"
+    ]
+  },
+  "evolution": {
+    "suggestions": [
+      "满足 v0.2 标准"
+    ],
+    "total_score": null,
+    "dimension_scores": {}
+  },
+  "timeline": [
+    {
+      "timestamp": "2026-06-04T14:32:01.343357+00:00",
+      "event": "intent_updated",
+      "payload": {
+        "topic": "invariant-sales-e2e",
+        "payload": {
+          "governance_controls": [
+            "audit",
+            "approval"
+          ],
+          "sales_case_id": "CASE-001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.343373+00:00",
+      "event": "knowledge_updated",
+      "payload": {
+        "configs": [
+          "cs_law_pack.sample",
+          "evolution_policy",
+          "governance_policy",
+          "platform_manifest",
+          "runtime_config",
+          "swarm_agents",
+          "system_registry",
+          "workflow_config",
+          "world_model"
+        ],
+        "skills": [],
+        "docs": [],
+        "capability_registry": {
+          "agents": [
+            {
+              "id": "sales_intent",
+              "name": "销售意图智能体",
+              "dimension": null,
+              "stance": null,
+              "mission": null,
+              "deliverable": null
+            },
+            {
+              "id": "quote_agent",
+              "name": "报价智能体",
+              "dimension": null,
+              "stance": null,
+              "mission": null,
+              "deliverable": null
+            },
+            {
+              "id": "governance_guard",
+              "name": "治理守门人",
+              "dimension": null,
+              "stance": null,
+              "mission": null,
+              "deliverable": null
+            }
+          ],
+          "systems": [
+            {
+              "id": "mock_crm",
+              "type": "crm",
+              "mode": "mock"
+            },
+            {
+              "id": "mock_oa",
+              "type": "oa",
+              "mode": "mock"
+            },
+            {
+              "id": "capability_registry",
+              "type": "asui_knowledge",
+              "mode": "native"
+            }
+          ],
+          "workflow_capabilities": [
+            {
+              "step_id": "intent_activation",
+              "type": "llm",
+              "agent_id": "sales_intent"
+            },
+            {
+              "step_id": "governance_check",
+              "type": "llm",
+              "agent_id": "governance_guard"
+            },
+            {
+              "step_id": "sales_execute",
+              "type": "script",
+              "agent_id": null
+            },
+            {
+              "step_id": "simulation_snapshot",
+              "type": "simulation",
+              "agent_id": null
+            },
+            {
+              "step_id": "render_report",
+              "type": "script",
+              "agent_id": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.344037+00:00",
+      "event": "route_recorded",
+      "payload": {
+        "step_id": "intent_activation",
+        "step_type": "llm",
+        "target_agent_id": "sales_intent",
+        "reason": "根据 step=intent_activation、能力注册表与当前认知状态进行路由",
+        "uncertainty": "medium",
+        "intent_keywords": []
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.344697+00:00",
+      "event": "step_output_recorded",
+      "payload": {
+        "step_id": "intent_activation",
+        "output_keys": [
+          "intent_model",
+          "topic"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.345364+00:00",
+      "event": "route_recorded",
+      "payload": {
+        "step_id": "governance_check",
+        "step_type": "llm",
+        "target_agent_id": "governance_guard",
+        "reason": "根据 step=governance_check、能力注册表与当前认知状态进行路由",
+        "uncertainty": "medium",
+        "intent_keywords": []
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.345993+00:00",
+      "event": "step_output_recorded",
+      "payload": {
+        "step_id": "governance_check",
+        "output_keys": [
+          "governance_controls"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.346641+00:00",
+      "event": "route_recorded",
+      "payload": {
+        "step_id": "sales_execute",
+        "step_type": "script",
+        "target_agent_id": null,
+        "reason": "根据 step=sales_execute、能力注册表与当前认知状态进行路由",
+        "uncertainty": "medium",
+        "intent_keywords": []
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.404638+00:00",
+      "event": "step_output_recorded",
+      "payload": {
+        "step_id": "sales_execute",
+        "output_keys": [
+          "audit_path",
+          "evolution_loop",
+          "final_state",
+          "governance_controls",
+          "intent_model",
+          "mvp_cases_passed",
+          "sales_case_id",
+          "sales_result"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.405541+00:00",
+      "event": "route_recorded",
+      "payload": {
+        "step_id": "simulation_snapshot",
+        "step_type": "simulation",
+        "target_agent_id": null,
+        "reason": "根据 step=simulation_snapshot、能力注册表与当前认知状态进行路由",
+        "uncertainty": "medium",
+        "intent_keywords": []
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.516612+00:00",
+      "event": "step_output_recorded",
+      "payload": {
+        "step_id": "simulation_snapshot",
+        "output_keys": [
+          "metrics",
+          "revenue_feedback",
+          "simulation_status",
+          "value_loop_steps"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.517974+00:00",
+      "event": "route_recorded",
+      "payload": {
+        "step_id": "render_report",
+        "step_type": "script",
+        "target_agent_id": null,
+        "reason": "根据 step=render_report、能力注册表与当前认知状态进行路由",
+        "uncertainty": "medium",
+        "intent_keywords": []
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.576623+00:00",
+      "event": "step_output_recorded",
+      "payload": {
+        "step_id": "render_report",
+        "output_keys": [
+          "data_path",
+          "report_path",
+          "status"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.629819+00:00",
+      "event": "evaluation_updated",
+      "payload": {
+        "status": "pass"
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:32:01.630774+00:00",
+      "event": "evolution_updated",
+      "payload": {
+        "suggestions": [
+          "满足 v0.2 标准"
+        ],
+        "total_score": null,
+        "dimension_scores": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "template_id": "cs_customer_service",
+  "name": "客服工单处理",
+  "domain": "pipaw_cs",
+  "states": ["ticket_open", "triaged", "resolved", "escalated"],
+  "transitions": [
+    {"from": "ticket_open", "to": "triaged", "capability": "cs.ticket.triage"},
+    {"from": "triaged", "to": "resolved", "capability": "cs.ticket.resolve"},
+    {"from": "triaged", "to": "escalated", "operation": "cs.process.escalate"}
+  ],
+  "escalation": {
+    "on": ["SLA_BREACH", "SENTIMENT_NEGATIVE"],
+    "operation": "cs.process.escalate",
+    "assignee_roles": ["cs_manager"]
+  }
+}

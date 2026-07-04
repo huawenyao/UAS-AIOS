@@ -23,6 +23,10 @@
 | 文件 | 用途 |
 |------|------|
 | `configs/workflow_config.json` | 蜂群工作流定义 |
+| `configs/platform_manifest.json` | UAS 平台清单（ASUI 验证 + 可选升级 projects） |
+| `configs/governance_policy.json` | 治理策略 |
+| `configs/evolution_policy.json` | 演化与复盘策略 |
+| `configs/system_registry.json` | 系统网格 |
 | `configs/swarm_agents.json` | 智能体角色、使命、对手盘定义 |
 | `.claude/skills/swarm_protocol.md` | 三阶段执行协议 |
 | `.claude/skills/decision_output_contract.md` | 最终输出契约 |

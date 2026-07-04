@@ -79,6 +79,18 @@
       "default_data_scopes": [{ "type": "tenant" }]
     },
     {
+      "role_id": "role.finance",
+      "name": "财务数字岗位（ΠPaw 原型）",
+      "product_track": "pipaw",
+      "allowed_operations": [
+        "cs.process.start",
+        "cs.process.advance",
+        "cs.approval.submit",
+        "cs.notify.send_im"
+      ],
+      "default_data_scopes": [{ "type": "tenant" }]
+    },
+    {
       "role_id": "role.compliance",
       "name": "合规官",
       "product_track": "shared",

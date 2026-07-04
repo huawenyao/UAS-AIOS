@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asui.dev/schemas/cs_form_operation.schema.json",
+  "title": "cs.form operation",
+  "type": "object",
+  "required": ["operation", "tenant_id", "form_id", "actor_id"],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": ["cs.form.render", "cs.form.submit", "cs.form.validate"]
+    },
+    "tenant_id": { "type": "string" },
+    "form_id": { "type": "string" },
+    "template_id": { "type": "string" },
+    "actor_id": { "type": "string" },
+    "fields": { "type": "object" },
+    "validation_errors": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": true
+}

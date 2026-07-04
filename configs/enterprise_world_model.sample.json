@@ -1,0 +1,30 @@
+{
+  "world_model_id": "enterprise_edh_sample",
+  "dimensions": {
+    "space": {"tenant_id": "tenant_acme", "data_region": "cn-east", "systems": ["mock_crm", "mock_oa"]},
+    "time": {"approval_sla_hours": 24, "quote_valid_days": 15},
+    "subject": [
+      {"id": "sales_rep", "type": "human_role"},
+      {"id": "ppaw_sales_advisor", "type": "agent"}
+    ],
+    "object": [
+      {"id": "lead", "lifecycle": ["new", "qualified"]},
+      {"id": "quote", "lifecycle": ["draft", "pending_approval"]}
+    ],
+    "feedback": [
+      {"id": "capability_result", "type": "system_event"},
+      {"id": "approval_result", "type": "human_decision"}
+    ]
+  },
+  "identities": {
+    "mirror": "反映租户内线索/报价/审批真实状态",
+    "lens": "通过 G0-G4 与证据规则看本质风险",
+    "furnace": "ChangeSet 草案重塑 Agent 与法则包"
+  },
+  "law_pack": [
+    {"id": "sla_response", "summary": "线索 24h 内响应", "risk_level": "G2"},
+    {"id": "approval_matrix", "summary": "超 15% 折扣需销售经理审批", "risk_level": "G3"},
+    {"id": "compliance_redline", "summary": "禁止自动对外发送报价", "risk_level": "G4"}
+  ],
+  "governance_alignment": "projects/*/configs/governance_policy.json"
+}

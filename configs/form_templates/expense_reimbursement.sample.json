@@ -1,0 +1,15 @@
+{
+  "template_id": "expense_reimbursement",
+  "name": "报销申请",
+  "domain": "finance",
+  "fields": [
+    {"id": "amount", "type": "number", "required": true, "min": 0},
+    {"id": "category", "type": "enum", "required": true, "options": ["travel", "entertainment", "procurement"]},
+    {"id": "receipt_ids", "type": "array", "required": true, "min_items": 1},
+    {"id": "description", "type": "string", "required": false}
+  ],
+  "validation_rules": [
+    {"if": "amount > 5000", "then": {"risk_level": "G3", "required_roles": ["finance_reviewer"]}}
+  ],
+  "linked_process_template": "cs_customer_service"
+}

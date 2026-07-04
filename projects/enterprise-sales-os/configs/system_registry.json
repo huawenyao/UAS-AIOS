@@ -1,0 +1,19 @@
+{
+  "version": "v1.0",
+  "capabilities": [
+    "cs.lead.qualify",
+    "cs.quote.draft",
+    "cs.approval.request",
+    "cs.audit.append",
+    "cs.process.start",
+    "cs.process.advance",
+    "cs.process.escalate"
+  ],
+  "systems": [
+    {"id": "mock_crm", "type": "crm", "mode": "mock"},
+    {"id": "mock_oa", "type": "oa", "mode": "mock"},
+    {"id": "capability_registry", "type": "asui_knowledge", "mode": "native"}
+  ],
+  "connectors": ["mock_crm", "mock_oa"],
+  "deployment_mode": "local_mock"
+}

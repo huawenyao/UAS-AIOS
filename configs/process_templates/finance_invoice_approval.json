@@ -1,0 +1,16 @@
+{
+  "template_id": "finance_invoice_approval",
+  "name": "开票与回款审批",
+  "domain": "finance",
+  "states": ["draft", "submitted", "approved", "paid"],
+  "transitions": [
+    {"from": "draft", "to": "submitted", "capability": "cs.approval.submit"},
+    {"from": "submitted", "to": "approved", "capability": "cs.approval.approve"},
+    {"from": "approved", "to": "paid", "capability": "cs.process.advance"}
+  ],
+  "escalation": {
+    "on": ["G4", "AMOUNT_THRESHOLD"],
+    "operation": "cs.process.escalate",
+    "assignee_roles": ["finance_manager"]
+  }
+}

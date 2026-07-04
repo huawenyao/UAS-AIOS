@@ -1,0 +1,19 @@
+{
+  "$schema": "https://asui.dev/schemas/uas_platform_manifest.schema.json",
+  "version": "v1.0",
+  "platform": {
+    "name": "UAS-Platform",
+    "formal_definition": ["I", "K", "R", "A", "S", "G", "E", "Π"],
+    "technical_base": "ASUI",
+    "runtime": "autonomous_agent"
+  },
+  "app": {
+    "id": "ai-recruitment-example",
+    "mode": "asui_validation",
+    "full_subapp_reference": "projects/ai-recruitment-os"
+  },
+  "defaults": {
+    "require_governance": true,
+    "require_evolution": true
+  }
+}

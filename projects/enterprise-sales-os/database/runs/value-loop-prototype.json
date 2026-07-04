@@ -1,0 +1,209 @@
+{
+  "topic": "value-loop-prototype",
+  "intent_model": [
+    "围绕“value-loop-prototype”生成的业务意图与成功标准"
+  ],
+  "governance_controls": [
+    "audit",
+    "approval",
+    "rollback"
+  ],
+  "sales_execute_result": {
+    "sales_case_id": "CASE-001",
+    "sales_result": {
+      "case_id": "CASE-001",
+      "passed": true,
+      "business_code": null,
+      "intent": {
+        "intent_id": "intent-CASE-001",
+        "actor": "sales_rep",
+        "business_object": "lead",
+        "risk_level": "G2"
+      },
+      "audit": [
+        {
+          "event": "intent",
+          "case_id": "CASE-001"
+        },
+        {
+          "event": "policy",
+          "risk_level": "G2",
+          "g4_reason": false
+        },
+        {
+          "event": "capability",
+          "name": "cs.lead.qualify"
+        },
+        {
+          "event": "result",
+          "qualification": "qualified"
+        }
+      ],
+      "report": {
+        "case_id": "CASE-001",
+        "conclusion": "quote_draft_ready",
+        "next_step": "internal_review_only",
+        "external_send_forbidden": true
+      },
+      "world_model_view": {
+        "subjects": [
+          "sales_rep"
+        ],
+        "objects": [
+          "lead",
+          "quote"
+        ],
+        "drive": [
+          "审批流程慢",
+          "客户跟进不可追溯"
+        ],
+        "blockers": [],
+        "connectors": [
+          "mock_crm"
+        ]
+      },
+      "state": {
+        "qualification": "qualified",
+        "final": "report_rendered",
+        "tasks": []
+      },
+      "approval": "not_required",
+      "required_roles": [],
+      "errors": []
+    },
+    "governance_controls": [
+      "audit",
+      "approval",
+      "rollback"
+    ],
+    "evolution_loop": [
+      "intent_activation",
+      "governance_check",
+      "sales_execute"
+    ],
+    "mvp_cases_passed": true,
+    "intent_model": [
+      "围绕“value-loop-prototype”生成的业务意图与成功标准"
+    ],
+    "final_state": "report_rendered",
+    "audit_path": "database\\audit\\runtime_CASE-001.json"
+  },
+  "sales_case_id": "CASE-001",
+  "sales_result": {
+    "case_id": "CASE-001",
+    "passed": true,
+    "business_code": null,
+    "intent": {
+      "intent_id": "intent-CASE-001",
+      "actor": "sales_rep",
+      "business_object": "lead",
+      "risk_level": "G2"
+    },
+    "audit": [
+      {
+        "event": "intent",
+        "case_id": "CASE-001"
+      },
+      {
+        "event": "policy",
+        "risk_level": "G2",
+        "g4_reason": false
+      },
+      {
+        "event": "capability",
+        "name": "cs.lead.qualify"
+      },
+      {
+        "event": "result",
+        "qualification": "qualified"
+      }
+    ],
+    "report": {
+      "case_id": "CASE-001",
+      "conclusion": "quote_draft_ready",
+      "next_step": "internal_review_only",
+      "external_send_forbidden": true
+    },
+    "world_model_view": {
+      "subjects": [
+        "sales_rep"
+      ],
+      "objects": [
+        "lead",
+        "quote"
+      ],
+      "drive": [
+        "审批流程慢",
+        "客户跟进不可追溯"
+      ],
+      "blockers": [],
+      "connectors": [
+        "mock_crm"
+      ]
+    },
+    "state": {
+      "qualification": "qualified",
+      "final": "report_rendered",
+      "tasks": []
+    },
+    "approval": "not_required",
+    "required_roles": [],
+    "errors": []
+  },
+  "evolution_loop": [
+    "intent_activation",
+    "governance_check",
+    "sales_execute"
+  ],
+  "mvp_cases_passed": true,
+  "final_state": "report_rendered",
+  "audit_path": "database\\audit\\runtime_CASE-001.json",
+  "simulation_snapshot_result": {
+    "simulation_status": "completed",
+    "value_loop_steps": {
+      "simulate": "completed",
+      "revenue": "snapshot"
+    },
+    "metrics": {
+      "cycle_time_minutes": 0,
+      "approval_pass_rate": 1.0,
+      "evidence_block_rate": 0.0,
+      "mvp_passed": true
+    },
+    "revenue_feedback": {
+      "recorded_at": "2026-06-04T14:32:04.679778+00:00",
+      "topic": "value-loop-prototype",
+      "metrics": {
+        "cycle_time_minutes": 0,
+        "approval_pass_rate": 1.0,
+        "evidence_block_rate": 0.0,
+        "mvp_passed": true
+      },
+      "revenue_feedback_ready": true,
+      "note": "收益反哺 evolution 可读 value_metrics.sample.json"
+    }
+  },
+  "simulation_status": "completed",
+  "value_loop_steps": {
+    "simulate": "completed",
+    "revenue": "snapshot"
+  },
+  "metrics": {
+    "cycle_time_minutes": 0,
+    "approval_pass_rate": 1.0,
+    "evidence_block_rate": 0.0,
+    "mvp_passed": true
+  },
+  "revenue_feedback": {
+    "recorded_at": "2026-06-04T14:32:04.679778+00:00",
+    "topic": "value-loop-prototype",
+    "metrics": {
+      "cycle_time_minutes": 0,
+      "approval_pass_rate": 1.0,
+      "evidence_block_rate": 0.0,
+      "mvp_passed": true
+    },
+    "revenue_feedback_ready": true,
+    "note": "收益反哺 evolution 可读 value_metrics.sample.json"
+  }
+}

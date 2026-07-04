@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asui.dev/schemas/enterprise_world_model.schema.json",
+  "title": "Enterprise World Model",
+  "type": "object",
+  "required": ["world_model_id", "dimensions", "identities", "law_pack"],
+  "properties": {
+    "world_model_id": { "type": "string" },
+    "dimensions": {
+      "type": "object",
+      "required": ["space", "time", "subject", "object", "feedback"],
+      "properties": {
+        "space": { "type": "object" },
+        "time": { "type": "object" },
+        "subject": { "type": "array" },
+        "object": { "type": "array" },
+        "feedback": { "type": "array" }
+      }
+    },
+    "identities": {
+      "type": "object",
+      "required": ["mirror", "lens", "furnace"],
+      "properties": {
+        "mirror": { "type": "string" },
+        "lens": { "type": "string" },
+        "furnace": { "type": "string" }
+      }
+    },
+    "law_pack": { "type": "array" }
+  }
+}

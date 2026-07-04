@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/task_panel_view.schema.json",
+  "title": "TaskPanelView",
+  "description": "ΠPaw Task Panel 视图模型：任务态（非执行日志）。对齐 Demo 待办/当前任务区。",
+  "type": "object",
+  "required": ["tenant_id", "assignee_role_id", "summary", "backlog", "current"],
+  "properties": {
+    "tenant_id": { "type": "string" },
+    "assignee_role_id": { "type": "string" },
+    "agent_id": { "type": "string" },
+    "summary": {
+      "type": "object",
+      "required": ["backlog_count", "has_current"],
+      "properties": {
+        "backlog_count": { "type": "integer" },
+        "has_current": { "type": "boolean" },
+        "sla_at_risk": { "type": "integer" }
+      }
+    },
+    "backlog": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/panelItem" }
+    },
+    "current": {
+      "oneOf": [{ "$ref": "#/definitions/panelItem" }, { "type": "null" }]
+    }
+  },
+  "definitions": {
+    "panelItem": {
+      "type": "object",
+      "required": [
+        "item_id",
+        "source_type",
+        "status",
+        "display_phase",
+        "title",
+        "priority",
+        "steps"
+      ],
+      "properties": {
+        "item_id": { "type": "string" },
+        "source_type": { "type": "string", "enum": ["working_task", "ticket"] },
+        "status": {
+          "type": "string",
+          "enum": ["open", "in_progress", "blocked", "done", "cancelled"]
+        },
+        "display_phase": {
+          "type": "string",
+          "enum": ["backlog", "current", "completed"],
+          "description": "UI 分区：待办列表 vs 当前任务执行区"
+        },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "priority": { "type": "string" },
+        "due_at": { "type": "string" },
+        "sla_label": { "type": "string" },
+        "business_context": { "type": "object" },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["step_id", "label", "done", "current"],
+            "properties": {
+              "step_id": { "type": "string" },
+              "label": { "type": "string" },
+              "done": { "type": "boolean" },
+              "current": { "type": "boolean" },
+              "operation_ref": { "type": "string" }
+            }
+          }
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "action"],
+            "properties": {
+              "label": { "type": "string" },
+              "action": { "type": "string", "enum": ["open", "complete_step", "escalate", "close"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

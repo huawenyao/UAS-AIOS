@@ -7,6 +7,7 @@
 ## 核心命令
 
 - `python run_batch.py [--resume-dir DIR] [--feedback]` - **P0 一键批次**（扫描→报告→价值摘要→推荐名单）
+- `python scripts/run_entity_closed_loop.py` - **实体事件闭环**（初筛→面试任务→事件→评价→通知）
 - `python run_interactive.py` - 交互式菜单（HR 友好）
 - `/start` - 启动招聘流程
 - `/addJob [岗位描述]` - 添加岗位并解析 JD

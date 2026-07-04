@@ -118,7 +118,21 @@ class RuntimeManager:
                 continue
 
             if step_type == "simulation":
-                self.audit_engine.record({"event": "step_skipped_simulation_placeholder", "step_id": step["id"]})
+                script = step.get("script")
+                if script:
+                    output = self.tool_gateway.execute_script(self.app_root, script, state)
+                    state[f"{step['id']}_result"] = output
+                    state.update(output)
+                    state_store.record_step_output(step["id"], output)
+                    self.audit_engine.record(
+                        {
+                            "event": "simulation_completed",
+                            "step_id": step["id"],
+                            "output_keys": sorted(output.keys()),
+                        }
+                    )
+                else:
+                    self.audit_engine.record({"event": "step_skipped_simulation_placeholder", "step_id": step["id"]})
                 continue
 
         evaluation = None

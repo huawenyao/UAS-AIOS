@@ -70,15 +70,26 @@
       "type": "product",
       "description": "User AGI 企业版：员工数字分身",
       "depends_on": ["UASKernel", "CapabilityServiceRegistry", "EnterpriseDataPlane"],
-      "files": [],
-      "reference_repo": "../aipos/copaw-src"
+      "files": [
+        "projects/selfpaw-enterprise/",
+        "asui-cli/src/asui/org_identity.py",
+        "asui-cli/src/asui/domain_binding.py",
+        "configs/selfpaw_enterprise.feature_flags.json",
+        "configs/role_domain_bindings.json"
+      ],
+      "status": "reference_implemented",
+      "reference_repo": "../aipos/copaw-src",
+      "reference_repo_absolute": "C:/Users/ranwu/XiaomiCloud/aipos/copaw-src",
+      "implementation_note": "User AGI 主实现在 aipos/copaw-src；本仓库为企业集成与升级 ΠPaw 契约"
     },
     "PiPawBusinessAGI": {
       "type": "product",
       "description": "Business AGI：经营数字岗位体系",
       "depends_on": ["UASKernel", "CapabilityServiceRegistry", "OutwardGateway"],
       "files": [
-        "docs/strategic/demo/ΠPaw_Enterprise_Demo.html"
+        "docs/strategic/demo/ΠPaw_Enterprise_Demo.html",
+        "asui-cli/src/asui/pipaw_task_panel.py",
+        "schemas/task_panel_view.schema.json"
       ]
     },
     "Domain": {
@@ -102,13 +113,20 @@
       "type": "concept",
       "description": "单次执行单元，桥接 Domain/Project 与 Task Panel",
       "depends_on": ["Project"],
-      "files": []
+      "files": [
+        "schemas/working_task.schema.json",
+        "database/edh/working_tasks.json"
+      ]
     },
     "BusinessAgentRoster": {
       "type": "concept",
       "description": "ΠPaw 岗位 Agent 编制：销售/客服/合规/调度等",
       "depends_on": ["Domain", "PiPawBusinessAGI"],
-      "files": []
+      "files": [
+        "schemas/business_agent_roster.schema.json",
+        "configs/pipaw_business_agent_roster.json",
+        "harness/knowledge/technical/pipaw-cs-agent-benchmark.md"
+      ]
     },
     "IntentHub": {
       "type": "service",

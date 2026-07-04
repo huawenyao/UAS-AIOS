@@ -8,8 +8,8 @@
 
 ## Acceptance Criteria
 
-- [ ] 企业级 `governance_policy.json` 模板（G1-G7 + L1/L2/L3）
-- [ ] `evolve_apply.py` 支持 cs 法则包回写路径
+- [x] 企业级 `governance_policy.json` 模板（G1-G7 + L1/L2/L3）— 见 `projects/enterprise-sales-os/configs/`
+- [x] `evolve_apply.py` 支持 cs 法则包回写路径（`--law-pack` 输出目标路径，不自动写入）
 - [ ] ChangeSet 审计字段与 PL-06 一致
 
 ## 映射能力

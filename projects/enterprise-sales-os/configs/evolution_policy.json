@@ -1,0 +1,19 @@
+{
+  "version": "v1.0",
+  "human_feedback_path": "database/feedback/{topic_slug}.json",
+  "changeset": {
+    "auto_apply": false,
+    "require_human_approval": true,
+    "audit_fields": ["intent_id", "policy_id", "capability_id", "result", "actor"]
+  },
+  "iteration": {
+    "enabled": true,
+    "require_validation_before_evolution": true,
+    "default_loop": ["intent_activation", "governance_check", "evolution_plan"]
+  },
+  "value_loop": {
+    "simulation_step": "simulation_snapshot",
+    "revenue_metrics_ref": "../../configs/value_metrics.sample.json",
+    "revenue_feedback_path": "database/value_feedback/{topic_slug}.json"
+  }
+}

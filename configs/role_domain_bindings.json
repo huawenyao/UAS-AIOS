@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-06-04T12:00:00Z",
+  "domain_builder_format": "domain_pack_v1",
+  "bindings": [
+    {
+      "position_code": "SALES_REP",
+      "domain_id": "domain.sales",
+      "display_name": "销售岗位域",
+      "ontology_ref": ".claude/skills/domain_builder.md#sales",
+      "capability_whitelist": [
+        "cs.customer.get_profile",
+        "cs.customer.query",
+        "cs.lead.qualify_lead",
+        "cs.lead.list",
+        "cs.process.start",
+        "cs.process.advance",
+        "cs.notify.send_im"
+      ],
+      "compliance_tags": ["G1", "G4"]
+    },
+    {
+      "position_code": "CS_AGENT",
+      "domain_id": "domain.customer_service",
+      "display_name": "客服岗位域",
+      "ontology_ref": "pipaw_cs_agent_playbook",
+      "capability_whitelist": [
+        "cs.customer.get_profile",
+        "cs.ticket.create",
+        "cs.ticket.escalate",
+        "cs.process.start",
+        "cs.process.advance"
+      ],
+      "compliance_tags": ["G1", "G4", "G6"]
+    },
+    {
+      "position_code": "HR_GENERALIST",
+      "domain_id": "domain.hr",
+      "display_name": "人力资源岗位域",
+      "ontology_ref": "projects/ai-recruitment-os",
+      "capability_whitelist": [
+        "cs.process.start",
+        "cs.approval.submit",
+        "cs.notify.send_im"
+      ],
+      "compliance_tags": ["G1", "G6"]
+    },
+    {
+      "position_code": "RD_ENGINEER",
+      "domain_id": "domain.rd",
+      "display_name": "研发岗位域",
+      "ontology_ref": "examples/selfpaw-cognitive-swarm",
+      "capability_whitelist": [
+        "cs.process.start",
+        "cs.notify.send_im"
+      ],
+      "compliance_tags": ["G1"]
+    }
+  ]
+}

@@ -18,6 +18,8 @@ technical:
     title: SystemConnector 与密钥分区
   - file: technical/intent-escalation-api.md
     title: Intent Hub 与升级 ΠPaw API 草案
+  - file: technical/pipaw-cs-agent-benchmark.md
+    title: ΠPaw 客服岗位 Agent 标杆（P1）
 domain:
   - file: domain/glossary.md
     title: 数字人生态术语表

@@ -1,0 +1,44 @@
+{
+  "agents": [
+    {
+      "id": "personal_intent",
+      "name": "个人意图智能体",
+      "dimension": null,
+      "stance": null,
+      "mission": null,
+      "deliverable": null
+    },
+    {
+      "id": "domain_guard",
+      "name": "岗位域守门人",
+      "dimension": null,
+      "stance": null,
+      "mission": null,
+      "deliverable": null
+    }
+  ],
+  "systems": [
+    {
+      "id": "tenant_catalog",
+      "type": "identity",
+      "mode": "native"
+    },
+    {
+      "id": "role_domain_bindings",
+      "type": "knowledge",
+      "mode": "native"
+    }
+  ],
+  "workflow_capabilities": [
+    {
+      "step_id": "intent_activation",
+      "type": "script",
+      "agent_id": null
+    },
+    {
+      "step_id": "render_report",
+      "type": "script",
+      "agent_id": null
+    }
+  ]
+}

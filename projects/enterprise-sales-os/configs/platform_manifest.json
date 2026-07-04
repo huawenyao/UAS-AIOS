@@ -1,0 +1,28 @@
+{
+  "$schema": "https://asui.dev/schemas/uas_platform_manifest.schema.json",
+  "version": "v1.0",
+  "platform": {
+    "name": "UAS-Platform",
+    "formal_definition": ["I", "K", "R", "A", "S", "G", "E", "Π"],
+    "enterprise_agi_definition": "目标驱动 + 知识驱动 + Agent协作 + 系统执行 + 审计治理 + 演化闭环",
+    "technical_base": "ASUI",
+    "runtime": "autonomous_agent"
+  },
+  "app": {
+    "id": "enterprise-sales-os",
+    "name": "Enterprise Sales OS",
+    "mvp_version": "v0.3",
+    "spec_root": "docs/enterprise-sales-os"
+  },
+  "capability_dependencies": [
+    "cs.lead.qualify",
+    "cs.quote.draft",
+    "cs.approval.request",
+    "cs.audit.append"
+  ],
+  "defaults": {
+    "require_governance": true,
+    "require_evolution": true,
+    "require_audit": true
+  }
+}

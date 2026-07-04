@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "tenant_id": "t-acme-demo",
+  "updated_at": "2026-05-23T18:00:00Z",
+  "agents": [
+    {
+      "agent_id": "agent.cs_specialist",
+      "name": "客服数字岗位 Agent（P1 标杆）",
+      "position_id": "pos-cs-agent",
+      "role_id": "role.cs_agent",
+      "product_track": "pipaw",
+      "domain_id": "domain.customer_service",
+      "outward": true,
+      "bound_operations": [
+        "cs.customer.get_profile",
+        "cs.ticket.create",
+        "cs.ticket.escalate"
+      ],
+      "narrative_aliases": {
+        "cs.customer": "cs.customer.get_profile",
+        "cs.ticket": "cs.ticket.create",
+        "cs.escalate": "cs.ticket.escalate"
+      },
+      "playbook_id": "playbook.cs_complaint_v1",
+      "demo_reference": "docs/strategic/demo/ΠPaw_Enterprise_Demo.html（待办任务 + 当前任务执行区）"
+    }
+  ]
+}

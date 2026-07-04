@@ -1,0 +1,21 @@
+{
+  "version": "v1.0",
+  "pack_id": "enterprise_sales_os_laws",
+  "laws": [
+    {
+      "id": "sla_response",
+      "summary": "线索 24h 内首次响应",
+      "risk_level": "G2"
+    },
+    {
+      "id": "approval_matrix",
+      "summary": "超 15% 折扣需销售经理审批",
+      "risk_level": "G3"
+    },
+    {
+      "id": "compliance_redline",
+      "summary": "禁止自动对外发送报价",
+      "risk_level": "G4"
+    }
+  ]
+}

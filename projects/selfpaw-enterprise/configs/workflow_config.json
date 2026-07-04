@@ -1,0 +1,20 @@
+{
+  "version": "v1.0",
+  "name": "SelfPaw Enterprise Session",
+  "description": "组织身份绑定 → 岗位 Domain 注入 → 个人意图归一化",
+  "steps": [
+    {
+      "id": "intent_activation",
+      "name": "个人意图激活",
+      "type": "script",
+      "script": "scripts/run_selfpaw_session.py"
+    },
+    {
+      "id": "render_report",
+      "name": "会话报告",
+      "type": "script",
+      "dependencies": ["intent_activation"],
+      "script": "scripts/render_session_report.py"
+    }
+  ]
+}

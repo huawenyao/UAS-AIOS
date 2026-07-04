@@ -1,0 +1,19 @@
+{
+  "template_id": "sales_quote_approval",
+  "name": "B2B 线索到报价审批",
+  "domain": "enterprise_sales",
+  "states": ["lead_created", "qualified", "quote_drafting", "approval_pending", "report_rendered", "evidence_required", "business_blocked"],
+  "transitions": [
+    {"from": "lead_created", "to": "qualified", "capability": "cs.lead.qualify"},
+    {"from": "qualified", "to": "quote_drafting", "capability": "cs.quote.draft"},
+    {"from": "quote_drafting", "to": "approval_pending", "condition": "risk>=G3"},
+    {"from": "approval_pending", "to": "report_rendered", "condition": "approved"},
+    {"from": "qualified", "to": "evidence_required", "condition": "EVIDENCE_REQUIRED"},
+    {"from": "*", "to": "business_blocked", "condition": "BUSINESS_RULE_BLOCKED"}
+  ],
+  "escalation": {
+    "on": ["G3", "G4", "CONNECTOR_UNAVAILABLE"],
+    "operation": "cs.process.escalate",
+    "assignee_roles": ["sales_manager", "finance_reviewer"]
+  }
+}

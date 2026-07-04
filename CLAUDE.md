@@ -205,7 +205,10 @@ execution → monitoring → render_report → evaluation
 | 企业级产品方案与模块设计 | docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md |
 | 企业级架构与产品图谱 | docs/UAS_AIOS_ENTERPRISE_VISUAL_BLUEPRINT.md |
 | Enterprise Sales OS MVP开发规约 | docs/enterprise-sales-os/README.md |
-| 蜂群智能体实现 | examples/selfpaw-cognitive-swarm/ |
+| 分类治理与未闭环追踪 | docs/GOVERNANCE_REGISTRY.md |
+| 生态全场景原型与完成度 | docs/ECOSYSTEM_IMPLEMENTATION_STATUS.md · `scripts/run_ecosystem_prototype.py` |
+| SelfPaw User AGI 主实现（copaw-src） | [SELFPaw_REFERENCE_IMPLEMENTATION.md](./docs/SELFPaw_REFERENCE_IMPLEMENTATION.md) · `../aipos/copaw-src` |
+| 蜂群智能体示例（UAS 模板） | examples/selfpaw-cognitive-swarm/ |
 | 三维理念现实 | examples/triadic-ideal-reality-swarm/ |
 | 领域构建评估技能 | .claude/skills/domain_builder.md |
 | Agent注册表 | .claude/agents/domain_agent_registry.json |

@@ -1,0 +1,11 @@
+{
+  "version": "v1.0",
+  "human_feedback_path": "database/feedback/{topic_slug}.json",
+  "iteration": {
+    "enabled": true,
+    "default_loop": ["intake", "first_negation", "second_negation", "synthesis", "retrospective"]
+  },
+  "evaluation_thresholds": {
+    "consensus_clarity_score": 0.7
+  }
+}

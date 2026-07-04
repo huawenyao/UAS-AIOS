@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asui.dev/schemas/cs_process_operation.schema.json",
+  "title": "cs.process operation",
+  "type": "object",
+  "required": ["operation", "tenant_id", "process_id", "actor_id"],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": ["cs.process.start", "cs.process.advance", "cs.process.escalate"]
+    },
+    "tenant_id": { "type": "string" },
+    "process_id": { "type": "string" },
+    "actor_id": { "type": "string" },
+    "template_id": { "type": "string" },
+    "current_state": { "type": "string" },
+    "payload": { "type": "object" },
+    "escalation_reason": { "type": "string" }
+  },
+  "additionalProperties": true
+}

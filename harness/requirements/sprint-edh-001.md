@@ -13,7 +13,7 @@
 3. ✅ 租户/权限/审计 规格（REQ-EDH-PL-001/002/006）
 4. ✅ CRM+OA 连接器 mock（REQ-EDH-PL-007）
 5. ✅ Intent 升级契约（REQ-EDH-SP-003）
-6. ⬜ 客服 Agent 标杆 PRD+原型对齐（REQ-EDH-PP-001）
+6. ✅ 客服 Agent 标杆 PRD+原型对齐（REQ-EDH-PP-001）
 
 ## 需求燃尽（计划）
 
@@ -27,6 +27,6 @@
 
 ## DoD（Sprint）
 
-- [ ] `python harness/invariants/run-all.py` 全 PASS
+- [x] `python harness/invariants/run-all.py` 全 PASS
 - [ ] Phase-0 需求 ≥30% 转 in_progress
 - [ ] 能力服务契约 PR 合并

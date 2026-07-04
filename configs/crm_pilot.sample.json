@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "pilot_id": "crm-sandbox-v0.3",
+  "status": "prototype",
+  "connector_id": "connector.crm.sandbox",
+  "deployment": "mock_with_pilot_contract",
+  "capabilities": ["cs.customer.get_profile", "cs.lead.qualify_lead", "cs.lead.list"],
+  "tenant_allowlist": ["t-acme-demo"],
+  "audit_required": true,
+  "notes": "REQ C-05 原型：可切换为真 CRM 时替换 connector 端点，契约不变"
+}

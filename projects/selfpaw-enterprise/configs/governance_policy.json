@@ -1,0 +1,9 @@
+{
+  "version": "v1.0",
+  "governance": {
+    "audit_required": true,
+    "product_track": "selfpaw",
+    "require_tenant_context": true,
+    "escalation_requires_evidence": true
+  }
+}

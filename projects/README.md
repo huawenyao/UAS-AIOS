@@ -30,6 +30,13 @@ python3 scripts/run_uas_runtime_service.py process
 python3 scripts/run_uas_runtime_service.py queue
 ```
 
+## 当前 SubApp
+
+| 目录 | 说明 | 验收 |
+|------|------|------|
+| `ai-recruitment-os/` | 全流程招聘智能 OS | `pytest` + `run_uas_runtime_service` |
+| `enterprise-sales-os/` | B2B 线索→报价→审批 MVP v0.2 | `python projects/enterprise-sales-os/scripts/evaluate_sales_mvp.py` |
+
 ## 标准约束
 
 所有 `projects/<business-app>/` 都必须：

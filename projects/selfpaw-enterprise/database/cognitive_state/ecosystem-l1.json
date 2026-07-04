@@ -1,0 +1,264 @@
+{
+  "topic": "ecosystem-l1",
+  "intent": {
+    "topic": "ecosystem-l1",
+    "payload": {}
+  },
+  "knowledge": {
+    "configs": [
+      "evolution_policy",
+      "governance_policy",
+      "platform_manifest",
+      "runtime_config",
+      "swarm_agents",
+      "system_registry",
+      "workflow_config"
+    ],
+    "skills": [],
+    "docs": [],
+    "capability_registry": {
+      "agents": [
+        {
+          "id": "personal_intent",
+          "name": "个人意图智能体",
+          "dimension": null,
+          "stance": null,
+          "mission": null,
+          "deliverable": null
+        },
+        {
+          "id": "domain_guard",
+          "name": "岗位域守门人",
+          "dimension": null,
+          "stance": null,
+          "mission": null,
+          "deliverable": null
+        }
+      ],
+      "systems": [
+        {
+          "id": "tenant_catalog",
+          "type": "identity",
+          "mode": "native"
+        },
+        {
+          "id": "role_domain_bindings",
+          "type": "knowledge",
+          "mode": "native"
+        }
+      ],
+      "workflow_capabilities": [
+        {
+          "step_id": "intent_activation",
+          "type": "script",
+          "agent_id": null
+        },
+        {
+          "step_id": "render_report",
+          "type": "script",
+          "agent_id": null
+        }
+      ]
+    }
+  },
+  "routes": [
+    {
+      "step_id": "intent_activation",
+      "step_type": "script",
+      "target_agent_id": null,
+      "reason": "根据 step=intent_activation、能力注册表与当前认知状态进行路由",
+      "uncertainty": "medium",
+      "intent_keywords": []
+    },
+    {
+      "step_id": "render_report",
+      "step_type": "script",
+      "target_agent_id": null,
+      "reason": "根据 step=render_report、能力注册表与当前认知状态进行路由",
+      "uncertainty": "medium",
+      "intent_keywords": []
+    }
+  ],
+  "step_outputs": {
+    "intent_activation": {
+      "status": "completed",
+      "topic": "ecosystem-l1",
+      "org_identity_bound": true,
+      "session": {
+        "tenant_id": "t-acme-demo",
+        "user_id": "u-employee-1001",
+        "position_code": "SALES_REP",
+        "domain_id": "domain.sales",
+        "role_ids": [
+          "role.employee",
+          "role.sales_rep"
+        ],
+        "data_scopes": [
+          {
+            "type": "self"
+          },
+          {
+            "type": "dept"
+          },
+          {
+            "type": "self"
+          },
+          {
+            "type": "dept_tree"
+          }
+        ]
+      },
+      "domain_binding": {
+        "domain_bound": true,
+        "domain_id": "domain.sales",
+        "capability_whitelist": [
+          "cs.customer.get_profile",
+          "cs.customer.query",
+          "cs.lead.qualify_lead",
+          "cs.lead.list",
+          "cs.process.start",
+          "cs.process.advance",
+          "cs.notify.send_im"
+        ],
+        "compliance_tags": [
+          "G1",
+          "G4"
+        ],
+        "prompt_fragment": "岗位域 销售岗位域；可用能力 cs.customer.get_profile, cs.customer.query, cs.lead.qualify_lead, cs.lead.list, cs.process.start, cs.process.advance..."
+      },
+      "intent_model": [
+        "议题：ecosystem-l1",
+        "岗位域：domain.sales",
+        "岗位域 销售岗位域；可用能力 cs.customer.get_profile, cs.customer.query, cs.lead.qualify_lead, cs.lead.list, cs.process.start, cs.process.advance..."
+      ],
+      "escalation_ready": true
+    },
+    "render_report": {
+      "report_path": "reports\\ecosystem-l1.md"
+    }
+  },
+  "tensions": [],
+  "evaluation": {},
+  "evolution": {},
+  "timeline": [
+    {
+      "timestamp": "2026-06-04T14:25:18.441227+00:00",
+      "event": "intent_updated",
+      "payload": {
+        "topic": "ecosystem-l1",
+        "payload": {}
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:25:18.441245+00:00",
+      "event": "knowledge_updated",
+      "payload": {
+        "configs": [
+          "evolution_policy",
+          "governance_policy",
+          "platform_manifest",
+          "runtime_config",
+          "swarm_agents",
+          "system_registry",
+          "workflow_config"
+        ],
+        "skills": [],
+        "docs": [],
+        "capability_registry": {
+          "agents": [
+            {
+              "id": "personal_intent",
+              "name": "个人意图智能体",
+              "dimension": null,
+              "stance": null,
+              "mission": null,
+              "deliverable": null
+            },
+            {
+              "id": "domain_guard",
+              "name": "岗位域守门人",
+              "dimension": null,
+              "stance": null,
+              "mission": null,
+              "deliverable": null
+            }
+          ],
+          "systems": [
+            {
+              "id": "tenant_catalog",
+              "type": "identity",
+              "mode": "native"
+            },
+            {
+              "id": "role_domain_bindings",
+              "type": "knowledge",
+              "mode": "native"
+            }
+          ],
+          "workflow_capabilities": [
+            {
+              "step_id": "intent_activation",
+              "type": "script",
+              "agent_id": null
+            },
+            {
+              "step_id": "render_report",
+              "type": "script",
+              "agent_id": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:25:18.442104+00:00",
+      "event": "route_recorded",
+      "payload": {
+        "step_id": "intent_activation",
+        "step_type": "script",
+        "target_agent_id": null,
+        "reason": "根据 step=intent_activation、能力注册表与当前认知状态进行路由",
+        "uncertainty": "medium",
+        "intent_keywords": []
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:25:18.509126+00:00",
+      "event": "step_output_recorded",
+      "payload": {
+        "step_id": "intent_activation",
+        "output_keys": [
+          "domain_binding",
+          "escalation_ready",
+          "intent_model",
+          "org_identity_bound",
+          "session",
+          "status",
+          "topic"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:25:18.510155+00:00",
+      "event": "route_recorded",
+      "payload": {
+        "step_id": "render_report",
+        "step_type": "script",
+        "target_agent_id": null,
+        "reason": "根据 step=render_report、能力注册表与当前认知状态进行路由",
+        "uncertainty": "medium",
+        "intent_keywords": []
+      }
+    },
+    {
+      "timestamp": "2026-06-04T14:25:18.561084+00:00",
+      "event": "step_output_recorded",
+      "payload": {
+        "step_id": "render_report",
+        "output_keys": [
+          "report_path"
+        ]
+      }
+    }
+  ]
+}

@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 from uuid import uuid4
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("AI_RECRUITMENT_ROOT", "")).resolve() if os.environ.get("AI_RECRUITMENT_ROOT") else Path(__file__).resolve().parent.parent
 CONFIGS = ROOT / "configs"
 DATABASE = ROOT / "database"
 AUDIT_DIR = DATABASE / "audit"

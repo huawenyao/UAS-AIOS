@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "pack_id": "edh_platform_laws",
+  "laws": [
+    {
+      "id": "tenant_isolation",
+      "summary": "跨租户数据禁止访问",
+      "risk_level": "G7"
+    },
+    {
+      "id": "evidence_escalation",
+      "summary": "经营类意图升级须带 Evidence",
+      "risk_level": "G4"
+    },
+    {
+      "id": "capability_only",
+      "summary": "Agent 仅经 cs.* 调用业务系统",
+      "risk_level": "G1"
+    }
+  ]
+}

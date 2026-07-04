@@ -1,0 +1,7 @@
+{
+  "version": "v1.0",
+  "iteration": {
+    "default_loop": ["drive", "feedback", "reflexivity"],
+    "human_feedback_path": "database/feedback/{topic_slug}.json"
+  }
+}

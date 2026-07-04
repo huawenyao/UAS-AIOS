@@ -1,0 +1,36 @@
+{
+  "world_model_id": "enterprise_sales_os_mvp",
+  "dimensions": {
+    "space": {
+      "tenant_id": "tenant_acme",
+      "business_loop": "lead_to_quote_approval",
+      "systems": ["mock_crm", "mock_oa"]
+    },
+    "time": {"approval_sla_hours": 24, "quote_valid_days": 15},
+    "subject": [
+      {"id": "sales_rep", "type": "human_role", "permissions": ["cs.lead.qualify", "cs.quote.draft"]},
+      {"id": "sales_manager", "type": "human_role", "permissions": ["cs.approval.decide.sales"]},
+      {"id": "ppaw_sales_advisor", "type": "agent", "permissions": ["cs.lead.qualify", "cs.quote.draft"]}
+    ],
+    "object": [
+      {"id": "lead", "lifecycle": ["new", "needs_evidence", "qualified"]},
+      {"id": "quote", "lifecycle": ["draft", "pending_approval", "approved", "rejected"]}
+    ],
+    "feedback": [
+      {"id": "capability_result", "type": "system_event"},
+      {"id": "approval_result", "type": "human_decision"},
+      {"id": "manual_feedback", "type": "human_feedback"}
+    ]
+  },
+  "identities": {
+    "mirror": "database/audit 与 runtime 状态反映销售闭环",
+    "lens": "sales_policy 风险分级与证据门禁",
+    "furnace": "ChangeSet 草案更新 cs_law_pack 与 agent 策略"
+  },
+  "law_pack_ref": "configs/cs_law_pack.sample.json",
+  "drive_blocker_connectors": {
+    "example_drive": "客户预算与时间窗口明确",
+    "example_blocker": "折扣超阈值",
+    "example_connector": "cs.approval.request"
+  }
+}

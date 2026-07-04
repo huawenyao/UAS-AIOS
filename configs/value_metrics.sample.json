@@ -1,0 +1,28 @@
+{
+  "version": "v1.0",
+  "metrics": [
+    {
+      "id": "cycle_time_minutes",
+      "description": "意图激活到报告输出的分钟数",
+      "source": "runtime.audit",
+      "target_direction": "decrease"
+    },
+    {
+      "id": "approval_pass_rate",
+      "description": "审批通过率",
+      "source": "sales_result.approval",
+      "target_direction": "increase"
+    },
+    {
+      "id": "evidence_block_rate",
+      "description": "证据不足拦截率",
+      "source": "sales_result.business_code",
+      "target_direction": "decrease"
+    }
+  ],
+  "revenue_feedback": {
+    "enabled": true,
+    "path": "database/value_feedback/{topic_slug}.json",
+    "feeds_evolution": true
+  }
+}

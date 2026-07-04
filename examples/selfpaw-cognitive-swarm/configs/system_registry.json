@@ -1,0 +1,6 @@
+{
+  "version": "v1.0",
+  "systems": [
+    {"id": "selfpaw_native", "type": "cognitive_swarm", "mode": "native", "description": "五智能体辩证蜂群"}
+  ]
+}

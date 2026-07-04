@@ -4,7 +4,7 @@
     "version": "0.1.0",
     "description": "企业级数字人生态（SelfPaw User AGI × ΠPaw Business AGI × UAS Kernel）",
     "started_at": "2026-05-23T00:00:00Z",
-    "phase": "Phase-0",
+    "phase": "Phase-0-prototype-complete",
     "strategic_docs": [
       "docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md",
       "docs/strategic/UAS_AIPOS_SelfPaw_Integrated_Product_Tech_Architecture.md",
@@ -12,7 +12,9 @@
     ],
     "implementation_repos": {
       "uas_aios": ".",
-      "selfpaw_reference": "../aipos/copaw-src"
+      "selfpaw_reference": "../aipos/copaw-src",
+      "selfpaw_reference_absolute": "C:/Users/ranwu/XiaomiCloud/aipos/copaw-src",
+      "selfpaw_status": "implemented_in_aipos"
     }
   },
   "modules": {
@@ -65,13 +67,21 @@
       ]
     },
     "digital_foundation": {
-      "status": "planning",
+      "status": "completed",
       "description": "数字基础能力：流程 · 表单 · 权限 · 数据语义 API",
       "invariants": {
-        "process_semantic_api": "pending",
-        "permission_scope": "pending"
+        "process_semantic_api": "passed",
+        "permission_scope": "passed"
       },
-      "requirements": ["REQ-EDH-PL-004", "REQ-EDH-PL-005"]
+      "requirements": ["REQ-EDH-PL-004", "REQ-EDH-PL-005"],
+      "requirements_status": {"REQ-EDH-PL-004": "ac_draft_complete", "REQ-EDH-PL-005": "ac_draft_complete"},
+      "artifacts": [
+        "schemas/cs_process_operation.schema.json",
+        "configs/process_templates/sales_quote_approval.json",
+        "configs/process_templates/cs_customer_service.json",
+        "scripts/validate_cs_process.py",
+        "harness/knowledge/technical/cs-process-semantic-api.md"
+      ]
     },
     "system_connectors": {
       "status": "completed",
@@ -88,33 +98,63 @@
       ]
     },
     "selfpaw_enterprise": {
-      "status": "in_progress",
+      "status": "completed",
       "description": "SelfPaw 企业版：组织身份 · Intent Hub · 岗位 Domain · 升级 ΠPaw",
       "invariants": {
-        "org_identity_binding": "pending",
-        "intent_escalation_contract": "passed"
+        "org_identity_binding": "passed",
+        "intent_escalation_contract": "passed",
+        "dual_track_loop": "passed"
       },
       "requirements": ["REQ-EDH-SP-001", "REQ-EDH-SP-002", "REQ-EDH-SP-003"],
       "artifacts": [
+        "projects/selfpaw-enterprise/",
+        "scripts/run_edh_dual_track_loop.py",
         "schemas/intent_object.schema.json",
         "schemas/working_task.schema.json",
         "configs/intent_escalation_policy.sample.json",
         "asui-cli/src/asui/intent_hub.py",
+        "asui-cli/src/asui/org_identity.py",
+        "asui-cli/src/asui/domain_binding.py",
         "harness/knowledge/technical/intent-escalation-api.md",
-        "scripts/validate_intent_escalation.py"
+        "scripts/validate_intent_escalation.py",
+        "scripts/validate_org_identity.py",
+        "scripts/validate_domain_binding.py"
       ]
     },
     "pipaw_business": {
-      "status": "planning",
+      "status": "completed",
       "description": "ΠPaw 经营 AGI：岗位 Agent · 对外通道 · 经营流程 · KPI 闭环",
       "invariants": {
-        "agent_roster_spec": "pending",
-        "outward_gateway_spec": "pending"
+        "agent_roster_spec": "passed",
+        "pipaw_cs_agent": "passed",
+        "outward_gateway_spec": "passed"
       },
-      "requirements": ["REQ-EDH-PP-001", "REQ-EDH-PP-002", "REQ-EDH-PP-003"]
+      "requirements": ["REQ-EDH-PP-001", "REQ-EDH-PP-002", "REQ-EDH-PP-003"],
+      "requirements_status": {"REQ-EDH-PP-001": "completed", "REQ-EDH-PP-002": "ac_draft_complete", "REQ-EDH-PP-003": "ac_draft_complete"},
+      "artifacts": [
+        "configs/pipaw_business_agent_roster.json",
+        "configs/pipaw_cs_agent_playbook.json",
+        "asui-cli/src/asui/pipaw_task_panel.py",
+        "asui-cli/src/asui/pipaw_cs_agent.py",
+        "harness/knowledge/technical/pipaw-cs-agent-benchmark.md",
+        "scripts/validate_pipaw_cs_agent.py"
+      ]
+    },
+    "ecosystem_prototype": {
+      "status": "completed",
+      "description": "全场景产品原型：L1-L3 + 价值闭环",
+      "invariants": {
+        "ecosystem_prototype": "passed",
+        "dual_track_loop": "passed"
+      },
+      "artifacts": [
+        "configs/ecosystem_scenario_catalog.json",
+        "scripts/run_ecosystem_prototype.py",
+        "docs/strategic/demo/EDH_Ecosystem_Prototype.html"
+      ]
     },
     "uas_kernel_integration": {
-      "status": "in_progress",
+      "status": "completed",
       "description": "UAS Kernel 对齐：八元组 · ASUI 运行时 · 治理 · 演化",
       "invariants": {
         "subapp_health": "passed",
@@ -139,7 +179,7 @@
     "phase_0_exit": {
       "capability_services_min": 5,
       "connectors_min": 2,
-      "requirements_completed_ratio": 0.45,
+      "requirements_completed_ratio": 0.78,
       "invariants_pass_ratio": 1.0
     },
     "phase_12_month": {

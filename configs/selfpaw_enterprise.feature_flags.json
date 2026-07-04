@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "product": "selfpaw-enterprise",
+  "flags": {
+    "enterprise_mode": true,
+    "consumer_mode": false,
+    "require_tenant_context": true,
+    "bind_position_domain_on_login": true,
+    "allow_pipaw_escalation": true
+  },
+  "console": {
+    "tenant_context_middleware": "OrgIdentityResolver",
+    "api_prefix": "/api/v1/selfpaw"
+  },
+  "notes": "REQ-EDH-SP-001：企业版与 C 端分离；租户上下文由 org_identity 解析"
+}

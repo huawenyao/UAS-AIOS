@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/business_agent_roster.schema.json",
+  "title": "BusinessAgentRoster",
+  "description": "ΠPaw 岗位 Agent 编制；每个 Agent 绑定 Domain、岗位与 cs.* 能力。",
+  "type": "object",
+  "required": ["version", "tenant_id", "agents"],
+  "properties": {
+    "version": { "type": "string" },
+    "tenant_id": { "type": "string", "pattern": "^t-[a-z0-9-]+$" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "agents": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/businessAgent" },
+      "minItems": 1
+    }
+  },
+  "definitions": {
+    "businessAgent": {
+      "type": "object",
+      "required": [
+        "agent_id",
+        "name",
+        "position_id",
+        "role_id",
+        "product_track",
+        "domain_id",
+        "bound_operations"
+      ],
+      "properties": {
+        "agent_id": { "type": "string", "pattern": "^agent\\.[a-z0-9_.]+$" },
+        "name": { "type": "string" },
+        "position_id": { "type": "string" },
+        "role_id": { "type": "string" },
+        "product_track": { "type": "string", "const": "pipaw" },
+        "domain_id": { "type": "string" },
+        "outward": { "type": "boolean", "default": false },
+        "bound_operations": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^cs\\.[a-z][a-z0-9_.]+\\.[a-z][a-z0-9_]+$" },
+          "minItems": 1
+        },
+        "narrative_aliases": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "playbook_id": { "type": "string" },
+        "demo_reference": { "type": "string" }
+      }
+    }
+  }
+}

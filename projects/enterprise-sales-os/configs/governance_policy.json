@@ -1,0 +1,13 @@
+{
+  "version": "v1.0",
+  "governance": {
+    "audit_required": true,
+    "permission_model": ["READ_ONLY", "WRITE_SAFE", "WRITE_RISK", "SYSTEM_OP"],
+    "require_explainability": true,
+    "require_traceability": true,
+    "high_risk_requires_human_approval": true,
+    "discount_approval_threshold": 0.15,
+    "risk_levels": ["G0", "G1", "G2", "G3", "G4"],
+    "mvp_excludes": ["G5", "G6", "production_ui"]
+  }
+}

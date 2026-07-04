@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ΠPaw 世界级企业智能经营系统 Demo</title>
+    <title>AIOS 企业智能经营操作系统 Demo · 智慧闭环 / 六大引擎 / 角色工作台</title>
     <!-- 引入外部资源 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -60,6 +60,103 @@
             }
             .tag {
                 @apply text-xs px-1.5 py-0.5 rounded;
+            }
+            .nav-pill-active {
+                @apply bg-white card-shadow text-primary;
+            }
+            .nav-pill {
+                @apply px-2 md:px-3 py-1.5 rounded-md text-xs md:text-sm font-medium text-text2 hover:bg-white/50 transition-all whitespace-nowrap;
+            }
+            .org-node {
+                @apply flex items-center gap-2 px-2 py-1.5 rounded-md text-sm cursor-pointer transition-all border border-transparent;
+            }
+            .org-node-active {
+                @apply bg-primary/10 border-primary/30 text-primary font-medium;
+            }
+            .wm-dim-card {
+                @apply p-3 rounded-lg border border-border hover:border-primary/40 transition-all cursor-pointer;
+            }
+            .wm-dim-active {
+                @apply border-primary bg-primary/5 ring-1 ring-primary/20;
+            }
+            .flow-step {
+                @apply flex items-center text-xs text-text2;
+            }
+            .scenario-card-active {
+                @apply ring-2 ring-primary border-primary/40;
+            }
+            .pipe-step {
+                @apply flex flex-col items-center flex-1 min-w-[72px] relative;
+            }
+            .pipe-step-dot {
+                @apply w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-border bg-white text-text3 transition-all;
+            }
+            .pipe-step-active .pipe-step-dot {
+                @apply border-primary bg-primary text-white scale-110;
+            }
+            .pipe-step-done .pipe-step-dot {
+                @apply border-success bg-success/10 text-success;
+            }
+            .deal-pipeline {
+                @apply relative flex justify-between items-start w-full pt-1 pb-1;
+            }
+            .deal-pipeline::before {
+                content: '';
+                @apply absolute top-[18px] left-[6%] right-[6%] h-0.5 bg-border -z-0;
+            }
+            .deal-pipeline-fill {
+                @apply absolute top-[18px] left-[6%] h-0.5 bg-primary transition-all duration-300 -z-0;
+            }
+            .pdca-phase {
+                @apply px-3 py-2 rounded-lg border border-border text-center text-xs transition-all cursor-default;
+            }
+            .pdca-phase-active {
+                @apply border-primary bg-primary/10 font-medium text-primary;
+            }
+            .audit-line {
+                @apply font-mono text-[10px] py-1 border-b border-border/50 last:border-0;
+            }
+            .value-step-done { @apply text-success; }
+            .value-step-active { @apply text-primary font-medium; }
+            .project-card-active { @apply ring-2 ring-primary border-primary/40 bg-primary/5; }
+            .milestone-track { @apply relative flex justify-between items-start pt-6 pb-2; }
+            .milestone-node { @apply flex flex-col items-center z-10 w-[72px]; }
+            .milestone-dot { @apply w-3 h-3 rounded-full border-2 border-border bg-white; }
+            .milestone-dot-done { @apply border-success bg-success; }
+            .milestone-dot-active { @apply border-primary bg-primary scale-125; }
+            .milestone-line { @apply absolute top-[18px] left-[8%] right-[8%] h-0.5 bg-border; }
+            .milestone-line-fill { @apply absolute top-[18px] left-[8%] h-0.5 bg-primary transition-all; }
+            .project-tab { @apply px-3 py-1.5 text-xs rounded-md border border-transparent text-text2 hover:bg-bg1 cursor-pointer transition-all; }
+            .project-tab-active { @apply bg-primary/10 border-primary/30 text-primary font-medium; }
+            .focus-widget { @apply bg-white rounded-xl p-4 card-shadow border border-border/60 hover:border-primary/20 transition-all; }
+            .focus-widget-span-12 { @apply col-span-12; }
+            .focus-widget-span-8 { @apply col-span-12 lg:col-span-8; }
+            .focus-widget-span-6 { @apply col-span-12 md:col-span-6; }
+            .focus-widget-span-4 { @apply col-span-12 sm:col-span-6 lg:col-span-4; }
+            .focus-widget-span-3 { @apply col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3; }
+            .focus-role-pill { @apply px-2.5 py-1 text-xs rounded-full border border-border bg-white text-text2 hover:border-primary/40 cursor-pointer transition-all whitespace-nowrap; }
+            .focus-role-pill-active { @apply bg-primary text-white border-primary shadow-sm; }
+            .focus-greeting { @apply text-2xl md:text-3xl font-semibold tracking-tight; }
+            .aios-loop-step {
+                @apply flex flex-col items-center flex-1 min-w-[64px] relative;
+            }
+            .aios-loop-dot {
+                @apply w-9 h-9 rounded-full flex items-center justify-center text-[10px] font-medium border-2 border-border bg-white text-text3 transition-all;
+            }
+            .aios-loop-active .aios-loop-dot {
+                @apply border-primary bg-primary text-white scale-110 shadow-sm;
+            }
+            .aios-loop-done .aios-loop-dot {
+                @apply border-success bg-success/15 text-success;
+            }
+            .aios-engine-card {
+                @apply p-2.5 rounded-lg border border-border hover:border-primary/40 transition-all text-xs;
+            }
+            .aios-engine-active {
+                @apply border-primary bg-primary/5 ring-1 ring-primary/20;
+            }
+            .entity-pill {
+                @apply px-2 py-1 rounded-md border text-[10px] font-medium;
             }
         }
 
@@ -200,29 +297,29 @@
         <div class="max-h-[400px] overflow-y-auto">
             <div class="p-3 border-b border-border hover:bg-bg1/50 transition-colors cursor-pointer bg-primary/5">
                 <div class="flex items-start">
-                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-2 flex-shrink-0">
-                        <i class="fa fa-exclamation-triangle"></i>
+                    <div class="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center text-danger mr-2 flex-shrink-0">
+                        <i class="fa fa-line-chart"></i>
                     </div>
                     <div class="flex-1">
                         <div class="flex items-center justify-between mb-1">
-                            <div class="text-sm font-medium text-text1">生产线A故障告警</div>
+                            <div class="text-sm font-medium text-text1">PAC Margin 异常 · 感知引擎</div>
                             <span class="text-xs text-text3">刚刚</span>
                         </div>
-                        <div class="text-xs text-text2">生产线A电机异响，温度过高，已自动停机，请尽快处理</div>
+                        <div class="text-xs text-text2">Q2 Margin 环比下跌 3.2pp，归因引擎已预分析：TR 下降贡献 62%、CFC 客户流失贡献 28%</div>
                     </div>
                 </div>
             </div>
             <div class="p-3 border-b border-border hover:bg-bg1/50 transition-colors cursor-pointer bg-primary/5">
                 <div class="flex items-start">
                     <div class="w-8 h-8 rounded-full bg-warning/10 flex items-center justify-center text-warning mr-2 flex-shrink-0">
-                        <i class="fa fa-bell"></i>
+                        <i class="fa fa-lightbulb-o"></i>
                     </div>
                     <div class="flex-1">
                         <div class="flex items-center justify-between mb-1">
-                            <div class="text-sm font-medium text-text1">新的督办任务</div>
+                            <div class="text-sm font-medium text-text1">策略推荐 · 3 套方案待确认</div>
                             <span class="text-xs text-text3">10分钟前</span>
                         </div>
-                        <div class="text-xs text-text2">你收到新的督办任务：华东区Q2营收缺口攻坚方案制定</div>
+                        <div class="text-xs text-text2">策略引擎基于归因结果推荐：BD-A 深耕 TR 赛道、BD-B 挽回 CFC 客户、BD-C 优化报价结构</div>
                     </div>
                 </div>
             </div>
@@ -263,34 +360,52 @@
     <!-- 顶部导航栏 -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <div class="text-primary text-2xl font-bold">ΠPaw</div>
-                <div class="text-text3 text-sm">世界级企业智能经营系统</div>
+            <div class="flex items-center space-x-2 min-w-0">
+                <div class="text-primary text-2xl font-bold shrink-0">AIOS</div>
+                <div class="hidden lg:block text-text3 text-xs leading-tight">
+                    <div>企业智能经营操作系统</div>
+                    <div class="text-[10px] mt-0.5 text-text3/80">数据感知 → 智能策略 → 精准行动 → 结果归因 → 策略进化</div>
+                </div>
             </div>
 
-            <!-- 角色切换tab -->
-            <div class="flex space-x-1 bg-bg1 rounded-lg p-1">
-                <button id="tab1" onclick="switchTab(1)" class="px-2 md:px-4 py-1.5 rounded-md text-sm font-medium bg-white card-shadow text-primary">
-                    <i class="fa fa-sitemap mr-0 md:mr-1"></i>
-                    <span class="hidden md:inline">战略决策层</span>
+            <!-- L6 交互层：智慧闭环 · 三角色工作台 · 组织/策略库 · 系统架构 -->
+            <div class="flex flex-wrap items-center justify-center gap-1 max-w-4xl">
+                <button id="tab0" onclick="switchView('value')" class="nav-pill nav-pill-active" title="智慧闭环主控台 · 五大实体 · 六大引擎">
+                    <i class="fa fa-refresh mr-0 md:mr-1"></i><span class="hidden sm:inline">智慧闭环</span>
                 </button>
-                <button id="tab2" onclick="switchTab(2)" class="px-2 md:px-4 py-1.5 rounded-md text-sm font-medium text-text2 hover:bg-white/50 transition-all">
-                    <i class="fa fa-users mr-0 md:mr-1"></i>
-                    <span class="hidden md:inline">管理执行层</span>
-                </button>
-                <button id="tab3" onclick="switchTab(3)" class="px-2 md:px-4 py-1.5 rounded-md text-sm font-medium text-text2 hover:bg-white/50 transition-all">
-                    <i class="fa fa-user-circle-o mr-0 md:mr-1"></i>
-                    <span class="hidden md:inline">一线操作层</span>
-                </button>
+                <span class="text-border hidden sm:inline">|</span>
+                <div class="flex space-x-0.5 bg-bg1 rounded-lg p-0.5">
+                    <button id="tab1" onclick="switchView(1)" class="nav-pill" title="L6 · 经营驾驶舱（CEO/BG）">
+                        <i class="fa fa-dashboard mr-0 md:mr-1"></i><span class="hidden sm:inline">经营驾驶舱</span>
+                    </button>
+                    <button id="tab2" onclick="switchView(2)" class="nav-pill" title="L6 · 策略工作台（BU/部门）">
+                        <i class="fa fa-sitemap mr-0 md:mr-1"></i><span class="hidden sm:inline">策略工作台</span>
+                    </button>
+                    <button id="tab3" onclick="switchView(3)" class="nav-pill" title="L6 · 个人工作台（一线员工）">
+                        <i class="fa fa-user mr-0 md:mr-1"></i><span class="hidden sm:inline">个人工作台</span>
+                    </button>
+                </div>
+                <span class="text-border hidden md:inline">|</span>
+                <div class="flex space-x-0.5 bg-bg1 rounded-lg p-0.5">
+                    <button id="tab4" onclick="switchView('org')" class="nav-pill" title="L3 组织模型 · OMTU/PMTU">
+                        <i class="fa fa-building-o mr-0 md:mr-1"></i><span class="hidden sm:inline">组织模型</span>
+                    </button>
+                    <button id="tab5" onclick="switchView('project')" class="nav-pill" title="策略库 · 战役与 SOP">
+                        <i class="fa fa-book mr-0 md:mr-1"></i><span class="hidden sm:inline">策略库</span>
+                    </button>
+                </div>
             </div>
 
             <div class="flex items-center space-x-4">
                 <!-- 全局搜索框 -->
                 <div class="relative hidden md:block">
-                    <input type="text" placeholder="搜索任务、SOP、通知..." class="w-64 pl-10 pr-4 py-1.5 rounded-lg border border-border bg-bg1 text-sm focus:outline-none focus:border-primary transition-colors">
+                    <input type="text" placeholder="搜索 Strategy、Action、SOP、归因…" class="w-64 pl-10 pr-4 py-1.5 rounded-lg border border-border bg-bg1 text-sm focus:outline-none focus:border-primary transition-colors">
                     <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-text3"></i>
                 </div>
                 <!-- 导出按钮 -->
+                <button class="text-text2 hover:text-primary transition-all px-2 py-1 rounded hover:bg-bg1 text-xs hidden md:inline" onclick="switchView('platform')" title="AIOS 六层架构 · 六大引擎 · UAS 底座">
+                    <i class="fa fa-cog mr-1"></i>系统架构
+                </button>
                 <button class="text-text2 hover:text-primary transition-all px-2 py-1 rounded hover:bg-bg1" onclick="showToast('info', '导出功能', '正在准备导出数据，请稍候...')">
                     <i class="fa fa-download text-lg"></i>
                 </button>
@@ -315,18 +430,332 @@
         </div>
     </header>
 
+    <!-- AIOS 智慧闭环状态条（五大实体链路 · 非 BI 看板） -->
+    <div id="architectureStrip" class="bg-white border-b border-border">
+        <div class="container mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div id="runtimeStripLeft" class="flex flex-wrap items-center gap-2">
+                <span class="tag bg-primary/10 text-primary" id="stripValueStream">PAC 经营闭环</span>
+                <span class="text-text3" id="stripMgmt">Objective → Strategy → Action</span>
+                <span class="text-text2 hidden md:inline" id="stripRun">暂无进行中的闭环实例</span>
+            </div>
+            <div id="runtimeStripPipeline" class="flex flex-wrap items-center gap-1 text-[10px]"></div>
+            <button onclick="switchView('value')" class="text-primary hover:underline shrink-0">智慧闭环 →</button>
+        </div>
+    </div>
+
     <!-- 内容区域 -->
     <main class="container mx-auto px-4 py-6">
-        <!-- 页面1：战略决策层（董事长/CEO/高管） -->
-        <div id="page1" class="space-y-6">
+        <!-- 页面0：智慧闭环主控台（五大实体 · 六大引擎 · 角色自适应） -->
+        <div id="page-value" class="space-y-4">
+            <!-- AIOS 核心理念：断裂链 vs 修复链 -->
+            <div class="bg-white rounded-xl p-4 card-shadow border border-border/60">
+                <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+                    <div>
+                        <div class="text-sm font-medium">AIOS 核心命题</div>
+                        <div class="text-xs text-text2 mt-1 max-w-3xl">企业最宝贵的资产不是数据，是<strong class="text-text1">决策智慧</strong> — 「为什么做、做了什么、效果如何、下次怎么改」。AIOS 让这条链从人脑隐含 → 系统显式 → 机器可学习。</div>
+                    </div>
+                    <div class="flex flex-wrap gap-1 text-[10px]">
+                        <span class="entity-pill border-primary/30 bg-primary/5 text-primary">Objective</span>
+                        <span class="entity-pill border-secondary/30 bg-secondary/5 text-secondary">Strategy</span>
+                        <span class="entity-pill border-warning/30 bg-warning/5 text-warning">Action</span>
+                        <span class="entity-pill border-success/30 bg-success/5 text-success">Result</span>
+                        <span class="entity-pill border-danger/30 bg-danger/5 text-danger">Attribution</span>
+                    </div>
+                </div>
+                <div id="aiosLoopBanner" class="relative flex justify-between items-start pt-1 pb-1 gap-1"></div>
+                <div class="grid md:grid-cols-2 gap-3 mt-3 text-[10px]">
+                    <div class="p-2.5 rounded-lg bg-danger/5 border border-danger/15 text-text2">
+                        <span class="text-danger font-medium">断裂链（今天）</span>：经营分析会 → 飞书 Todo → 执行黑箱 → 结果无归因 → 智慧流失
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-success/5 border border-success/15 text-text2">
+                        <span class="text-success font-medium">AIOS 闭环</span>：感知引擎检测 → 归因引擎分析 → 策略引擎推荐 → 编排引擎分派 → 7 天自动验证 → SOP 沉淀
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-2xl p-4 md:p-5 card-shadow bg-gradient-to-br from-primary/12 via-white to-success/8 border border-primary/10">
+                <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+                    <div class="min-w-0">
+                        <div class="text-xs text-text3 mb-1"><i class="fa fa-refresh mr-1"></i>智慧闭环主控台 · PAC 场景演示</div>
+                        <div class="focus-greeting" id="focusGreeting">上午好</div>
+                        <div class="text-sm text-text2 mt-1" id="focusHeadline">加载中…</div>
+                        <div class="text-xs text-text3 mt-1" id="focusSubline">按角色编排模块 · 每个 Action 关联 Strategy · 每个 Result 关联 Attribution</div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 shrink-0">
+                        <button type="button" class="action-btn border border-border text-xs bg-white" onclick="toggleFocusCustomize()"><i class="fa fa-sliders mr-1"></i>自定义模块</button>
+                        <button class="primary-btn text-xs" onclick="demoFullChain()"><i class="fa fa-play mr-1"></i>演示智慧闭环</button>
+                        <button class="action-btn border border-border text-xs bg-white" onclick="resetRuntime()">重置</button>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-1.5" id="focusRolePicker"></div>
+            </div>
+            <div id="focusWidgetGrid" class="grid grid-cols-12 gap-3"></div>
+            <div id="focusCustomizePanel" class="hidden fixed inset-0 z-[60] bg-black/30 flex items-end md:items-center justify-center p-4" onclick="if(event.target===this)toggleFocusCustomize()">
+                <div class="bg-white rounded-xl modal-shadow w-full max-w-md max-h-[80vh] overflow-hidden flex flex-col" onclick="event.stopPropagation()">
+                    <div class="p-4 border-b border-border flex justify-between items-center">
+                        <span class="font-medium text-sm">自定义智慧闭环模块</span>
+                        <button type="button" class="text-text3" onclick="toggleFocusCustomize()"><i class="fa fa-times"></i></button>
+                    </div>
+                    <div class="p-4 overflow-y-auto flex-1 text-xs space-y-2" id="focusCustomizeList"></div>
+                    <div class="p-3 border-t border-border flex gap-2 justify-end">
+                        <button type="button" class="action-btn border border-border text-xs" onclick="resetFocusLayoutToRole()">恢复角色默认</button>
+                        <button type="button" class="primary-btn text-xs" onclick="saveFocusCustomize()">保存布局</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面4：组织模型（L3 配置层） -->
+        <div id="page-org" class="space-y-4 hidden">
+            <div class="bg-gradient-to-r from-primary/10 via-secondary/5 to-primary/5 rounded-lg p-4 card-shadow">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                        <div class="text-lg font-medium">组织模型 · OMTU/PMTU 与责权配置</div>
+                        <div class="text-xs text-text2 mt-1">L3 配置层：定义谁在什么层级对哪些 Objective 负责 · 编排引擎任务分派的组织骨架 · ΠPaw Agent 编制挂载点</div>
+                    </div>
+                    <div class="flex gap-2 text-xs">
+                        <span class="tag bg-blue-100 text-blue-800">L1 SelfPaw</span>
+                        <span class="tag bg-purple-100 text-purple-800">L2 职能</span>
+                        <span class="tag bg-emerald-100 text-emerald-800">L3 经营</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 lg:col-span-4 bg-white rounded-lg p-4 card-shadow">
+                    <div class="font-medium mb-3 flex items-center justify-between">
+                        <span><i class="fa fa-sitemap text-primary mr-2"></i>组织树</span>
+                        <span class="text-xs text-text3">tenant: acme-corp</span>
+                    </div>
+                    <div id="orgTree" class="space-y-0.5 max-h-[420px] overflow-y-auto pr-1"></div>
+                </div>
+                <div class="col-span-12 lg:col-span-8 space-y-4">
+                    <div class="bg-white rounded-lg p-4 card-shadow">
+                        <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
+                            <div class="font-medium" id="orgDetailTitle">集团总部</div>
+                            <div class="flex gap-1 flex-wrap">
+                                <button class="primary-btn text-xs" id="orgSpawnProjectBtn" onclick="spawnProjectFromOrg()"><i class="fa fa-plus mr-1"></i>由 KPI 缺口立项</button>
+                                <button class="action-btn border border-border text-xs" onclick="switchView('project')">项目空间</button>
+                                <button class="action-btn border border-border text-xs" onclick="switchView('value')">价值流工作台</button>
+                            </div>
+                        </div>
+                        <div class="mb-4 p-3 bg-bg1 rounded-lg">
+                            <div class="text-xs font-medium mb-2">组织管理节律 PDCA（常态）</div>
+                            <div id="orgPdcaPanel" class="grid grid-cols-4 gap-2"></div>
+                            <div class="text-[10px] text-text3 mt-2" id="orgPdcaHint"></div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4" id="orgKpiCards"></div>
+                        <div id="orgActiveRunBanner" class="hidden mb-4 p-3 rounded-lg border border-primary/30 bg-primary/5 text-xs"></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <div class="text-sm font-medium mb-2">数字岗位助手编制</div>
+                                <div id="orgAgents" class="space-y-2"></div>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium mb-2">数据域与授权 scope</div>
+                                <div id="orgScopes" class="text-xs text-text2 space-y-1"></div>
+                                <div class="mt-3 text-sm font-medium mb-2">RACI 摘要</div>
+                                <div id="orgRaci" class="text-xs"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 card-shadow">
+                        <div class="font-medium mb-2"><i class="fa fa-exchange text-secondary mr-2"></i>经营五要素（客户/流程/责权/时间/反馈）</div>
+                        <div id="orgWmMapping" class="grid grid-cols-5 gap-2 text-xs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面5：策略库（L4 模型层 · Strategy + SOP） -->
+        <div id="page-project" class="space-y-4 hidden">
+            <div class="bg-gradient-to-r from-warning/10 via-primary/5 to-success/5 rounded-lg p-4 card-shadow">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                        <div class="text-lg font-medium">策略库 · 战役载体与 SOP 沉淀</div>
+                        <div class="text-xs text-text2 mt-1 max-w-2xl">L4 模型层：Strategy（归因假设+方案+预期效果）→ Action（任务+SLA）→ Result + Attribution · 有效策略升级为 SOP，无效策略淘汰</div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <select id="projectOrgFilter" class="text-xs border border-border rounded-md px-2 py-1.5 bg-white" onchange="renderProjects()"></select>
+                        <button type="button" class="primary-btn text-xs" onclick="spawnProjectFromOrg()"><i class="fa fa-plus mr-1"></i>由缺口立项</button>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="projectPortfolioStats"></div>
+            <div class="bg-white rounded-lg px-3 py-2 card-shadow flex flex-wrap items-center gap-2 text-xs">
+                <span class="text-text3 shrink-0">筛选</span>
+                <div id="projectStatusFilters" class="flex flex-wrap gap-1"></div>
+                <span class="text-border hidden sm:inline">|</span>
+                <input id="projectSearch" type="text" placeholder="搜索战役名称、主责人…" class="flex-1 min-w-[140px] border border-border rounded-md px-2 py-1" oninput="renderProjects()">
+                <select id="projectSort" class="border border-border rounded-md px-2 py-1" onchange="renderProjects()">
+                    <option value="priority">按优先级</option>
+                    <option value="deadline">按截止日</option>
+                    <option value="progress">按进度</option>
+                    <option value="risk">风险优先</option>
+                </select>
+            </div>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 lg:col-span-4 space-y-3">
+                    <div class="bg-white rounded-lg p-4 card-shadow">
+                        <div class="font-medium mb-2 flex items-center justify-between">
+                            <span><i class="fa fa-flag text-warning mr-2"></i>战役列表</span>
+                            <span class="text-xs text-text3" id="projectCount"></span>
+                        </div>
+                        <div id="projectList" class="space-y-2 max-h-[520px] overflow-y-auto pr-1"></div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 card-shadow">
+                        <div class="text-sm font-medium mb-2">组合健康度</div>
+                        <div id="projectPortfolioChart" class="w-full h-[160px]"></div>
+                        <div id="projectResourceAlert" class="mt-3 pt-3 border-t border-border text-xs space-y-1"></div>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-8 space-y-4">
+                    <div class="bg-white rounded-lg p-4 card-shadow min-h-[200px]" id="projectDetailPanel">
+                        <div class="text-text3 text-sm text-center py-12">选择左侧战役查看章程、里程碑、工作流与风险</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4">
+                        <div class="col-span-12 md:col-span-6 bg-white rounded-lg p-4 card-shadow">
+                            <div class="text-sm font-medium mb-2"><i class="fa fa-line-chart text-primary mr-1"></i>战役 KPI 对标</div>
+                            <div id="projectKpiChart" class="w-full h-[200px]"></div>
+                        </div>
+                        <div class="col-span-12 md:col-span-6 bg-white rounded-lg p-4 card-shadow">
+                            <div class="text-sm font-medium mb-2"><i class="fa fa-tasks text-secondary mr-1"></i>工作流与待办</div>
+                            <div id="projectWorkboard" class="text-xs max-h-[200px] overflow-y-auto space-y-2"></div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4">
+                        <div class="col-span-12 lg:col-span-8 bg-white rounded-lg p-4 card-shadow">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <div class="text-sm font-medium"><i class="fa fa-calendar text-primary mr-1"></i>战役甘特 · 关键路径</div>
+                                <span class="text-[10px] text-text3" id="projectGanttHint">—</span>
+                            </div>
+                            <div id="projectGanttChart" class="w-full h-[240px]"></div>
+                        </div>
+                        <div class="col-span-12 lg:col-span-4 bg-white rounded-lg p-4 card-shadow">
+                            <div class="text-sm font-medium mb-2"><i class="fa fa-user-circle text-warning mr-1"></i>资源负荷</div>
+                            <div id="projectResourceChart" class="w-full h-[240px]"></div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 card-shadow">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="text-sm font-medium"><i class="fa fa-comments text-success mr-1"></i>战役周会 · 决策与督办</div>
+                            <button type="button" class="text-xs action-btn border border-border" onclick="showToast('info','周会','已生成本周战役例会纪要草稿')"><i class="fa fa-plus mr-1"></i>生成本周纪要</button>
+                        </div>
+                        <div id="projectWeeklyPanel" class="text-xs space-y-3 max-h-[320px] overflow-y-auto"></div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 card-shadow hidden" id="projectRunPanel">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="font-medium"><i class="fa fa-random text-primary mr-2"></i>价值流执行态</div>
+                            <button class="text-xs text-primary hover:underline" onclick="switchView('value')">打开价值流工作台 →</button>
+                        </div>
+                        <div id="projectValueStreamTrack" class="flex flex-wrap gap-1 mb-3 text-[10px]"></div>
+                        <div id="projectTaskQueue" class="text-xs space-y-2 mb-3 max-h-[120px] overflow-y-auto"></div>
+                        <div class="text-[10px] text-text3 mb-1">项目 PDCA</div>
+                        <div id="projectPdcaPanel" class="grid grid-cols-4 gap-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面6：系统架构（AIOS 六层 + 六大引擎 + UAS 底座） -->
+        <div id="page-kernel" class="space-y-4 hidden">
+            <div class="bg-bg1 border border-border rounded-lg p-3 text-xs text-text2 flex flex-wrap justify-between gap-2">
+                <span><i class="fa fa-lock text-primary mr-1"></i><strong>系统架构视图</strong> — L1~L6 全景 + 六大 AI 引擎运行态；经营者日常使用「智慧闭环」三工作台。</span>
+                <button class="text-primary hover:underline" onclick="switchView('value')">返回智慧闭环 →</button>
+            </div>
+            <div class="bg-gradient-to-r from-primary/15 to-secondary/10 rounded-lg p-4 card-shadow border border-primary/10">
+                <div class="text-lg font-medium">AIOS 六层架构 · 从数据底座到角色化界面</div>
+                <div class="text-xs text-text2 mt-1">L1 集成（CRM/飞书/BPMS）→ L2 数据（四大金刚宽表）→ L3 配置（组织/指标/策略规则）→ L4 模型（五大实体）→ L5 智能（六大引擎）→ L6 交互（三工作台）</div>
+            </div>
+            <div class="bg-white rounded-lg p-4 card-shadow">
+                <div class="font-medium mb-3 text-sm"><i class="fa fa-cogs text-primary mr-2"></i>L5 智能层 · 六大 AI 引擎矩阵</div>
+                <div id="aiosEnginesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2"></div>
+            </div>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 lg:col-span-7 bg-white rounded-lg p-4 card-shadow">
+                    <div class="font-medium mb-3"><i class="fa fa-globe text-primary mr-2"></i>世界模型五维（点击切换推演焦点）</div>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mb-4" id="wmDimensions"></div>
+                    <div id="wmDetail" class="p-3 bg-bg1 rounded-lg text-sm text-text2 min-h-[100px]"></div>
+                    <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs" id="wmTension"></div>
+                </div>
+                <div class="col-span-12 lg:col-span-5 bg-white rounded-lg p-4 card-shadow">
+                    <div class="font-medium mb-2">UAS 八元组运行态</div>
+                    <div id="uasOctet" class="grid grid-cols-2 gap-2 text-xs"></div>
+                    <div id="kernelFlowChart" class="w-full h-[200px] mt-4"></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg p-4 card-shadow">
+                <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
+                    <div class="font-medium"><i class="fa fa-plug text-success mr-2"></i>cs.* 语义能力目录（Capability Hub）</div>
+                    <input type="text" id="capabilitySearch" placeholder="筛选能力，如 approval、lead…" class="text-xs border border-border rounded-md px-2 py-1 w-48" oninput="renderCapabilities()">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs">
+                        <thead class="bg-bg1">
+                            <tr>
+                                <th class="text-left p-2 rounded-tl-lg">能力 ID</th>
+                                <th class="text-left p-2">分层</th>
+                                <th class="text-left p-2">绑定场景</th>
+                                <th class="text-left p-2">策略</th>
+                                <th class="text-left p-2 rounded-tr-lg">24h 调用</th>
+                            </tr>
+                        </thead>
+                        <tbody id="capabilityTable" class="divide-y divide-border"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 lg:col-span-6 bg-white rounded-lg p-4 card-shadow max-h-[200px] overflow-y-auto">
+                    <div class="font-medium mb-2 text-sm">实时审计尾迹（当前运行）</div>
+                    <div id="kernelAuditTail" class="text-[10px] font-mono text-text2"></div>
+                </div>
+                <div class="col-span-12 lg:col-span-6 bg-white rounded-lg p-4 card-shadow">
+                    <div class="font-medium mb-2 text-sm">能力迭代进化内核</div>
+                    <div id="kernelEvolutionPanel" class="text-xs text-text2"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面7：价值流模板配置（实施顾问，非日常经营） -->
+        <div id="page-scenario" class="space-y-4 hidden">
+            <div class="bg-bg1 border border-border rounded-lg p-3 text-xs text-text2">
+                <button class="text-primary hover:underline mr-2" onclick="switchView('value')">← 价值流工作台</button>
+                价值流模板与验收标准（Pack / 流程 / 规则）— 由实施与业务专家维护。
+            </div>
+            <div class="bg-white rounded-lg p-4 card-shadow">
+                <div class="font-medium mb-1">价值流模板库</div>
+                <div class="text-xs text-text2">每条价值流对应可验收 KPI、流程节点与岗位分工；上线后经营者只见「销售价值流」等菜单名。</div>
+            </div>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 md:col-span-4 space-y-2" id="scenarioCards"></div>
+                <div class="col-span-12 md:col-span-8 bg-white rounded-lg p-4 card-shadow">
+                    <div id="scenarioDetail" class="min-h-[280px]"></div>
+                    <div class="mt-3 flex flex-wrap gap-2 border-t border-border pt-3">
+                        <button class="primary-btn text-xs" onclick="startBusinessRun()"><i class="fa fa-play mr-1"></i>启动价值流演示</button>
+                        <button class="action-btn border border-border text-xs" onclick="advanceBusinessRun()">下一步</button>
+                        <button class="action-btn border border-border text-xs" onclick="switchView('value')">价值流工作台</button>
+                    </div>
+                    <div id="scenarioValueLoop" class="mt-3 flex flex-wrap gap-1 text-[10px]"></div>
+                    <div id="scenarioFlowChart" class="w-full h-[180px] mt-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面1：经营驾驶舱（L6 · CEO/BG） -->
+        <div id="page1" class="space-y-6 hidden">
             <!-- 层级说明卡片 -->
             <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-4 mb-2">
                 <div class="flex items-start">
                     <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary mr-3 flex-shrink-0">
-                        <i class="fa fa-compass text-xl"></i>
+                        <i class="fa fa-dashboard text-xl"></i>
                     </div>
-                    <div>
-                        <div class="text-lg font-medium mb-1">战略决策层 · 核心关注要素</div>
+                    <div class="flex-1">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+                            <div class="text-lg font-medium">经营驾驶舱 · 四大金刚与战略 Objective</div>
+                            <div class="flex gap-1 text-xs">
+                                <button onclick="switchView('org')" class="action-btn text-primary border border-primary/20">组织视图</button>
+                                <button onclick="switchView('value')" class="action-btn text-primary border border-primary/20">价值流工作台</button>
+                                <button onclick="switchView('org')" class="action-btn text-secondary border border-secondary/20">组织架构</button>
+                            </div>
+                        </div>
                         <div class="grid grid-cols-5 gap-4 mt-2">
                             <div class="bg-white/50 rounded p-2 text-sm">
                                 <i class="fa fa-check-circle text-success mr-1"></i> 核心经营结果（营收/利润/现金流）
@@ -345,7 +774,7 @@
                             </div>
                         </div>
                         <div class="text-xs text-text2 mt-2">
-                            核心理念：做正确的事 → 找机会、控风险、配资源、拿结果
+                            感知引擎推送异常 · 归因引擎给出维度贡献度 · 管理层确认 Strategy → 不是又一个 BI 看板，是经营智慧入口
                         </div>
                     </div>
                 </div>
@@ -355,7 +784,7 @@
             <div class="bg-white rounded-lg p-5 card-shadow">
                 <div class="flex items-center justify-between mb-4">
                     <div class="font-medium flex items-center">
-                        <i class="fa fa-bar-chart text-primary mr-2"></i> 核心经营结果
+                        <i class="fa fa-bar-chart text-primary mr-2"></i> 四大金刚 · Spend / Revenue / Margin / TR
                     </div>
                     <div class="text-xs text-text2">
                         数据更新时间：2025-06-01 08:00 <span class="text-success ml-2">自动同步中</span>
@@ -653,10 +1082,10 @@
                 </div>
                 <div id="drillChart" class="w-full h-[400px]"></div>
                 <div class="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
-                    <div class="text-sm font-medium mb-1 text-primary">AI智能分析结论</div>
+                    <div class="text-sm font-medium mb-1 text-primary">归因引擎 · 维度贡献度排序</div>
                     <div class="text-sm text-text2">
-                        营收低于目标主要原因是华南区大客户流失3个，影响营收1.2亿，其次是新业务上线滞后2个月，影响营收8000万。
-                        建议1. 对华南区安排资源攻坚，追回流失客户；2. 加快新业务上线进度，协调研发资源优先支持。
+                        PAC Margin 下跌 3.2pp 主因：TR 下降贡献 62%（赛道结构变化）、CFC 大客户流失贡献 28%、报价结构贡献 10%。
+                        策略引擎推荐：① BD-A 深耕 TR 赛道（预期 +2pp）② BD-B 挽回 CFC 客户 ③ 优化报价结构 — 请在工作台确认 Strategy 后生成分派 Action。
                     </div>
                     <div class="flex justify-end mt-2 space-x-2">
                         <button class="primary-btn">采纳建议，自动督办</button>
@@ -666,16 +1095,19 @@
             </div>
         </div>
 
-        <!-- 页面2：管理执行层（部门负责人/业务线leader/总监） -->
+        <!-- 页面2：策略工作台（L6 · BU/部门负责人） -->
         <div id="page2" class="space-y-6 hidden">
             <!-- 层级说明卡片 -->
             <div class="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-lg p-4 mb-2">
                 <div class="flex items-start">
                     <div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center text-secondary mr-3 flex-shrink-0">
-                        <i class="fa fa-tasks text-xl"></i>
+                        <i class="fa fa-sitemap text-xl"></i>
                     </div>
-                    <div>
-                        <div class="text-lg font-medium mb-1">管理执行层 · 核心关注要素</div>
+                    <div class="flex-1">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+                            <div class="text-lg font-medium">策略工作台 · Strategy 制定与 Action 编排</div>
+                            <button onclick="jumpToRuntimeSlice('value')" class="text-xs primary-btn"><i class="fa fa-play-circle mr-1"></i>智慧闭环控制台</button>
+                        </div>
                         <div class="grid grid-cols-5 gap-4 mt-2">
                             <div class="bg-white/50 rounded p-2 text-sm">
                                 <i class="fa fa-bullseye text-primary mr-1"></i> 承接目标进度对齐
@@ -694,7 +1126,7 @@
                             </div>
                         </div>
                         <div class="text-xs text-text2 mt-2">
-                            核心理念：把事做正确 → 对齐目标、带好团队、提效降本、拿到结果
+                            策略引擎推荐 Top-N 方案 · 编排引擎自动生成 Action+SLA · 预警引擎监控闭环 · PDCA 从人工巡检升级为 AI 驱动
                         </div>
                     </div>
                 </div>
@@ -1041,7 +1473,7 @@
             </div>
         </div>
 
-        <!-- 页面3：一线操作层（员工/主管/一线经理） -->
+        <!-- 页面3：个人工作台（L6 · 一线员工/BD） -->
         <div id="page3" class="space-y-6 hidden">
             <!-- 层级说明卡片 -->
             <div class="bg-gradient-to-r from-success/10 to-primary/10 rounded-lg p-4 mb-2">
@@ -1050,7 +1482,7 @@
                         <i class="fa fa-user-o text-xl"></i>
                     </div>
                     <div>
-                        <div class="text-lg font-medium mb-1">一线操作层 · 核心关注要素</div>
+                        <div class="text-lg font-medium mb-1">个人工作台 · Action 执行与结果反馈</div>
                         <div class="grid grid-cols-5 gap-4 mt-2">
                             <div class="bg-white/50 rounded p-2 text-sm">
                                 <i class="fa fa-check-square-o text-primary mr-1"></i> 待办任务清晰可执行
@@ -1069,7 +1501,7 @@
                             </div>
                         </div>
                         <div class="text-xs text-text2 mt-2">
-                            核心理念：正确的做事 → 标准清晰、资源到位、执行高效、拿到结果
+                            每个 Action 关联 Strategy 与 Objective · 执行完成触发归因验证 · ΠPaw 个人助手提供 SOP 与上下文
                         </div>
                     </div>
                 </div>
@@ -1421,10 +1853,29 @@
         </div>
     </main>
 
+    <!-- 全局 AI 助手（感知当前视图上下文） -->
+    <button id="aiFab" onclick="toggleAiPanel()" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary text-white float-shadow flex items-center justify-center z-40 hover:scale-105 transition-transform" title="AIOS 智能助手 · ΠPaw Agent">
+        <i class="fa fa-magic text-lg"></i>
+    </button>
+    <div id="aiPanel" class="fixed bottom-20 right-6 w-80 bg-white rounded-lg card-shadow z-40 hidden transform transition-all duration-300 opacity-0 translate-y-2">
+        <div class="p-3 border-b border-border flex justify-between items-center">
+            <span class="text-sm font-medium">AIOS · ΠPaw 上下文助手</span>
+            <button onclick="toggleAiPanel()" class="text-text3"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="p-3 text-xs text-text2 bg-bg1/50" id="aiContextHint">—</div>
+        <div class="p-3 max-h-32 overflow-y-auto text-xs space-y-2" id="aiMessages">
+            <div class="text-text3">基于当前智慧闭环上下文（五大实体、六大引擎、角色工作台）回答。</div>
+        </div>
+        <div class="p-3 border-t border-border flex gap-1">
+            <input id="aiInput" type="text" placeholder="自然语言查询或指令…" class="flex-1 text-xs border border-border rounded-md px-2 py-1.5" onkeydown="if(event.key==='Enter')sendAiQuery()">
+            <button onclick="sendAiQuery()" class="primary-btn text-xs">发送</button>
+        </div>
+    </div>
+
     <!-- 页脚 -->
     <footer class="bg-white border-t border-border py-4 mt-8">
         <div class="container mx-auto px-4 text-center text-text3 text-xs">
-            © 2025 ΠPaw 智能经营系统 · 基于世界级管理最佳实践 · 帮助企业实现管理数字化、智能化
+            © 2026 AIOS · 企业智能经营操作系统 Demo · 基于 BP V1.0 · 智慧闭环 / 六大引擎 / ΠPaw Agent 执行层 · 系统架构见「系统架构」
         </div>
     </footer>
 
@@ -1520,35 +1971,1719 @@
             }
         }
 
-        // 切换Tab
-        function switchTab(index) {
-            // 隐藏所有页面
-            document.getElementById('page1').classList.add('hidden');
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page3').classList.add('hidden');
+        // —— 企业模型数据（对齐 design 蓝图）——
+        let currentView = 'org';
+        let selectedOrgId = 'org-root';
+        let selectedProjectId = 'proj-sales-gap';
+        let selectedWmDim = 'space';
+        let selectedScenarioId = 'scn-b2b-sales';
 
-            // 重置所有tab样式
-            const tabs = document.querySelectorAll('[id^="tab"]');
-            tabs.forEach(tab => {
-                tab.classList.remove('bg-white', 'card-shadow', 'text-primary');
-                tab.classList.add('text-text2', 'hover:bg-white/50');
+        const ORG_NODES = {
+            'org-root': { name: '钛动科技', level: '集团', parent: null, kpis: [{ l: 'Spend YTD', v: '8.2亿', s: 'ok' }, { l: 'Revenue', v: '12.5亿', s: 'warn' }, { l: 'Margin', v: '78.8%', s: 'danger' }, { l: 'TR', v: '1.52', s: 'warn' }],
+                agents: [{ layer: 'L2', name: 'ΠPaw 经营分析官', status: '运行中' }, { layer: 'L2', name: 'ΠPaw 合规审查', status: '运行中' }],
+                scopes: ['tenant:acme-corp', 'data:financial_summary', 'data:org_metrics'], raci: 'R: CEO · A: COO · C: CFO · I: 董事会',
+                wm: { space: '全集团组织树与数据域', time: '年度 OKR / 季度复盘', subject: '高管、事业部负责人', object: '战略目标、预算、风险台账', feedback: '经营大盘、审计链、ChangeSet' },
+                children: ['org-sales', 'org-mfg', 'org-hr'] },
+            'org-sales': { name: '全球销售事业部', level: '事业部', parent: 'org-root', kpis: [{ l: '事业部营收', v: '6.8亿', s: 'ok' }, { l: '商机转化', v: '32%', s: 'warn' }, { l: 'L3 Agent', v: '6', s: 'ok' }, { l: '待审报价', v: '12', s: 'warn' }],
+                agents: [{ layer: 'L3', name: 'ΠPaw Sales Advisor', status: '运行中' }, { layer: 'L3', name: 'ΠPaw 报价合规', status: '运行中' }, { layer: 'L1', name: '销售个人分身', status: '128 人绑定' }],
+                scopes: ['data:crm_leads', 'data:quotes', 'action:cs.lead.*', 'action:cs.quote.*'], raci: 'R: 销售 VP · A: 华东区总监 · C: 财务/合规',
+                wm: { space: '区域/渠道/客户域', time: '销售周期 / 报价有效期', subject: '销售、经理、客户', object: 'Lead/Quote/Contract', feedback: '转化 KPI、审批结果' },
+                children: ['org-east', 'org-south'] },
+            'org-east': { name: '华东区销售部', level: '部门', parent: 'org-sales', kpis: [{ l: '区营收', v: '2.1亿', s: 'ok' }, { l: '完成率', v: '82%', s: 'ok' }, { l: '缺口', v: '2.3亿', s: 'danger' }, { l: '升级任务', v: '5', s: 'warn' }],
+                agents: [{ layer: 'L3', name: '区域经营助手', status: '运行中' }],
+                scopes: ['data:region_east', 'action:cs.approval.start'], raci: 'R: 华东总监 · A: 一线销售经理',
+                wm: { space: '华东客户与渠道', time: 'Q2 攻坚截止 6/30', subject: '华东销售团队', object: '攻坚项目、大客户', feedback: '缺口预警、督办状态' },
+                children: [] },
+            'org-south': { name: '华南区销售部', level: '部门', parent: 'org-sales', kpis: [{ l: '区营收', v: '1.5亿', s: 'warn' }, { l: '完成率', v: '70%', s: 'danger' }, { l: '流失客户', v: '3', s: 'danger' }, { l: '专项', v: '2', s: 'warn' }],
+                agents: [{ layer: 'L3', name: '客户回流顾问', status: '运行中' }],
+                scopes: ['data:region_south'], raci: 'R: 华南总监',
+                wm: { space: '华南区域', time: '客户挽回 30 天 SLA', subject: '华南销售', object: '流失客户 A/B', feedback: '满意度、回款' },
+                children: [] },
+            'org-mfg': { name: '智能制造事业部', level: '事业部', parent: 'org-root', kpis: [{ l: '产能利用', v: '88%', s: 'ok' }, { l: '良品率', v: '99.2%', s: 'ok' }, { l: '停产次数', v: '3', s: 'danger' }, { l: 'L2 Agent', v: '4', s: 'ok' }],
+                agents: [{ layer: 'L2', name: 'ΠPaw 生产调度', status: '运行中' }, { layer: 'L2', name: 'ΠPaw 质量分析', status: '运行中' }],
+                scopes: ['data:mes', 'action:cs.ticket.*'], raci: 'R: 生产 VP',
+                wm: { space: '工厂/产线', time: '排产节拍 / 维护窗口', subject: '产线主管、设备工程师', object: '工单、设备、物料', feedback: 'OEE、故障事件' },
+                children: [] },
+            'org-hr': { name: '人力资源中心', level: '职能', parent: 'org-root', kpis: [{ l: '招聘周期', v: '28天', s: 'ok' }, { l: '留存率', v: '92%', s: 'ok' }, { l: 'AI 招聘 OS', v: '运行', s: 'ok' }, { l: '待办', v: '7', s: 'warn' }],
+                agents: [{ layer: 'L2', name: 'ΠPaw 招聘专员', status: '运行中' }],
+                scopes: ['data:hr_candidates', 'action:cs.approval.*'], raci: 'R: HRBP',
+                wm: { space: '岗位编制域', time: '招聘 SLA', subject: 'HR、用人经理', object: '候选人、Offer', feedback: '闭环评估、审计' },
+                children: [] }
+        };
+
+        const PROJECT_STATUS_ORDER = { '紧急': 0, '风险': 1, '进行中': 2, '筹备': 3, '已完成': 4 };
+        let projectStatusFilter = '全部';
+
+        const PROJECTS = [
+            { id: 'proj-sales-gap', code: 'CAM-2025-EAST-Q2', type: '营收攻坚', name: '华东区 Q2 营收缺口攻坚',
+              org: 'org-east', status: '进行中', progress: 45, priority: 'P0', layer: 'L3', scenarioId: 'scn-b2b-sales',
+              charter: { goal: '在 6/30 前填补华东 Q2 营收缺口，保障事业部目标达成', gap: '缺口 2.3 亿', target: '签约 +1.2 亿', deadline: '2025-06-30', budget: '专项费用 80 万' },
+              owner: '张华东', sponsor: '销售 VP · 李某某', team: [{ role: '战役负责人', name: '张华东', dept: '华东区' }, { role: '销售主责', name: '王磊', dept: '大客户组' }, { role: '合规会签', name: '赵合规', dept: '财务共享' }, { role: '数字助手', name: '区域经营助手', dept: 'L3' }],
+              raci: { R: '华东区销售部', A: '张华东', C: '财务/合规', I: '全球销售事业部' },
+              wmDims: ['space', 'time', 'object'], agents: ['区域经营助手', 'Sales Advisor'],
+              kpis: [{ l: '缺口填补率', baseline: '0%', current: '45%', target: '80%', s: 'warn' }, { l: '大客户签约', baseline: '0', current: '3', target: '8', unit: '单', s: 'warn' }, { l: '报价合规率', baseline: '92%', current: '100%', target: '100%', s: 'ok' }, { l: '平均审批时长', baseline: '3.2天', current: '1.8天', target: '≤2天', s: 'ok' }],
+              workstreams: [{ name: '缺口归因与名单', owner: '张华东', status: '已完成', pct: 100 }, { name: '大客户报价攻坚', owner: '王磊', status: '进行中', pct: 55 }, { name: '折扣合规专项', owner: '赵合规', status: '进行中', pct: 40 }, { name: '复盘与制度优化', owner: '张华东', status: '未开始', pct: 0 }],
+              risks: [{ level: '高', desc: '2 家战略客户决策链未闭环', owner: '王磊', mitigation: '本周完成决策人拜访 + 证据包' }, { level: '中', desc: '折扣>10% 触发经理审批积压', owner: '赵合规', mitigation: '制度组评审「战略客户理由」字段' }],
+              activities: [{ t: '今天 10:32', who: '王磊', text: 'LT-2024 报价 1200 万进入经理审批' }, { t: '昨天 16:20', who: '系统', text: '里程碑「缺口归因报告」已验收' }, { t: '6/03 09:00', who: '张华东', text: '战役启动会 · 绑定销售价值流' }],
+              milestones: [{ t: '6/05', n: '缺口归因报告', ok: true, phase: 'P' }, { t: '6/15', n: '攻坚方案评审', ok: false, phase: 'D' }, { t: '6/22', n: '大客户签约 ≥5', ok: false, phase: 'C' }, { t: '6/30', n: '缺口填补验收', ok: false, phase: 'A' }],
+              nextActions: ['推进 LT-2024 审批', '本周拜访 2 家决策人', '准备 6/15 方案评审材料'],
+              ganttTasks: [
+                { name: '缺口归因', owner: '张华东', start: '2025-06-01', end: '2025-06-05', progress: 100, critical: true },
+                { name: '大客户名单', owner: '王磊', start: '2025-06-04', end: '2025-06-08', progress: 100 },
+                { name: 'LT-2024 报价', owner: '王磊', start: '2025-06-06', end: '2025-06-18', progress: 55, critical: true },
+                { name: '折扣合规', owner: '赵合规', start: '2025-06-10', end: '2025-06-22', progress: 30 },
+                { name: '方案评审', owner: '张华东', start: '2025-06-13', end: '2025-06-15', progress: 0, milestone: true },
+                { name: '缺口验收', owner: '张华东', start: '2025-06-25', end: '2025-06-30', progress: 0, critical: true }
+              ],
+              resources: [{ name: '张华东', role: '负责人', load: 92, tasks: 4 }, { name: '王磊', role: '销售主责', load: 110, tasks: 6 }, { name: '赵合规', role: '合规', load: 65, tasks: 2 }],
+              weeklyMeetings: [
+                { week: 'W23', date: '2025-06-02', chair: '张华东', highlight: '战役启动，锁定 8 家大客户', kpiDelta: '缺口填补 0%→12%',
+                  decisions: ['LT-2024 列为 P0', '折扣超 10% 走经理审批'], issues: ['2 家决策人未接触'],
+                  actions: [{ who: '王磊', what: '完成 LT-2024 证据包', due: '6/6' }, { who: '赵合规', what: '梳理折扣审批 SOP', due: '6/8' }] },
+                { week: 'W24', date: '2025-06-09', chair: '张华东', highlight: 'LT-2024 报价进入审批', kpiDelta: '缺口填补 12%→45%',
+                  decisions: ['6/15 方案评审改线下'], issues: ['审批队列 3 单积压'],
+                  actions: [{ who: '王磊', what: '跟进经理审批', due: '6/10' }, { who: '张华东', what: '准备评审材料', due: '6/14' }] }
+              ] },
+            { id: 'proj-south-winback', code: 'CAM-2025-SOUTH-CS', type: '客户挽回', name: '华南大客户回流',
+              org: 'org-south', status: '风险', progress: 30, priority: 'P1', layer: 'L3', scenarioId: 'scn-cs',
+              charter: { goal: '30 天内挽回 A/B 级流失客户，续签率回升', gap: '流失 3 家', target: '续签 ≥2 家', deadline: '2025-06-25', budget: '客户成功专项 30 万' },
+              owner: '陈华南', sponsor: '华南区总监', team: [{ role: '负责人', name: '陈华南', dept: '华南区' }, { role: '客户成功', name: '刘挽回', dept: 'CS' }],
+              raci: { R: '华南区', A: '陈华南', C: '法务', I: '销售事业部' },
+              wmDims: ['subject', 'object', 'feedback'], agents: ['客户回流顾问'],
+              kpis: [{ l: '挽回进度', baseline: '0%', current: '30%', target: '70%', s: 'danger' }, { l: 'NPS', baseline: '62', current: '58', target: '≥65', s: 'danger' }, { l: '续签金额', baseline: '0', current: '0.4亿', target: '1.2亿', unit: '预估', s: 'warn' }],
+              workstreams: [{ name: '流失原因分析', owner: '刘挽回', status: '已完成', pct: 100 }, { name: '定制挽回方案', owner: '陈华南', status: '进行中', pct: 35 }, { name: '合同续签谈判', owner: '陈华南', status: '风险', pct: 10 }],
+              risks: [{ level: '高', desc: 'A 客户竞品已报价低 15%', owner: '陈华南', mitigation: '价值方案 + 高管拜访' }],
+              activities: [{ t: '今天 09:15', who: '刘挽回', text: 'A 客户挽回方案待客户确认' }],
+              milestones: [{ t: '6/10', n: 'A 客户挽回方案', ok: false, phase: 'D' }, { t: '6/20', n: '合同续签', ok: false, phase: 'C' }],
+              nextActions: ['周五前完成 A 客户方案签字', '启动 B 客户试用延期条款'],
+              ganttTasks: [{ name: '流失分析', owner: '刘挽回', start: '2025-05-28', end: '2025-06-05', progress: 100 }, { name: 'A 客户方案', owner: '陈华南', start: '2025-06-06', end: '2025-06-12', progress: 35, critical: true }, { name: '续签谈判', owner: '陈华南', start: '2025-06-15', end: '2025-06-25', progress: 10, critical: true }],
+              resources: [{ name: '陈华南', role: '负责人', load: 95, tasks: 5 }, { name: '刘挽回', role: 'CS', load: 78, tasks: 3 }],
+              weeklyMeetings: [{ week: 'W24', date: '2025-06-09', chair: '陈华南', highlight: 'A 客户方案待确认', kpiDelta: '挽回 30%', decisions: ['启动高管拜访'], issues: ['竞品低价'], actions: [{ who: '陈华南', what: '周五前方案签字', due: '6/13' }] }] },
+            { id: 'proj-cost-raw', code: 'CAM-2025-COST', type: '成本专项', name: '原材料涨价应对',
+              org: 'org-root', status: '进行中', progress: 55, priority: 'P1', layer: 'L2', scenarioId: 'scn-finance',
+              charter: { goal: '抵消原材料上涨对毛利率的影响（目标 -1.2pp）', gap: '毛利率 -1.8pp', target: '回升至预算线', deadline: '2025-06-20', budget: '降本基金 200 万' },
+              owner: '周采购', sponsor: 'CFO', team: [{ role: '负责人', name: '周采购', dept: '供应链' }, { role: '工艺', name: '吴工艺', dept: '制造' }],
+              raci: { R: '供应链中心', A: '周采购', C: 'CFO', I: 'COO' },
+              wmDims: ['object', 'feedback'], agents: ['ΠPaw 合规审查', '采购分析'],
+              kpis: [{ l: '采购降本', baseline: '0', current: '320万', target: '500万', unit: '元', s: 'ok' }, { l: '工艺降耗', baseline: '0', current: '40%', target: '100%', s: 'warn' }],
+              workstreams: [{ name: '供应商谈判', owner: '周采购', status: '已完成', pct: 100 }, { name: '工艺降耗', owner: '吴工艺', status: '进行中', pct: 40 }],
+              risks: [{ level: '中', desc: '替代料认证周期 6 周', owner: '吴工艺', mitigation: '并行小批量试产' }],
+              activities: [{ t: '6/08', who: '周采购', text: '三家核心供应商新协议签署' }],
+              milestones: [{ t: '6/08', n: '供应商谈判', ok: true, phase: 'D' }, { t: '6/15', n: '工艺降耗方案', ok: false, phase: 'C' }],
+              nextActions: ['6/12 工艺评审会', '更新降本测算表'],
+              ganttTasks: [{ name: '供应商谈判', owner: '周采购', start: '2025-06-01', end: '2025-06-08', progress: 100 }, { name: '工艺降耗', owner: '吴工艺', start: '2025-06-09', end: '2025-06-18', progress: 40, critical: true }],
+              resources: [{ name: '周采购', role: '负责人', load: 70, tasks: 2 }, { name: '吴工艺', role: '工艺', load: 88, tasks: 3 }],
+              weeklyMeetings: [{ week: 'W23', date: '2025-06-03', chair: '周采购', highlight: '三家供应商协议签署', kpiDelta: '降本 320万', decisions: ['工艺方案 6/15 前评审'], issues: ['替代料认证慢'], actions: [{ who: '吴工艺', what: '小批量试产', due: '6/12' }] }] },
+            { id: 'proj-recruit-ai', code: 'CAM-2025-HR-AI', type: '数字化试点', name: 'AI 招聘 OS 试点',
+              org: 'org-hr', status: '进行中', progress: 72, priority: 'P2', layer: 'L2', scenarioId: 'scn-recruit',
+              charter: { goal: '招聘闭环可验收上线，周期缩短 20%', gap: '周期 35天', target: '≤28天', deadline: '2025-06-20', budget: '试点 50 万' },
+              owner: '孙 HR', sponsor: 'CHRO', team: [{ role: '负责人', name: '孙 HR', dept: '人力资源' }],
+              raci: { R: 'HR 数字化', A: '孙 HR', C: '用人经理', I: 'COO' },
+              wmDims: ['time', 'subject', 'feedback'], agents: ['ΠPaw 招聘专员'],
+              kpis: [{ l: '闭环验收', baseline: '0/7', current: '5/7', target: '7/7', s: 'ok' }, { l: '平均周期', baseline: '35天', current: '28天', target: '28天', s: 'ok' }],
+              workstreams: [{ name: '用例验收', owner: '孙 HR', status: '进行中', pct: 72 }, { name: '业务推广', owner: '孙 HR', status: '未开始', pct: 0 }],
+              risks: [{ level: '低', desc: '部分用人经理不愿改流程', owner: '孙 HR', mitigation: '标杆岗位先行' }],
+              activities: [{ t: '6/01', who: '孙 HR', text: '世界模型验收通过' }],
+              milestones: [{ t: '6/01', n: '试点验收', ok: true, phase: 'C' }, { t: '6/20', n: '全链路 E2E', ok: false, phase: 'A' }],
+              nextActions: ['完成剩余 2 条验收用例', '准备推广培训'],
+              ganttTasks: [{ name: '用例验收', owner: '孙 HR', start: '2025-05-20', end: '2025-06-15', progress: 72, critical: true }, { name: '推广培训', owner: '孙 HR', start: '2025-06-16', end: '2025-06-20', progress: 0 }],
+              resources: [{ name: '孙 HR', role: '负责人', load: 75, tasks: 4 }],
+              weeklyMeetings: [{ week: 'W22', date: '2025-06-01', chair: '孙 HR', highlight: '试点验收 5/7', kpiDelta: '周期 28天', decisions: ['剩余用例 6/20 前完成'], issues: [], actions: [{ who: '孙 HR', what: 'E2E 验收', due: '6/18' }] }] },
+            { id: 'proj-line-a', code: 'CAM-2025-MFG-A', type: '运营抢修', name: '生产线 A 可靠性提升',
+              org: 'org-mfg', status: '紧急', progress: 20, priority: 'P0', layer: 'L2', scenarioId: 'scn-cs',
+              charter: { goal: '7 天内将 A 线非计划停机降至 0', gap: '本周停机 3 次', target: 'OEE ≥88%', deadline: '2025-06-12', budget: '抢修预算 120 万' },
+              owner: '郑设备', sponsor: '生产 VP', team: [{ role: '负责人', name: '郑设备', dept: '设备部' }, { role: '质量', name: '钱质量', dept: 'QA' }],
+              raci: { R: 'A 线班组', A: '郑设备', C: '生产 VP', I: '制造事业部' },
+              wmDims: ['space', 'time', 'feedback'], agents: ['生产调度', '质量分析'],
+              kpis: [{ l: '非计划停机', baseline: '3次/周', current: '1次/周', target: '0', s: 'warn' }, { l: 'OEE', baseline: '82%', current: '85%', target: '88%', s: 'warn' }],
+              workstreams: [{ name: '根因分析', owner: '郑设备', status: '已完成', pct: 100 }, { name: '改造上线', owner: '郑设备', status: '进行中', pct: 25 }],
+              risks: [{ level: '高', desc: '关键备件交期 5 天', owner: '郑设备', mitigation: '启用 B 线代工 + 空运备件' }],
+              activities: [{ t: '今天 08:00', who: '郑设备', text: '根因：轴承润滑周期不足' }],
+              milestones: [{ t: '6/04', n: '根因分析', ok: true, phase: 'D' }, { t: '6/10', n: '改造方案上线', ok: false, phase: 'C' }],
+              nextActions: ['今日完成改造方案评审', '跟踪备件物流'],
+              ganttTasks: [{ name: '根因分析', owner: '郑设备', start: '2025-06-03', end: '2025-06-04', progress: 100 }, { name: '改造上线', owner: '郑设备', start: '2025-06-05', end: '2025-06-10', progress: 25, critical: true }, { name: 'OEE 验收', owner: '钱质量', start: '2025-06-10', end: '2025-06-12', progress: 0, critical: true }],
+              resources: [{ name: '郑设备', role: '负责人', load: 120, tasks: 5 }, { name: '钱质量', role: 'QA', load: 85, tasks: 2 }],
+              weeklyMeetings: [{ week: 'W24', date: '2025-06-09', chair: '郑设备', highlight: '根因：润滑周期不足', kpiDelta: 'OEE 85%', decisions: ['备件空运'], issues: ['备件交期 5 天'], actions: [{ who: '郑设备', what: '改造方案评审', due: '今天' }] }] }
+        ];
+
+        const WM_DIMS = {
+            space: { label: '空间', icon: 'fa-map', color: 'primary', desc: '组织、区域、渠道、系统边界、数据 scope' },
+            time: { label: '时间', icon: 'fa-clock-o', color: 'secondary', desc: 'SLA、账期、审批时限、销售周期、里程碑' },
+            subject: { label: '主体', icon: 'fa-user', color: 'success', desc: '员工、客户、审批人、L1/L2/L3 Agent' },
+            object: { label: '客体', icon: 'fa-cube', color: 'warning', desc: '线索、商机、报价、工单、项目、政策' },
+            feedback: { label: '反馈', icon: 'fa-refresh', color: 'danger', desc: '事件流、审批结果、KPI、ChangeSet' }
+        };
+
+        const CAPABILITIES = [
+            { id: 'cs.customer.get_profile', layer: '对象', scenes: 'B2B/客服', policy: 'G2', calls: 1240 },
+            { id: 'cs.lead.qualify', layer: '经营', scenes: 'B2B 销售', policy: 'G3', calls: 890 },
+            { id: 'cs.quote.draft', layer: '经营', scenes: 'B2B 销售', policy: 'G4+审批', calls: 456 },
+            { id: 'cs.approval.start', layer: '流程', scenes: '全场景', policy: 'G5', calls: 2103 },
+            { id: 'cs.pricing.calculate', layer: '决策', scenes: 'B2B 销售', policy: 'G4', calls: 678 },
+            { id: 'cs.ticket.escalate', layer: '流程', scenes: '客服/生产', policy: 'G3', calls: 534 },
+            { id: 'cs.invoice.get_status', layer: '对象', scenes: '财务', policy: 'G2', calls: 321 },
+            { id: 'cs.evidence.collect', layer: '证据', scenes: '全场景', policy: 'G1', calls: 1567 },
+            { id: 'cs.audit.append', layer: '证据', scenes: '全场景', policy: 'G0', calls: 3201 },
+            { id: 'cs.kpi.attribute', layer: '经营', scenes: '经营复盘', policy: 'G2', calls: 412 },
+            { id: 'cs.renewal.plan', layer: '经营', scenes: '客户成功', policy: 'G3', calls: 198 }
+        ];
+
+        const SCENARIOS = [
+            { id: 'scn-b2b-sales', title: 'B2B 线索 → 报价审批', layer: 'L3', track: 'Growth & Service',
+              chain: ['空间:租户/销售部', '时间:报价有效期7天', '主体:销售+合规Agent', '客体:Lead→Quote', '反馈:审批+KPI'],
+              packs: ['Domain Pack: B2B', 'Workflow: sales_quote_approval', 'Law: 折扣红线', 'Agent: Sales Advisor'],
+              capabilities: ['cs.lead.qualify', 'cs.quote.draft', 'cs.pricing.calculate', 'cs.approval.start'],
+              flow: ['intent_created', 'evidence_checking', 'lead_qualifying', 'quote_drafting', 'policy_checking', 'approved', 'changeset_drafted'],
+              kpi: '转化率 +12% · 报价合规 100%' },
+            { id: 'scn-cs', title: '客服工单 · SLA 履约', layer: 'L3', track: 'Growth & Service',
+              chain: ['主体:客服Agent+客户', '客体:Ticket', '反馈:SLA事件'],
+              packs: ['Workflow: cs_customer_service', 'Agent: CS Agent Playbook'],
+              capabilities: ['cs.ticket.escalate', 'cs.customer.get_profile', 'cs.evidence.collect'],
+              flow: ['ticket_created', 'sla_monitor', 'escalate', 'resolved', 'kpi_attribute'],
+              kpi: '首响 -35% · 升级可追溯' },
+            { id: 'scn-finance', title: '开票 · 财务审批', layer: 'L2', track: 'Workbench',
+              chain: ['客体:Invoice', '时间:账期', '反馈:approval_result'],
+              packs: ['Workflow: finance_invoice_approval', 'Law: 信用规则'],
+              capabilities: ['cs.invoice.get_status', 'cs.approval.start', 'cs.audit.append'],
+              flow: ['draft', 'policy_check', 'approval_pending', 'approved'],
+              kpi: '审批时效 2.1天' },
+            { id: 'scn-recruit', title: 'AI 招聘 OS 闭环', layer: 'L2', track: 'Workbench',
+              chain: ['主体:HR+候选人', '客体:Offer', '反馈:评估审计'],
+              packs: ['Domain:招聘世界模型', 'Evaluation Pack'],
+              capabilities: ['cs.approval.start', 'cs.evidence.collect', 'cs.audit.append'],
+              flow: ['simulate', 'generate', 'interact', 'evolve', 'output'],
+              kpi: '闭环验收 7/7' }
+        ];
+
+        const UAS_OCTET = [
+            { k: 'I', n: 'Intent Hub', s: '正常', v: '今日 342 意图' },
+            { k: 'K', n: 'Knowledge/Pack', s: '正常', v: '12 个 Pack 生效' },
+            { k: 'R', n: 'Runtime/AEE', s: '正常', v: '队列延迟 120ms' },
+            { k: 'A', n: 'Agent Fabric', s: '正常', v: '24 岗位 Agent' },
+            { k: 'S', n: 'System Mesh', s: '正常', v: '6 连接器在线' },
+            { k: 'G', n: 'Governance', s: '正常', v: '0 红线触发' },
+            { k: 'E', n: 'Evolution', s: '待审', v: '3 条 ChangeSet' },
+            { k: 'Π', n: 'Protocol', s: '正常', v: 'ASUI + cs.*' }
+        ];
+
+        const PLATFORM_STEPS = [
+            { id: 'capture', label: 'Capture', sub: 'I' },
+            { id: 'normalize', label: 'Normalize', sub: 'I' },
+            { id: 'govern', label: 'Govern', sub: 'G' },
+            { id: 'plan', label: 'Plan', sub: 'A·K' },
+            { id: 'execute', label: 'Execute', sub: 'cs.*' },
+            { id: 'observe', label: 'Observe', sub: 'E' },
+            { id: 'evolve', label: 'Evolve', sub: 'E' }
+        ];
+        const AIOS_LOOP_STEPS = [
+            { id: 'sense', label: '数据感知', short: 'Sense', icon: 'fa-eye' },
+            { id: 'attribute_d', label: '智能归因', short: 'Attribute', icon: 'fa-search' },
+            { id: 'strategize', label: '智能策略', short: 'Strategize', icon: 'fa-lightbulb-o' },
+            { id: 'orchestrate', label: '精准行动', short: 'Orchestrate', icon: 'fa-paper-plane' },
+            { id: 'attribute_r', label: '结果归因', short: 'Attribute', icon: 'fa-pie-chart' },
+            { id: 'evolve', label: '策略进化', short: 'Evolve', icon: 'fa-graduation-cap' }
+        ];
+        const AIOS_ENGINES = [
+            { id: 'sense', name: '感知引擎', en: 'Sense', status: '运行中', metric: '今日推送 3 异常', desc: '四大金刚异常检测' },
+            { id: 'attribute', name: '归因引擎', en: 'Attribute', status: '运行中', metric: '归因覆盖 72%', desc: '维度下钻 + 行动归因' },
+            { id: 'strategize', name: '策略引擎', en: 'Strategize', status: '运行中', metric: '策略库 48 条', desc: 'Top-N 方案推荐' },
+            { id: 'orchestrate', name: '编排引擎', en: 'Orchestrate', status: '运行中', metric: 'ΠPaw 5 Agent', desc: '任务分派 + SLA' },
+            { id: 'alert', name: '预警引擎', en: 'Alert', status: '运行中', metric: '2 条 SLA 预警', desc: '指标/闭环断裂监控' },
+            { id: 'evolve', name: '进化引擎', en: 'Evolve', status: '待审', metric: '3 条 SOP 候选', desc: '有效沉淀 · 无效淘汰' }
+        ];
+        const VALUE_STREAM = {
+            id: 'vs-pac-margin',
+            name: 'PAC Margin 经营闭环',
+            path: '感知 → 归因 → 策略 → 行动 → 验证 → 进化',
+            bizStages: AIOS_LOOP_STEPS.map(s => s.label)
+        };
+        const VALUE_STREAM_BY_SCENARIO = {
+            'scn-b2b-sales': { name: 'PAC Margin 经营闭环', stages: VALUE_STREAM.bizStages },
+            'scn-cs': { name: '客户服务价值流', stages: ['工单受理', 'SLA 监控', '分诊处理', '升级督办', '闭环检视'] },
+            'scn-finance': { name: '财务价值流', stages: ['单据起草', '合规校验', '审批决策', '入账确认'] },
+            'scn-recruit': { name: '招聘价值流', stages: ['需求确认', '候选人模拟', '面试协同', 'Offer 审批', '入职闭环'] }
+        };
+        const MGMT_PDca_LABELS = { org: ['P 目标', 'D 执行', 'C 检查', 'A 改进'], project: ['P 立项', 'D 推进', 'C 里程碑', 'A 沉淀'] };
+        let projectKpiChartInstance = null;
+        let projectPortfolioChartInstance = null;
+        let projectGanttChartInstance = null;
+        let projectResourceChartInstance = null;
+        let projectDetailTab = 'overview';
+
+        const RUN_STEPS_B2B = [
+            { workflow: 'sense_detect', platform: 0, bizStage: 0, aiosEngine: 'sense', pdcaOrg: 'P', pdcaProject: 'P',
+              entity: 'Objective', bizTitle: '数据感知', bizDetail: '感知引擎检测：PAC Q2 Margin 环比下跌 3.2pp（82.0%→78.8%），触发异常事件 EVT-MRG-0612。',
+              bizAction: '确认异常并启动归因', bizActor: 'AIOS 感知引擎 · 自动推送', bizHint: '飞书已通知 PAC BU 负责人与经营分析会',
+              capability: 'aios.sense.detect', bizLog: 'Margin 异常 · Z-score 2.8σ' },
+            { workflow: 'attribute_drill', platform: 1, bizStage: 1, aiosEngine: 'attribute', pdcaProject: 'P',
+              entity: 'Attribution', bizTitle: '智能归因', bizDetail: '归因引擎维度下钻：TR 下降贡献 62%、CFC 大客户流失贡献 28%、报价结构贡献 10%。',
+              bizAction: '确认归因结论', bizActor: 'AIOS 归因引擎 · Black 复核', bizHint: '客观替代会上拍脑袋讨论',
+              capability: 'aios.attribute.drill', bizLog: '归因完成 · 置信度 85%' },
+            { workflow: 'strategy_recommend', platform: 3, bizStage: 2, aiosEngine: 'strategize', pdcaProject: 'P',
+              entity: 'Strategy', bizTitle: '智能策略', bizDetail: '策略引擎推荐 Top-3：① BD-A 深耕 TR 赛道（预期 Margin +2pp）② BD-B 挽回 CFC 客户 ③ BD-C 优化报价结构。',
+              bizAction: '采纳策略①并生成 Action', bizActor: '张华东 · PAC BU 负责人', bizHint: '策略 STR-PAC-0612-A 关联 Objective',
+              capability: 'aios.strategy.recommend', bizLog: '策略 STR-PAC-0612-A 已确认' },
+            { workflow: 'action_dispatch', platform: 4, bizStage: 3, aiosEngine: 'orchestrate', pdcaProject: 'D',
+              entity: 'Action', bizTitle: '精准行动', bizDetail: '编排引擎分派：BD-A 本周拜访 5 个 TR 赛道客户 + 提交 3 份优化报价；SLA 7 天；同时推进 LT-2024 大单（1200 万）。',
+              bizAction: 'BD-A 确认并开始执行', bizActor: '王磊 · BD-A / ΠPaw Sales Advisor', bizHint: '每个 Action 必须关联 Strategy',
+              capability: 'aios.orchestrate.dispatch', bizLog: 'Action ACT-0612-001 已创建' },
+            { workflow: 'result_attribute', platform: 5, bizStage: 4, aiosEngine: 'attribute', pdcaProject: 'C',
+              entity: 'Result', bizTitle: '结果归因', bizDetail: '7 天后自动验证：BD-A 策略带来 Margin +2.1pp；BD-B 策略无效（-0.3pp）；LT-2024 赢单贡献缺口填补 8%。',
+              bizAction: '确认归因验证结果', bizActor: 'AIOS 归因引擎 · 反事实推断', bizHint: '行动归因 — AIOS 核心差异点',
+              capability: 'aios.attribute.action', bizLog: '策略 STR-PAC-0612-A 验证有效' },
+            { workflow: 'sop_evolve', platform: 6, bizStage: 5, postClose: true, aiosEngine: 'evolve', pdcaOrg: 'A', pdcaProject: 'A',
+              entity: 'Strategy→SOP', bizTitle: '策略进化', bizDetail: '进化引擎沉淀 SOP：「TR 赛道深耕」在 PAC 场景验证有效，升级为标准流程；BD-B 策略标记淘汰。',
+              bizAction: '确认 SOP 沉淀', bizActor: 'AIOS 进化引擎 · 制度组评审', bizHint: '有效的沉淀为 SOP，无效的淘汰',
+              capability: 'aios.evolve.sop', bizLog: 'SOP-PAC-TR-001 候选 · 策略库更新' }
+        ];
+
+        const EnterpriseRuntime = {
+            run: null,
+            audit: [],
+            changeSets: [
+                { id: 'sop_pac_tr_001', pack: 'SOP 库', status: '待审', reason: '「TR 赛道深耕」策略验证有效 · 进化引擎沉淀候选' }
+            ],
+            pdca: { org: 'C', project: 'P' },
+            biz: { leadId: 'LT-2024', customerName: '华东某制造集团', quoteId: null, stage: 'idle', amount: 0, discount: 0, owner: '王磊', deadline: '6/14' },
+            autoTimer: null
+        };
+
+        function getScenarioSteps(scenarioId) {
+            if (scenarioId === 'scn-b2b-sales') return RUN_STEPS_B2B;
+            const sc = SCENARIOS.find(s => s.id === scenarioId);
+            return (sc?.flow || []).map((f, i) => ({
+                workflow: f, platform: Math.min(i, 6), bizStage: Math.min(i, 4), pdcaProject: 'D',
+                bizTitle: f, bizDetail: '价值流节点：' + f, capability: null, bizLog: f
+            }));
+        }
+
+        function startBusinessRun(projectId, scenarioId, autoFirstStep) {
+            if (EnterpriseRuntime.run && EnterpriseRuntime.run.status === 'running') {
+                showToast('warning', '已有运行中实例', '请先重置或继续推进；避免并行运行导致审计冲突');
+                switchView('value');
+                return;
+            }
+            projectId = projectId || selectedProjectId || 'proj-sales-gap';
+            scenarioId = scenarioId || (PROJECTS.find(p => p.id === projectId)?.scenarioId) || 'scn-b2b-sales';
+            const proj = PROJECTS.find(p => p.id === projectId);
+            const steps = getScenarioSteps(scenarioId);
+            if (!proj || !steps.length) return;
+            selectedProjectId = projectId;
+            selectedScenarioId = scenarioId;
+            selectedOrgId = proj.org;
+            EnterpriseRuntime.run = {
+                id: 'run_' + Date.now(),
+                projectId, scenarioId, orgId: proj.org,
+                stepIndex: -1,
+                steps,
+                status: 'running'
+            };
+            EnterpriseRuntime.biz = { leadId: 'LT-2024', customerName: '华东某制造集团', quoteId: null, stage: 'idle', amount: 0, discount: 0, owner: '王磊', deadline: '6/14' };
+            EnterpriseRuntime.pdca = { org: 'P', project: 'P' };
+            pushAudit('智慧闭环', '启动', `【${VALUE_STREAM.name}】${ORG_NODES[proj.org]?.name} / 策略战役「${proj.name}」`);
+            document.getElementById('btnAdvanceRun')?.classList.remove('hidden');
+            document.getElementById('btnAutoRun')?.classList.remove('hidden');
+            if (currentView !== 'value') switchView('value');
+            if (autoFirstStep !== false) advanceBusinessRun();
+            else {
+                showToast('info', '已立项', '点击「' + (steps[0]?.bizAction || '确认商机信息') + '」开始推进');
+                syncRuntimeUi();
+            }
+        }
+
+        function advanceBusinessRun() {
+            const r = EnterpriseRuntime.run;
+            if (!r || r.status !== 'running') {
+                showToast('warning', '未运行', '请先启动业务运行');
+                return;
+            }
+            if (r.stepIndex >= r.steps.length - 1) {
+                r.status = 'completed';
+                document.getElementById('btnAdvanceRun')?.classList.add('hidden');
+                document.getElementById('btnAutoRun')?.classList.add('hidden');
+                showToast('success', '智慧闭环完成', 'PAC Margin 闭环跑通：策略 STR-PAC-0612-A 验证有效 → SOP 沉淀候选已生成');
+                syncRuntimeUi();
+                return;
+            }
+            r.stepIndex++;
+            const step = r.steps[r.stepIndex];
+            applyStepBusinessLogic(step, r);
+            const proj = PROJECTS.find(p => p.id === r.projectId);
+            if (proj?.activities) {
+                proj.activities.unshift({ t: '刚刚', who: '系统', text: `${step.bizTitle} · ${step.bizLog}` });
+                if (proj.activities.length > 8) proj.activities.pop();
+            }
+            if (step.pdcaOrg) EnterpriseRuntime.pdca.org = step.pdcaOrg;
+            if (step.pdcaProject) EnterpriseRuntime.pdca.project = step.pdcaProject;
+            pushAudit(step.bizTitle, step.workflow, step.bizLog + (step.capability ? ' [' + step.capability + ']' : ''));
+            if (step.workflow === 'changeset_drafted' || (step.workflow === 'sop_evolve' && step.postClose)) {
+                EnterpriseRuntime.changeSets.unshift({
+                    id: 'sop_' + Date.now(), pack: 'SOP 库 / 策略库',
+                    status: '待审', reason: '进化引擎：有效 Strategy 沉淀为 SOP-PAC-TR-001（由闭环验证触发）'
+                });
+                UAS_OCTET[6].v = EnterpriseRuntime.changeSets.length + ' 条 ChangeSet';
+            }
+            syncRuntimeUi();
+        }
+
+        function applyStepBusinessLogic(step, run) {
+            const b = EnterpriseRuntime.biz;
+            const proj = PROJECTS.find(p => p.id === run.projectId);
+            if (step.workflow === 'strategy_recommend') b.stage = 'strategy_confirmed';
+            if (step.workflow === 'action_dispatch') {
+                b.stage = 'action_running'; b.quoteId = 'QT-2024-0612'; b.amount = 1200; b.discount = 0.12;
+            }
+            if (step.workflow === 'result_attribute') { b.stage = 'attributed'; b.amount = 1200; }
+            if (step.workflow === 'result_attribute' && proj) {
+                proj.progress = Math.min(95, proj.progress + 12);
+                const ms = proj.milestones.find(m => m.n.includes('攻坚方案评审'));
+                if (ms) ms.ok = true;
+                const gt = proj.ganttTasks?.find(t => t.name.includes('报价') || t.name.includes('LT'));
+                if (gt) gt.progress = Math.min(100, (gt.progress || 0) + 25);
+            }
+            if (step.workflow === 'sop_evolve' && step.postClose && run.orgId === 'org-east') {
+                const node = ORG_NODES['org-east'];
+                const gap = node.kpis.find(k => k.l === '缺口');
+                if (gap) { gap.v = '2.1亿'; gap.s = 'warn'; }
+                const root = ORG_NODES['org-root'];
+                const margin = root.kpis.find(k => k.l === 'Margin');
+                if (margin) { margin.v = '80.9%'; margin.s = 'warn'; }
+            }
+        }
+
+        function pushAudit(capability, event, detail) {
+            const ts = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+            EnterpriseRuntime.audit.unshift({ ts, capability, event, detail });
+            if (EnterpriseRuntime.audit.length > 40) EnterpriseRuntime.audit.pop();
+        }
+
+        function autoRunAll() {
+            if (EnterpriseRuntime.autoTimer) return;
+            EnterpriseRuntime.autoTimer = setInterval(() => {
+                if (!EnterpriseRuntime.run || EnterpriseRuntime.run.status !== 'running') {
+                    clearInterval(EnterpriseRuntime.autoTimer);
+                    EnterpriseRuntime.autoTimer = null;
+                    return;
+                }
+                advanceBusinessRun();
+                if (EnterpriseRuntime.run.status === 'completed') {
+                    clearInterval(EnterpriseRuntime.autoTimer);
+                    EnterpriseRuntime.autoTimer = null;
+                }
+            }, 900);
+        }
+
+        function demoFullChain() {
+            resetRuntime(false);
+            switchView('value');
+            selectOrgNode('org-east');
+            selectedProjectId = 'proj-sales-gap';
+            selectedScenarioId = 'scn-b2b-sales';
+            startBusinessRun('proj-sales-gap', 'scn-b2b-sales');
+            setTimeout(() => autoRunAll(), 600);
+        }
+
+        function resetRuntime(showMsg) {
+            if (EnterpriseRuntime.autoTimer) {
+                clearInterval(EnterpriseRuntime.autoTimer);
+                EnterpriseRuntime.autoTimer = null;
+            }
+            EnterpriseRuntime.run = null;
+            EnterpriseRuntime.audit = [];
+            EnterpriseRuntime.pdca = { org: 'C', project: 'P' };
+            EnterpriseRuntime.biz = { leadId: 'LT-2024', customerName: '华东某制造集团', quoteId: null, stage: 'idle', amount: 0, discount: 0, owner: '王磊', deadline: '6/14' };
+            document.getElementById('btnAdvanceRun')?.classList.add('hidden');
+            document.getElementById('btnAutoRun')?.classList.add('hidden');
+            syncRuntimeUi();
+            if (showMsg !== false) showToast('info', '已重置', '运行时状态已恢复初始');
+        }
+
+        function spawnProjectFromOrg() {
+            const projs = PROJECTS.filter(p => p.org === selectedOrgId);
+            if (!projs.length) {
+                const childProjs = PROJECTS.filter(p => projectUnderOrg(p.org, selectedOrgId));
+                if (childProjs.length) {
+                    selectedProjectId = childProjs[0].id;
+                    EnterpriseRuntime.pdca.org = 'P';
+                    showToast('success', '由缺口立项', `已关联下级战役：${childProjs[0].name}`);
+                    switchView('project');
+                    return;
+                }
+                showToast('warning', '无绑定项目', '当前组织节点无战役项目，请选择华东区');
+                return;
+            }
+            selectedProjectId = projs[0].id;
+            EnterpriseRuntime.pdca.org = 'P';
+            showToast('success', '由缺口立项', `已立项战役「${projs[0].name}」— 可在项目页或价值流工作台推进`);
+            switchView('project');
+        }
+
+        function jumpToRuntimeSlice(slice) {
+            const r = EnterpriseRuntime.run;
+            if (!r && slice !== 'org') {
+                showToast('info', '先启动运行', '将使用默认华东缺口 × B2B 场景');
+                startBusinessRun();
+                return;
+            }
+            if (slice === 'org') { switchView('org'); selectOrgNode(r?.orgId || 'org-east'); }
+            else if (slice === 'project') { switchView('project'); selectProject(r?.projectId || 'proj-sales-gap'); }
+            else if (slice === 'scenario') { switchView('scenario'); selectScenario(r?.scenarioId || 'scn-b2b-sales'); }
+            else if (slice === 'kernel' || slice === 'platform') switchView('platform');
+            else if (slice === 'value') switchView('value');
+            else switchView('value');
+        }
+
+        /* ── 智慧闭环 · 角色自适应模块（L6 交互层） ── */
+        const FOCUS_ROLES = {
+            executive: { id: 'executive', label: 'CEO/BG', persona: '钛动 CEO · 经营驾驶舱', org: 'org-root',
+                defaultWidgets: ['kpi_pulse', 'portfolio', 'risk', 'linkage', 'improvement'] },
+            manager: { id: 'manager', label: 'BU 负责人', persona: 'PAC BU · 张华东', org: 'org-east',
+                defaultWidgets: ['kpi_pulse', 'campaign', 'value_stream', 'actions', 'linkage', 'pdca'] },
+            owner: { id: 'owner', label: '策略主责', persona: '策略战役负责人 · 张华东', org: 'org-east',
+                defaultWidgets: ['campaign', 'value_stream', 'actions', 'object', 'audit'] },
+            executor: { id: 'executor', label: '一线 BD', persona: 'BD-A · 王磊', org: 'org-east',
+                defaultWidgets: ['actions', 'value_stream', 'object', 'approvals', 'audit'] },
+            compliance: { id: 'compliance', label: '分析/职能', persona: '数据分析 · Black', org: 'org-root',
+                defaultWidgets: ['approvals', 'risk', 'audit', 'improvement', 'pdca'] }
+        };
+        const FOCUS_WIDGETS = {
+            kpi_pulse: { title: '四大金刚', icon: 'fa-heartbeat', span: 'focus-widget-span-12', desc: 'Spend/Revenue/Margin/TR · 感知引擎输入' },
+            portfolio: { title: '策略组合', icon: 'fa-th-list', span: 'focus-widget-span-8', desc: '在管 Strategy 与验证状态' },
+            campaign: { title: '当前战役', icon: 'fa-flag', span: 'focus-widget-span-4', desc: 'Objective 载体 · 策略战役' },
+            value_stream: { title: '智慧闭环', icon: 'fa-refresh', span: 'focus-widget-span-8', desc: '感知→归因→策略→行动→验证→进化' },
+            actions: { title: '精准行动', icon: 'fa-check-square-o', span: 'focus-widget-span-4', desc: 'Action 待办 · 关联 Strategy' },
+            linkage: { title: '实体链路', icon: 'fa-link', span: 'focus-widget-span-4', desc: 'Objective→Strategy→Action→Result' },
+            pdca: { title: 'PDCA 节律', icon: 'fa-refresh', span: 'focus-widget-span-4', desc: 'AI 驱动自动巡检' },
+            object: { title: '经营实体', icon: 'fa-cube', span: 'focus-widget-span-3', desc: 'Objective/Strategy/Action' },
+            approvals: { title: '待确认', icon: 'fa-gavel', span: 'focus-widget-span-4', desc: '策略确认 · 审批队列' },
+            risk: { title: '预警引擎', icon: 'fa-exclamation-triangle', span: 'focus-widget-span-4', desc: '指标/SLA/闭环断裂' },
+            audit: { title: '归因审计', icon: 'fa-history', span: 'focus-widget-span-6', desc: '完整决策智慧链记录' },
+            improvement: { title: 'SOP 沉淀', icon: 'fa-lightbulb-o', span: 'focus-widget-span-6', desc: '进化引擎产出 · 策略库更新' },
+            platform: { title: '系统架构', icon: 'fa-cog', span: 'focus-widget-span-12', desc: 'L1~L6 + 六大引擎' }
+        };
+        let focusRoleId = 'manager';
+        let focusLayoutStore = {};
+
+        function loadFocusLayout(roleId) {
+            try {
+                const raw = localStorage.getItem('pipaw_focus_' + roleId);
+                if (raw) return JSON.parse(raw);
+            } catch (e) { /* ignore */ }
+            return [...(FOCUS_ROLES[roleId]?.defaultWidgets || [])];
+        }
+
+        function getEnabledFocusWidgets() {
+            if (!focusLayoutStore[focusRoleId]) focusLayoutStore[focusRoleId] = loadFocusLayout(focusRoleId);
+            return focusLayoutStore[focusRoleId].filter(id => FOCUS_WIDGETS[id]);
+        }
+
+        function setFocusRole(roleId) {
+            if (!FOCUS_ROLES[roleId]) return;
+            focusRoleId = roleId;
+            const role = FOCUS_ROLES[roleId];
+            if (role.org) selectedOrgId = role.org;
+            if (!focusLayoutStore[roleId]) focusLayoutStore[roleId] = loadFocusLayout(roleId);
+            renderFocusBoard();
+            syncRuntimeUi();
+            showToast('info', '视角切换', '已切换为「' + role.label + '」焦点布局');
+        }
+
+        function toggleFocusCustomize() {
+            const p = document.getElementById('focusCustomizePanel');
+            if (!p) return;
+            const hidden = p.classList.toggle('hidden');
+            if (!hidden) renderFocusCustomizeList();
+        }
+
+        function renderFocusCustomizeList() {
+            const el = document.getElementById('focusCustomizeList');
+            if (!el) return;
+            const enabled = new Set(getEnabledFocusWidgets());
+            el.innerHTML = Object.entries(FOCUS_WIDGETS).map(([id, w]) =>
+                '<label class="flex items-start gap-2 p-2 rounded hover:bg-bg1 cursor-pointer">' +
+                '<input type="checkbox" class="focus-widget-toggle mt-0.5" data-wid="' + id + '" ' + (enabled.has(id) ? 'checked' : '') + '>' +
+                '<span><span class="font-medium"><i class="fa ' + w.icon + ' text-primary mr-1"></i>' + w.title + '</span>' +
+                '<span class="block text-text3">' + w.desc + '</span></span></label>'
+            ).join('');
+        }
+
+        function saveFocusCustomize() {
+            const ids = [...document.querySelectorAll('.focus-widget-toggle')].filter(c => c.checked).map(c => c.dataset.wid);
+            focusLayoutStore[focusRoleId] = ids.length ? ids : [...FOCUS_ROLES[focusRoleId].defaultWidgets];
+            try { localStorage.setItem('pipaw_focus_' + focusRoleId, JSON.stringify(focusLayoutStore[focusRoleId])); } catch (e) { /* ignore */ }
+            toggleFocusCustomize();
+            renderFocusBoard();
+            syncRuntimeUi();
+            showToast('success', '已保存', '焦点模块布局已更新');
+        }
+
+        function resetFocusLayoutToRole() {
+            focusLayoutStore[focusRoleId] = [...FOCUS_ROLES[focusRoleId].defaultWidgets];
+            try { localStorage.removeItem('pipaw_focus_' + focusRoleId); } catch (e) { /* ignore */ }
+            renderFocusCustomizeList();
+            showToast('info', '已恢复', '当前角色默认模块布局');
+        }
+
+        function focusWidgetShell(id, inner) {
+            const w = FOCUS_WIDGETS[id];
+            return '<div class="focus-widget ' + w.span + '" data-focus-widget="' + id + '">' +
+                '<div class="flex items-center justify-between mb-2">' +
+                '<span class="text-sm font-medium"><i class="fa ' + w.icon + ' text-primary mr-1.5"></i>' + w.title + '</span>' +
+                '<span class="text-[10px] text-text3">' + w.desc + '</span></div>' + inner + '</div>';
+        }
+
+        function buildFocusWidgetHtml(id) {
+            switch (id) {
+            case 'kpi_pulse':
+                return focusWidgetShell(id, '<div id="focusKpiGrid" class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs"></div>');
+            case 'portfolio':
+                return focusWidgetShell(id, '<div id="focusPortfolioList" class="space-y-2 text-xs max-h-[220px] overflow-y-auto"></div>');
+            case 'campaign':
+                return focusWidgetShell(id, '<div id="focusCampaignCard" class="text-xs"></div>');
+            case 'value_stream':
+                return focusWidgetShell(id,
+                    '<div id="valueStreamDealCard" class="p-2.5 mb-3 rounded-lg bg-gradient-to-r from-primary/5 to-bg1 border border-border/60"></div>' +
+                    '<div id="valueStreamPipeline" class="relative mb-3"></div>' +
+                    '<div class="p-3 bg-bg1 rounded-lg border-l-4 border-primary mb-2">' +
+                    '<div class="flex flex-wrap justify-between gap-1 mb-1">' +
+                    '<div class="text-sm font-medium" id="bizStepTitle">—</div>' +
+                    '<span class="text-[10px] text-text3 shrink-0" id="valueStreamActor">—</span></div>' +
+                    '<div class="text-xs text-text2" id="bizStepDetail">—</div>' +
+                    '<div class="text-[10px] text-warning mt-1" id="valueStreamHint"></div></div>' +
+                    '<div id="valueStreamPostClose" class="hidden mb-2"></div>' +
+                    '<div class="flex flex-wrap gap-2">' +
+                    '<button id="btnStartRun" class="primary-btn text-xs" onclick="startBusinessRun()"><i class="fa fa-play mr-1"></i>启动 PAC Margin 闭环</button>' +
+                    '<button id="btnAdvanceRun" class="action-btn border border-primary text-primary text-xs hidden" onclick="advanceBusinessRun()"><i class="fa fa-arrow-right mr-1"></i>推进</button>' +
+                    '<button id="btnAutoRun" class="action-btn border border-border text-xs hidden" onclick="autoRunAll()">自动演示智慧闭环</button></div>');
+            case 'actions':
+                return focusWidgetShell(id, '<ul id="focusActionList" class="space-y-2 text-xs"></ul>');
+            case 'linkage':
+                return focusWidgetShell(id,
+                    '<div id="domainLinkage" class="text-xs space-y-2 text-text2 mb-3"></div>' +
+                    '<div class="flex flex-wrap gap-1">' +
+                    '<button type="button" class="text-[10px] px-2 py-0.5 rounded bg-bg1 hover:bg-primary/10" onclick="jumpToRuntimeSlice(\'org\')">组织/KPI</button>' +
+                    '<button type="button" class="text-[10px] px-2 py-0.5 rounded bg-bg1 hover:bg-primary/10" onclick="jumpToRuntimeSlice(\'project\')">项目战役</button></div>');
+            case 'pdca':
+                return focusWidgetShell(id,
+                    '<div class="text-[10px] text-text3 mb-1">组织（常态）</div><div id="loopOrgPdca" class="grid grid-cols-4 gap-1 mb-2"></div>' +
+                    '<div class="text-[10px] text-text3 mb-1">项目（战役）</div><div id="loopProjectPdca" class="grid grid-cols-4 gap-1"></div>');
+            case 'object':
+                return focusWidgetShell(id,
+                    '<div class="text-xs"><span class="text-text3">客户/线索</span> <span id="loopBizObject" class="text-primary font-medium">—</span></div>' +
+                    '<div class="text-xs mt-2"><span class="text-text3">当前阶段</span> <span id="loopWorkflowState" class="font-medium">—</span></div>');
+            case 'approvals':
+                return focusWidgetShell(id, '<div id="focusApprovalList" class="space-y-2 text-xs"></div>');
+            case 'risk':
+                return focusWidgetShell(id, '<div id="focusRiskList" class="space-y-2 text-xs max-h-[200px] overflow-y-auto"></div>');
+            case 'audit':
+                return focusWidgetShell(id, '<div id="globalAuditLog" class="max-h-[200px] overflow-y-auto text-xs"></div>');
+            case 'improvement':
+                return focusWidgetShell(id, '<div id="globalChangeSets" class="space-y-2 text-xs max-h-[200px] overflow-y-auto"></div>');
+            case 'platform':
+                return focusWidgetShell(id,
+                    '<details class="text-xs text-text3"><summary class="cursor-pointer hover:text-primary">UAS 架构师 / IT 运行详情</summary>' +
+                    '<div id="platformPipeline" class="flex flex-wrap gap-2 mt-2 pt-2 border-t border-border"></div>' +
+                    '<div id="platformStepNote" class="mt-1 font-mono text-[10px] text-text3"></div></details>');
+            default: return '';
+            }
+        }
+
+        function renderFocusRolePicker() {
+            const el = document.getElementById('focusRolePicker');
+            if (!el) return;
+            el.innerHTML = Object.values(FOCUS_ROLES).map(r =>
+                '<button type="button" class="focus-role-pill ' + (r.id === focusRoleId ? 'focus-role-pill-active' : '') +
+                '" onclick="setFocusRole(\'' + r.id + '\')">' + r.label + '</button>'
+            ).join('');
+        }
+
+        function renderAiosLoopBanner() {
+            const el = document.getElementById('aiosLoopBanner');
+            if (!el) return;
+            const r = EnterpriseRuntime.run;
+            const step = r && r.stepIndex >= 0 ? r.steps[r.stepIndex] : null;
+            const bi = step && !step.postClose ? step.bizStage : (step?.postClose ? AIOS_LOOP_STEPS.length : -1);
+            el.innerHTML = '<div class="deal-pipeline-fill" style="width:' + (bi >= 0 ? Math.round((bi / AIOS_LOOP_STEPS.length) * 88) : 0) + '%"></div>' +
+                '<div class="deal-pipeline">' + AIOS_LOOP_STEPS.map((s, i) => {
+                    let cls = 'aios-loop-step relative z-10';
+                    if (i < bi) cls += ' aios-loop-done';
+                    else if (i === bi) cls += ' aios-loop-active';
+                    const dot = i < bi ? '<i class="fa fa-check text-[10px]"></i>' : '<i class="fa ' + s.icon + ' text-[10px]"></i>';
+                    return '<div class="' + cls + '"><div class="aios-loop-dot">' + dot + '</div>' +
+                        '<div class="text-[10px] mt-1 font-medium text-center leading-tight max-w-[68px]">' + s.label + '</div>' +
+                        '<div class="text-[9px] text-text3">' + s.short + '</div></div>';
+                }).join('') + '</div>';
+        }
+
+        function renderAiosEngines() {
+            const el = document.getElementById('aiosEnginesGrid');
+            if (!el) return;
+            const r = EnterpriseRuntime.run;
+            const activeEngine = r && r.stepIndex >= 0 ? r.steps[r.stepIndex]?.aiosEngine : null;
+            el.innerHTML = AIOS_ENGINES.map(e => {
+                const act = activeEngine === e.id || (activeEngine === 'attribute' && e.id === 'attribute') ? 'aios-engine-active' : '';
+                const stCls = e.status === '待审' ? 'text-warning' : 'text-success';
+                return '<div class="aios-engine-card ' + act + '"><div class="font-medium text-sm">' + e.name +
+                    '</div><div class="text-[10px] text-text3">' + e.en + '</div><div class="text-[10px] mt-1 ' + stCls + '">' + e.status +
+                    ' · ' + e.metric + '</div><div class="text-[10px] text-text3 mt-0.5">' + e.desc + '</div></div>';
+            }).join('');
+        }
+
+        function renderFocusBoard() {
+            const grid = document.getElementById('focusWidgetGrid');
+            if (!grid) return;
+            renderFocusRolePicker();
+            renderAiosLoopBanner();
+            grid.innerHTML = getEnabledFocusWidgets().map(id => buildFocusWidgetHtml(id)).join('');
+            updateFocusHeadline();
+            updateFocusStaticWidgets();
+        }
+
+        function updateFocusHeadline() {
+            const role = FOCUS_ROLES[focusRoleId];
+            const h = new Date().getHours();
+            const greet = h < 12 ? '上午好' : h < 18 ? '下午好' : '晚上好';
+            const ge = document.getElementById('focusGreeting');
+            if (ge) ge.textContent = greet + '，' + (role?.persona || '');
+            const hl = document.getElementById('focusHeadline');
+            const r = EnterpriseRuntime.run;
+            const step = r && r.stepIndex >= 0 ? r.steps[r.stepIndex] : null;
+            if (hl) {
+                if (step) hl.textContent = '今日焦点：' + step.bizTitle + (step.entity ? ' · ' + step.entity : '') + ' · ' + (step.aiosEngine || 'AIOS');
+                else if (focusRoleId === 'executive') hl.textContent = '今日焦点：PAC Margin 异常 -3.2pp · 感知引擎已推送 · 待确认 Strategy';
+                else if (focusRoleId === 'compliance') hl.textContent = '今日焦点：归因置信度 85% · 3 条 SOP 候选待审';
+                else hl.textContent = '今日焦点：PAC Margin 闭环 · 点击「演示智慧闭环」体验完整链路';
+            }
+            const sub = document.getElementById('focusSubline');
+            if (sub) sub.textContent = '「' + (role?.label || '') + '」视角 · ' + getEnabledFocusWidgets().length + ' 个模块 · 智慧闭环非 BI 看板';
+            const strip = document.getElementById('stripValueStream');
+            if (strip && currentView === 'value') strip.textContent = '智慧闭环 · ' + (role?.label || '');
+        }
+
+        function updateFocusStaticWidgets() {
+            const role = FOCUS_ROLES[focusRoleId];
+            const org = ORG_NODES[role?.org || 'org-east'];
+            const kpiEl = document.getElementById('focusKpiGrid');
+            if (kpiEl && org) {
+                kpiEl.innerHTML = org.kpis.map(k => {
+                    const c = k.s === 'danger' ? 'text-danger' : k.s === 'warn' ? 'text-warning' : 'text-success';
+                    return '<div class="p-2 bg-bg1 rounded-lg text-center"><div class="text-[10px] text-text3">' + k.l +
+                        '</div><div class="text-lg font-bold ' + c + '">' + k.v + '</div></div>';
+                }).join('');
+            }
+            const portEl = document.getElementById('focusPortfolioList');
+            if (portEl) {
+                portEl.innerHTML = PROJECTS.map(p => {
+                    const tag = p.status === '紧急' ? 'text-danger' : p.status === '风险' ? 'text-warning' : 'text-primary';
+                    return '<div class="p-2 bg-bg1 rounded flex justify-between gap-2 cursor-pointer hover:ring-1 hover:ring-primary/30" onclick="switchView(\'project\');selectProject(\'' + p.id + '\')">' +
+                        '<span class="font-medium truncate">' + p.name + '</span><span class="' + tag + ' shrink-0">' + p.progress + '%</span></div>';
+                }).join('');
+            }
+            const campEl = document.getElementById('focusCampaignCard');
+            const proj = PROJECTS.find(p => p.id === (EnterpriseRuntime.run?.projectId || 'proj-sales-gap'));
+            if (campEl && proj) {
+                campEl.innerHTML = '<div class="font-medium mb-1">' + proj.name + '</div>' +
+                    '<div class="text-text3 mb-2">' + (proj.charter?.goal || '').slice(0, 48) + '…</div>' +
+                    '<div class="flex justify-between mb-1"><span>进度</span><span class="text-primary font-medium">' + proj.progress + '%</span></div>' +
+                    '<div class="w-full h-1.5 bg-bg1 rounded"><div class="h-full bg-primary rounded" style="width:' + proj.progress + '%"></div></div>' +
+                    '<button class="mt-2 text-primary text-[10px] hover:underline" onclick="switchView(\'project\');selectProject(\'' + proj.id + '\')">进入战役 →</button>';
+            }
+            const actEl = document.getElementById('focusActionList');
+            if (actEl) {
+                let actions;
+                if (focusRoleId === 'executive') actions = ['审阅 Q2 经营分析会材料', '批示华东缺口战役', '审阅制度优化 #028'];
+                else if (focusRoleId === 'compliance') actions = ['审批 LT-2024 折扣 12%', '评审 Law Pack 变更', '抽检报价合规率'];
+                else if (focusRoleId === 'executor') actions = ['完成 LT-2024 证据包', '跟进经理审批', '拜访决策人 2 家'];
+                else actions = proj?.nextActions || ['推进价值流', '查看 KPI 偏差'];
+                actEl.innerHTML = actions.map((a, i) =>
+                    '<li class="flex gap-2 p-2 bg-bg1 rounded"><span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] shrink-0">' +
+                    (i + 1) + '</span><span>' + a + '</span></li>'
+                ).join('');
+            }
+            const apprEl = document.getElementById('focusApprovalList');
+            if (apprEl) {
+                const items = [
+                    { id: 'APR-889', title: 'LT-2024 折扣 12%', who: '王磊', amt: '1200万', urgent: true },
+                    { id: 'APR-882', title: '华南 A 客户续签条款', who: '陈华南', amt: '—', urgent: false },
+                    { id: 'APR-875', title: '采购降本协议会签', who: '周采购', amt: '320万', urgent: false }
+                ];
+                apprEl.innerHTML = items.map(it =>
+                    '<div class="p-2 rounded border ' + (it.urgent ? 'border-warning/40 bg-warning/5' : 'border-border bg-bg1') + '">' +
+                    '<div class="font-medium">' + it.title + '</div><div class="text-text3">' + it.id + ' · ' + it.who + ' · ' + it.amt + '</div></div>'
+                ).join('');
+            }
+            const riskEl = document.getElementById('focusRiskList');
+            if (riskEl) {
+                const risks = PROJECTS.flatMap(p => (p.risks || []).map(r => ({ level: r.level, desc: r.desc, owner: r.owner, proj: p.name })));
+                riskEl.innerHTML = risks.length ? risks.map(r =>
+                    '<div class="p-2 rounded border border-warning/30 bg-warning/5"><span class="tag bg-danger/10 text-danger mr-1">' + r.level +
+                    '</span>' + r.desc + '<div class="text-text3 mt-0.5">' + r.proj + ' · ' + r.owner + '</div></div>'
+                ).join('') : '<div class="text-text3">暂无风险</div>';
+            }
+        }
+
+        function renderPdcaPanel(containerId, phase, labels) {
+            const el = document.getElementById(containerId);
+            if (!el) return;
+            const phases = labels || ['P 计划', 'D 执行', 'C 检查', 'A 处置'];
+            el.innerHTML = phases.map((lab, i) => {
+                const key = ['P', 'D', 'C', 'A'][i];
+                const act = phase === key ? 'pdca-phase-active' : '';
+                return `<div class="pdca-phase ${act}">${lab}</div>`;
+            }).join('');
+        }
+
+        function renderValueStreamPanel(r, step) {
+            const stages = VALUE_STREAM.bizStages;
+            const bi = step ? (step.postClose ? stages.length : step.bizStage) : -1;
+            const fillPct = stages.length ? Math.round((Math.min(bi, stages.length) / stages.length) * 88) : 0;
+
+            const pipeEl = document.getElementById('valueStreamPipeline');
+            if (pipeEl) {
+                pipeEl.innerHTML =
+                    '<div class="deal-pipeline-fill" style="width:' + fillPct + '%"></div>' +
+                    '<div class="deal-pipeline">' + stages.map((lab, i) => {
+                        let cls = 'pipe-step relative z-10';
+                        if (i < bi) cls += ' pipe-step-done';
+                        else if (i === bi) cls += ' pipe-step-active';
+                        const dot = i < bi ? '<i class="fa fa-check text-[10px]"></i>' : (i === bi ? '●' : '');
+                        return '<div class="' + cls + '"><div class="pipe-step-dot">' + dot + '</div>' +
+                            '<div class="text-[10px] mt-1 font-medium leading-tight text-center px-0.5 max-w-[64px]">' + lab + '</div></div>';
+                    }).join('') + '</div>';
+            }
+
+            const dealEl = document.getElementById('valueStreamDealCard');
+            if (dealEl) {
+                const b = EnterpriseRuntime.biz;
+                const proj = r ? PROJECTS.find(p => p.id === r.projectId) : null;
+                if (r && proj) {
+                    const amt = b.amount ? b.amount + ' 万' : '金额待定';
+                    const disc = b.discount ? ' · 折扣 ' + Math.round(b.discount * 100) + '%' : '';
+                    const stageLab = step && !step.postClose ? stages[step.bizStage] : (step?.postClose || r.status === 'completed' ? '已赢单' : '—');
+                    dealEl.innerHTML =
+                        '<div class="flex flex-wrap justify-between gap-2">' +
+                        '<div class="min-w-0"><div class="text-sm font-medium truncate">' + (b.customerName || '—') +
+                        ' <span class="text-[10px] font-mono text-text3">' + b.leadId + '</span></div>' +
+                        '<div class="text-xs text-text2 truncate">' + proj.name + ' · 主责 ' + (b.owner || proj.owner) + '</div></div>' +
+                        '<div class="text-right shrink-0"><div class="text-sm font-bold text-primary">' + amt + disc + '</div>' +
+                        '<div class="text-[10px] text-text3">阶段 · ' + stageLab + ' · 报价至 ' + (b.deadline || '—') + '</div></div></div>';
+                } else {
+                    dealEl.innerHTML = '<div class="text-xs text-text2"><i class="fa fa-info-circle text-primary mr-1"></i>暂无运行中的闭环。点击下方启动 <strong>PAC Margin</strong> 示范场景，体验六大引擎协同。</div>';
+                }
+            }
+
+            const actorEl = document.getElementById('valueStreamActor');
+            if (actorEl) actorEl.textContent = step?.bizActor || (r ? '待操作' : '');
+            const hintEl = document.getElementById('valueStreamHint');
+            if (hintEl) hintEl.textContent = step?.bizHint || '';
+
+            const postEl = document.getElementById('valueStreamPostClose');
+            if (postEl) {
+                const show = !!(step?.postClose || r?.status === 'completed');
+                postEl.classList.toggle('hidden', !show);
+                if (step?.postClose) {
+                    postEl.innerHTML = '<div class="text-xs p-2 rounded-lg bg-success/5 border border-success/20"><i class="fa fa-flag-checkered text-success mr-1"></i><strong>主管线已完成</strong> · ' + step.bizDetail + '</div>';
+                } else if (r?.status === 'completed') {
+                    postEl.innerHTML = '<div class="text-xs p-2 rounded-lg bg-success/5 border border-success/20"><i class="fa fa-check-circle text-success mr-1"></i>商机 LT-2024 已闭环 · 战果计入战役 KPI</div>';
+                }
+            }
+
+            const btnStart = document.getElementById('btnStartRun');
+            if (btnStart) btnStart.classList.toggle('hidden', !!(r && r.status === 'running'));
+            const btnAdv = document.getElementById('btnAdvanceRun');
+            if (btnAdv && r && r.status === 'running' && step) {
+                btnAdv.innerHTML = '<i class="fa fa-arrow-right mr-1"></i>' + (step.bizAction || '推进到下一阶段');
+            }
+        }
+
+        function syncRuntimeUi() {
+            const r = EnterpriseRuntime.run;
+            const step = r && r.stepIndex >= 0 ? r.steps[r.stepIndex] : null;
+            const bi = step && !step.postClose ? step.bizStage : (step?.postClose ? VALUE_STREAM.bizStages.length : -1);
+            const pi = step ? step.platform : -1;
+            const stages = VALUE_STREAM.bizStages;
+            const pdcaIdx = { P: 0, D: 1, C: 2, A: 3 };
+
+            renderValueStreamPanel(r, step);
+
+            const platEl = document.getElementById('platformPipeline');
+            if (platEl) platEl.innerHTML = PLATFORM_STEPS.map((s, i) =>
+                `<span class="px-1 py-0.5 rounded text-[10px] ${i === pi ? 'bg-secondary/20 text-secondary' : 'bg-bg1'}">${s.label}</span>`
+            ).join('');
+            const pnote = document.getElementById('platformStepNote');
+            if (pnote) pnote.textContent = step?.capability ? `底层：${step.capability}` : '';
+
+            const bizTitle = document.getElementById('bizStepTitle');
+            const bizDetail = document.getElementById('bizStepDetail');
+            if (bizTitle) bizTitle.textContent = step ? step.bizTitle : '暂无运行中的闭环';
+            if (bizDetail) bizDetail.textContent = step ? step.bizDetail : 'PAC Margin 场景：感知 → 归因 → 策略 → 行动 → 验证 → 进化。点击「启动 PAC Margin 闭环」。';
+
+            renderAiosLoopBanner();
+            renderAiosEngines();
+
+            const stripVs = document.getElementById('stripValueStream');
+            if (stripVs) stripVs.textContent = VALUE_STREAM.name;
+            const stripMgmt = document.getElementById('stripMgmt');
+            if (stripMgmt) stripMgmt.textContent = r
+                ? (step?.entity ? `实体·${step.entity} | 引擎·${step.aiosEngine || '—'}` : `PDCA·${MGMT_PDca_LABELS.org[pdcaIdx[EnterpriseRuntime.pdca.org] ?? 2]}`)
+                : 'Objective → Strategy → Action → Result → Attribution';
+            const stripRun = document.getElementById('stripRun');
+            if (stripRun) stripRun.textContent = r
+                ? `${step?.bizTitle || '—'} · ${step?.bizActor || EnterpriseRuntime.biz.leadId}`
+                : '暂无运行中的闭环实例';
+
+            const stripPipe = document.getElementById('runtimeStripPipeline');
+            if (stripPipe) stripPipe.innerHTML = stages.map((lab, i) =>
+                `<span class="px-1 py-0.5 rounded ${i === bi ? 'bg-primary text-white' : i < bi ? 'bg-success/20 text-success' : 'bg-bg1 text-text3'}">${lab}</span>`
+            ).join('');
+
+            renderPdcaPanel('loopOrgPdca', EnterpriseRuntime.pdca.org, MGMT_PDca_LABELS.org);
+            renderPdcaPanel('loopProjectPdca', EnterpriseRuntime.pdca.project, MGMT_PDca_LABELS.project);
+            renderPdcaPanel('orgPdcaPanel', EnterpriseRuntime.pdca.org, MGMT_PDca_LABELS.org);
+            if (document.getElementById('projectPdcaPanel')) {
+                renderPdcaPanel('projectPdcaPanel', EnterpriseRuntime.pdca.project, MGMT_PDca_LABELS.project);
+            }
+            const orgHint = document.getElementById('orgPdcaHint');
+            if (orgHint) orgHint.textContent = EnterpriseRuntime.pdca.org === 'A'
+                ? '进化：有效 Strategy 沉淀为 SOP · 无效策略淘汰'
+                : '常态：感知异常 → 归因分析 → 策略确认 → Action 分派';
+
+            const proj = r ? PROJECTS.find(p => p.id === r.projectId) : null;
+            const linkEl = document.getElementById('domainLinkage');
+            if (linkEl) linkEl.innerHTML = proj ? `
+                <div class="cursor-pointer hover:text-primary" onclick="jumpToRuntimeSlice('org')"><span class="text-primary font-medium">① Objective</span> ${ORG_NODES[proj.org]?.name} · Margin 目标</div>
+                <div class="cursor-pointer hover:text-primary" onclick="jumpToRuntimeSlice('project')"><span class="text-warning font-medium">② Strategy</span> ${proj.name}（${proj.progress}%）</div>
+                <div class="cursor-pointer hover:text-primary" onclick="jumpToRuntimeSlice('value')"><span class="text-success font-medium">③ Action→Result</span> ${VALUE_STREAM.path}</div>
+            ` : '<div class="text-text3">启动后：Objective → Strategy → Action → Result → Attribution → 策略进化</div>';
+
+            const wi = step?.bizTitle || null;
+            const loopBiz = document.getElementById('loopBizObject');
+            if (loopBiz) loopBiz.textContent = (EnterpriseRuntime.biz.customerName || '') + ' · ' + EnterpriseRuntime.biz.leadId + (EnterpriseRuntime.biz.quoteId ? ' · ' + EnterpriseRuntime.biz.quoteId : '');
+            const loopWs = document.getElementById('loopWorkflowState');
+            if (loopWs) loopWs.textContent = step && !step.postClose ? (stages[step.bizStage] || step.bizTitle) : (step?.postClose ? '战果复盘' : '—');
+            const loopWf = document.getElementById('loopWorkflowSteps');
+            if (loopWf) loopWf.innerHTML = stages.map((lab, i) =>
+                `<span class="px-1.5 py-0.5 rounded ${i === bi ? 'bg-primary text-white' : i < bi ? 'bg-success/20 text-success' : 'bg-bg1'}">${lab}</span>`
+            ).join('');
+
+            const auditHtml = EnterpriseRuntime.audit.length
+                ? EnterpriseRuntime.audit.map(a => `<div class="audit-line text-text2"><span class="text-text3">${a.ts}</span> <strong>${a.capability}</strong> · ${a.detail}</div>`).join('')
+                : '<div class="text-text3 text-xs">暂无过程记录</div>';
+            ['globalAuditLog', 'kernelAuditTail'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = auditHtml;
             });
 
-            // 显示对应页面，激活对应tab
-            document.getElementById('page' + index).classList.remove('hidden');
-            document.getElementById('tab' + index).classList.add('bg-white', 'card-shadow', 'text-primary');
-            document.getElementById('tab' + index).classList.remove('text-text2', 'hover:bg-white/50');
+            const csEl = document.getElementById('globalChangeSets');
+            if (csEl) csEl.innerHTML = EnterpriseRuntime.changeSets.map(cs =>
+                `<div class="p-2 bg-bg1 rounded border border-border"><div class="font-medium">${cs.reason}</div><div class="text-text3">${cs.status}</div></div>`
+            ).join('');
 
-            // 初始化对应页面的图表
-            if (index === 1) {
-                initRevenueChart();
-                initHealthChart();
-                initDrillChart(1);
-            } else if (index === 2) {
-                initTeamChart();
-            } else if (index === 3) {
-                initPersonalChart();
+            const evo = document.getElementById('kernelEvolutionPanel');
+            if (evo) evo.innerHTML = `<p>配置变更经审批发布；经营者仅见「制度优化建议」。</p><p class="mt-2">待审 <strong>${EnterpriseRuntime.changeSets.filter(c => c.status === '待审').length}</strong> 条</p>`;
+
+            const banner = document.getElementById('orgActiveRunBanner');
+            if (banner) {
+                if (r && (r.orgId === selectedOrgId || projectUnderOrg(r.orgId, selectedOrgId))) {
+                    banner.classList.remove('hidden');
+                    banner.innerHTML = `<i class="fa fa-play-circle text-primary mr-1"></i>进行中：${r.steps[r.stepIndex]?.bizTitle || '—'} — <button class="text-primary underline" onclick="switchView('value')">价值流工作台</button>`;
+                } else banner.classList.add('hidden');
             }
+
+            if (r) {
+                document.getElementById('projectRunPanel')?.classList.remove('hidden');
+                const tasks = r.steps.slice(0, r.stepIndex + 1).map((s, i) =>
+                    `<div class="p-2 rounded ${i === r.stepIndex ? 'bg-primary/10 border border-primary/20' : 'bg-bg1'}">${i + 1}. ${s.bizTitle}</div>`
+                ).join('');
+                const ptq = document.getElementById('projectTaskQueue');
+                if (ptq) ptq.innerHTML = tasks || '等待第一步';
+            }
+
+            if (currentView === 'org' && selectedOrgId) selectOrgNode(selectedOrgId);
+            if (currentView === 'project') {
+                renderProjects();
+                if (selectedProjectId) selectProject(selectedProjectId, true);
+            }
+            if (currentView === 'scenario') renderScenarioDetail();
+            updateFocusHeadline();
+            updateFocusStaticWidgets();
+            updateAiContext();
+        }
+
+        function renderScenarioDetail() {
+            const s = SCENARIOS.find(x => x.id === selectedScenarioId);
+            if (!s) return;
+            const r = EnterpriseRuntime.run;
+            const wi = r?.scenarioId === s.id && r.stepIndex >= 0 ? r.steps[r.stepIndex].bizTitle : null;
+            document.getElementById('scenarioDetail').innerHTML = `
+                <div class="font-medium text-base mb-2">${s.title}</div>
+                <div class="text-xs text-text2 mb-2">价值流模板 · 验收 KPI：${s.kpi}</div>
+                <div class="text-sm font-medium mb-1">流程节点（经营者可见名）</div>
+                <div class="flex flex-wrap gap-1 mb-2">${VALUE_STREAM.bizStages.map(lab => `<span class="tag bg-bg1">${lab}</span>`).join('')}</div>
+                <div class="text-xs p-2 bg-bg1 rounded">${r && r.scenarioId === s.id ? `当前节点：<strong>${wi}</strong> · ${EnterpriseRuntime.biz.leadId}` : '在价值流工作台启动'}</div>`;
+            const vls = document.getElementById('scenarioValueLoop');
+            if (vls) vls.innerHTML = VALUE_STREAM.bizStages.map(lab =>
+                `<span class="py-1 rounded text-[10px] px-1 ${lab === wi ? 'bg-primary text-white' : 'bg-bg1 text-text3'}">${lab}</span>`
+            ).join('');
+            initScenarioFlowChart(VALUE_STREAM.bizStages, wi);
+        }
+
+        const VIEW_PAGES = {
+            'value': 'page-value', 'org': 'page-org', 'project': 'page-project',
+            'platform': 'page-kernel', 'kernel': 'page-kernel', 'scenario': 'page-scenario',
+            1: 'page1', 2: 'page2', 3: 'page3'
+        };
+        const VIEW_TABS = { 'value': 'tab0', 'org': 'tab4', 'project': 'tab5', 1: 'tab1', 2: 'tab2', 3: 'tab3' };
+
+        function switchView(view) {
+            if (view === 'loop') view = 'value';
+            currentView = view;
+            Object.values(VIEW_PAGES).forEach(pid => {
+                const el = document.getElementById(pid);
+                if (el) el.classList.add('hidden');
+            });
+            document.querySelectorAll('[id^="tab"]').forEach(tab => {
+                tab.classList.remove('nav-pill-active', 'bg-white', 'card-shadow', 'text-primary');
+            });
+            const pageId = VIEW_PAGES[view];
+            const tabId = VIEW_TABS[view];
+            if (pageId) document.getElementById(pageId).classList.remove('hidden');
+            if (tabId) document.getElementById(tabId).classList.add('nav-pill-active');
+            if (view === 'value') renderFocusBoard();
+            else if (view === 'org') { renderOrgTree(); selectOrgNode(selectedOrgId); }
+            else if (view === 'project') { initProjectFilters(); initProjectStatusFilters(); renderProjects(); }
+            else if (view === 'platform' || view === 'kernel') { renderAiosEngines(); renderWmDimensions(); renderCapabilities(); renderUasOctet(); initKernelFlowChart(); }
+            else if (view === 'scenario') { renderScenarioCards(); renderScenarioDetail(); }
+            else if (view === 1) { initRevenueChart(); initHealthChart(); initDrillChart(1); }
+            else if (view === 2) { initTeamChart(); }
+            else if (view === 3) { initPersonalChart(); }
+            syncRuntimeUi();
+            updateAiContext();
+        }
+
+        function renderOrgTree() {
+            const root = document.getElementById('orgTree');
+            function node(id, depth) {
+                const n = ORG_NODES[id];
+                if (!n) return '';
+                const active = id === selectedOrgId ? 'org-node-active' : '';
+                let html = `<div class="org-node ${active}" style="padding-left:${depth * 12 + 8}px" onclick="selectOrgNode('${id}')">
+                    <i class="fa ${n.children.length ? 'fa-folder-open' : 'fa-building-o'} text-text3"></i>
+                    <span class="flex-1 truncate">${n.name}</span>
+                    <span class="text-[10px] text-text3">${n.level}</span>
+                </div>`;
+                n.children.forEach(cid => { html += node(cid, depth + 1); });
+                return html;
+            }
+            root.innerHTML = node('org-root', 0);
+        }
+
+        function selectOrgNode(id) {
+            selectedOrgId = id;
+            const n = ORG_NODES[id];
+            if (!n) return;
+            renderOrgTree();
+            document.getElementById('orgDetailTitle').textContent = n.name + ' · ' + n.level;
+            const kpiEl = document.getElementById('orgKpiCards');
+            kpiEl.innerHTML = n.kpis.map(k => {
+                const c = k.s === 'danger' ? 'text-danger' : k.s === 'warn' ? 'text-warning' : 'text-success';
+                return `<div class="p-3 bg-bg1 rounded-lg"><div class="text-xs text-text3">${k.l}</div><div class="text-lg font-bold ${c}">${k.v}</div></div>`;
+            }).join('');
+            document.getElementById('orgAgents').innerHTML = n.agents.map(a => `
+                <div class="flex items-center justify-between p-2 bg-bg1 rounded text-xs">
+                    <span><span class="tag ${a.layer === 'L3' ? 'bg-emerald-100 text-emerald-800' : a.layer === 'L2' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'} mr-1">${a.layer}</span>${a.name}</span>
+                    <span class="text-success">${a.status}</span>
+                </div>`).join('');
+            document.getElementById('orgScopes').innerHTML = n.scopes.map(s => `<div class="font-mono bg-bg1 px-2 py-1 rounded">${s}</div>`).join('');
+            document.getElementById('orgRaci').textContent = n.raci;
+            const dims = ['space', 'time', 'subject', 'object', 'feedback'];
+            document.getElementById('orgWmMapping').innerHTML = dims.map(d => `
+                <div class="p-2 bg-bg1 rounded"><div class="font-medium text-primary mb-0.5">${WM_DIMS[d].label}</div><div class="text-text3">${n.wm[d]}</div></div>`).join('');
+            if (id === 'org-east' && !EnterpriseRuntime.run) {
+                const extra = document.getElementById('orgEastQuickRun');
+                if (!extra) {
+                    const wrap = document.getElementById('orgKpiCards');
+                    if (wrap) {
+                        const btn = document.createElement('div');
+                        btn.id = 'orgEastQuickRun';
+                        btn.className = 'col-span-2 md:col-span-4 mt-1';
+                        btn.innerHTML = `<button class="w-full primary-btn text-xs py-2" onclick="startBusinessRun('proj-sales-gap','scn-b2b-sales')"><i class="fa fa-bolt mr-1"></i>由 KPI 缺口启动 · 销售价值流</button>`;
+                        wrap.parentNode.insertBefore(btn, wrap.nextSibling);
+                    }
+                }
+            }
+        }
+
+        function initProjectFilters() {
+            const sel = document.getElementById('projectOrgFilter');
+            if (!sel) return;
+            const opts = [{ id: '', name: '全部组织' }, ...Object.keys(ORG_NODES).map(k => ({ id: k, name: ORG_NODES[k].name }))];
+            sel.innerHTML = opts.map(o => `<option value="${o.id}">${o.name}</option>`).join('');
+        }
+
+        function initProjectStatusFilters() {
+            const wrap = document.getElementById('projectStatusFilters');
+            if (!wrap || wrap.dataset.inited) return;
+            wrap.dataset.inited = '1';
+            ['全部', '紧急', '风险', '进行中', '筹备'].forEach(st => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'px-2 py-0.5 rounded-md border border-border hover:bg-bg1';
+                btn.textContent = st;
+                btn.onclick = () => { projectStatusFilter = st; renderProjects(); };
+                wrap.appendChild(btn);
+            });
+        }
+
+        function projectUnderOrg(projectOrgId, filterOrgId) {
+            if (!filterOrgId || projectOrgId === filterOrgId) return true;
+            let cur = ORG_NODES[projectOrgId];
+            while (cur) {
+                if (cur.parent === filterOrgId) return true;
+                cur = cur.parent ? ORG_NODES[cur.parent] : null;
+            }
+            return filterOrgId === 'org-root';
+        }
+
+        function getFilteredProjects() {
+            const orgFilter = document.getElementById('projectOrgFilter')?.value || '';
+            const q = (document.getElementById('projectSearch')?.value || '').toLowerCase();
+            const sort = document.getElementById('projectSort')?.value || 'priority';
+            let list = PROJECTS.filter(p => projectUnderOrg(p.org, orgFilter));
+            if (projectStatusFilter !== '全部') list = list.filter(p => p.status === projectStatusFilter);
+            if (q) list = list.filter(p =>
+                p.name.toLowerCase().includes(q) || p.code.toLowerCase().includes(q) ||
+                p.owner.toLowerCase().includes(q) || (ORG_NODES[p.org]?.name || '').toLowerCase().includes(q));
+            list.sort((a, b) => {
+                if (sort === 'deadline') return (a.charter?.deadline || '').localeCompare(b.charter?.deadline || '');
+                if (sort === 'progress') return b.progress - a.progress;
+                if (sort === 'risk') return (PROJECT_STATUS_ORDER[a.status] ?? 9) - (PROJECT_STATUS_ORDER[b.status] ?? 9);
+                const pa = parseInt((a.priority || 'P9').replace('P', ''), 10);
+                const pb = parseInt((b.priority || 'P9').replace('P', ''), 10);
+                return pa - pb;
+            });
+            return list;
+        }
+
+        function getValueStreamForProject(p) {
+            return VALUE_STREAM_BY_SCENARIO[p.scenarioId] || { name: '经营价值流', stages: VALUE_STREAM.bizStages };
+        }
+
+        function renderProjectPortfolioStats(list) {
+            const el = document.getElementById('projectPortfolioStats');
+            if (!el) return;
+            const urgent = list.filter(p => p.status === '紧急').length;
+            const risk = list.filter(p => p.status === '风险').length;
+            const avg = list.length ? Math.round(list.reduce((s, p) => s + p.progress, 0) / list.length) : 0;
+            const dueSoon = list.filter(p => p.charter?.deadline && p.charter.deadline <= '2025-06-15').length;
+            const cards = [
+                { label: '在管战役', value: list.length, sub: '含跨组织专项', border: 'border-primary', text: 'text-primary' },
+                { label: '紧急 / 风险', value: `${urgent} / ${risk}`, sub: '需周会督办', border: 'border-danger', text: 'text-danger' },
+                { label: '组合均进度', value: avg + '%', sub: '加权里程碑', border: 'border-success', text: 'text-success' },
+                { label: '15 日内到期', value: dueSoon, sub: '截止临近', border: 'border-warning', text: 'text-warning' }
+            ];
+            el.innerHTML = cards.map(c => `
+                <div class="bg-white rounded-lg p-3 card-shadow border-l-4 ${c.border}">
+                    <div class="text-xs text-text3">${c.label}</div>
+                    <div class="text-xl font-bold ${c.text} mt-0.5">${c.value}</div>
+                    <div class="text-[10px] text-text3">${c.sub}</div>
+                </div>`).join('');
+            document.querySelectorAll('#projectStatusFilters button').forEach(btn => {
+                btn.classList.toggle('bg-primary/10', btn.textContent === projectStatusFilter);
+                btn.classList.toggle('border-primary', btn.textContent === projectStatusFilter);
+                btn.classList.toggle('text-primary', btn.textContent === projectStatusFilter);
+            });
+        }
+
+        function initProjectPortfolioChart(list) {
+            const dom = document.getElementById('projectPortfolioChart');
+            if (!dom || typeof echarts === 'undefined') return;
+            projectPortfolioChartInstance?.dispose();
+            projectPortfolioChartInstance = echarts.init(dom);
+            projectPortfolioChartInstance.setOption({
+                tooltip: { trigger: 'item' },
+                series: [{
+                    type: 'pie', radius: ['42%', '70%'],
+                    data: list.map(p => ({ name: p.name.length > 8 ? p.name.slice(0, 8) + '…' : p.name, value: p.progress })),
+                    label: { fontSize: 9 }
+                }]
+            });
+        }
+
+        function initProjectKpiChart(p) {
+            const dom = document.getElementById('projectKpiChart');
+            if (!dom || typeof echarts === 'undefined' || !p.kpis) return;
+            projectKpiChartInstance?.dispose();
+            projectKpiChartInstance = echarts.init(dom);
+            const labels = p.kpis.map(k => k.l);
+            const completion = p.kpis.map(k => {
+                const cur = parseFloat(String(k.current).replace(/[^\d.]/g, '')) || 0;
+                const tgt = parseFloat(String(k.target).replace(/[^\d.]/g, '')) || 0;
+                if (!tgt) return 50;
+                return Math.min(100, Math.round((cur / tgt) * 100));
+            });
+            projectKpiChartInstance.setOption({
+                tooltip: { formatter: (params) => {
+                    const i = params[0]?.dataIndex ?? 0;
+                    const k = p.kpis[i];
+                    return k ? `${k.l}<br>当前 ${k.current} / 目标 ${k.target}` : '';
+                }},
+                grid: { left: 40, right: 12, top: 24, bottom: 48 },
+                xAxis: { type: 'category', data: labels, axisLabel: { fontSize: 9, rotate: 12 } },
+                yAxis: { type: 'value', max: 100, axisLabel: { formatter: '{value}%' } },
+                series: [{ name: '达成率', type: 'bar', data: completion, itemStyle: { color: '#165DFF' },
+                    markLine: { data: [{ yAxis: 100, name: '目标线' }], lineStyle: { color: '#00B42A', type: 'dashed' } } }]
+            });
+        }
+
+        function parseProjectDate(s) {
+            return new Date(String(s).slice(0, 10) + 'T00:00:00').getTime();
+        }
+
+        function initProjectGanttChart(p) {
+            const dom = document.getElementById('projectGanttChart');
+            const hint = document.getElementById('projectGanttHint');
+            const tasks = p.ganttTasks || [];
+            if (!dom || typeof echarts === 'undefined') return;
+            if (!tasks.length) {
+                projectGanttChartInstance?.dispose();
+                projectGanttChartInstance = null;
+                dom.innerHTML = '<div class="text-text3 text-xs text-center py-16">暂无计划任务</div>';
+                if (hint) hint.textContent = '—';
+                return;
+            }
+            dom.innerHTML = '';
+            projectGanttChartInstance?.dispose();
+            projectGanttChartInstance = echarts.init(dom);
+            const categories = tasks.map(t => t.name);
+            const minT = Math.min(...tasks.map(t => parseProjectDate(t.start)));
+            const maxT = Math.max(...tasks.map(t => parseProjectDate(t.end)), parseProjectDate(p.charter?.deadline || tasks[tasks.length - 1].end));
+            const criticalN = tasks.filter(t => t.critical).length;
+            if (hint) hint.textContent = `${criticalN} 项关键路径 · 战役截止 ${p.charter?.deadline || '—'}`;
+            projectGanttChartInstance.setOption({
+                tooltip: {
+                    trigger: 'item',
+                    formatter: (param) => {
+                        const t = tasks[param.dataIndex];
+                        if (!t) return '';
+                        return `<strong>${t.name}</strong><br>${t.owner}<br>${t.start} → ${t.end}<br>进度 ${t.progress}%${t.critical ? '<br><span style="color:#F53F3F">关键路径</span>' : ''}`;
+                    }
+                },
+                grid: { left: 96, right: 20, top: 12, bottom: 28 },
+                xAxis: {
+                    type: 'time', min: minT - 86400000, max: maxT + 86400000,
+                    axisLabel: { fontSize: 9, formatter: v => {
+                        const d = new Date(v);
+                        return (d.getMonth() + 1) + '/' + d.getDate();
+                    }}
+                },
+                yAxis: { type: 'category', data: categories.slice().reverse(), axisLabel: { fontSize: 9, width: 88, overflow: 'truncate' } },
+                series: [{
+                    type: 'custom',
+                    renderItem: (params, api) => {
+                        const idx = params.dataIndex;
+                        const t = tasks[idx];
+                        const catIdx = categories.length - 1 - idx;
+                        const start = api.coord([parseProjectDate(t.start), catIdx]);
+                        const end = api.coord([parseProjectDate(t.end), catIdx]);
+                        const h = api.size([0, 1])[1] * 0.52;
+                        const fullW = Math.max(end[0] - start[0], 4);
+                        const progW = fullW * ((t.progress || 0) / 100);
+                        const baseColor = t.critical ? '#F53F3F' : t.milestone ? '#722ED1' : '#165DFF';
+                        const children = [{
+                            type: 'rect',
+                            shape: { x: start[0], y: start[1] - h / 2, width: fullW, height: h, r: 3 },
+                            style: { fill: baseColor, opacity: 0.18 }
+                        }];
+                        if (progW > 1) {
+                            children.push({
+                                type: 'rect',
+                                shape: { x: start[0], y: start[1] - h / 2, width: progW, height: h, r: 3 },
+                                style: { fill: baseColor, opacity: 0.9 }
+                            });
+                        }
+                        return { type: 'group', children };
+                    },
+                    data: tasks.map((t, i) => [i, parseProjectDate(t.start), parseProjectDate(t.end)])
+                }]
+            });
+        }
+
+        function initProjectResourceChart(p) {
+            const dom = document.getElementById('projectResourceChart');
+            const res = p.resources || [];
+            if (!dom || typeof echarts === 'undefined') return;
+            if (!res.length) {
+                projectResourceChartInstance?.dispose();
+                projectResourceChartInstance = null;
+                dom.innerHTML = '<div class="text-text3 text-xs text-center py-16">暂无编组数据</div>';
+                return;
+            }
+            dom.innerHTML = '';
+            projectResourceChartInstance?.dispose();
+            projectResourceChartInstance = echarts.init(dom);
+            projectResourceChartInstance.setOption({
+                tooltip: {
+                    trigger: 'axis', axisPointer: { type: 'shadow' },
+                    formatter: (params) => {
+                        const r = res[params[0].dataIndex];
+                        return r ? `${r.name}（${r.role}）<br>负荷 ${r.load}% · ${r.tasks} 项任务${r.load > 100 ? '<br><span style="color:#F53F3F">超负荷</span>' : ''}` : '';
+                    }
+                },
+                grid: { left: 64, right: 36, top: 8, bottom: 24 },
+                xAxis: { type: 'value', max: 130, splitLine: { lineStyle: { type: 'dashed' } }, axisLabel: { fontSize: 9, formatter: '{value}%' } },
+                yAxis: { type: 'category', data: res.map(r => r.name), axisLabel: { fontSize: 9 } },
+                series: [
+                    { type: 'bar', z: 1, barWidth: 16, data: res.map(r => ({
+                        value: r.load,
+                        itemStyle: { color: r.load > 100 ? '#F53F3F' : r.load > 85 ? '#FF7D00' : '#165DFF', borderRadius: [0, 3, 3, 0] }
+                    })), label: { show: true, position: 'right', formatter: '{c}%', fontSize: 9 } },
+                    { type: 'bar', z: 0, barWidth: 16, barGap: '-100%', silent: true, data: res.map(() => 100), itemStyle: { color: 'rgba(134,144,156,0.15)', borderRadius: [0, 3, 3, 0] } }
+                ],
+                markLine: { silent: true, symbol: 'none', lineStyle: { color: '#F53F3F', type: 'dashed' }, data: [{ xAxis: 100, label: { formatter: '满负荷', fontSize: 8 } }] }
+            });
+        }
+
+        function renderProjectWeeklyPanel(p) {
+            const el = document.getElementById('projectWeeklyPanel');
+            if (!el) return;
+            const meetings = p.weeklyMeetings || [];
+            if (!meetings.length) {
+                el.innerHTML = '<div class="text-text3 py-6 text-center">暂无周会纪要 — 点击「生成本周纪要」创建</div>';
+                return;
+            }
+            el.innerHTML = meetings.slice().reverse().map(m => `
+                <div class="p-3 rounded-lg border border-border hover:border-primary/20 transition-colors">
+                    <div class="flex flex-wrap justify-between gap-2 mb-2">
+                        <span class="font-medium text-sm">${m.week} 战役例会 · ${m.date}</span>
+                        <span class="text-text3">主持 ${m.chair}</span>
+                    </div>
+                    <div class="p-2 bg-primary/5 rounded mb-2 text-text2">
+                        ${m.highlight}
+                        <span class="tag bg-success/10 text-success ml-1">KPI ${m.kpiDelta}</span>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-3">
+                        <div class="p-2 bg-bg1 rounded">
+                            <div class="font-medium text-primary mb-1"><i class="fa fa-gavel mr-1"></i>决策</div>
+                            <ul class="list-disc list-inside text-text2 space-y-0.5">${m.decisions.map(d => `<li>${d}</li>`).join('')}</ul>
+                        </div>
+                        <div class="p-2 bg-bg1 rounded">
+                            <div class="font-medium text-warning mb-1"><i class="fa fa-exclamation-circle mr-1"></i>问题</div>
+                            <ul class="list-disc list-inside text-text2 space-y-0.5">${(m.issues?.length ? m.issues : ['暂无']).map(d => `<li>${d}</li>`).join('')}</ul>
+                        </div>
+                        <div class="p-2 bg-bg1 rounded">
+                            <div class="font-medium text-success mb-1"><i class="fa fa-check-square-o mr-1"></i>督办</div>
+                            <ul class="list-none space-y-1">${m.actions.map(a =>
+                                `<li class="flex gap-1"><span class="tag bg-white shrink-0">${a.who}</span><span>${a.what}</span><span class="text-text3 shrink-0">${a.due}</span></li>`
+                            ).join('')}</ul>
+                        </div>
+                    </div>
+                </div>`).join('');
+        }
+
+        function setProjectDetailTab(tab) {
+            projectDetailTab = tab;
+            selectProject(selectedProjectId, true);
+        }
+
+        function renderProjectWorkboard(p) {
+            const el = document.getElementById('projectWorkboard');
+            if (!el) return;
+            const ws = (p.workstreams || []).map(w => {
+                const cls = w.status === '风险' ? 'text-danger' : w.status === '已完成' ? 'text-success' : 'text-primary';
+                return `<div class="p-2 bg-bg1 rounded flex justify-between gap-2">
+                    <div><span class="font-medium">${w.name}</span><div class="text-text3">${w.owner} · <span class="${cls}">${w.status}</span></div></div>
+                    <div class="text-right shrink-0"><div class="font-medium">${w.pct}%</div><div class="w-16 h-1 bg-border rounded mt-1"><div class="h-full bg-primary rounded" style="width:${w.pct}%"></div></div></div>
+                </div>`;
+            }).join('');
+            const risks = (p.risks || []).map(r => `
+                <div class="p-2 rounded border border-warning/30 bg-warning/5">
+                    <span class="tag bg-danger/10 text-danger mr-1">${r.level}</span>${r.desc}
+                    <div class="text-text3 mt-1">主责 ${r.owner} · ${r.mitigation}</div>
+                </div>`).join('');
+            const next = (p.nextActions || []).map(n => `<li class="flex gap-1"><i class="fa fa-angle-right text-primary mt-0.5"></i>${n}</li>`).join('');
+            el.innerHTML = `${ws}<div class="pt-2 border-t border-border font-medium text-text2">风险登记</div>${risks || '<div class="text-text3">暂无</div>'}
+                <div class="pt-2 border-t border-border font-medium text-text2">本周必办</div><ul class="list-none space-y-1">${next}</ul>`;
+        }
+
+        function renderProjectMilestoneTrack(p) {
+            const done = p.milestones.filter(m => m.ok).length;
+            const total = p.milestones.length;
+            const fillPct = total ? Math.round((done / total) * 84) : 0;
+            return `
+                <div class="milestone-track mt-2 mb-4">
+                    <div class="milestone-line"></div>
+                    <div class="milestone-line-fill" style="width:${fillPct}%"></div>
+                    ${p.milestones.map((m, i) => {
+                        const active = !m.ok && (i === 0 || p.milestones[i - 1].ok);
+                        const dotCls = m.ok ? 'milestone-dot-done' : active ? 'milestone-dot-active' : '';
+                        return `<div class="milestone-node">
+                            <div class="milestone-dot ${dotCls}"></div>
+                            <div class="text-[10px] font-medium mt-1">${m.t}</div>
+                            <div class="text-[10px] text-text3 text-center leading-tight">${m.n}</div>
+                            <span class="text-[9px] tag bg-bg1 mt-0.5">PDCA·${m.phase || 'D'}</span>
+                        </div>`;
+                    }).join('')}
+                </div>`;
+        }
+
+        function renderProjects() {
+            const list = getFilteredProjects();
+            renderProjectPortfolioStats(list);
+            initProjectPortfolioChart(list);
+            const alertEl = document.getElementById('projectResourceAlert');
+            if (alertEl) {
+                const overloaded = [];
+                list.forEach(p => (p.resources || []).forEach(r => {
+                    if (r.load > 100) overloaded.push({ name: r.name, proj: p.name, load: r.load });
+                }));
+                alertEl.innerHTML = overloaded.length
+                    ? `<div class="font-medium text-warning mb-1"><i class="fa fa-exclamation-triangle mr-1"></i>超负荷预警</div>`
+                      + overloaded.map(o => `<div class="text-text2">${o.name} ${o.load}% · ${o.proj.length > 10 ? o.proj.slice(0, 10) + '…' : o.proj}</div>`).join('')
+                    : '<div class="text-text3">编组负荷正常</div>';
+            }
+            document.getElementById('projectCount').textContent = `共 ${list.length} 项`;
+            document.getElementById('projectList').innerHTML = list.length ? list.map(p => {
+                const active = p.id === selectedProjectId ? 'project-card-active' : 'border-border';
+                const tagCls = p.status === '紧急' ? 'bg-danger/10 text-danger' : p.status === '风险' ? 'bg-warning/10 text-warning' : 'bg-primary/10 text-primary';
+                const vs = getValueStreamForProject(p);
+                const daysLeft = p.charter?.deadline ? Math.max(0, Math.ceil((new Date(p.charter.deadline) - new Date()) / 86400000)) : '—';
+                return `<div class="p-3 border rounded-lg cursor-pointer hover:bg-bg1/50 ${active}" onclick="selectProject('${p.id}')">
+                    <div class="flex justify-between items-start gap-2">
+                        <div class="min-w-0">
+                            <div class="text-sm font-medium truncate">${p.name}</div>
+                            <div class="text-[10px] text-text3 font-mono">${p.code}</div>
+                        </div>
+                        <span class="tag ${tagCls} shrink-0">${p.status}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mt-1.5 text-[10px]">
+                        <span class="tag bg-bg1">${p.priority}</span>
+                        <span class="tag bg-bg1">${p.type}</span>
+                    </div>
+                    <div class="text-xs text-text3 mt-1">${ORG_NODES[p.org]?.name} · ${p.owner} · 剩 ${daysLeft} 天</div>
+                    <div class="flex justify-between text-[10px] mt-1"><span class="text-text3">${vs.name}</span><span class="font-medium text-primary">${p.progress}%</span></div>
+                    <div class="w-full h-1.5 bg-bg1 rounded mt-1"><div class="h-full bg-primary rounded transition-all" style="width:${p.progress}%"></div></div>
+                </div>`;
+            }).join('') : '<div class="text-text3 text-xs py-6 text-center">无匹配战役</div>';
+            if (list.find(p => p.id === selectedProjectId)) selectProject(selectedProjectId, true);
+            else if (list[0]) selectProject(list[0].id, true);
+            else {
+                document.getElementById('projectDetailPanel').innerHTML = '<div class="text-text3 text-sm text-center py-12">无匹配战役</div>';
+            }
+        }
+
+        function selectProject(id, skipListRender) {
+            selectedProjectId = id;
+            const p = PROJECTS.find(x => x.id === id);
+            if (!p) return;
+            if (!skipListRender) renderProjects();
+            const vs = getValueStreamForProject(p);
+            const runActive = EnterpriseRuntime.run?.projectId === id;
+            const runStep = runActive ? EnterpriseRuntime.run.steps[EnterpriseRuntime.run.stepIndex] : null;
+            const tagCls = p.status === '紧急' ? 'bg-danger/10 text-danger' : p.status === '风险' ? 'bg-warning/10 text-warning' : 'bg-primary/10 text-primary';
+            const panel = document.getElementById('projectDetailPanel');
+            const headerBlock = `
+                <div class="flex flex-wrap justify-between gap-3 mb-3 pb-3 border-b border-border">
+                    <div class="min-w-0 flex-1">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="text-lg font-medium">${p.name}</span>
+                            <span class="tag ${tagCls}">${p.status}</span>
+                            <span class="tag bg-warning/10 text-warning">${p.priority}</span>
+                            <span class="text-[10px] text-text3 font-mono">${p.code}</span>
+                        </div>
+                        <div class="text-xs text-text2">${ORG_NODES[p.org]?.name} · ${p.type} · 主责 <strong>${p.owner}</strong> · 赞助人 ${p.sponsor}</div>
+                    </div>
+                    <div class="flex gap-1 text-xs flex-wrap shrink-0">
+                        <button class="primary-btn" onclick="startBusinessRun('${p.id}','${p.scenarioId}')"><i class="fa fa-play mr-1"></i>推进价值流</button>
+                        <button class="action-btn border border-border" onclick="switchView('org');selectOrgNode('${p.org}')"><i class="fa fa-building-o mr-1"></i>组织 KPI</button>
+                        <button class="action-btn border border-border" onclick="switchView('value')">价值流工作台</button>
+                    </div>
+                </div>
+                ${runActive ? `<div class="mb-3 p-2 rounded-lg bg-primary/5 border border-primary/20 text-xs flex flex-wrap justify-between gap-2">
+                    <span><i class="fa fa-spinner text-primary mr-1"></i>价值流进行中：<strong>${runStep?.bizTitle || '—'}</strong></span>
+                    <button class="text-primary underline" onclick="switchView('value')">查看详情</button>
+                </div>` : ''}`;
+            const tabBar = `
+                <div class="flex flex-wrap gap-1 mb-3">
+                    <button type="button" class="project-tab ${projectDetailTab === 'overview' ? 'project-tab-active' : ''}" onclick="setProjectDetailTab('overview')">战役概览</button>
+                    <button type="button" class="project-tab ${projectDetailTab === 'plan' ? 'project-tab-active' : ''}" onclick="setProjectDetailTab('plan')">计划甘特</button>
+                    <button type="button" class="project-tab ${projectDetailTab === 'weekly' ? 'project-tab-active' : ''}" onclick="setProjectDetailTab('weekly')">周会纪要</button>
+                </div>`;
+            const overviewBlock = projectDetailTab === 'overview' ? `
+                <div class="p-3 rounded-lg bg-gradient-to-r from-primary/5 to-bg1 border border-primary/10 mb-4">
+                    <div class="text-xs font-medium text-primary mb-1"><i class="fa fa-file-text-o mr-1"></i>战役章程（P · 为何打）</div>
+                    <div class="text-sm">${p.charter.goal}</div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2 text-xs">
+                        <div><span class="text-text3">缺口</span><div class="font-medium text-danger">${p.charter.gap}</div></div>
+                        <div><span class="text-text3">目标</span><div class="font-medium text-success">${p.charter.target}</div></div>
+                        <div><span class="text-text3">截止</span><div class="font-medium">${p.charter.deadline}</div></div>
+                        <div><span class="text-text3">预算</span><div class="font-medium">${p.charter.budget}</div></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+                    ${(p.kpis || []).map(k => {
+                        const c = k.s === 'danger' ? 'text-danger' : k.s === 'warn' ? 'text-warning' : 'text-success';
+                        return `<div class="p-2 bg-bg1 rounded-lg text-center">
+                            <div class="text-[10px] text-text3">${k.l}</div>
+                            <div class="text-lg font-bold ${c}">${k.current}</div>
+                            <div class="text-[10px] text-text3">目标 ${k.target}${k.unit ? ' ' + k.unit : ''}</div>
+                        </div>`;
+                    }).join('')}
+                </div>
+                <div class="mb-2 flex flex-wrap items-center justify-between gap-2">
+                    <div class="text-sm font-medium"><i class="fa fa-flag-checkered text-warning mr-1"></i>里程碑时间轴（C · 打到哪）</div>
+                    <span class="text-xs text-text3">绑定 ${vs.name} · 总进度 ${p.progress}%</span>
+                </div>
+                ${renderProjectMilestoneTrack(p)}
+                <div class="grid grid-cols-12 gap-4 mb-4">
+                    <div class="col-span-12 md:col-span-6">
+                        <div class="text-sm font-medium mb-2"><i class="fa fa-users text-success mr-1"></i>战役编组与 RACI</div>
+                        <table class="w-full text-xs">
+                            <thead class="bg-bg1"><tr><th class="text-left p-1.5">角色</th><th class="text-left p-1.5">姓名</th><th class="text-left p-1.5">部门</th></tr></thead>
+                            <tbody>${(p.team || []).map(t => `<tr class="border-t border-border/50"><td class="p-1.5">${t.role}</td><td class="p-1.5 font-medium">${t.name}</td><td class="p-1.5 text-text3">${t.dept}</td></tr>`).join('')}</tbody>
+                        </table>
+                        <div class="mt-2 p-2 bg-bg1 rounded text-[10px] text-text2">
+                            <strong>RACI</strong> · R:${p.raci.R} · A:${p.raci.A} · C:${p.raci.C} · I:${p.raci.I}
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <div class="text-sm font-medium mb-2"><i class="fa fa-magic text-secondary mr-1"></i>数字岗位助手</div>
+                        <div class="flex flex-wrap gap-1 mb-2">${p.agents.map(a => `<span class="tag bg-secondary/10 text-secondary">${a}</span>`).join('')}</div>
+                        <div class="text-sm font-medium mb-1">经营关注点</div>
+                        <div class="flex flex-wrap gap-1 mb-3">${p.wmDims.map(d => `<span class="tag bg-primary/10 text-primary">${WM_DIMS[d].label}</span>`).join('')}</div>
+                        <div class="text-sm font-medium mb-1"><i class="fa fa-history text-text3 mr-1"></i>战役动态</div>
+                        <div class="space-y-1 max-h-[140px] overflow-y-auto text-xs">${(p.activities || []).map(a =>
+                            `<div class="py-1 border-b border-border/30"><span class="text-text3">${a.t}</span> <strong>${a.who}</strong> ${a.text}</div>`
+                        ).join('')}</div>
+                    </div>
+                </div>
+                <div class="p-3 bg-bg1 rounded text-xs text-text2">
+                    <strong>管理闭环：</strong>组织 KPI 缺口 → 本战役章程 → <em>${vs.name}</em> 节点推进 → 里程碑检视 → 制度优化沉淀
+                </div>` : '';
+            const planBlock = projectDetailTab === 'plan' ? `
+                <div class="text-sm font-medium mb-2"><i class="fa fa-calendar text-primary mr-1"></i>关键路径任务</div>
+                <div class="space-y-2 mb-4">${(p.ganttTasks || []).map(t => {
+                    const barColor = t.critical ? 'bg-danger' : t.milestone ? 'bg-secondary' : 'bg-primary';
+                    return `<div class="p-2 bg-bg1 rounded">
+                        <div class="flex justify-between text-xs mb-1"><span class="font-medium">${t.name}${t.critical ? ' <span class="tag bg-danger/10 text-danger">关键</span>' : ''}</span><span>${t.progress}%</span></div>
+                        <div class="text-[10px] text-text3 mb-1">${t.owner} · ${t.start} → ${t.end}</div>
+                        <div class="w-full h-1.5 bg-border rounded"><div class="h-full ${barColor} rounded" style="width:${t.progress}%"></div></div>
+                    </div>`;
+                }).join('')}</div>
+                <div class="text-sm font-medium mb-2">编组负荷</div>
+                <div class="space-y-2">${(p.resources || []).map(r => `
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="w-16 truncate font-medium">${r.name}</span>
+                        <div class="flex-1 h-2 bg-bg1 rounded"><div class="h-full rounded ${r.load > 100 ? 'bg-danger' : r.load > 85 ? 'bg-warning' : 'bg-primary'}" style="width:${Math.min(r.load, 100)}%"></div></div>
+                        <span class="w-10 text-right ${r.load > 100 ? 'text-danger font-medium' : ''}">${r.load}%</span>
+                    </div>`).join('')}</div>` : '';
+            const weeklyBlock = projectDetailTab === 'weekly' ? `<div id="projectWeeklyInline" class="space-y-3"></div>` : '';
+            panel.innerHTML = headerBlock + tabBar + overviewBlock + planBlock + weeklyBlock;
+            if (projectDetailTab === 'weekly') {
+                const inline = document.getElementById('projectWeeklyInline');
+                if (inline) {
+                    renderProjectWeeklyPanel(p);
+                    const src = document.getElementById('projectWeeklyPanel');
+                    if (src) inline.innerHTML = src.innerHTML;
+                }
+            }
+            renderProjectWorkboard(p);
+            initProjectKpiChart(p);
+            initProjectGanttChart(p);
+            initProjectResourceChart(p);
+            if (projectDetailTab === 'overview') renderProjectWeeklyPanel(p);
+            const prp = document.getElementById('projectRunPanel');
+            if (prp) {
+                const showRun = runActive;
+                prp.classList.toggle('hidden', !showRun);
+                if (showRun) {
+                    const stages = vs.stages;
+                    const bi = runStep?.bizStage ?? -1;
+                    document.getElementById('projectValueStreamTrack').innerHTML = stages.map((lab, i) =>
+                        `<span class="px-1.5 py-0.5 rounded ${i === bi ? 'bg-primary text-white' : i < bi ? 'bg-success/20 text-success' : 'bg-bg1 text-text3'}">${lab}</span>`
+                    ).join('');
+                }
+            }
+            setTimeout(() => {
+                projectKpiChartInstance?.resize();
+                projectPortfolioChartInstance?.resize();
+                projectGanttChartInstance?.resize();
+                projectResourceChartInstance?.resize();
+            }, 80);
+        }
+
+        function renderWmDimensions() {
+            document.getElementById('wmDimensions').innerHTML = Object.keys(WM_DIMS).map(d => {
+                const w = WM_DIMS[d];
+                const act = d === selectedWmDim ? 'wm-dim-active' : '';
+                const iconColor = { primary: 'text-primary', secondary: 'text-secondary', success: 'text-success', warning: 'text-warning', danger: 'text-danger' }[w.color] || 'text-primary';
+                return `<div class="wm-dim-card ${act}" onclick="selectWmDim('${d}')">
+                    <i class="fa ${w.icon} ${iconColor} text-lg"></i>
+                    <div class="font-medium mt-1">${w.label}</div>
+                </div>`;
+            }).join('');
+            selectWmDim(selectedWmDim);
+        }
+
+        function selectWmDim(d) {
+            selectedWmDim = d;
+            renderWmDimensions();
+            const w = WM_DIMS[d];
+            document.getElementById('wmDetail').innerHTML = `<strong>${w.label}维</strong>：${w.desc}<br><br>
+                当前推演：${ORG_NODES[selectedOrgId]?.wm[d] || '全企业默认配置'}<br>
+                关联场景：${SCENARIOS.filter(s => s.chain.some(c => c.includes(w.label))).map(s => s.title).join('、') || '—'}`;
+            document.getElementById('wmTension').innerHTML = `
+                <div class="p-2 rounded bg-success/10"><div class="font-medium text-success">推动</div><div class="text-text3 mt-0.5">预算/需求/决策人明确</div></div>
+                <div class="p-2 rounded bg-danger/10"><div class="font-medium text-danger">阻碍</div><div class="text-text3 mt-0.5">证据不足/折扣超阈</div></div>
+                <div class="p-2 rounded bg-primary/10"><div class="font-medium text-primary">连接</div><div class="text-text3 mt-0.5">cs.* / 审计 / ChangeSet</div></div>`;
+        }
+
+        function renderUasOctet() {
+            document.getElementById('uasOctet').innerHTML = UAS_OCTET.map(o => `
+                <div class="p-2 bg-bg1 rounded border border-border">
+                    <span class="font-bold text-primary">${o.k}</span> ${o.n}
+                    <div class="text-text3 mt-0.5">${o.v} · <span class="text-success">${o.s}</span></div>
+                </div>`).join('');
+        }
+
+        function renderCapabilities() {
+            const q = (document.getElementById('capabilitySearch')?.value || '').toLowerCase();
+            const lastCap = EnterpriseRuntime.audit[0]?.capability;
+            const rows = CAPABILITIES.filter(c => !q || c.id.includes(q) || c.scenes.includes(q));
+            document.getElementById('capabilityTable').innerHTML = rows.map(c => `
+                <tr class="hover:bg-bg1/50 cursor-pointer ${c.id === lastCap ? 'bg-primary/5' : ''}" onclick="showToast('info','${c.id}','策略 ${c.policy} · 绑定 ${c.scenes}')">
+                    <td class="p-2 font-mono text-primary">${c.id}</td>
+                    <td class="p-2">${c.layer}</td>
+                    <td class="p-2">${c.scenes}</td>
+                    <td class="p-2">${c.policy}</td>
+                    <td class="p-2">${c.calls}</td>
+                </tr>`).join('');
+        }
+
+        function initKernelFlowChart() {
+            const dom = document.getElementById('kernelFlowChart');
+            if (!dom) return;
+            const chart = echarts.init(dom);
+            chart.setOption({
+                tooltip: { trigger: 'item' },
+                series: [{
+                    type: 'graph', layout: 'force', roam: true, label: { show: true, fontSize: 10 },
+                    force: { repulsion: 120, edgeLength: 80 },
+                    data: [
+                        { name: 'Intent', symbolSize: 40, itemStyle: { color: '#165DFF' } },
+                        { name: 'Policy', symbolSize: 36, itemStyle: { color: '#722ED1' } },
+                        { name: 'Agent', symbolSize: 36, itemStyle: { color: '#00B42A' } },
+                        { name: 'cs.*', symbolSize: 44, itemStyle: { color: '#FF7D00' } },
+                        { name: 'Audit', symbolSize: 32, itemStyle: { color: '#86909C' } }
+                    ],
+                    links: [
+                        { source: 'Intent', target: 'Policy' },
+                        { source: 'Policy', target: 'Agent' },
+                        { source: 'Agent', target: 'cs.*' },
+                        { source: 'cs.*', target: 'Audit' }
+                    ]
+                }]
+            });
+            window.addEventListener('resize', () => chart.resize());
+        }
+
+        function renderScenarioCards() {
+            document.getElementById('scenarioCards').innerHTML = SCENARIOS.map(s => {
+                const act = s.id === selectedScenarioId ? 'scenario-card-active' : '';
+                const layerTag = s.layer === 'L3' ? 'bg-emerald-100 text-emerald-800' : 'bg-purple-100 text-purple-800';
+                return `<div class="p-3 bg-white rounded-lg card-shadow border cursor-pointer ${act}" onclick="selectScenario('${s.id}')">
+                    <span class="tag ${layerTag}">${s.layer}</span>
+                    <div class="font-medium text-sm mt-2">${s.title}</div>
+                    <div class="text-xs text-text3 mt-1">${s.track}</div>
+                    <div class="text-xs text-success mt-2">${s.kpi}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function selectScenario(id) {
+            selectedScenarioId = id;
+            renderScenarioCards();
+            renderScenarioDetail();
+        }
+
+        let scenarioChartInstance = null;
+        function initScenarioFlowChart(states, activeWorkflow) {
+            const dom = document.getElementById('scenarioFlowChart');
+            if (!dom) return;
+            if (!scenarioChartInstance) scenarioChartInstance = echarts.init(dom);
+            const idx = activeWorkflow ? states.indexOf(activeWorkflow) : -1;
+            scenarioChartInstance.setOption({
+                tooltip: { trigger: 'axis' },
+                xAxis: { type: 'category', data: states, axisLabel: { rotate: 25, fontSize: 9 } },
+                yAxis: { type: 'value', show: false },
+                series: [{
+                    type: 'line', smooth: true,
+                    data: states.map((_, i) => (idx >= 0 && i <= idx ? 20 + i * 15 : 8 + i * 3)),
+                    areaStyle: { color: 'rgba(22,93,255,0.15)' },
+                    lineStyle: { color: '#165DFF', width: 2 },
+                    itemStyle: { color: '#165DFF' },
+                    markPoint: idx >= 0 ? {
+                        data: [{ coord: [idx, 20 + idx * 15], value: '当前', itemStyle: { color: '#FF7D00' } }]
+                    } : undefined
+                }]
+            });
+            window.addEventListener('resize', () => scenarioChartInstance?.resize());
+        }
+
+        function updateAiContext() {
+            const hints = {
+                value: EnterpriseRuntime.run
+                    ? '智慧闭环 · ' + EnterpriseRuntime.run.steps[EnterpriseRuntime.run.stepIndex]?.bizTitle + ' · ' + (EnterpriseRuntime.run.steps[EnterpriseRuntime.run.stepIndex]?.entity || '')
+                    : '智慧闭环 · 五大实体 · 六大引擎 · 角色自适应',
+                loop: EnterpriseRuntime.run
+                    ? '智慧闭环 · ' + EnterpriseRuntime.run.steps[EnterpriseRuntime.run.stepIndex]?.bizTitle
+                    : '智慧闭环主控台',
+                org: `组织模型 L3 · ${ORG_NODES[selectedOrgId]?.name} · OMTU 配置`,
+                project: `策略库 L4 · ${PROJECTS.find(p => p.id === selectedProjectId)?.name} · Strategy/SOP`,
+                platform: `系统架构 · 六大引擎 · ${WM_DIMS[selectedWmDim]?.label} · 审计 ${EnterpriseRuntime.audit.length} 条`,
+                kernel: `系统架构 · L5 智能层 · ${WM_DIMS[selectedWmDim]?.label}`,
+                scenario: `场景模板 · ${SCENARIOS.find(s => s.id === selectedScenarioId)?.title}`,
+                1: '经营驾驶舱 L6 · 四大金刚 · CEO/BG', 2: '策略工作台 L6 · Strategy/Action 编排', 3: '个人工作台 L6 · Action 执行'
+            };
+            const el = document.getElementById('aiContextHint');
+            if (el) el.textContent = hints[currentView] || 'AIOS 企业智能经营操作系统';
+        }
+
+        function toggleAiPanel() {
+            const p = document.getElementById('aiPanel');
+            if (p.classList.contains('hidden')) {
+                p.classList.remove('hidden');
+                updateAiContext();
+                setTimeout(() => p.classList.remove('opacity-0', 'translate-y-2'), 10);
+            } else {
+                p.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => p.classList.add('hidden'), 300);
+            }
+        }
+
+        function sendAiQuery() {
+            const input = document.getElementById('aiInput');
+            const q = (input.value || '').trim();
+            if (!q) return;
+            const box = document.getElementById('aiMessages');
+            box.innerHTML += `<div class="text-text1"><strong>你：</strong>${q}</div>`;
+            const replies = {
+                value: EnterpriseRuntime.run
+                    ? '当前焦点：' + EnterpriseRuntime.run.steps[EnterpriseRuntime.run.stepIndex]?.bizTitle + '。在「在跟商机」模块点击「' + (EnterpriseRuntime.run.steps[EnterpriseRuntime.run.stepIndex]?.bizAction || '推进') + '」。'
+                    : '切换顶部角色胶囊可换布局；点「自定义模块」勾选卡片；「演示闭环」走通全链路。',
+                loop: EnterpriseRuntime.run
+                    ? `当前：${EnterpriseRuntime.run.steps[EnterpriseRuntime.run.stepIndex]?.bizTitle}。`
+                    : '建议演示完整经营闭环。',
+                org: '已拉取本单元 KPI、岗位助手与责权；KPI 缺口可「由缺口立项」进入项目战役。',
+                project: '战役已绑定销售价值流；点击「推进价值流」或进入价值流工作台继续节点。',
+                platform: '（IT）语义能力、策略门控与审计在此配置；经营者使用价值流工作台即可。',
+                kernel: '（IT）语义能力、策略门控与审计配置。',
+                scenario: '价值流模板与验收 KPI；启动后节点与组织/项目检视联动高亮。',
+                1: '3 月营收下滑主因：华东大客户合同到期，建议查看战略拆解树华南节点。'
+            };
+            box.innerHTML += `<div class="text-primary/90"><strong>ΠPaw：</strong>${replies[currentView] || replies[1]}</div>`;
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
         }
 
         // 穿透分析层级切换
@@ -1939,9 +4074,13 @@
             }
         });
 
-        // 初始化页面
+        // 初始化页面（默认：智慧闭环主控台）
         window.onload = function() {
-            switchTab(1);
+            renderAiosLoopBanner();
+            renderAiosEngines();
+            renderFocusBoard();
+            syncRuntimeUi();
+            switchView('value');
         };
     </script>
 </body>

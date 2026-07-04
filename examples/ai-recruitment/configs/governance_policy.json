@@ -1,0 +1,10 @@
+{
+  "version": "v1.0",
+  "governance": {
+    "audit_required": true,
+    "permission_model": ["READ_ONLY", "WRITE_SAFE", "WRITE_RISK"],
+    "require_explainability": true,
+    "require_traceability": true,
+    "fairness_review_required": true
+  }
+}

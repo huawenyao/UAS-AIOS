@@ -1,0 +1,7 @@
+{
+  "version": "v1.0",
+  "agents": [
+    {"id": "personal_intent", "name": "个人意图智能体", "role": "intent_normalization"},
+    {"id": "domain_guard", "name": "岗位域守门人", "role": "domain_scope"}
+  ]
+}

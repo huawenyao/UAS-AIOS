@@ -1,0 +1,71 @@
+{
+  "version": "1.0.0",
+  "description": "L1-L3 全场景产品原型目录（可脚本验收）",
+  "scenarios": [
+    {
+      "id": "L1-personal-session",
+      "layer": "L1",
+      "track": "selfpaw",
+      "title": "员工数字分身 · 组织身份与会话",
+      "runner": "selfpaw_session",
+      "app_id": "selfpaw-enterprise",
+      "verify": "org_identity_bound"
+    },
+    {
+      "id": "L1-escalate-to-pipaw",
+      "layer": "L1",
+      "track": "dual_track",
+      "title": "经营意图升级 ΠPaw",
+      "runner": "dual_track_cs",
+      "verify": "working_task_created"
+    },
+    {
+      "id": "L2-recruitment-os",
+      "layer": "L2",
+      "track": "pipaw",
+      "title": "职能数字人 · AI 招聘闭环",
+      "runner": "recruitment_entity",
+      "path": "examples/ai-recruitment/scripts/run_entity_closed_loop.py"
+    },
+    {
+      "id": "L3-sales-b2b",
+      "layer": "L3",
+      "track": "pipaw",
+      "title": "经营数字人 · B2B 线索到报价",
+      "runner": "sales_mvp",
+      "app_id": "enterprise-sales-os"
+    },
+    {
+      "id": "L3-cs-ticket",
+      "layer": "L3",
+      "track": "pipaw",
+      "title": "经营数字人 · 客服工单履约",
+      "runner": "pipaw_cs_agent",
+      "verify": "cs_step_ok"
+    },
+    {
+      "id": "L3-finance-approval",
+      "layer": "L3",
+      "track": "pipaw",
+      "title": "经营数字人 · 开票审批原型",
+      "runner": "finance_prototype",
+      "verify": "approval_submitted"
+    },
+    {
+      "id": "L3-outward-notify",
+      "layer": "L3",
+      "track": "pipaw",
+      "title": "经营向外 · IM 触达原型",
+      "runner": "outward_gateway",
+      "verify": "message_sent"
+    },
+    {
+      "id": "platform-value-loop",
+      "layer": "platform",
+      "track": "uas",
+      "title": "价值闭环 7 步编排",
+      "runner": "value_loop_full",
+      "verify": "seven_steps_ok"
+    }
+  ]
+}

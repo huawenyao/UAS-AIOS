@@ -400,15 +400,27 @@
     "governance": {
       "status": "pass",
       "risks": [],
-      "suggestions": ["当前方案满足平台标准"]
+      "suggestions": [
+        "当前方案满足平台标准"
+      ]
     },
     "iteration": {
       "status": "needs_evolution",
-      "missing_purpose_keywords": ["效率", "公平", "体验"],
-      "risks": ["基础目的覆盖不足，存在目标漂移风险"],
-      "suggestions": ["回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级"]
+      "missing_purpose_keywords": [
+        "效率",
+        "公平",
+        "体验"
+      ],
+      "risks": [
+        "基础目的覆盖不足，存在目标漂移风险"
+      ],
+      "suggestions": [
+        "回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级"
+      ]
     },
-    "risks": ["基础目的覆盖不足，存在目标漂移风险"],
+    "risks": [
+      "基础目的覆盖不足，存在目标漂移风险"
+    ],
     "suggestions": [
       "回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级"
     ]
@@ -419,6 +431,20 @@
     "suggestions": [
       "回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级",
       "在 purpose_anchor 中显式纳入效率、公平、体验，满足 evolution_policy.goal_guard 至少 3 个关键词"
+    ],
+    "last_applied_at": "2026-06-04T13:55:21.385273+00:00",
+    "applied_suggestions": [
+      "回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级",
+      "在 purpose_anchor 中显式纳入效率、公平、体验，满足 evolution_policy.goal_guard 至少 3 个关键词"
+    ],
+    "apply_note": "Wave2 purpose_anchor",
+    "purpose_anchor": [
+      "匹配",
+      "效率",
+      "公平",
+      "体验",
+      "成本",
+      "让组织在可控成本下以更高确定性获得匹配人才"
     ]
   },
   "timeline": [
@@ -867,7 +893,11 @@
       "timestamp": "2026-03-15T00:00:00+00:00",
       "event": "evolution_loop_run",
       "payload": {
-        "loop": ["intent_activation", "governance_check", "evolution_plan"],
+        "loop": [
+          "intent_activation",
+          "governance_check",
+          "evolution_plan"
+        ],
         "governance_result": "pass",
         "iteration_result": "needs_evolution",
         "drift_triggered": "purpose_drift"
@@ -879,7 +909,11 @@
       "payload": {
         "status": "pass",
         "iteration": "needs_evolution",
-        "missing_purpose_keywords": ["效率", "公平", "体验"]
+        "missing_purpose_keywords": [
+          "效率",
+          "公平",
+          "体验"
+        ]
       }
     },
     {
@@ -905,6 +939,17 @@
           "保障选拔公平与可解释性",
           "优化候选人体验与反馈"
         ]
+      }
+    },
+    {
+      "timestamp": "2026-06-04T13:55:21.385273+00:00",
+      "event": "evolution_applied",
+      "payload": {
+        "suggestions": [
+          "回到目的激活阶段，重新校准匹配/效率/公平/体验/成本的优先级",
+          "在 purpose_anchor 中显式纳入效率、公平、体验，满足 evolution_policy.goal_guard 至少 3 个关键词"
+        ],
+        "backup": "database\\evolution_backups\\ai-os_2026-06-04T13-55-21.385273+00-00.json"
       }
     }
   ]

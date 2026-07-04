@@ -31,6 +31,47 @@
         "completed_jobs": 0
       }
     },
-    "updated_at": "2026-06-02T14:28:21.905083+00:00"
+    "updated_at": "2026-06-04T14:32:04.911672+00:00"
+  },
+  {
+    "app_id": "enterprise-sales-os",
+    "app_root": "C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\projects\\enterprise-sales-os",
+    "version": "v1.0",
+    "technical_base": "ASUI",
+    "runtime": "autonomous_agent",
+    "capability_tags": [
+      "system:asui_knowledge",
+      "system:crm",
+      "system:oa"
+    ],
+    "health": {
+      "status": "healthy",
+      "missing_assets": [],
+      "queue": {
+        "queued_jobs": 0,
+        "completed_jobs": 0
+      }
+    },
+    "updated_at": "2026-06-04T14:32:04.912635+00:00"
+  },
+  {
+    "app_id": "selfpaw-enterprise",
+    "app_root": "C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\projects\\selfpaw-enterprise",
+    "version": "v1.0",
+    "technical_base": "ASUI",
+    "runtime": "autonomous_agent",
+    "capability_tags": [
+      "system:identity",
+      "system:knowledge"
+    ],
+    "health": {
+      "status": "healthy",
+      "missing_assets": [],
+      "queue": {
+        "queued_jobs": 0,
+        "completed_jobs": 0
+      }
+    },
+    "updated_at": "2026-06-04T14:32:04.913483+00:00"
   }
 ]

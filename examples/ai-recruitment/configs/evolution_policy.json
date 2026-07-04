@@ -1,0 +1,16 @@
+{
+  "version": "v1.0",
+  "human_feedback_path": "database/feedback/{topic_slug}.json",
+  "goal_guard": {
+    "required_purpose_keywords": ["匹配", "效率", "公平", "体验"],
+    "minimum_keyword_hits": 2,
+    "enabled": true
+  },
+  "iteration": {
+    "enabled": true,
+    "require_validation_before_evolution": true
+  },
+  "evaluation_thresholds": {
+    "process_completion_score": 0.85
+  }
+}

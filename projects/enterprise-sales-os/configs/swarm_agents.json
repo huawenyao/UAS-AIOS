@@ -1,0 +1,8 @@
+{
+  "version": "v1.0",
+  "agents": [
+    {"id": "sales_intent", "name": "销售意图智能体", "role": "intent_normalization"},
+    {"id": "quote_agent", "name": "报价智能体", "role": "quote_draft"},
+    {"id": "governance_guard", "name": "治理守门人", "role": "approval_gate"}
+  ]
+}

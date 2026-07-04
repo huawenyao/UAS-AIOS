@@ -1,83 +1,78 @@
-<<<<<<< cursor/asui-fa59
-# ACA-protocol / ASUI
-
-APP AGENT contract，build by tech protocol
-
-## ASUI 架构
-
-ASUI（AI-System-UI Integration）是一种以显式知识为驱动、实现 AI 能力与系统执行深度融合的智能系统架构模式。
-
-## 项目结构
-
-```
-├── whitepaper/          # ASUI 架构白皮书
-├── schemas/             # workflow_config JSON Schema
-├── asui-cli/            # asui init 脚手架
-├── examples/            # 领域验证项目
-│   ├── customer-service/   # 智能客服
-│   └── ai-recruitment/    # AI 全自动招聘
-└── docs/                # 战略分析文档
-```
-
-## 快速开始
-
-### 1. 安装 asui 脚手架
-
-```bash
-cd asui-cli && pip install -e .
-```
-
-### 2. 初始化项目
-
-```bash
-# 默认模板
-asui init my-project
-
-# 智能客服模板
-asui init customer-service-demo -t customer-service
-
-# AI 招聘模板
-asui init recruitment-demo -t recruitment
-```
-
-### 3. 运行领域验证
-
-在 Cursor/Claude Code 中打开 `examples/customer-service` 或 `examples/ai-recruitment`，按照各自 README 执行验证。
-
-## 文档
-
-- [ASUI 架构白皮书](whitepaper/ASUI_WHITEPAPER_CN.md)
-- [战略分析 2025](docs/ASUI_STRATEGIC_ANALYSIS_2025.md)
-- [技术附录](docs/ASUI_TECHNICAL_APPENDIX.md)
-=======
-# ACA-protocol
+# ACA-protocol / UAS-AIOS
 
 APP AGENT contract，build by tech protocol
 
 ## 架构范式：ASUI
 
-本项目采用 **ASUI**（AI-System-UI Integration）架构范式：
+**ASUI**（AI-System-UI Integration）以显式知识驱动 AI 与系统执行深度融合：
 
-- **知识驱动**：CLAUDE.md + configs 定义业务规则，修改即生效
-- **构建即运行**：无需编译/部署，知识更新后立即可用
-- **增量演化**：通过添加知识文件持续扩展系统能力
+- **知识驱动**：`CLAUDE.md` + `configs/` 定义业务规则，修改即生效
+- **构建即运行**：知识更新后立即可用，无需重型编译部署
+- **增量演化**：通过 skills、evolution 回路与 `/evolveApply` 持续扩展
+
+完整理论体系与索引见 [CLAUDE.md](./CLAUDE.md)。
 
 ## 项目结构
 
 ```
-├── CLAUDE.md          # 系统操作手册（AI 自动加载）
-├── .claude/
-│   ├── skills/        # 功能模块知识
-│   ├── agents/        # 场景化 Agent 配置
-│   └── commands/      # 交互命令定义
-├── configs/           # 业务规则配置
-├── scripts/           # 执行工具脚本
-├── database/          # 数据持久化
-└── docs/
-    └── ASUI_ARCHITECTURE.md  # 架构理论文档
+├── CLAUDE.md              # 系统操作手册（AI 自动加载）
+├── .claude/               # skills · agents · commands
+├── configs/               # 平台级业务规则
+├── scripts/               # 校验与运行时工具
+├── asui-cli/              # asui init 脚手架
+├── projects/              # UAS subapp（标准八元组）
+│   ├── ai-recruitment-os/
+│   └── enterprise-sales-os/
+├── examples/              # ASUI 领域验证（轻量，非全部 subapp）
+│   ├── ai-recruitment/
+│   ├── selfpaw-cognitive-swarm/
+│   └── triadic-ideal-reality-swarm/
+├── docs/                  # 理论、企业蓝图、MVP 规约
+├── harness/               # reqharness 需求与 invariant
+└── database/              # 平台级持久化
 ```
+
+> 智能客服模板：`asui init <name> -t customer-service`（生成到目标目录，非 `examples/customer-service`）。
+
+## 快速开始
+
+### 1. 安装 asui CLI
+
+```bash
+cd asui-cli && pip install -e ".[dev]"
+```
+
+### 2. 初始化项目
+
+```bash
+asui init my-project
+asui init recruitment-demo -t recruitment
+asui init cs-demo -t customer-service
+```
+
+### 3. 运行验证
+
+```bash
+# 平台 invariant
+python harness/invariants/run-all.py
+
+# 列出可运行 subapp
+python scripts/run_uas_runtime_service.py list
+
+# Enterprise Sales MVP 验收（v0.2 原型）
+python projects/enterprise-sales-os/scripts/evaluate_sales_mvp.py
+```
+
+### 4. 领域示例
+
+在 Cursor 中打开 `examples/ai-recruitment` 或 `projects/ai-recruitment-os`，按各自 README 执行。
 
 ## 文档
 
-- [ASUI 架构理论分析](./docs/ASUI_ARCHITECTURE.md) - 从第一性原理出发的体系化分析
->>>>>>> main
+| 主题 | 路径 |
+|------|------|
+| ASUI 架构 | [docs/ASUI_ARCHITECTURE.md](./docs/ASUI_ARCHITECTURE.md) |
+| 企业产品蓝图 | [docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md](./docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md) |
+| Sales OS MVP 规约 | [docs/enterprise-sales-os/README.md](./docs/enterprise-sales-os/README.md) |
+| 治理未闭环追踪 | [docs/GOVERNANCE_REGISTRY.md](./docs/GOVERNANCE_REGISTRY.md) |
+| 白皮书 | [whitepaper/ASUI_WHITEPAPER_CN.md](./whitepaper/ASUI_WHITEPAPER_CN.md) |

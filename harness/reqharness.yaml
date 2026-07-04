@@ -16,6 +16,12 @@ verify_commands:
   - python scripts/validate_capability_registry.py validate
   - python scripts/validate_enterprise_policy.py validate
   - python scripts/validate_connectors.py validate
+  - python scripts/validate_intent_escalation.py validate
+  - python scripts/validate_pipaw_cs_agent.py validate
+  - python projects/enterprise-sales-os/scripts/evaluate_sales_mvp.py
+  - python scripts/validate_cs_process.py validate
+  - python scripts/validate_cs_form.py validate
+  - python scripts/validate_enterprise_wm.py validate
 success_threshold: 1.0
 current_sprint: sprint-edh-001
 priority_requirements:

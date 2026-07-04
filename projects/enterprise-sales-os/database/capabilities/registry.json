@@ -1,0 +1,72 @@
+{
+  "agents": [
+    {
+      "id": "sales_intent",
+      "name": "销售意图智能体",
+      "dimension": null,
+      "stance": null,
+      "mission": null,
+      "deliverable": null
+    },
+    {
+      "id": "quote_agent",
+      "name": "报价智能体",
+      "dimension": null,
+      "stance": null,
+      "mission": null,
+      "deliverable": null
+    },
+    {
+      "id": "governance_guard",
+      "name": "治理守门人",
+      "dimension": null,
+      "stance": null,
+      "mission": null,
+      "deliverable": null
+    }
+  ],
+  "systems": [
+    {
+      "id": "mock_crm",
+      "type": "crm",
+      "mode": "mock"
+    },
+    {
+      "id": "mock_oa",
+      "type": "oa",
+      "mode": "mock"
+    },
+    {
+      "id": "capability_registry",
+      "type": "asui_knowledge",
+      "mode": "native"
+    }
+  ],
+  "workflow_capabilities": [
+    {
+      "step_id": "intent_activation",
+      "type": "llm",
+      "agent_id": "sales_intent"
+    },
+    {
+      "step_id": "governance_check",
+      "type": "llm",
+      "agent_id": "governance_guard"
+    },
+    {
+      "step_id": "sales_execute",
+      "type": "script",
+      "agent_id": null
+    },
+    {
+      "step_id": "simulation_snapshot",
+      "type": "simulation",
+      "agent_id": null
+    },
+    {
+      "step_id": "render_report",
+      "type": "script",
+      "agent_id": null
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.0",
+  "name": "Enterprise Sales Runtime Workflow",
+  "description": "UAS runtime 可执行：意图 → 治理 → 销售流水线 → 报告",
+  "steps": [
+    {
+      "id": "intent_activation",
+      "name": "销售意图激活",
+      "type": "llm",
+      "agent_id": "sales_intent",
+      "prompt_template": "归一化 B2B 销售意图：线索、报价、审批与成功标准。\n\n{{topic}}"
+    },
+    {
+      "id": "governance_check",
+      "name": "治理校验",
+      "type": "llm",
+      "dependencies": ["intent_activation"],
+      "agent_id": "governance_guard"
+    },
+    {
+      "id": "sales_execute",
+      "name": "销售闭环执行",
+      "type": "script",
+      "dependencies": ["governance_check"],
+      "script": "scripts/run_sales_pipeline.py"
+    },
+    {
+      "id": "simulation_snapshot",
+      "name": "经营指标模拟快照",
+      "type": "simulation",
+      "dependencies": ["sales_execute"],
+      "script": "scripts/run_simulation_snapshot.py"
+    },
+    {
+      "id": "render_report",
+      "name": "写入销售报告",
+      "type": "script",
+      "dependencies": ["sales_execute"],
+      "script": "scripts/render_sales_report.py"
+    }
+  ]
+}

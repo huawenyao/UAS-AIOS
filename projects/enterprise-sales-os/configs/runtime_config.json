@@ -1,0 +1,7 @@
+{
+  "version": "v1.0",
+  "runtime": "autonomous_agent",
+  "audit_enabled": true,
+  "task_level_state": true,
+  "human_review_checkpoint": true
+}
