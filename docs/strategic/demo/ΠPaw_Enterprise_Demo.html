@@ -176,6 +176,13 @@
             .dual-loop-step-active {
                 @apply bg-primary text-white;
             }
+            .df-node { @apply px-2 py-1 rounded border text-[10px] transition-all; }
+            .df-node-active { @apply border-primary bg-primary/10 text-primary font-medium; }
+            .df-node-done { @apply border-success/40 bg-success/5 text-success; }
+            .df-arrow { @apply text-text3 text-[10px]; }
+            .tp-step-done { @apply border-success/30 bg-success/5; }
+            .tp-step-current { @apply border-primary bg-primary/5 ring-1 ring-primary/20; }
+            .cap-result { @apply mt-1 p-2 rounded bg-bg1 font-mono text-[10px] text-text2 max-h-24 overflow-y-auto; }
         }
 
         /* 暗黑模式样式 */
@@ -525,7 +532,8 @@
                     </div>
                     <div class="flex flex-wrap gap-2 shrink-0">
                         <button type="button" class="action-btn border border-border text-xs bg-white" onclick="toggleFocusCustomize()"><i class="fa fa-sliders mr-1"></i>自定义模块</button>
-                        <button class="primary-btn text-xs" onclick="demoFullChain()"><i class="fa fa-play mr-1"></i>演示智慧闭环</button>
+                        <button class="primary-btn text-xs" onclick="demoFullChain()"><i class="fa fa-play mr-1"></i>演示 PAC 闭环</button>
+                        <button class="action-btn border border-secondary text-secondary text-xs bg-white" onclick="demoCsEscalation()"><i class="fa fa-headphones mr-1"></i>客诉升级链路</button>
                         <button class="action-btn border border-border text-xs bg-white" onclick="resetRuntime()">重置</button>
                     </div>
                 </div>
@@ -1551,60 +1559,36 @@
                 </div>
             </div>
 
-            <!-- 个人工作面板 -->
+            <!-- Harness 数据流 + Task Panel（对齐 configs/ + schemas/） -->
+            <div class="bg-white rounded-lg p-4 card-shadow border border-primary/10">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div class="font-medium text-sm"><i class="fa fa-exchange text-primary mr-2"></i>Harness 业务数据流</div>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <button class="primary-btn text-xs" onclick="demoCsEscalation()"><i class="fa fa-level-up mr-1"></i>SelfPaw → ΠPaw 客诉升级</button>
+                        <button class="action-btn border border-border text-xs" onclick="openWorkingTask(EnterpriseRuntime.activeTaskId)">打开当前任务</button>
+                    </div>
+                </div>
+                <div id="harnessDataFlowStrip" class="flex flex-wrap items-center gap-1 mb-3"></div>
+                <div class="grid lg:grid-cols-3 gap-4">
+                    <div class="lg:col-span-1">
+                        <div class="text-xs font-medium mb-2 text-text3">待办 backlog · WorkingTask</div>
+                        <div id="executorBacklog" class="space-y-2 text-xs max-h-[320px] overflow-y-auto"></div>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <div class="text-xs font-medium mb-2 text-text3">【当前任务】Task Panel · Playbook 步骤 → cs.*</div>
+                        <div id="executorCurrentTask" class="text-xs min-h-[200px]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 个人工作面板（BD 静态 + 动态 KPI） -->
             <div class="grid grid-cols-3 gap-4">
-                <!-- 今日待办 -->
                 <div class="bg-white rounded-lg p-5 card-shadow">
                     <div class="font-medium mb-4 flex items-center">
-                        <i class="fa fa-calendar-check-o text-primary mr-2"></i> 今日待办任务
-                        <span class="ml-2 text-xs bg-danger text-white rounded-full px-1.5 py-0.5">6个</span>
+                        <i class="fa fa-calendar-check-o text-primary mr-2"></i> BD 行动待办
+                        <span class="ml-2 text-xs bg-primary/10 text-primary rounded-full px-1.5 py-0.5" id="executorTodoCount">—</span>
                     </div>
-                    <div class="space-y-2 max-h-[280px] overflow-y-auto pr-2">
-                        <div class="p-3 border-l-4 border-danger bg-danger/5 rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">维修生产线A故障 <span class="text-xs bg-danger/10 text-danger tag ml-1">紧急</span></div>
-                                <div class="text-xs text-text3">预计耗时：2小时 | 要求：今天18:00前完成</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                        <div class="p-3 border-l-4 border-warning bg-warning/5 rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">提交上月设备维护报告 <span class="text-xs bg-warning/10 text-warning tag ml-1">重要</span></div>
-                                <div class="text-xs text-text3">预计耗时：1小时 | 要求：今天12:00前完成</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                        <div class="p-3 border-l-4 border-success bg-success/5 rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">参加10:00生产部门周会</div>
-                                <div class="text-xs text-text3">预计耗时：1小时 | 会议号：123456</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                        <div class="p-3 border-l-4 border-border rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">巡检生产线B设备状态</div>
-                                <div class="text-xs text-text3">预计耗时：30分钟 | 要求：今天16:00前完成</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                        <div class="p-3 border-l-4 border-border rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">提交本周采购申请</div>
-                                <div class="text-xs text-text3">预计耗时：30分钟 | 要求：今天17:00前完成</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-border flex justify-between items-center">
-                        <div class="text-xs text-text2">今日完成率：0%</div>
-                        <div class="flex space-x-2">
-                            <button class="text-xs action-btn text-primary">
-                                <i class="fa fa-magic mr-1"></i> AI排程
-                            </button>
-                            <button class="text-xs action-btn text-primary">同步日历</button>
-                        </div>
-                    </div>
+                    <div id="executorBdTodos" class="space-y-2 max-h-[200px] overflow-y-auto pr-2 text-xs"></div>
                 </div>
 
                 <!-- 绩效进度 -->
@@ -1706,192 +1690,21 @@
                 </div>
             </div>
 
-            <!-- 工作区 -->
+            <!-- BD 商机执行区（cs.* 调用结果） -->
             <div class="grid grid-cols-3 gap-4">
-                <!-- 任务执行区 -->
                 <div class="bg-white rounded-lg p-5 card-shadow col-span-2">
                     <div class="flex items-center justify-between mb-4">
                         <div class="font-medium flex items-center">
-                            <i class="fa fa-play-circle text-primary mr-2"></i> 【当前任务】维修生产线A故障
+                            <i class="fa fa-play-circle text-primary mr-2"></i> <span id="executorBizTitle">【当前商机】LT-2024</span>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs bg-warning/10 text-warning tag">剩余时间：4小时</span>
-                            <button class="primary-btn text-xs">完成提交</button>
-                        </div>
+                        <span class="text-xs bg-warning/10 text-warning tag" id="executorBizSla">报价至 6/14</span>
                     </div>
-                    <div class="p-4 bg-bg1 rounded-lg mb-4">
-                        <div class="text-sm font-medium mb-2">任务详情</div>
-                        <div class="text-sm text-text2 space-y-1">
-                            <div><span class="font-medium text-text1">故障现象：</span>生产线A电机异响，温度过高，已自动停机</div>
-                            <div><span class="font-medium text-text1">发生时间：</span>2025-06-01 08:30</div>
-                            <div><span class="font-medium text-text1">影响范围：</span>生产线A停产，每小时损失约5万</div>
-                            <div><span class="font-medium text-text1">历史处理记录：</span>本月已发生2次同类故障，上次更换轴承后恢复</div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <div class="text-sm font-medium mb-2">维修步骤指引 <span class="text-xs text-primary ml-2">(自动匹配SOP)</span></div>
-                            <div class="space-y-2">
-                                <div class="p-2 border border-border rounded-md flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4" checked>
-                                        <span class="text-sm">1. 切断设备主电源，悬挂维修警示牌</span>
-                                    </div>
-                                    <i class="fa fa-check-circle text-success"></i>
-                                </div>
-                                <div class="p-2 border border-border rounded-md flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4" checked>
-                                        <span class="text-sm">2. 拆卸电机防护罩，检查轴承和线圈状态</span>
-                                    </div>
-                                    <i class="fa fa-check-circle text-success"></i>
-                                </div>
-                                <div class="p-2 border border-primary rounded-md bg-primary/5 flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4">
-                                        <span class="text-sm text-primary font-medium">3. 检查发现轴承磨损严重，需要更换</span>
-                                    </div>
-                                    <span class="text-xs bg-primary/10 text-primary tag">当前步骤</span>
-                                </div>
-                                <div class="p-2 border border-border rounded-md flex items-center justify-between opacity-50">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4" disabled>
-                                        <span class="text-sm">4. 更换新轴承，添加润滑油</span>
-                                    </div>
-                                </div>
-                                <div class="p-2 border border-border rounded-md flex items-center justify-between opacity-50">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4" disabled>
-                                        <span class="text-sm">5. 试机运行，检查是否正常，清理现场</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-sm font-medium mb-2">所需资源 <span class="text-xs text-success ml-2">(已自动匹配)</span></div>
-                            <div class="space-y-2">
-                                <div class="p-2 border border-success rounded-md bg-success/5 flex items-center justify-between">
-                                    <div class="text-sm">
-                                        <i class="fa fa-wrench text-success mr-1"></i> 维修工具包
-                                    </div>
-                                    <span class="tag bg-success/10 text-success">已领取</span>
-                                </div>
-                                <div class="p-2 border border-success rounded-md bg-success/5 flex items-center justify-between">
-                                    <div class="text-sm">
-                                        <i class="fa fa-cubes text-success mr-1"></i> 型号6205轴承备件
-                                    </div>
-                                    <span class="tag bg-success/10 text-success">库存充足，已预留</span>
-                                </div>
-                                <div class="p-2 border border-warning rounded-md bg-warning/5 flex items-center justify-between">
-                                    <div class="text-sm">
-                                        <i class="fa fa-user text-warning mr-1"></i> 需要协助：电工班配合断电
-                                    </div>
-                                    <button class="text-xs px-2 py-0.5 bg-warning text-white rounded-md hover:bg-warning/90 transition-all">已通知</button>
-                                </div>
-                            </div>
-                            <div class="mt-4">
-                                <div class="text-sm font-medium mb-2">相关知识推荐</div>
-                                <div class="space-y-1">
-                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
-                                        <span class="text-xs">《电机常见故障处理手册》</span>
-                                        <i class="fa fa-external-link text-text3"></i>
-                                    </div>
-                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
-                                        <span class="text-xs">《轴承更换标准作业SOP》</span>
-                                        <i class="fa fa-external-link text-text3"></i>
-                                    </div>
-                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
-                                        <span class="text-xs">同类故障案例分析-2025年5月</span>
-                                        <i class="fa fa-external-link text-text3"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-border">
-                        <div class="text-sm font-medium mb-2">异常求助</div>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
-                                <i class="fa fa-video-camera mr-1"></i> 远程连线专家
-                            </button>
-                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
-                                <i class="fa fa-picture-o mr-1"></i> 上传故障照片
-                            </button>
-                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
-                                <i class="fa fa-comment-o mr-1"></i> 发起群聊求助
-                            </button>
-                        </div>
-                    </div>
+                    <div id="executorBizDetail" class="p-4 bg-bg1 rounded-lg mb-3 text-sm text-text2"></div>
+                    <div id="executorCapResults" class="space-y-2 text-xs"></div>
                 </div>
-
-                <!-- 智能助手 -->
                 <div class="bg-white rounded-lg p-5 card-shadow">
-                    <div class="font-medium mb-4 flex items-center">
-                        <i class="fa fa-robot text-secondary mr-2"></i> 个人智能助手
-                    </div>
-                    <div class="h-[350px] overflow-y-auto pr-2 space-y-3 mb-4">
-                        <div class="flex justify-start">
-                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
-                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
-                                <div class="text-sm">
-                                    您好，我是您的个人智能助手，看到您正在处理生产线A的电机故障，我已经为您准备好了相关的SOP和备件信息，还有什么可以帮您的吗？
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <div class="bg-primary text-white rounded-lg p-2.5 rounded-tr-none max-w-[90%]">
-                                <div class="text-xs text-white/80 mb-1">我</div>
-                                <div class="text-sm">更换轴承需要注意什么？</div>
-                            </div>
-                        </div>
-                        <div class="flex justify-start">
-                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
-                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
-                                <div class="text-sm space-y-1.5">
-                                    <div>更换轴承需要注意以下几点：</div>
-                                    <div>1. 安装前要检查新轴承是否完好，型号是否匹配</div>
-                                    <div>2. 安装时要使用专用工具，禁止直接敲击轴承外圈</div>
-                                    <div>3. 轴承要安装到位，和轴肩贴合无间隙</div>
-                                    <div>4. 添加适量的专用润滑油，不要加过多</div>
-                                    <div>5. 安装后要手动转动检查是否灵活，有无异响</div>
-                                    <div class="mt-1">
-                                        <button class="text-xs text-primary hover:text-primaryHover">查看详细操作视频 →</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <div class="bg-primary text-white rounded-lg p-2.5 rounded-tr-none max-w-[90%]">
-                                <div class="text-xs text-white/80 mb-1">我</div>
-                                <div class="text-sm">有没有快速检查轴承是否合格的方法？</div>
-                            </div>
-                        </div>
-                        <div class="flex justify-start">
-                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
-                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
-                                <div class="text-sm">
-                                    快速检查轴承的方法：
-                                    1. 看：外观有无裂纹、磕碰、锈蚀
-                                    2. 转：用手转动轴承，看是否转动灵活，有无卡顿异响
-                                    3. 晃：用手晃动轴承外圈，看是否有过大的间隙
-                                    4. 测：用游标卡尺测量轴承内径和外径，确认和旧轴承一致。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex items-center">
-                            <input type="text" placeholder="输入问题，直接对话..." class="flex-1 border border-border rounded-l-md px-3 py-2 text-sm focus:outline-none focus:border-primary">
-                            <button class="bg-primary text-white px-3 py-2 rounded-r-md text-sm hover:bg-primaryHover transition-all">
-                                发送
-                            </button>
-                        </div>
-                        <div class="mt-2 flex flex-wrap gap-1">
-                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">查看历史故障记录</span>
-                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">生成维修报告模板</span>
-                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">下一步该做什么？</span>
-                        </div>
-                    </div>
+                    <div class="font-medium mb-3"><i class="fa fa-history text-secondary mr-2"></i>cs.* 调用审计</div>
+                    <div id="executorCapAudit" class="max-h-[240px] overflow-y-auto text-[10px] font-mono"></div>
                 </div>
             </div>
         </div>
@@ -2312,9 +2125,98 @@
               capability: 'aios.evolve.sop', bizLog: 'SOP-PAC-TR-001 候选 · 策略库更新' }
         ];
 
+        /* ── Harness 对齐数据模型（configs/ + schemas/） ── */
+        const TENANT_ID = 't-acme-demo';
+        const HARNESS_INTENT_COMPLAINT = {
+            intent_id: 'int-complaint-demo-001', tenant_id: TENANT_ID, source: 'selfpaw_intent_hub',
+            intent_class: 'business_outward', goal: '处理 VIP 客户交付延期投诉并协调客服跟进',
+            summary: '客户 C-1001 反馈交付延期 3 天，要求今日内回复', urgency: 'high',
+            actor: { user_id: 'u-employee-1001', display_name: '张三', org_unit_id: 'ou-sales',
+                position_id: 'pos-sales-rep', product_track: 'selfpaw' },
+            business_context: { customer_id: 'C-1001', channel: 'im' },
+            escalation_target: { product_track: 'pipaw', position_id: 'pos-cs-agent',
+                domain_id: 'domain.customer_service', role_id: 'role.cs_agent' },
+            evidence_refs: [{ evidence_id: 'ev-chat-001', type: 'chat_transcript', ref_id: 'chat-thread-88',
+                summary: '客户 IM：交付已延期 3 天，请今日回复处理方案' }],
+            status: 'active'
+        };
+        const HARNESS_PLAYBOOK_CS = {
+            playbook_id: 'playbook.cs_complaint_v1', name: '客诉处理 SOP（VIP 交付延期）',
+            steps: [
+                { step_id: 's1_profile', label: '1. 获取客户画像与历史工单摘要', operation_ref: 'cs.customer.get_profile' },
+                { step_id: 's2_ticket', label: '2. 创建客服工单并绑定 SLA', operation_ref: 'cs.ticket.create' },
+                { step_id: 's3_escalate', label: '3. SLA 临近或无法自动结案时升级主管', operation_ref: 'cs.ticket.escalate', optional: true }
+            ]
+        };
+        const HARNESS_AGENT_CS = {
+            agent_id: 'agent.cs_specialist', name: '客服数字岗位 Agent（P1 标杆）',
+            position_id: 'pos-cs-agent', role_id: 'role.cs_agent', product_track: 'pipaw',
+            domain_id: 'domain.customer_service', outward: true,
+            bound_operations: ['cs.customer.get_profile', 'cs.ticket.create', 'cs.ticket.escalate'],
+            playbook_id: 'playbook.cs_complaint_v1'
+        };
+        const HARNESS_AGENT_SALES = {
+            agent_id: 'agent.sales_advisor', name: 'ΠPaw Sales Advisor',
+            position_id: 'pos-bd-a', role_id: 'role.sales_rep', product_track: 'pipaw',
+            domain_id: 'domain.b2b_sales', outward: false,
+            bound_operations: ['cs.lead.qualify_lead', 'cs.approval.submit', 'cs.process.start'],
+            playbook_id: null
+        };
+        const CAPABILITY_META = {
+            'cs.customer.get_profile': { approval_level: 'L1', gates: ['G1', 'G6'], source: 'crm' },
+            'cs.ticket.create': { approval_level: 'L2', gates: ['G1', 'G4', 'G6'], source: 'itsm' },
+            'cs.ticket.escalate': { approval_level: 'L2', gates: ['G6'], source: 'itsm' },
+            'cs.lead.qualify_lead': { approval_level: 'L1', gates: ['G4', 'G6'], source: 'crm' },
+            'cs.approval.submit': { approval_level: 'L2', gates: ['G1', 'G4', 'G6'], source: 'oa' },
+            'cs.process.start': { approval_level: 'L2', gates: ['G1', 'G4'], source: 'bpm' }
+        };
+        const CAPABILITY_MOCK = {
+            'cs.customer.get_profile': (p) => ({
+                customer_id: p.customer_id || 'C-1001', name: '华东智造集团（VIP）', segment: 'VIP',
+                tier: 'A', open_tickets: 1, last_order_delay_days: 3,
+                evidence: ['ev-chat-001', 'crm.profile.v2024']
+            }),
+            'cs.ticket.create': (p) => ({
+                ticket_id: 'TK-' + Math.floor(8800 + Math.random() * 200),
+                sla_due_at: new Date(Date.now() + 8 * 3600000).toISOString(),
+                subject: p.subject || 'VIP 客诉：交付延期跟进', priority: p.priority || 'high'
+            }),
+            'cs.ticket.escalate': (p) => ({
+                escalation_id: 'ESC-' + Date.now().toString().slice(-6),
+                assigned_to: 'role.cs_lead', ticket_id: p.ticket_id
+            }),
+            'cs.lead.qualify_lead': (p) => ({
+                qualified: true, score: 87, lead_id: p.lead_id || 'LT-2024',
+                evidence: ['crm.budget.confirmed', 'crm.decision_maker.met']
+            }),
+            'cs.approval.submit': (p) => ({
+                approval_id: 'APR-' + Math.floor(880 + Math.random() * 20),
+                status: 'pending', template_id: p.template_id || 'quote_discount'
+            }),
+            'cs.process.start': (p) => ({
+                process_instance_id: 'PI-' + Date.now().toString().slice(-8),
+                template_id: p.template_id || 'sales_quote_approval'
+            })
+        };
+        const DATA_FLOW_NODES = [
+            { id: 'intent', label: 'Intent', sub: 'SelfPaw' },
+            { id: 'evidence', label: 'Evidence', sub: 'ev-chat-001' },
+            { id: 'escalate', label: 'POST /intent/escalate', sub: 'ADR-001' },
+            { id: 'wt', label: 'WorkingTask', sub: 'pipaw' },
+            { id: 'playbook', label: 'Playbook', sub: 'SOP 步骤' },
+            { id: 'cs', label: 'cs.* invoke', sub: 'CapabilityRouter' },
+            { id: 'audit', label: 'Audit Chain', sub: 'audit_id' },
+            { id: 'result', label: 'Result', sub: 'SLA/工单' }
+        ];
+
         const EnterpriseRuntime = {
             run: null,
             audit: [],
+            capabilityCalls: [],
+            workingTasks: [],
+            activeTaskId: null,
+            dataFlowStep: -1,
+            lastAuditId: null,
             changeSets: [
                 { id: 'sop_pac_tr_001', pack: 'SOP 库', status: '待审', reason: '「TR 赛道深耕」策略验证有效 · 进化引擎沉淀候选' }
             ],
@@ -2323,6 +2225,256 @@
             autoTimer: null
         };
 
+        function genAuditId() {
+            EnterpriseRuntime.lastAuditId = 'aud-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+            return EnterpriseRuntime.lastAuditId;
+        }
+
+        function invokeCapability(operationRef, payload, actor) {
+            const meta = CAPABILITY_META[operationRef] || { approval_level: 'L1', gates: ['G1'], source: 'platform' };
+            const agent = actor?.agent_id ? actor : HARNESS_AGENT_CS;
+            if (!agent.bound_operations?.includes(operationRef)) {
+                const err = { status: 'denied', deny_reason: 'OP_NOT_IN_ROSTER', operation_ref: operationRef };
+                pushAudit(operationRef, 'DENIED', err.deny_reason);
+                return err;
+            }
+            const mockFn = CAPABILITY_MOCK[operationRef];
+            const output = mockFn ? mockFn(payload || {}) : { ok: true };
+            const auditId = genAuditId();
+            const record = {
+                ts: new Date().toLocaleTimeString('zh-CN', { hour12: false }),
+                audit_id: auditId, operation_ref: operationRef,
+                actor: actor?.agent_id || agent.agent_id, tenant_id: TENANT_ID,
+                approval_level: meta.approval_level, gates: meta.gates,
+                payload, output, status: 'ok', source_system: meta.source
+            };
+            EnterpriseRuntime.capabilityCalls.unshift(record);
+            if (EnterpriseRuntime.capabilityCalls.length > 30) EnterpriseRuntime.capabilityCalls.pop();
+            pushAudit(operationRef, 'invoke', `audit_id=${auditId} · L${meta.approval_level.slice(1)} · ${JSON.stringify(output).slice(0, 80)}…`);
+            setDataFlowStep('cs');
+            return { status: 'ok', audit_id: auditId, output };
+        }
+
+        function buildWorkingTaskFromIntent(intent) {
+            const wtId = 'wt-' + Date.now().toString(36);
+            const steps = HARNESS_PLAYBOOK_CS.steps.map((s, i) => ({
+                step_id: s.step_id, label: s.label, operation_ref: s.operation_ref,
+                done: false, current: i === 0, optional: !!s.optional
+            }));
+            return {
+                task_id: wtId, tenant_id: intent.tenant_id, source: 'selfpaw_escalation',
+                product_track: 'pipaw', status: 'open', display_phase: 'backlog',
+                intent_id: intent.intent_id, playbook_id: HARNESS_PLAYBOOK_CS.playbook_id,
+                agent_id: HARNESS_AGENT_CS.agent_id,
+                position_id: intent.escalation_target.position_id,
+                assignee_role_id: intent.escalation_target.role_id,
+                title: intent.goal, subtitle: intent.summary, priority: intent.urgency || 'high',
+                sla_label: '剩余时间：今日内', due_at: new Date(Date.now() + 8 * 3600000).toISOString(),
+                business_context: { ...intent.business_context, evidence_refs: intent.evidence_refs },
+                steps, ticket_id: null, audit_id: null,
+                actions: [{ label: '接手处理', action: 'open' }, { label: '执行当前步骤', action: 'complete_step' }]
+            };
+        }
+
+        function escalateIntentToPipaw() {
+            const intent = { ...HARNESS_INTENT_COMPLAINT, status: 'escalated' };
+            const auditId = genAuditId();
+            setDataFlowStep('intent');
+            setDataFlowStep('evidence');
+            setDataFlowStep('escalate');
+            pushAudit('intent/escalate', 'POST', `intent_id=${intent.intent_id} · evidence_refs=1 · audit_id=${auditId}`);
+            const wt = buildWorkingTaskFromIntent(intent);
+            wt.audit_id = auditId;
+            EnterpriseRuntime.workingTasks.unshift(wt);
+            EnterpriseRuntime.activeTaskId = wt.task_id;
+            setDataFlowStep('wt');
+            setDataFlowStep('playbook');
+            return wt;
+        }
+
+        function openWorkingTask(taskId) {
+            const wt = EnterpriseRuntime.workingTasks.find(t => t.task_id === taskId);
+            if (!wt) { showToast('warning', '无任务', '请先演示客诉升级链路'); return; }
+            EnterpriseRuntime.activeTaskId = taskId;
+            wt.display_phase = 'current';
+            wt.status = 'in_progress';
+            EnterpriseRuntime.workingTasks.forEach(t => {
+                if (t.task_id !== taskId && t.display_phase === 'current') {
+                    t.display_phase = 'backlog';
+                    if (t.status === 'in_progress') t.status = 'open';
+                }
+            });
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            if (currentView === 3 || currentView === 'value') syncRuntimeUi();
+            switchView(3);
+            showToast('info', '已打开任务', wt.title);
+        }
+
+        function advancePlaybookStep(taskId) {
+            const wt = EnterpriseRuntime.workingTasks.find(t => t.task_id === taskId);
+            if (!wt) return;
+            const step = wt.steps.find(s => s.current);
+            if (!step) {
+                if (wt.status !== 'done') {
+                    wt.status = 'done'; wt.display_phase = 'completed';
+                    setDataFlowStep('result');
+                    showToast('success', '工单闭环', 'Playbook 全部步骤已完成');
+                }
+                renderTaskPanelUi();
+                return;
+            }
+            const payload = {};
+            if (step.operation_ref === 'cs.customer.get_profile') {
+                payload.customer_id = wt.business_context.customer_id;
+            } else if (step.operation_ref === 'cs.ticket.create') {
+                payload.subject = 'VIP 客诉：交付延期跟进';
+                payload.customer_id = wt.business_context.customer_id;
+                payload.priority = 'high';
+            } else if (step.operation_ref === 'cs.ticket.escalate') {
+                payload.ticket_id = wt.ticket_id;
+                payload.reason = 'VIP SLA 临近';
+            }
+            const resp = invokeCapability(step.operation_ref, payload, HARNESS_AGENT_CS);
+            if (resp.status !== 'ok') {
+                showToast('error', '能力调用被拒绝', resp.deny_reason || '');
+                return;
+            }
+            step.done = true; step.current = false; step.last_output = resp.output;
+            if (step.operation_ref === 'cs.ticket.create') wt.ticket_id = resp.output.ticket_id;
+            const nextIdx = wt.steps.findIndex(s => !s.done);
+            if (nextIdx >= 0) {
+                wt.steps[nextIdx].current = true;
+            } else {
+                wt.status = 'done'; wt.display_phase = 'completed';
+                setDataFlowStep('audit');
+                setDataFlowStep('result');
+            }
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            renderExecutorPage();
+        }
+
+        function setDataFlowStep(nodeId) {
+            const idx = DATA_FLOW_NODES.findIndex(n => n.id === nodeId);
+            if (idx >= 0) EnterpriseRuntime.dataFlowStep = Math.max(EnterpriseRuntime.dataFlowStep, idx);
+        }
+
+        function renderHarnessDataFlow() {
+            const stripIds = ['harnessDataFlowStrip', 'focusDataFlowStrip'];
+            const di = EnterpriseRuntime.dataFlowStep;
+            const html = DATA_FLOW_NODES.map((n, i) => {
+                let cls = 'df-node border-border';
+                if (i < di) cls = 'df-node df-node-done border-success/40';
+                else if (i === di) cls = 'df-node df-node-active border-primary';
+                return '<span class="' + cls + '"><span class="font-medium">' + n.label + '</span>' +
+                    '<span class="block text-[9px] text-text3">' + n.sub + '</span></span>' +
+                    (i < DATA_FLOW_NODES.length - 1 ? '<span class="df-arrow">→</span>' : '');
+            }).join('');
+            stripIds.forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = html; });
+        }
+
+        function renderTaskPanelUi() {
+            const backlogEl = document.getElementById('executorBacklog');
+            const currentEl = document.getElementById('executorCurrentTask');
+            const focusBacklog = document.getElementById('focusTaskBacklog');
+            const focusCurrent = document.getElementById('focusTaskCurrent');
+            const tasks = EnterpriseRuntime.workingTasks;
+            const renderBacklog = (el) => {
+                if (!el) return;
+                const items = tasks.filter(t => t.display_phase === 'backlog' || (t.task_id !== EnterpriseRuntime.activeTaskId && t.status === 'open'));
+                el.innerHTML = items.length ? items.map(t =>
+                    '<div class="p-2 rounded border border-border hover:border-primary/40 cursor-pointer" onclick="openWorkingTask(\'' + t.task_id + '\')">' +
+                    '<div class="font-medium">' + t.title.slice(0, 36) + '…</div>' +
+                    '<div class="text-text3 mt-0.5">' + t.task_id + ' · ' + t.priority + ' · ' + t.sla_label + '</div></div>'
+                ).join('') : '<div class="text-text3 p-2">暂无待办 · 点击「客诉升级链路」创建 WorkingTask</div>';
+            };
+            const renderCurrent = (el) => {
+                if (!el) return;
+                const wt = tasks.find(t => t.task_id === EnterpriseRuntime.activeTaskId);
+                if (!wt || wt.display_phase !== 'current') {
+                    el.innerHTML = '<div class="text-text3 p-4 bg-bg1 rounded-lg">选择 backlog 任务或运行客诉升级演示</div>';
+                    return;
+                }
+                const stepsHtml = wt.steps.map(s => {
+                    const cls = s.done ? 'tp-step-done border-success/30' : (s.current ? 'tp-step-current' : 'border-border opacity-60');
+                    const icon = s.done ? '<i class="fa fa-check text-success"></i>' : (s.current ? '●' : '○');
+                    let out = '';
+                    if (s.last_output) out = '<div class="cap-result">' + JSON.stringify(s.last_output, null, 0).slice(0, 200) + '</div>';
+                    return '<div class="p-2 mb-1 rounded border ' + cls + ' flex justify-between gap-2">' +
+                        '<div class="flex-1"><div>' + icon + ' ' + s.label + '</div>' +
+                        '<div class="text-[10px] text-text3 font-mono mt-0.5">' + (s.operation_ref || '') + '</div>' + out + '</div></div>';
+                }).join('');
+                el.innerHTML =
+                    '<div class="flex flex-wrap justify-between gap-2 mb-2">' +
+                    '<div><div class="font-medium text-sm">' + wt.title + '</div>' +
+                    '<div class="text-text3">' + wt.task_id + ' · agent.' + wt.agent_id.replace('agent.', '') + ' · audit ' + (wt.audit_id || '—') + '</div></div>' +
+                    '<span class="tag bg-warning/10 text-warning">' + wt.sla_label + '</span></div>' +
+                    '<div class="p-2 bg-bg1 rounded mb-2 text-text2"><strong>Evidence：</strong>' +
+                    (wt.business_context.evidence_refs || []).map(e => e.summary).join(' · ') + '</div>' +
+                    stepsHtml +
+                    '<div class="flex gap-2 mt-3">' +
+                    '<button class="primary-btn text-xs" onclick="advancePlaybookStep(\'' + wt.task_id + '\')"><i class="fa fa-bolt mr-1"></i>执行当前步骤 (cs.*)</button>' +
+                    (wt.ticket_id ? '<span class="text-[10px] text-success self-center">工单 ' + wt.ticket_id + '</span>' : '') +
+                    '</div>';
+            };
+            renderBacklog(backlogEl);
+            renderBacklog(focusBacklog);
+            renderCurrent(currentEl);
+            renderCurrent(focusCurrent);
+        }
+
+        function renderExecutorPage() {
+            const b = EnterpriseRuntime.biz;
+            const titleEl = document.getElementById('executorBizTitle');
+            if (titleEl) titleEl.textContent = '【当前商机】' + b.leadId + ' · ' + b.customerName;
+            const slaEl = document.getElementById('executorBizSla');
+            if (slaEl) slaEl.textContent = b.quoteId ? ('报价 ' + b.quoteId + ' · 折扣 ' + Math.round((b.discount || 0) * 100) + '%') : ('报价至 ' + (b.deadline || '—'));
+            const detEl = document.getElementById('executorBizDetail');
+            if (detEl) {
+                detEl.innerHTML = '<div><strong>阶段：</strong>' + (b.stage || 'idle') + '</div>' +
+                    '<div><strong>金额：</strong>' + (b.amount ? b.amount + ' 万' : '待定') + ' · 主责 ' + b.owner + '</div>' +
+                    '<div class="text-text3 mt-1">经 CapabilityServiceRouter 调用，禁止直连 CRM</div>';
+            }
+            const capEl = document.getElementById('executorCapResults');
+            if (capEl) {
+                capEl.innerHTML = EnterpriseRuntime.capabilityCalls.length
+                    ? EnterpriseRuntime.capabilityCalls.slice(0, 5).map(c =>
+                        '<div class="p-2 border border-border rounded"><div class="font-mono text-primary">' + c.operation_ref + '</div>' +
+                        '<div class="text-[10px] text-text3">' + c.audit_id + ' · ' + c.approval_level + '</div>' +
+                        '<div class="cap-result">' + JSON.stringify(c.output).slice(0, 180) + '</div></div>'
+                    ).join('')
+                    : '<div class="text-text3">运行 PAC 闭环「行动」步或客诉 Playbook 后显示 cs.* 返回</div>';
+            }
+            const audEl = document.getElementById('executorCapAudit');
+            if (audEl) {
+                audEl.innerHTML = EnterpriseRuntime.capabilityCalls.length
+                    ? EnterpriseRuntime.capabilityCalls.map(c =>
+                        '<div class="py-0.5 border-b border-border/40"><span class="text-text3">' + c.ts + '</span> ' +
+                        '<strong>' + c.operation_ref + '</strong> ' + c.audit_id + '</div>'
+                    ).join('')
+                    : '<div class="text-text3">—</div>';
+            }
+            const todos = document.getElementById('executorBdTodos');
+            const todoCount = document.getElementById('executorTodoCount');
+            const bdActions = b.stage === 'action_running'
+                ? ['跟进 ' + (b.quoteId || '报价') + ' 经理审批', '补充 LT-2024 决策人证据包', '拜访 2 家 TR 赛道客户']
+                : ['完成 LT-2024 证据包', '跟进经理审批', '拜访决策人 2 家'];
+            if (todos) todos.innerHTML = bdActions.map((a, i) =>
+                '<div class="p-2 border-l-4 border-primary/40 bg-primary/5 rounded-r">' + (i + 1) + '. ' + a + '</div>'
+            ).join('');
+            if (todoCount) todoCount.textContent = bdActions.length + ' 项';
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+        }
+
+        function demoCsEscalation() {
+            resetRuntime(false);
+            EnterpriseRuntime.dataFlowStep = -1;
+            const wt = escalateIntentToPipaw();
+            openWorkingTask(wt.task_id);
+            showToast('success', '客诉升级完成', 'WorkingTask ' + wt.task_id + ' 已进入 ΠPaw Task Panel');
+        }
         function getScenarioSteps(scenarioId) {
             if (scenarioId === 'scn-b2b-sales') return RUN_STEPS_B2B;
             const sc = SCENARIOS.find(s => s.id === scenarioId);
@@ -2407,6 +2559,8 @@
             if (step.workflow === 'strategy_recommend') b.stage = 'strategy_confirmed';
             if (step.workflow === 'action_dispatch') {
                 b.stage = 'action_running'; b.quoteId = 'QT-2024-0612'; b.amount = 1200; b.discount = 0.12;
+                invokeCapability('cs.lead.qualify_lead', { lead_id: b.leadId, criteria_ref: 'b2b-v1' }, HARNESS_AGENT_SALES);
+                invokeCapability('cs.approval.submit', { template_id: 'quote_discount', payload: { amount: b.amount, discount: b.discount } }, HARNESS_AGENT_SALES);
             }
             if (step.workflow === 'result_attribute') { b.stage = 'attributed'; b.amount = 1200; }
             if (step.workflow === 'result_attribute' && proj) {
@@ -2465,10 +2619,18 @@
             }
             EnterpriseRuntime.run = null;
             EnterpriseRuntime.audit = [];
+            EnterpriseRuntime.capabilityCalls = [];
+            EnterpriseRuntime.workingTasks = [];
+            EnterpriseRuntime.activeTaskId = null;
+            EnterpriseRuntime.dataFlowStep = -1;
+            EnterpriseRuntime.lastAuditId = null;
             EnterpriseRuntime.pdca = { org: 'C', project: 'P' };
             EnterpriseRuntime.biz = { leadId: 'LT-2024', customerName: '华东某制造集团', quoteId: null, stage: 'idle', amount: 0, discount: 0, owner: '王磊', deadline: '6/14' };
             document.getElementById('btnAdvanceRun')?.classList.add('hidden');
             document.getElementById('btnAutoRun')?.classList.add('hidden');
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            renderExecutorPage();
             syncRuntimeUi();
             if (showMsg !== false) showToast('info', '已重置', '运行时状态已恢复初始');
         }
@@ -2517,7 +2679,9 @@
             owner: { id: 'owner', label: '策略主责', persona: '策略战役负责人 · 张华东', org: 'org-east',
                 defaultWidgets: ['campaign', 'value_stream', 'actions', 'object', 'audit'] },
             executor: { id: 'executor', label: '执行助手', persona: 'BD-A · 王磊', org: 'org-east',
-                defaultWidgets: ['actions', 'value_stream', 'object', 'approvals', 'audit'] },
+                defaultWidgets: ['actions', 'task_panel', 'value_stream', 'object', 'audit'] },
+            cs_agent: { id: 'cs_agent', label: '客服 Agent', persona: 'agent.cs_specialist · 客服岗', org: 'org-root',
+                defaultWidgets: ['task_panel', 'data_flow', 'audit', 'risk'] },
             compliance: { id: 'compliance', label: '分析/职能', persona: '数据分析 · Black', org: 'org-root',
                 defaultWidgets: ['approvals', 'risk', 'audit', 'improvement', 'pdca', 'value_flow_io'] }
         };
@@ -2535,6 +2699,8 @@
             risk: { title: '预警引擎', icon: 'fa-exclamation-triangle', span: 'focus-widget-span-4', desc: '指标/SLA/闭环断裂' },
             audit: { title: '归因审计', icon: 'fa-history', span: 'focus-widget-span-6', desc: '完整决策智慧链记录' },
             improvement: { title: 'SOP 沉淀', icon: 'fa-lightbulb-o', span: 'focus-widget-span-6', desc: '进化引擎产出 · 策略库更新' },
+            task_panel: { title: 'Task Panel', icon: 'fa-tasks', span: 'focus-widget-span-8', desc: 'WorkingTask · Playbook · cs.* 步骤' },
+            data_flow: { title: 'Harness 数据流', icon: 'fa-long-arrow-right', span: 'focus-widget-span-12', desc: 'Intent → Evidence → WorkingTask → cs.* → Audit' },
             platform: { title: '系统架构', icon: 'fa-cog', span: 'focus-widget-span-12', desc: 'L1~L6 + 六大引擎' }
         };
         let focusRoleId = 'manager';
@@ -2657,6 +2823,14 @@
                 return focusWidgetShell(id, '<div id="globalAuditLog" class="max-h-[200px] overflow-y-auto text-xs"></div>');
             case 'improvement':
                 return focusWidgetShell(id, '<div id="globalChangeSets" class="space-y-2 text-xs max-h-[200px] overflow-y-auto"></div>');
+            case 'task_panel':
+                return focusWidgetShell(id,
+                    '<div class="grid md:grid-cols-3 gap-3">' +
+                    '<div class="md:col-span-1"><div class="text-[10px] text-text3 mb-1">backlog</div><div id="focusTaskBacklog" class="space-y-1 max-h-[180px] overflow-y-auto"></div></div>' +
+                    '<div class="md:col-span-2"><div class="text-[10px] text-text3 mb-1">current · Playbook</div><div id="focusTaskCurrent"></div></div></div>');
+            case 'data_flow':
+                return focusWidgetShell(id, '<div id="focusDataFlowStrip" class="flex flex-wrap items-center gap-1 mb-2"></div>' +
+                    '<div class="text-[10px] text-text3">对齐 intent_escalation API · pipaw_cs_agent_playbook · business_agent_roster</div>');
             case 'platform':
                 return focusWidgetShell(id,
                     '<details class="text-xs text-text3"><summary class="cursor-pointer hover:text-primary">UAS 架构师 / IT 运行详情</summary>' +
@@ -3044,6 +3218,9 @@
                 if (selectedProjectId) selectProject(selectedProjectId, true);
             }
             if (currentView === 'scenario') renderScenarioDetail();
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            if (currentView === 3) renderExecutorPage();
             updateFocusHeadline();
             updateFocusStaticWidgets();
             updateAiContext();
@@ -3097,7 +3274,7 @@
             else if (view === 'scenario') { renderScenarioCards(); renderScenarioDetail(); }
             else if (view === 1) { initRevenueChart(); initHealthChart(); initDrillChart(1); }
             else if (view === 2) { initTeamChart(); }
-            else if (view === 3) { initPersonalChart(); }
+            else if (view === 3) { initPersonalChart(); renderExecutorPage(); }
             syncRuntimeUi();
             updateAiContext();
         }
@@ -4220,9 +4397,11 @@
         window.onload = function() {
             renderAdaptationLayersBar();
             renderDualLoops();
+            renderHarnessDataFlow();
             renderAiosLoopBanner();
             renderAiosEngines();
             renderFocusBoard();
+            renderExecutorPage();
             syncRuntimeUi();
             switchView('value');
         };

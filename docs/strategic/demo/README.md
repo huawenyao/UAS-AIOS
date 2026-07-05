@@ -120,7 +120,7 @@ cd docs/strategic/demo && python3 -m http.server 8080
 
 ---
 
-## 6. 与 detailed-design / 架构基线索引
+## 7. 与 detailed-design / 架构基线索引
 
 | 主题 | 文档 |
 |------|------|
