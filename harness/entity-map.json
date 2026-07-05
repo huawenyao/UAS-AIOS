@@ -87,7 +87,9 @@
       "description": "Business AGI：经营数字岗位体系",
       "depends_on": ["UASKernel", "CapabilityServiceRegistry", "OutwardGateway"],
       "files": [
+        "docs/strategic/design/BusinessAGI_Standardized_Architecture_AND_TOGAF_Delivery.md",
         "docs/strategic/demo/ΠPaw_Enterprise_Demo.html",
+        "docs/strategic/demo/README.md",
         "asui-cli/src/asui/pipaw_task_panel.py",
         "schemas/task_panel_view.schema.json"
       ]

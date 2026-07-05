@@ -120,14 +120,16 @@ cd docs/strategic/demo && python3 -m http.server 8080
 
 ---
 
-## 6. 与 detailed-design 文档索引
+## 6. 与 detailed-design / 架构基线索引
 
 | 主题 | 文档 |
 |------|------|
-| 平台功能模块 | `ΠPaw_Business_AGI_Platform_Detailed_Design.md` |
-| 四适配层 + 双闭环 | `ΠPaw_Business_AGI_Platform_Enhanced_Design.md` |
-| 三层角色化应用 + 场景套件 | `ΠPaw_Full_Stack_Product_Landing_Definition.md` |
-| UAS 内核 | `UAS_Kernel_Detailed_Design.md` |
+| **标准化架构 + TOGAF 交付** | `../design/BusinessAGI_Standardized_Architecture_AND_TOGAF_Delivery.md` |
+| Harness Agent 应用规范 | `../../harness/knowledge/technical/pipaw-cs-agent-benchmark.md` |
+| 平台功能模块 | `../detailed-design/ΠPaw_Business_AGI_Platform_Detailed_Design.md` |
+| 四适配层 + 双闭环 | `../detailed-design/ΠPaw_Business_AGI_Platform_Enhanced_Design.md` |
+| 三层角色化应用 + 场景套件 | `../detailed-design/ΠPaw_Full_Stack_Product_Landing_Definition.md` |
+| UAS 内核 | `../detailed-design/UAS_Kernel_Detailed_Design.md` |
 | 数字人生态 | `../Enterprise_Digital_Human_Ecosystem_Product_Definition.md` |
 
 ---
