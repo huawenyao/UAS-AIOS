@@ -66,6 +66,9 @@ def export_fixtures() -> dict:
     FIXTURES_DIR.mkdir(parents=True, exist_ok=True)
     files = {
         "manifest.json": manifest,
+        "commercial_scenario_catalog.json": json.loads(
+            (REPO_ROOT / "configs" / "commercial_scenario_catalog.json").read_text(encoding="utf-8")
+        ),
         "intent_complaint.json": intent,
         "escalate_response.json": {
             "status": esc.status,
