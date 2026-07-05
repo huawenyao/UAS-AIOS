@@ -1,6 +1,6 @@
 # ΠPaw Business AGI Demo 设计说明
 
-> **版本**：v2.1 · 2026-07-05  
+> **版本**：v2.2 · 2026-07-05  
 > **依据**：`docs/strategic/detailed-design/` 业务体系与管理逻辑  
 > **演示载体**：`ΠPaw_Enterprise_Demo.html`（单页交互 Demo，浏览器直接打开）
 
@@ -151,13 +151,26 @@ Demo 中 PAC Margin 场景演示业务闭环；销售提成策略示例在 READM
 ## 6. 本地运行
 
 ```bash
+# 导出真实运行时 fixtures（intent_hub + task_panel）
+python3 scripts/export_demo_harness_fixtures.py
+
 # 语法检查（可选）
 node docs/strategic/demo/_check_js.mjs
 
-# 启动静态服务
+# 启动静态服务（fixtures 加载需 HTTP，不可用 file://）
 cd docs/strategic/demo && python3 -m http.server 8080
 # 浏览器打开 http://localhost:8080/ΠPaw_Enterprise_Demo.html
+# 执行助手 →「加载真实运行时」导入 fixtures/escalate_response.json
 ```
+
+### Fixtures 目录
+
+| 文件 | 来源 |
+|------|------|
+| `fixtures/escalate_response.json` | `scripts/escalate_intent.py` 等价输出 |
+| `fixtures/task_panel_current.json` | `PipawTaskPanel.build_view()` |
+| `fixtures/playbook_cs.json` / `playbook_sales.json` | configs |
+| `fixtures/manifest.json` | 导出时间与校验命令 |
 
 ---
 

@@ -1248,32 +1248,32 @@
                         <i class="fa fa-list-ul text-warning mr-2"></i> 待办任务
                         <span class="ml-2 text-xs bg-danger text-white rounded-full px-1.5 py-0.5">8个</span>
                     </div>
-                    <div class="space-y-2 max-h-[250px] overflow-y-auto pr-2">
-                        <div class="p-3 bg-danger/5 rounded-md border border-danger/20 flex items-center justify-between">
+                    <div class="space-y-2 max-h-[250px] overflow-y-auto pr-2" id="managerTodoList">
+                        <div class="p-3 bg-danger/5 rounded-md border border-danger/20 flex items-center justify-between cursor-pointer" onclick="demoLtcPlaybook()">
                             <div class="flex-1">
-                                <div class="text-sm font-medium">解决生产线A频繁故障问题</div>
-                                <div class="text-xs text-text3">截止时间：今天 18:00 | 优先级：高</div>
+                                <div class="text-sm font-medium">LT-2024 大单折扣审批（G3）</div>
+                                <div class="text-xs text-text3">截止时间：6/14 | 优先级：高 · Action ACT-0612-001</div>
+                            </div>
+                            <button class="action-btn text-primary ml-2">执行</button>
+                        </div>
+                        <div class="p-3 bg-warning/5 rounded-md border border-warning/20 flex items-center justify-between cursor-pointer" onclick="demoCsEscalation()">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">VIP 客诉 C-1001 交付延期</div>
+                                <div class="text-xs text-text3">SLA：今日内 | 待升级 ΠPaw 客服 Agent</div>
                             </div>
                             <button class="action-btn text-primary ml-2">处理</button>
                         </div>
-                        <div class="p-3 bg-warning/5 rounded-md border border-warning/20 flex items-center justify-between">
+                        <div class="p-3 bg-bg1 rounded-md flex items-center justify-between cursor-pointer" onclick="demoFullChain()">
                             <div class="flex-1">
-                                <div class="text-sm font-medium">准备Q2季度汇报材料</div>
-                                <div class="text-xs text-text3">截止时间：6月10日 | 优先级：中</div>
+                                <div class="text-sm font-medium">PAC Q2 Margin 异常归因复核</div>
+                                <div class="text-xs text-text3">EVT-MRG-0612 · 策略 STR-PAC-0612-A</div>
                             </div>
-                            <button class="action-btn text-primary ml-2">处理</button>
+                            <button class="action-btn text-primary ml-2">推进</button>
                         </div>
                         <div class="p-3 bg-bg1 rounded-md flex items-center justify-between">
                             <div class="flex-1">
-                                <div class="text-sm font-medium">评审新业务流程方案</div>
-                                <div class="text-xs text-text3">截止时间：6月12日 | 优先级：中</div>
-                            </div>
-                            <button class="action-btn text-primary ml-2">处理</button>
-                        </div>
-                        <div class="p-3 bg-bg1 rounded-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">半年度人才盘点</div>
-                                <div class="text-xs text-text3">截止时间：6月20日 | 优先级：低</div>
+                                <div class="text-sm font-medium">TR 赛道深耕 SOP 沉淀评审</div>
+                                <div class="text-xs text-text3">进化引擎 ChangeSet · 待制度组确认</div>
                             </div>
                             <button class="action-btn text-primary ml-2">处理</button>
                         </div>
@@ -1400,9 +1400,9 @@
                             <tbody class="divide-y divide-border">
                                 <tr class="hover:bg-bg1/50 transition-all">
                                     <td class="p-2 text-xs">🔴 高</td>
-                                    <td class="p-2 text-xs">生产线A故障频发，本月已停产3次</td>
-                                    <td class="p-2 text-xs">张工</td>
-                                    <td class="p-2 text-xs text-danger">今天 18:00</td>
+                                    <td class="p-2 text-xs">PAC Q2 Margin 下跌 3.2pp，TR 赛道缺口 2.3 亿</td>
+                                    <td class="p-2 text-xs">张华东</td>
+                                    <td class="p-2 text-xs text-danger">6/14</td>
                                     <td class="p-2 text-xs"><span class="tag bg-danger/10 text-danger">待处理</span></td>
                                     <td class="p-2 text-xs">
                                         <button class="text-xs text-primary hover:text-primaryHover">跟进</button>
@@ -1480,8 +1480,8 @@
                                 <div class="text-text3">进度：70% | 截止：6月30日</div>
                             </div>
                             <div class="p-2 bg-white rounded text-xs">
-                                <div class="font-medium mb-1">生产线升级改造</div>
-                                <div class="text-text3">进度：40% | 截止：7月15日</div>
+                                <div class="font-medium mb-1">华东 Q2 销售缺口攻坚</div>
+                                <div class="text-text3">进度：58% | 截止：6月30日 · LT-2024</div>
                             </div>
                         </div>
                         <button class="w-full mt-3 text-xs py-1 border border-green-200 rounded text-green-700 hover:bg-green-100 transition-all">
@@ -1573,9 +1573,12 @@
             <!-- Harness 数据流 + Task Panel（对齐 configs/ + schemas/） -->
             <div class="bg-white rounded-lg p-4 card-shadow border border-primary/10">
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                    <div class="font-medium text-sm"><i class="fa fa-exchange text-primary mr-2"></i>Harness 业务数据流</div>
+                    <div class="font-medium text-sm"><i class="fa fa-exchange text-primary mr-2"></i>Harness 业务数据流
+                        <span id="harnessFixtureBadge" class="ml-2 tag bg-bg1 text-text3 font-normal">fixtures: 内嵌</span>
+                    </div>
                     <div class="flex flex-wrap gap-2 text-xs">
                         <button class="primary-btn text-xs" onclick="demoCsEscalation()"><i class="fa fa-level-up mr-1"></i>SelfPaw → ΠPaw 客诉升级</button>
+                        <button class="action-btn border border-primary text-primary text-xs" onclick="demoFromRuntimeFixtures()"><i class="fa fa-database mr-1"></i>加载真实运行时</button>
                         <button class="action-btn border border-secondary text-secondary text-xs" onclick="demoLtcPlaybook()"><i class="fa fa-handshake-o mr-1"></i>LTC 报价 Playbook</button>
                         <button class="action-btn border border-success text-success text-xs" onclick="demoOutwardGateway()"><i class="fa fa-globe mr-1"></i>Outward Gateway</button>
                         <button class="action-btn border border-border text-xs" onclick="openWorkingTask(EnterpriseRuntime.activeTaskId)">打开当前任务</button>
@@ -2327,6 +2330,101 @@
             return HARNESS_AGENTS[agentId] || HARNESS_AGENT_CS;
         }
 
+        const HARNESS_FIXTURES_BASE = 'fixtures/';
+        const HarnessFixtures = { loaded: false, manifest: null, escalate: null, panelCurrent: null, roster: null };
+
+        function workingTaskFromRuntime(wt, panelItem, agentId) {
+            const agent = getHarnessAgent(agentId || 'agent.cs_specialist');
+            const playbook = agent.playbook_id === HARNESS_PLAYBOOK_SALES.playbook_id
+                ? HARNESS_PLAYBOOK_SALES : HARNESS_PLAYBOOK_CS;
+            const steps = (panelItem?.steps || playbook.steps.map((s, i) => ({
+                step_id: s.step_id, label: s.label, operation_ref: s.operation_ref,
+                done: false, current: i === 0, optional: !!s.optional
+            })));
+            return {
+                task_id: wt.task_id, tenant_id: wt.tenant_id,
+                source: wt.source || 'selfpaw_escalation', product_track: 'pipaw',
+                status: panelItem?.status === 'in_progress' ? 'in_progress' : (wt.status || 'open'),
+                display_phase: panelItem?.display_phase || 'backlog',
+                intent_id: wt.source_intent_id || wt.intent_id,
+                source_intent_id: wt.source_intent_id,
+                playbook_id: playbook.playbook_id,
+                agent_id: agent.agent_id,
+                position_id: wt.position_id || agent.position_id,
+                assignee_role_id: wt.assignee_role_id || agent.role_id,
+                title: wt.title || wt.goal, subtitle: wt.goal || panelItem?.subtitle || '',
+                goal: wt.goal, priority: wt.priority || 'high',
+                sla_label: panelItem?.sla_label || '剩余时间：今日内',
+                due_at: panelItem?.due_at || wt.sla_due_at,
+                business_context: { ...(wt.business_context || {}), evidence_refs: wt.evidence_refs || [] },
+                evidence_refs: wt.evidence_refs || [],
+                steps, ticket_id: null, process_instance_id: null, approval_id: null,
+                audit_id: wt.audit_id,
+                created_at: wt.created_at, updated_at: wt.updated_at,
+                actions: panelItem?.actions || [{ label: '接手处理', action: 'open' }, { label: '执行当前步骤', action: 'complete_step' }]
+            };
+        }
+
+        async function loadHarnessFixtures() {
+            if (HarnessFixtures.loaded) return true;
+            try {
+                const manifest = await fetch(HARNESS_FIXTURES_BASE + 'manifest.json').then(r => {
+                    if (!r.ok) throw new Error('manifest');
+                    return r.json();
+                });
+                const [escalate, panelCurrent] = await Promise.all([
+                    fetch(HARNESS_FIXTURES_BASE + 'escalate_response.json').then(r => r.json()),
+                    fetch(HARNESS_FIXTURES_BASE + 'task_panel_current.json').then(r => r.json())
+                ]);
+                HarnessFixtures.manifest = manifest;
+                HarnessFixtures.escalate = escalate;
+                HarnessFixtures.panelCurrent = panelCurrent;
+                HarnessFixtures.loaded = true;
+                updateHarnessFixtureBadge('已加载 ' + (manifest.exported_at || '').slice(0, 10));
+                return true;
+            } catch (e) {
+                updateHarnessFixtureBadge('需 http.server');
+                return false;
+            }
+        }
+
+        function updateHarnessFixtureBadge(text) {
+            const el = document.getElementById('harnessFixtureBadge');
+            if (el) {
+                el.textContent = 'fixtures: ' + text;
+                el.className = 'ml-2 tag font-normal ' + (HarnessFixtures.loaded ? 'bg-success/10 text-success' : 'bg-bg1 text-text3');
+            }
+        }
+
+        async function demoFromRuntimeFixtures() {
+            const ok = await loadHarnessFixtures();
+            if (!ok || !HarnessFixtures.escalate?.working_task) {
+                showToast('warning', 'Fixtures 不可用', '请 cd docs/strategic/demo && python3 -m http.server 8080 后重试');
+                return;
+            }
+            resetRuntime(false);
+            EnterpriseRuntime.dataFlowMode = 'cs_escalation';
+            EnterpriseRuntime.dataFlowStep = -1;
+            const esc = HarnessFixtures.escalate;
+            const panel = HarnessFixtures.panelCurrent;
+            setDataFlowStep('intent');
+            setDataFlowStep('evidence');
+            setDataFlowStep('escalate');
+            pushAudit('intent/escalate', 'FIXTURE', 'runtime export · ' + (esc.audit_id || esc.working_task.audit_id));
+            const wt = workingTaskFromRuntime(esc.working_task, panel.current, panel.agent_id);
+            wt.display_phase = 'current';
+            wt.status = 'in_progress';
+            EnterpriseRuntime.workingTasks = [wt];
+            EnterpriseRuntime.activeTaskId = wt.task_id;
+            setDataFlowStep('wt');
+            setDataFlowStep('playbook');
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            renderExecutorPage();
+            switchView(3);
+            showToast('success', '真实运行时已导入', wt.task_id + ' · 来自 export_demo_harness_fixtures.py');
+        }
+
         function buildWorkingTaskFromPlaybook(opts) {
             const { playbook, agent, source, title, subtitle, priority, businessContext, intentId, slaLabel } = opts;
             const wtId = 'wt-' + Date.now().toString(36);
@@ -2337,11 +2435,12 @@
             return {
                 task_id: wtId, tenant_id: TENANT_ID, source: source || 'pipaw_manual',
                 product_track: 'pipaw', status: 'open', display_phase: 'backlog',
-                intent_id: intentId || null, playbook_id: playbook.playbook_id,
+                intent_id: intentId || null, source_intent_id: intentId || null,
+                playbook_id: playbook.playbook_id,
                 agent_id: agent.agent_id,
                 position_id: agent.position_id,
                 assignee_role_id: agent.role_id,
-                title, subtitle, priority: priority || 'high',
+                title, subtitle, goal: subtitle || title, priority: priority || 'high',
                 sla_label: slaLabel || '剩余时间：今日内',
                 due_at: new Date(Date.now() + 8 * 3600000).toISOString(),
                 business_context: businessContext || {},
@@ -2356,7 +2455,8 @@
             return buildWorkingTaskFromPlaybook({
                 playbook: HARNESS_PLAYBOOK_CS, agent,
                 source: 'selfpaw_escalation', intentId: intent.intent_id,
-                title: intent.goal, subtitle: intent.summary, priority: intent.urgency,
+                title: intent.summary || intent.goal, subtitle: intent.goal,
+                priority: intent.urgency,
                 businessContext: { ...intent.business_context, evidence_refs: intent.evidence_refs },
                 slaLabel: '剩余时间：今日内'
             });
@@ -2601,7 +2701,7 @@
                     '<div class="text-text3">' + wt.task_id + ' · ' + wt.playbook_id + ' · agent.' + wt.agent_id.replace('agent.', '') + '</div></div>' +
                     '<span class="tag bg-warning/10 text-warning">' + wt.sla_label + '</span></div>' +
                     '<div class="p-2 bg-bg1 rounded mb-2 text-text2"><strong>Evidence：</strong>' +
-                    (wt.business_context.evidence_refs || []).map(e => e.summary).join(' · ') + '</div>' +
+                    ((wt.evidence_refs || wt.business_context.evidence_refs || []).map(e => e.summary).join(' · ') || '—') + '</div>' +
                     stepsHtml +
                     '<div class="flex gap-2 mt-3">' +
                     '<button class="primary-btn text-xs" onclick="advancePlaybookStep(\'' + wt.task_id + '\')"><i class="fa fa-bolt mr-1"></i>执行当前步骤 (cs.*)</button>' +
@@ -4619,6 +4719,7 @@
             renderDualLoops();
             renderHarnessDataFlow();
             renderOutwardGatewayUi();
+            loadHarnessFixtures();
             renderAiosLoopBanner();
             renderAiosEngines();
             renderFocusBoard();
