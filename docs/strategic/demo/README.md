@@ -1,6 +1,6 @@
 # ΠPaw Business AGI Demo 设计说明
 
-> **版本**：v2.0 · 2026-07-04  
+> **版本**：v2.1 · 2026-07-05  
 > **依据**：`docs/strategic/detailed-design/` 业务体系与管理逻辑  
 > **演示载体**：`ΠPaw_Enterprise_Demo.html`（单页交互 Demo，浏览器直接打开）
 
@@ -89,29 +89,36 @@ Demo 中 PAC Margin 场景演示业务闭环；销售提成策略示例在 READM
 | **智慧闭环** | 主控台 | 全角色（角色胶囊切换） | 四适配层条、双闭环、五大实体、六大引擎联动 |
 | **战略罗盘** | 原「经营驾驶舱」 | CEO/BG | 四大金刚、战略拆解、全局风险 |
 | **管理驾驶舱** | 原「策略工作台」 | BU/部门负责人 | 目标承接、过程管控、异常闭环 |
-| **执行助手** | 原「个人工作台」 | 一线 BD/运营 | 待办 Action、商机执行、审批 |
+| **执行助手** | 原「个人工作台」 | 一线 BD/运营 | Task Panel、LTC/客诉 Playbook、cs.* 审计 |
 | **组织模型** | 组织适配层配置 | 管理者/实施顾问 | OMTU、Agent 编制、RACI、五维映射 |
 | **策略库** | 战役 + SOP 载体 | 策略主责 | 项目战役、里程碑、价值流执行态 |
-| **系统架构** | 工程视图 | IT/架构师 | UAS 八元组、cs.*、六层栈、1核3层N套件 |
+| **系统架构** | 工程视图 | IT/架构师 | UAS 八元组、cs.*、Outward Gateway、六层栈 |
 | **价值流模板** | 场景套件配置 | 实施顾问 | Pack/流程/规则、验收 KPI |
 
 ---
 
 ## 4. 推荐演示路径
 
-### 路径 A · PAC Margin 经营闭环（B2B）
+### 路径 A · PAC Margin 经营闭环（B2B + LTC Playbook）
 
-1. **智慧闭环** →「管理驾驶舱」→「演示 PAC 闭环」  
-2. 「行动」步自动触发 `cs.lead.qualify_lead` + `cs.approval.submit`  
-3. **执行助手** → BD 商机区与 cs.* 审计尾迹  
+1. **智慧闭环** →「演示 PAC 闭环」  
+2. 推进至「行动」步 → 自动创建 `playbook.sales_ltc_quote_v1` WorkingTask  
+3. **执行助手** → 逐步「执行当前步骤」：`cs.lead.qualify_lead` → `cs.process.start` → `cs.approval.submit`  
+4. 数据流模式 `b2b_sales`：Action → WT → Playbook → cs.* → Audit → Result  
 
 ### 路径 B · SelfPaw → ΠPaw 客诉升级（REQ-EDH-PP-001）
 
-1. 点「客诉升级链路」— 数据流：Intent → Evidence → WorkingTask → Playbook → cs.*  
+1. 点「客诉升级链路」— 数据流：Intent → Evidence → escalate → WT → Playbook → cs.*  
 2. 角色「客服 Agent」→ Task Panel 逐步「执行当前步骤」  
 3. 步骤与 `pipaw_cs_agent_playbook.json` 一致  
 
-### 路径 C · 组织与战役
+### 路径 C · Outward Gateway 对外会话（PP-002）
+
+1. **系统架构** → Outward Gateway 面板 →「演示飞书 IM 入站」  
+2. 数据流：Channel → Gateway → Intent → Agent Route → WT → Playbook → cs.*  
+3. 对齐 `outward_gateway_routes.sample.json` · 飞书/企微 → `agent.cs_specialist`  
+
+### 路径 D · 组织与战役
 
 1. **组织适配** → 华东区 → 由缺口立项  
 2. **策略库** → 华东 Q2 攻坚 KPI 联动  
@@ -123,10 +130,21 @@ Demo 中 PAC Margin 场景演示业务闭环；销售提成策略示例在 READM
 | 模型 | 配置来源 | Demo API |
 |------|----------|----------|
 | IntentObject | `intent_samples/complaint_escalation.sample.json` | `escalateIntentToPipaw()` |
+| Outward Intent | `outward_gateway` + routes | `routeOutwardMessage()` |
 | WorkingTask | `working_task.schema.json` | `EnterpriseRuntime.workingTasks` |
-| Agent Roster | `pipaw_business_agent_roster.json` | `HARNESS_AGENT_CS` + gate |
-| Playbook | `pipaw_cs_agent_playbook.json` | `advancePlaybookStep()` |
+| Agent Roster | `pipaw_business_agent_roster.json` | `HARNESS_AGENTS` + roster gate |
+| CS Playbook | `pipaw_cs_agent_playbook.json` | `advancePlaybookStep()` |
+| Sales Playbook | `pipaw_sales_agent_playbook.json` | `dispatchSalesPlaybookTask()` |
+| Process Template | `process_templates/sales_quote_approval.json` | `cs.process.start` 步骤 |
 | cs.* | `capability_registry.json` | `invokeCapability()` |
+
+**数据流模式**（`EnterpriseRuntime.dataFlowMode`）：
+
+| 模式 | 触发 | 节点链 |
+|------|------|--------|
+| `cs_escalation` | SelfPaw 客诉升级 | Intent → Evidence → escalate → WT → … |
+| `outward` | Outward Gateway | Channel → Gateway → Intent → Route → WT → … |
+| `b2b_sales` | PAC Action 分派 / LTC 演示 | Action → WT → Playbook → cs.* → … |
 
 ---
 

@@ -534,6 +534,7 @@
                         <button type="button" class="action-btn border border-border text-xs bg-white" onclick="toggleFocusCustomize()"><i class="fa fa-sliders mr-1"></i>自定义模块</button>
                         <button class="primary-btn text-xs" onclick="demoFullChain()"><i class="fa fa-play mr-1"></i>演示 PAC 闭环</button>
                         <button class="action-btn border border-secondary text-secondary text-xs bg-white" onclick="demoCsEscalation()"><i class="fa fa-headphones mr-1"></i>客诉升级链路</button>
+                        <button class="action-btn border border-success text-success text-xs bg-white" onclick="demoOutwardGateway()"><i class="fa fa-globe mr-1"></i>对外会话路由</button>
                         <button class="action-btn border border-border text-xs bg-white" onclick="resetRuntime()">重置</button>
                     </div>
                 </div>
@@ -753,6 +754,16 @@
                         <tbody id="capabilityTable" class="divide-y divide-border"></tbody>
                     </table>
                 </div>
+            </div>
+            <div class="bg-white rounded-lg p-4 card-shadow border border-success/20">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div class="font-medium text-sm"><i class="fa fa-globe text-success mr-2"></i>Outward Gateway · PP-002 对外会话路由</div>
+                    <button class="primary-btn text-xs" onclick="demoOutwardGateway()"><i class="fa fa-play mr-1"></i>演示飞书 IM 入站</button>
+                </div>
+                <div class="text-xs text-text2 mb-2">对齐 <code class="bg-bg1 px-1 rounded">outward_gateway_routes.sample.json</code> · 渠道消息 → Intent → Agent 路由 → WorkingTask</div>
+                <div id="outwardGatewayRoutes" class="grid md:grid-cols-3 gap-2 mb-3 text-xs"></div>
+                <div id="outwardGatewayFlow" class="flex flex-wrap items-center gap-1 mb-2"></div>
+                <div id="outwardGatewayLog" class="p-2 bg-bg1 rounded font-mono text-[10px] text-text2 max-h-[120px] overflow-y-auto">等待演示…</div>
             </div>
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12 lg:col-span-6 bg-white rounded-lg p-4 card-shadow max-h-[200px] overflow-y-auto">
@@ -1565,6 +1576,8 @@
                     <div class="font-medium text-sm"><i class="fa fa-exchange text-primary mr-2"></i>Harness 业务数据流</div>
                     <div class="flex flex-wrap gap-2 text-xs">
                         <button class="primary-btn text-xs" onclick="demoCsEscalation()"><i class="fa fa-level-up mr-1"></i>SelfPaw → ΠPaw 客诉升级</button>
+                        <button class="action-btn border border-secondary text-secondary text-xs" onclick="demoLtcPlaybook()"><i class="fa fa-handshake-o mr-1"></i>LTC 报价 Playbook</button>
+                        <button class="action-btn border border-success text-success text-xs" onclick="demoOutwardGateway()"><i class="fa fa-globe mr-1"></i>Outward Gateway</button>
                         <button class="action-btn border border-border text-xs" onclick="openWorkingTask(EnterpriseRuntime.activeTaskId)">打开当前任务</button>
                     </div>
                 </div>
@@ -1597,40 +1610,40 @@
                         <i class="fa fa-line-chart text-success mr-2"></i> 个人绩效进度
                     </div>
                     <div id="personalChart" class="w-full h-[120px] mb-4"></div>
-                    <div class="space-y-3">
+                    <div class="space-y-3" id="executorKpiBars">
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-sm">设备完好率≥99%</span>
-                                <span class="text-xs text-success">当前：99.2%</span>
+                                <span class="text-sm">季度签约额目标 3000 万</span>
+                                <span class="text-xs text-warning" id="executorKpiRevenue">当前：2180 万</span>
                             </div>
                             <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
-                                <div class="h-full bg-success rounded-full" style="width: 99.2%"></div>
+                                <div class="h-full bg-warning rounded-full" id="executorKpiRevenueBar" style="width: 72.7%"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-sm">故障响应时间≤30分钟</span>
-                                <span class="text-xs text-success">当前：22分钟</span>
+                                <span class="text-sm">LT-2024 大单推进</span>
+                                <span class="text-xs text-primary" id="executorKpiDeal">报价审批中</span>
                             </div>
                             <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
-                                <div class="h-full bg-success rounded-full" style="width: 90%"></div>
+                                <div class="h-full bg-primary rounded-full" id="executorKpiDealBar" style="width: 65%"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-sm">维修及时率≥98%</span>
-                                <span class="text-xs text-warning">当前：95%</span>
+                                <span class="text-sm">TR 赛道拜访 ≥5 家/周</span>
+                                <span class="text-xs text-success" id="executorKpiVisit">当前：3 家</span>
                             </div>
                             <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
-                                <div class="h-full bg-warning rounded-full" style="width: 95%"></div>
+                                <div class="h-full bg-success rounded-full" id="executorKpiVisitBar" style="width: 60%"></div>
                             </div>
                         </div>
                     </div>
                     <div class="mt-4 pt-4 border-t border-border">
-                        <div class="text-xs text-text2 mb-2">提升建议</div>
-                        <div class="text-xs text-text1 bg-success/5 p-2 rounded-md border border-success/10">
-                            <i class="fa fa-lightbulb-o text-success mr-1"></i>
-                            维修及时率略低于目标，主要原因是备件出库时间长，建议提前备齐常用备件，预计可提升效率30%。
+                        <div class="text-xs text-text2 mb-2">ΠPaw 建议</div>
+                        <div class="text-xs text-text1 bg-primary/5 p-2 rounded-md border border-primary/10" id="executorKpiHint">
+                            <i class="fa fa-lightbulb-o text-primary mr-1"></i>
+                            优先完成 LT-2024 证据包与折扣审批，可填补 PAC Q2 Margin 缺口 8%。
                         </div>
                     </div>
                 </div>
@@ -1681,10 +1694,10 @@
                     <div class="mt-6 pt-4 border-t border-border">
                         <div class="text-sm font-medium mb-2">最近使用</div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">设备维修记录</span>
-                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">备件申请单</span>
-                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">巡检记录表</span>
-                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">故障处理SOP</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all" onclick="demoLtcPlaybook()">LT-2024 报价审批</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all" onclick="switchView(3)">商机证据包</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all" onclick="demoCsEscalation()">客诉升级 SOP</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all" onclick="switchView('platform')">cs.* 能力目录</span>
                         </div>
                     </div>
                 </div>
@@ -2160,7 +2173,42 @@
             position_id: 'pos-bd-a', role_id: 'role.sales_rep', product_track: 'pipaw',
             domain_id: 'domain.b2b_sales', outward: false,
             bound_operations: ['cs.lead.qualify_lead', 'cs.approval.submit', 'cs.process.start'],
-            playbook_id: null
+            playbook_id: 'playbook.sales_ltc_quote_v1'
+        };
+        const HARNESS_PLAYBOOK_SALES = {
+            playbook_id: 'playbook.sales_ltc_quote_v1', name: 'B2B 线索到报价审批（LTC）',
+            process_template_id: 'sales_quote_approval',
+            steps: [
+                { step_id: 's1_qualify', label: '1. 线索资格判定（lead_created → qualified）', operation_ref: 'cs.lead.qualify_lead' },
+                { step_id: 's2_process', label: '2. 启动报价审批流程（qualified → quote_drafting）', operation_ref: 'cs.process.start' },
+                { step_id: 's3_approval', label: '3. 提交折扣审批（approval_pending）', operation_ref: 'cs.approval.submit' }
+            ]
+        };
+        const HARNESS_OUTWARD_ROUTES = {
+            version: 'v1.0', registrar: 'pipaw_only',
+            routes: [
+                { channel_id: 'feishu_im', type: 'im', default_agent: 'agent.cs_specialist', tenant_header: 'X-Tenant-Id' },
+                { channel_id: 'wecom_im', type: 'im', default_agent: 'agent.cs_specialist', tenant_header: 'X-Tenant-Id' },
+                { channel_id: 'email_inbound', type: 'email', default_agent: 'agent.sales_advisor', tenant_header: 'X-Tenant-Id' }
+            ],
+            pii_mask_fields: ['contact_phone', 'contact_email', 'id_card']
+        };
+        const HARNESS_INTENT_OUTWARD = {
+            intent_id: 'int-outward-feishu-001', tenant_id: TENANT_ID, source: 'outward_gateway',
+            intent_class: 'business_outward', goal: '飞书 IM 客户咨询交付进度',
+            summary: '【飞书】客户 C-1001：请问订单 PO-8821 预计何时发货？', urgency: 'medium',
+            actor: { user_id: 'ext-c-1001', display_name: '华东智造·采购部', org_unit_id: 'customer-ext',
+                position_id: 'pos-customer', product_track: 'outward' },
+            business_context: { customer_id: 'C-1001', channel: 'feishu_im', order_id: 'PO-8821' },
+            escalation_target: { product_track: 'pipaw', position_id: 'pos-cs-agent',
+                domain_id: 'domain.customer_service', role_id: 'role.cs_agent' },
+            evidence_refs: [{ evidence_id: 'ev-feishu-001', type: 'im_message', ref_id: 'feishu-msg-442',
+                summary: '飞书 IM：订单 PO-8821 预计何时发货？' }],
+            status: 'active'
+        };
+        const HARNESS_AGENTS = {
+            'agent.cs_specialist': HARNESS_AGENT_CS,
+            'agent.sales_advisor': HARNESS_AGENT_SALES
         };
         const CAPABILITY_META = {
             'cs.customer.get_profile': { approval_level: 'L1', gates: ['G1', 'G6'], source: 'crm' },
@@ -2208,6 +2256,24 @@
             { id: 'audit', label: 'Audit Chain', sub: 'audit_id' },
             { id: 'result', label: 'Result', sub: 'SLA/工单' }
         ];
+        const DATA_FLOW_NODES_OUTWARD = [
+            { id: 'channel', label: 'Channel', sub: 'feishu_im' },
+            { id: 'gateway', label: 'Outward Gateway', sub: 'PP-002' },
+            { id: 'intent', label: 'Intent', sub: 'outward_gateway' },
+            { id: 'route', label: 'Agent Route', sub: 'roster' },
+            { id: 'wt', label: 'WorkingTask', sub: 'pipaw' },
+            { id: 'playbook', label: 'Playbook', sub: 'cs_complaint_v1' },
+            { id: 'cs', label: 'cs.* invoke', sub: 'CapabilityRouter' },
+            { id: 'audit', label: 'Audit Chain', sub: 'audit_id' }
+        ];
+        const DATA_FLOW_NODES_B2B = [
+            { id: 'action', label: 'Action', sub: 'ACT-0612-001' },
+            { id: 'wt', label: 'WorkingTask', sub: 'sales_advisor' },
+            { id: 'playbook', label: 'Playbook', sub: 'sales_ltc_quote_v1' },
+            { id: 'cs', label: 'cs.* invoke', sub: 'LTC 三步' },
+            { id: 'audit', label: 'Audit Chain', sub: 'audit_id' },
+            { id: 'result', label: 'Result', sub: '审批/报价' }
+        ];
 
         const EnterpriseRuntime = {
             run: null,
@@ -2216,7 +2282,9 @@
             workingTasks: [],
             activeTaskId: null,
             dataFlowStep: -1,
+            dataFlowMode: 'cs_escalation',
             lastAuditId: null,
+            outwardLog: [],
             changeSets: [
                 { id: 'sop_pac_tr_001', pack: 'SOP 库', status: '待审', reason: '「TR 赛道深耕」策略验证有效 · 进化引擎沉淀候选' }
             ],
@@ -2255,34 +2323,78 @@
             return { status: 'ok', audit_id: auditId, output };
         }
 
-        function buildWorkingTaskFromIntent(intent) {
+        function getHarnessAgent(agentId) {
+            return HARNESS_AGENTS[agentId] || HARNESS_AGENT_CS;
+        }
+
+        function buildWorkingTaskFromPlaybook(opts) {
+            const { playbook, agent, source, title, subtitle, priority, businessContext, intentId, slaLabel } = opts;
             const wtId = 'wt-' + Date.now().toString(36);
-            const steps = HARNESS_PLAYBOOK_CS.steps.map((s, i) => ({
+            const steps = playbook.steps.map((s, i) => ({
                 step_id: s.step_id, label: s.label, operation_ref: s.operation_ref,
                 done: false, current: i === 0, optional: !!s.optional
             }));
             return {
-                task_id: wtId, tenant_id: intent.tenant_id, source: 'selfpaw_escalation',
+                task_id: wtId, tenant_id: TENANT_ID, source: source || 'pipaw_manual',
                 product_track: 'pipaw', status: 'open', display_phase: 'backlog',
-                intent_id: intent.intent_id, playbook_id: HARNESS_PLAYBOOK_CS.playbook_id,
-                agent_id: HARNESS_AGENT_CS.agent_id,
-                position_id: intent.escalation_target.position_id,
-                assignee_role_id: intent.escalation_target.role_id,
-                title: intent.goal, subtitle: intent.summary, priority: intent.urgency || 'high',
-                sla_label: '剩余时间：今日内', due_at: new Date(Date.now() + 8 * 3600000).toISOString(),
-                business_context: { ...intent.business_context, evidence_refs: intent.evidence_refs },
-                steps, ticket_id: null, audit_id: null,
+                intent_id: intentId || null, playbook_id: playbook.playbook_id,
+                agent_id: agent.agent_id,
+                position_id: agent.position_id,
+                assignee_role_id: agent.role_id,
+                title, subtitle, priority: priority || 'high',
+                sla_label: slaLabel || '剩余时间：今日内',
+                due_at: new Date(Date.now() + 8 * 3600000).toISOString(),
+                business_context: businessContext || {},
+                steps, ticket_id: null, process_instance_id: null, approval_id: null, audit_id: null,
                 actions: [{ label: '接手处理', action: 'open' }, { label: '执行当前步骤', action: 'complete_step' }]
             };
         }
 
-        function escalateIntentToPipaw() {
-            const intent = { ...HARNESS_INTENT_COMPLAINT, status: 'escalated' };
+        function buildWorkingTaskFromIntent(intent) {
+            const agent = getHarnessAgent(intent.escalation_target?.role_id === 'role.cs_agent'
+                ? 'agent.cs_specialist' : HARNESS_AGENT_CS.agent_id);
+            return buildWorkingTaskFromPlaybook({
+                playbook: HARNESS_PLAYBOOK_CS, agent,
+                source: 'selfpaw_escalation', intentId: intent.intent_id,
+                title: intent.goal, subtitle: intent.summary, priority: intent.urgency,
+                businessContext: { ...intent.business_context, evidence_refs: intent.evidence_refs },
+                slaLabel: '剩余时间：今日内'
+            });
+        }
+
+        function dispatchSalesPlaybookTask(actionMeta) {
+            const b = EnterpriseRuntime.biz;
+            b.stage = 'action_running'; b.quoteId = 'QT-2024-0612'; b.amount = 1200; b.discount = 0.12;
+            EnterpriseRuntime.dataFlowMode = 'b2b_sales';
+            EnterpriseRuntime.dataFlowStep = -1;
+            setDataFlowStep('action');
+            const wt = buildWorkingTaskFromPlaybook({
+                playbook: HARNESS_PLAYBOOK_SALES, agent: HARNESS_AGENT_SALES,
+                source: 'pipaw_manual', intentId: actionMeta?.actionId || 'ACT-0612-001',
+                title: 'LT-2024 大单报价审批 · ' + (b.customerName || '华东某制造集团'),
+                subtitle: '策略 STR-PAC-0612-A 分派 · 金额 ' + b.amount + ' 万 · 折扣 ' + Math.round((b.discount || 0) * 100) + '%',
+                priority: 'high',
+                businessContext: { lead_id: b.leadId, customer_id: 'C-2001', amount: b.amount, discount: b.discount, quote_id: b.quoteId },
+                slaLabel: '报价至 ' + (b.deadline || '6/14')
+            });
+            wt.audit_id = genAuditId();
+            wt.display_phase = 'backlog';
+            EnterpriseRuntime.workingTasks.unshift(wt);
+            setDataFlowStep('wt');
+            setDataFlowStep('playbook');
+            pushAudit('action/dispatch', 'CREATE_WT', wt.task_id + ' · playbook.sales_ltc_quote_v1');
+            return wt;
+        }
+
+        function escalateIntentToPipaw(intentOverride) {
+            const intent = { ...(intentOverride || HARNESS_INTENT_COMPLAINT), status: 'escalated' };
+            EnterpriseRuntime.dataFlowMode = 'cs_escalation';
+            EnterpriseRuntime.dataFlowStep = -1;
             const auditId = genAuditId();
             setDataFlowStep('intent');
             setDataFlowStep('evidence');
             setDataFlowStep('escalate');
-            pushAudit('intent/escalate', 'POST', `intent_id=${intent.intent_id} · evidence_refs=1 · audit_id=${auditId}`);
+            pushAudit('intent/escalate', 'POST', `intent_id=${intent.intent_id} · evidence_refs=${(intent.evidence_refs || []).length} · audit_id=${auditId}`);
             const wt = buildWorkingTaskFromIntent(intent);
             wt.audit_id = auditId;
             EnterpriseRuntime.workingTasks.unshift(wt);
@@ -2290,6 +2402,33 @@
             setDataFlowStep('wt');
             setDataFlowStep('playbook');
             return wt;
+        }
+
+        function routeOutwardMessage(channelId, body) {
+            const route = HARNESS_OUTWARD_ROUTES.routes.find(r => r.channel_id === channelId);
+            if (!route) return { status: 'error', reason: 'ROUTE_NOT_FOUND' };
+            EnterpriseRuntime.dataFlowMode = 'outward';
+            EnterpriseRuntime.dataFlowStep = -1;
+            setDataFlowStep('channel');
+            setDataFlowStep('gateway');
+            const intent = { ...HARNESS_INTENT_OUTWARD, intent_id: 'int-out-' + Date.now().toString(36).slice(-6),
+                summary: body || HARNESS_INTENT_OUTWARD.summary,
+                business_context: { ...HARNESS_INTENT_OUTWARD.business_context, channel: channelId } };
+            setDataFlowStep('intent');
+            const agent = getHarnessAgent(route.default_agent);
+            setDataFlowStep('route');
+            const logLine = `[${new Date().toLocaleTimeString('zh-CN', { hour12: false })}] ${channelId} → ${route.default_agent} · PII mask: ${HARNESS_OUTWARD_ROUTES.pii_mask_fields.join(',')}`;
+            EnterpriseRuntime.outwardLog.unshift(logLine);
+            pushAudit('outward.gateway', 'ROUTE', `${channelId} → ${agent.agent_id} · intent=${intent.intent_id}`);
+            const wt = buildWorkingTaskFromIntent(intent);
+            wt.source = 'outward_gateway';
+            wt.agent_id = agent.agent_id;
+            wt.audit_id = genAuditId();
+            EnterpriseRuntime.workingTasks.unshift(wt);
+            setDataFlowStep('wt');
+            setDataFlowStep('playbook');
+            renderOutwardGatewayUi();
+            return { status: 'ok', intent, working_task: wt, route };
         }
 
         function openWorkingTask(taskId) {
@@ -2311,37 +2450,49 @@
             showToast('info', '已打开任务', wt.title);
         }
 
+        function buildPlaybookPayload(wt, step) {
+            const ctx = wt.business_context || {};
+            const op = step.operation_ref;
+            if (op === 'cs.customer.get_profile') return { customer_id: ctx.customer_id };
+            if (op === 'cs.ticket.create') return { subject: 'VIP 客诉：交付延期跟进', customer_id: ctx.customer_id, priority: 'high' };
+            if (op === 'cs.ticket.escalate') return { ticket_id: wt.ticket_id, reason: 'VIP SLA 临近' };
+            if (op === 'cs.lead.qualify_lead') return { lead_id: ctx.lead_id, criteria_ref: 'b2b-v1' };
+            if (op === 'cs.process.start') return {
+                template_id: 'sales_quote_approval', business_key: ctx.lead_id || 'LT-2024',
+                variables: { amount: ctx.amount, discount: ctx.discount, quote_id: ctx.quote_id }
+            };
+            if (op === 'cs.approval.submit') return {
+                template_id: 'quote_discount',
+                payload: { amount: ctx.amount, discount: ctx.discount, lead_id: ctx.lead_id, quote_id: ctx.quote_id }
+            };
+            return {};
+        }
+
         function advancePlaybookStep(taskId) {
             const wt = EnterpriseRuntime.workingTasks.find(t => t.task_id === taskId);
             if (!wt) return;
+            const agent = getHarnessAgent(wt.agent_id);
             const step = wt.steps.find(s => s.current);
             if (!step) {
                 if (wt.status !== 'done') {
                     wt.status = 'done'; wt.display_phase = 'completed';
                     setDataFlowStep('result');
-                    showToast('success', '工单闭环', 'Playbook 全部步骤已完成');
+                    showToast('success', '任务闭环', 'Playbook 全部步骤已完成');
                 }
                 renderTaskPanelUi();
+                renderExecutorPage();
                 return;
             }
-            const payload = {};
-            if (step.operation_ref === 'cs.customer.get_profile') {
-                payload.customer_id = wt.business_context.customer_id;
-            } else if (step.operation_ref === 'cs.ticket.create') {
-                payload.subject = 'VIP 客诉：交付延期跟进';
-                payload.customer_id = wt.business_context.customer_id;
-                payload.priority = 'high';
-            } else if (step.operation_ref === 'cs.ticket.escalate') {
-                payload.ticket_id = wt.ticket_id;
-                payload.reason = 'VIP SLA 临近';
-            }
-            const resp = invokeCapability(step.operation_ref, payload, HARNESS_AGENT_CS);
+            const payload = buildPlaybookPayload(wt, step);
+            const resp = invokeCapability(step.operation_ref, payload, agent);
             if (resp.status !== 'ok') {
                 showToast('error', '能力调用被拒绝', resp.deny_reason || '');
                 return;
             }
             step.done = true; step.current = false; step.last_output = resp.output;
             if (step.operation_ref === 'cs.ticket.create') wt.ticket_id = resp.output.ticket_id;
+            if (step.operation_ref === 'cs.process.start') wt.process_instance_id = resp.output.process_instance_id;
+            if (step.operation_ref === 'cs.approval.submit') wt.approval_id = resp.output.approval_id;
             const nextIdx = wt.steps.findIndex(s => !s.done);
             if (nextIdx >= 0) {
                 wt.steps[nextIdx].current = true;
@@ -2349,6 +2500,12 @@
                 wt.status = 'done'; wt.display_phase = 'completed';
                 setDataFlowStep('audit');
                 setDataFlowStep('result');
+                if (wt.playbook_id === HARNESS_PLAYBOOK_SALES.playbook_id) {
+                    const b = EnterpriseRuntime.biz;
+                    b.stage = 'approval_pending';
+                    const dealEl = document.getElementById('executorKpiDeal');
+                    if (dealEl) dealEl.textContent = '审批 ' + (wt.approval_id || '—');
+                }
             }
             renderTaskPanelUi();
             renderHarnessDataFlow();
@@ -2360,18 +2517,51 @@
             if (idx >= 0) EnterpriseRuntime.dataFlowStep = Math.max(EnterpriseRuntime.dataFlowStep, idx);
         }
 
+        function getDataFlowNodes() {
+            if (EnterpriseRuntime.dataFlowMode === 'outward') return DATA_FLOW_NODES_OUTWARD;
+            if (EnterpriseRuntime.dataFlowMode === 'b2b_sales') return DATA_FLOW_NODES_B2B;
+            return DATA_FLOW_NODES;
+        }
+
         function renderHarnessDataFlow() {
             const stripIds = ['harnessDataFlowStrip', 'focusDataFlowStrip'];
+            const nodes = getDataFlowNodes();
             const di = EnterpriseRuntime.dataFlowStep;
-            const html = DATA_FLOW_NODES.map((n, i) => {
+            const html = nodes.map((n, i) => {
                 let cls = 'df-node border-border';
                 if (i < di) cls = 'df-node df-node-done border-success/40';
                 else if (i === di) cls = 'df-node df-node-active border-primary';
                 return '<span class="' + cls + '"><span class="font-medium">' + n.label + '</span>' +
                     '<span class="block text-[9px] text-text3">' + n.sub + '</span></span>' +
-                    (i < DATA_FLOW_NODES.length - 1 ? '<span class="df-arrow">→</span>' : '');
+                    (i < nodes.length - 1 ? '<span class="df-arrow">→</span>' : '');
             }).join('');
             stripIds.forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = html; });
+        }
+
+        function renderOutwardGatewayUi() {
+            const routesEl = document.getElementById('outwardGatewayRoutes');
+            if (routesEl) {
+                routesEl.innerHTML = HARNESS_OUTWARD_ROUTES.routes.map(r =>
+                    '<div class="p-2 rounded border border-border hover:border-success/40 cursor-pointer" onclick="routeOutwardMessage(\'' + r.channel_id + '\')">' +
+                    '<div class="font-medium">' + r.channel_id + '</div>' +
+                    '<div class="text-text3">' + r.type + ' → ' + r.default_agent + '</div></div>'
+                ).join('');
+            }
+            const flowEl = document.getElementById('outwardGatewayFlow');
+            if (flowEl && EnterpriseRuntime.dataFlowMode === 'outward') {
+                flowEl.innerHTML = DATA_FLOW_NODES_OUTWARD.map((n, i) => {
+                    const di = EnterpriseRuntime.dataFlowStep;
+                    let cls = i <= di ? (i === di ? 'df-node-active border-primary' : 'df-node-done border-success/40') : 'border-border';
+                    return '<span class="df-node ' + cls + '">' + n.label + '</span>' +
+                        (i < DATA_FLOW_NODES_OUTWARD.length - 1 ? '<span class="df-arrow">→</span>' : '');
+                }).join('');
+            }
+            const logEl = document.getElementById('outwardGatewayLog');
+            if (logEl) {
+                logEl.innerHTML = EnterpriseRuntime.outwardLog.length
+                    ? EnterpriseRuntime.outwardLog.map(l => '<div>' + l + '</div>').join('')
+                    : '等待演示… 点击渠道卡片或「演示飞书 IM 入站」';
+            }
         }
 
         function renderTaskPanelUi() {
@@ -2385,8 +2575,8 @@
                 const items = tasks.filter(t => t.display_phase === 'backlog' || (t.task_id !== EnterpriseRuntime.activeTaskId && t.status === 'open'));
                 el.innerHTML = items.length ? items.map(t =>
                     '<div class="p-2 rounded border border-border hover:border-primary/40 cursor-pointer" onclick="openWorkingTask(\'' + t.task_id + '\')">' +
-                    '<div class="font-medium">' + t.title.slice(0, 36) + '…</div>' +
-                    '<div class="text-text3 mt-0.5">' + t.task_id + ' · ' + t.priority + ' · ' + t.sla_label + '</div></div>'
+                    '<div class="font-medium">' + (t.title.length > 36 ? t.title.slice(0, 36) + '…' : t.title) + '</div>' +
+                    '<div class="text-text3 mt-0.5">' + t.task_id + ' · ' + (t.playbook_id || '—') + ' · ' + t.priority + '</div></div>'
                 ).join('') : '<div class="text-text3 p-2">暂无待办 · 点击「客诉升级链路」创建 WorkingTask</div>';
             };
             const renderCurrent = (el) => {
@@ -2408,7 +2598,7 @@
                 el.innerHTML =
                     '<div class="flex flex-wrap justify-between gap-2 mb-2">' +
                     '<div><div class="font-medium text-sm">' + wt.title + '</div>' +
-                    '<div class="text-text3">' + wt.task_id + ' · agent.' + wt.agent_id.replace('agent.', '') + ' · audit ' + (wt.audit_id || '—') + '</div></div>' +
+                    '<div class="text-text3">' + wt.task_id + ' · ' + wt.playbook_id + ' · agent.' + wt.agent_id.replace('agent.', '') + '</div></div>' +
                     '<span class="tag bg-warning/10 text-warning">' + wt.sla_label + '</span></div>' +
                     '<div class="p-2 bg-bg1 rounded mb-2 text-text2"><strong>Evidence：</strong>' +
                     (wt.business_context.evidence_refs || []).map(e => e.summary).join(' · ') + '</div>' +
@@ -2464,16 +2654,42 @@
                 '<div class="p-2 border-l-4 border-primary/40 bg-primary/5 rounded-r">' + (i + 1) + '. ' + a + '</div>'
             ).join('');
             if (todoCount) todoCount.textContent = bdActions.length + ' 项';
+            const kpiDeal = document.getElementById('executorKpiDeal');
+            const kpiDealBar = document.getElementById('executorKpiDealBar');
+            if (kpiDeal && b.stage) {
+                const stageMap = { idle: '待启动', strategy_confirmed: '策略确认', action_running: 'Playbook 执行中', approval_pending: '审批 ' + (b.quoteId || ''), attributed: '已归因验证' };
+                kpiDeal.textContent = stageMap[b.stage] || b.stage;
+                if (kpiDealBar) kpiDealBar.style.width = b.stage === 'attributed' ? '100%' : b.stage === 'approval_pending' ? '85%' : b.stage === 'action_running' ? '65%' : '40%';
+            }
             renderTaskPanelUi();
             renderHarnessDataFlow();
         }
 
         function demoCsEscalation() {
             resetRuntime(false);
-            EnterpriseRuntime.dataFlowStep = -1;
             const wt = escalateIntentToPipaw();
             openWorkingTask(wt.task_id);
             showToast('success', '客诉升级完成', 'WorkingTask ' + wt.task_id + ' 已进入 ΠPaw Task Panel');
+        }
+
+        function demoLtcPlaybook() {
+            resetRuntime(false);
+            EnterpriseRuntime.biz = { leadId: 'LT-2024', customerName: '华东某制造集团', quoteId: 'QT-2024-0612', stage: 'idle', amount: 1200, discount: 0.12, owner: '王磊', deadline: '6/14' };
+            const wt = dispatchSalesPlaybookTask({ actionId: 'ACT-0612-001' });
+            openWorkingTask(wt.task_id);
+            switchView(3);
+            showToast('success', 'LTC Playbook 已创建', '执行「执行当前步骤」完成 qualify → process → approval');
+        }
+
+        function demoOutwardGateway() {
+            resetRuntime(false);
+            const resp = routeOutwardMessage('feishu_im', '【飞书】客户 C-1001：订单 PO-8821 预计何时发货？');
+            if (resp.status === 'ok') {
+                openWorkingTask(resp.working_task.task_id);
+                setFocusRole('cs_agent');
+                switchView('value');
+                showToast('success', 'Outward Gateway', '飞书 IM → agent.cs_specialist · WorkingTask 已创建');
+            }
         }
         function getScenarioSteps(scenarioId) {
             if (scenarioId === 'scn-b2b-sales') return RUN_STEPS_B2B;
@@ -2558,9 +2774,10 @@
             const proj = PROJECTS.find(p => p.id === run.projectId);
             if (step.workflow === 'strategy_recommend') b.stage = 'strategy_confirmed';
             if (step.workflow === 'action_dispatch') {
-                b.stage = 'action_running'; b.quoteId = 'QT-2024-0612'; b.amount = 1200; b.discount = 0.12;
-                invokeCapability('cs.lead.qualify_lead', { lead_id: b.leadId, criteria_ref: 'b2b-v1' }, HARNESS_AGENT_SALES);
-                invokeCapability('cs.approval.submit', { template_id: 'quote_discount', payload: { amount: b.amount, discount: b.discount } }, HARNESS_AGENT_SALES);
+                const wt = dispatchSalesPlaybookTask({ actionId: 'ACT-0612-001' });
+                EnterpriseRuntime.activeTaskId = wt.task_id;
+                showToast('info', 'Action 已分派', 'BD WorkingTask 已创建 · 切换「执行助手」逐步执行 LTC Playbook');
+                if (!EnterpriseRuntime.autoTimer) switchView(3);
             }
             if (step.workflow === 'result_attribute') { b.stage = 'attributed'; b.amount = 1200; }
             if (step.workflow === 'result_attribute' && proj) {
@@ -2623,13 +2840,16 @@
             EnterpriseRuntime.workingTasks = [];
             EnterpriseRuntime.activeTaskId = null;
             EnterpriseRuntime.dataFlowStep = -1;
+            EnterpriseRuntime.dataFlowMode = 'cs_escalation';
             EnterpriseRuntime.lastAuditId = null;
+            EnterpriseRuntime.outwardLog = [];
             EnterpriseRuntime.pdca = { org: 'C', project: 'P' };
             EnterpriseRuntime.biz = { leadId: 'LT-2024', customerName: '华东某制造集团', quoteId: null, stage: 'idle', amount: 0, discount: 0, owner: '王磊', deadline: '6/14' };
             document.getElementById('btnAdvanceRun')?.classList.add('hidden');
             document.getElementById('btnAutoRun')?.classList.add('hidden');
             renderTaskPanelUi();
             renderHarnessDataFlow();
+            renderOutwardGatewayUi();
             renderExecutorPage();
             syncRuntimeUi();
             if (showMsg !== false) showToast('info', '已重置', '运行时状态已恢复初始');
@@ -2830,7 +3050,7 @@
                     '<div class="md:col-span-2"><div class="text-[10px] text-text3 mb-1">current · Playbook</div><div id="focusTaskCurrent"></div></div></div>');
             case 'data_flow':
                 return focusWidgetShell(id, '<div id="focusDataFlowStrip" class="flex flex-wrap items-center gap-1 mb-2"></div>' +
-                    '<div class="text-[10px] text-text3">对齐 intent_escalation API · pipaw_cs_agent_playbook · business_agent_roster</div>');
+                    '<div class="text-[10px] text-text3">模式：cs_escalation · outward · b2b_sales · 对齐 intent_escalation / outward_gateway / sales_playbook</div>');
             case 'platform':
                 return focusWidgetShell(id,
                     '<details class="text-xs text-text3"><summary class="cursor-pointer hover:text-primary">UAS 架构师 / IT 运行详情</summary>' +
@@ -4398,6 +4618,7 @@
             renderAdaptationLayersBar();
             renderDualLoops();
             renderHarnessDataFlow();
+            renderOutwardGatewayUi();
             renderAiosLoopBanner();
             renderAiosEngines();
             renderFocusBoard();
