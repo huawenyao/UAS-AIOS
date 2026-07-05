@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "playbooks": [
+    {
+      "playbook_id": "playbook.cs_complaint_v1",
+      "name": "客诉处理 SOP（VIP 交付延期）",
+      "steps": [
+        {
+          "step_id": "s1_profile",
+          "label": "1. 获取客户画像与历史工单摘要",
+          "operation_ref": "cs.customer.get_profile",
+          "payload_field": "customer_id"
+        },
+        {
+          "step_id": "s2_ticket",
+          "label": "2. 创建客服工单并绑定 SLA",
+          "operation_ref": "cs.ticket.create",
+          "payload_template": {
+            "subject": "VIP 客诉：交付延期跟进",
+            "priority": "high"
+          }
+        },
+        {
+          "step_id": "s3_escalate",
+          "label": "3. SLA 临近或无法自动结案时升级主管",
+          "operation_ref": "cs.ticket.escalate",
+          "optional": true
+        }
+      ]
+    }
+  ]
+}

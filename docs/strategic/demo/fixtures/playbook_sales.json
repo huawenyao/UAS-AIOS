@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "playbooks": [
+    {
+      "playbook_id": "playbook.sales_ltc_quote_v1",
+      "name": "B2B 线索到报价审批（LTC）",
+      "process_template_id": "sales_quote_approval",
+      "steps": [
+        {
+          "step_id": "s1_qualify",
+          "label": "1. 线索资格判定（lead_created → qualified）",
+          "operation_ref": "cs.lead.qualify_lead",
+          "payload_field": "lead_id"
+        },
+        {
+          "step_id": "s2_process",
+          "label": "2. 启动报价审批流程（qualified → quote_drafting）",
+          "operation_ref": "cs.process.start",
+          "payload_template": {
+            "template_id": "sales_quote_approval"
+          }
+        },
+        {
+          "step_id": "s3_approval",
+          "label": "3. 提交折扣审批（approval_pending）",
+          "operation_ref": "cs.approval.submit",
+          "payload_template": {
+            "template_id": "quote_discount"
+          }
+        }
+      ]
+    }
+  ]
+}

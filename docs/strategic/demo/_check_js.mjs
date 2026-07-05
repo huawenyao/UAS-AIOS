@@ -1,5 +1,10 @@
 import fs from 'fs';
-const html = fs.readFileSync('c:/Users/ranwu/XiaomiCloud/UAS-AIOS/docs/strategic/demo/ΠPaw_Enterprise_Demo.html', 'utf8');
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const htmlPath = path.join(__dirname, 'ΠPaw_Enterprise_Demo.html');
+const html = fs.readFileSync(htmlPath, 'utf8');
 const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
 const js = scripts[scripts.length - 1][1];
 try {

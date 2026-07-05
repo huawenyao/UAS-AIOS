@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "exported_at": "2026-07-05T14:52:36Z",
+  "source": "scripts/export_demo_harness_fixtures.py",
+  "validate_cmd": "python scripts/validate_pipaw_cs_agent.py validate"
+}

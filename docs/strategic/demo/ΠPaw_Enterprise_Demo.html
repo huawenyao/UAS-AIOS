@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIOS 企业智能经营操作系统 Demo · 智慧闭环 / 六大引擎 / 角色工作台</title>
+    <title>ΠPaw 场景套件 Demo · 岗位 Agent · 90天可验收 ROI</title>
     <!-- 引入外部资源 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -158,6 +158,38 @@
             .entity-pill {
                 @apply px-2 py-1 rounded-md border text-[10px] font-medium;
             }
+            .adapt-layer {
+                @apply p-2 rounded-lg border border-border text-center transition-all cursor-default;
+            }
+            .adapt-layer-active {
+                @apply border-primary bg-primary/10 ring-1 ring-primary/20 font-medium text-primary;
+            }
+            .flow-io-card {
+                @apply p-3 rounded-lg border border-border hover:border-primary/30 transition-all;
+            }
+            .dual-loop-track {
+                @apply flex flex-wrap gap-1 text-[10px] items-center;
+            }
+            .dual-loop-step {
+                @apply px-1.5 py-0.5 rounded bg-bg1 text-text2;
+            }
+            .dual-loop-step-active {
+                @apply bg-primary text-white;
+            }
+            .df-node { @apply px-2 py-1 rounded border text-[10px] transition-all; }
+            .df-node-active { @apply border-primary bg-primary/10 text-primary font-medium; }
+            .df-node-done { @apply border-success/40 bg-success/5 text-success; }
+            .df-arrow { @apply text-text3 text-[10px]; }
+            .tp-step-done { @apply border-success/30 bg-success/5; }
+            .tp-step-current { @apply border-primary bg-primary/5 ring-1 ring-primary/20; }
+            .cap-result { @apply mt-1 p-2 rounded bg-bg1 font-mono text-[10px] text-text2 max-h-24 overflow-y-auto; }
+            .commercial-step { @apply flex flex-col items-center flex-1 min-w-[56px] text-center; }
+            .commercial-step-dot { @apply w-8 h-8 rounded-full border-2 border-border bg-white text-[10px] flex items-center justify-center font-medium text-text3 transition-all; }
+            .commercial-step-active .commercial-step-dot { @apply border-primary bg-primary text-white scale-110; }
+            .commercial-step-done .commercial-step-dot { @apply border-success bg-success/15 text-success; }
+            .kit-card { @apply p-4 rounded-xl border-2 border-border bg-white cursor-pointer transition-all hover:border-primary/40; }
+            .kit-card-selected { @apply border-primary bg-primary/5 ring-2 ring-primary/20; }
+            .integration-check-done { @apply border-success/40 bg-success/5; }
         }
 
         /* 暗黑模式样式 */
@@ -361,37 +393,34 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center space-x-2 min-w-0">
-                <div class="text-primary text-2xl font-bold shrink-0">AIOS</div>
+                <div class="text-primary text-2xl font-bold shrink-0">ΠPaw</div>
                 <div class="hidden lg:block text-text3 text-xs leading-tight">
-                    <div>企业智能经营操作系统</div>
-                    <div class="text-[10px] mt-0.5 text-text3/80">数据感知 → 智能策略 → 精准行动 → 结果归因 → 策略进化</div>
+                    <div>岗位 Agent 场景套件 · 嵌入 CRM/OA/IM</div>
+                    <div class="text-[10px] mt-0.5 text-text3/80">选场景 → 证价值 → 连系统 → 跑试点 → 验收扩面</div>
                 </div>
             </div>
 
-            <!-- L6 交互层：智慧闭环 · 三角色工作台 · 组织/策略库 · 系统架构 -->
+            <!-- 商业叙事：场景中心 · 一线工作台 · 管理看板 · IT交付 -->
             <div class="flex flex-wrap items-center justify-center gap-1 max-w-4xl">
-                <button id="tab0" onclick="switchView('value')" class="nav-pill nav-pill-active" title="智慧闭环主控台 · 五大实体 · 六大引擎">
-                    <i class="fa fa-refresh mr-0 md:mr-1"></i><span class="hidden sm:inline">智慧闭环</span>
+                <button id="tab0" onclick="switchView('commercial')" class="nav-pill nav-pill-active" title="场景中心 · 选场景证价值连系统">
+                    <i class="fa fa-cube mr-0 md:mr-1"></i><span class="hidden sm:inline">场景中心</span>
                 </button>
                 <span class="text-border hidden sm:inline">|</span>
                 <div class="flex space-x-0.5 bg-bg1 rounded-lg p-0.5">
-                    <button id="tab1" onclick="switchView(1)" class="nav-pill" title="L6 · 经营驾驶舱（CEO/BG）">
-                        <i class="fa fa-dashboard mr-0 md:mr-1"></i><span class="hidden sm:inline">经营驾驶舱</span>
+                    <button id="tab3" onclick="switchView(3)" class="nav-pill" title="一线工作台 · Playbook 执行">
+                        <i class="fa fa-bolt mr-0 md:mr-1"></i><span class="hidden sm:inline">一线工作台</span>
                     </button>
-                    <button id="tab2" onclick="switchView(2)" class="nav-pill" title="L6 · 策略工作台（BU/部门）">
-                        <i class="fa fa-sitemap mr-0 md:mr-1"></i><span class="hidden sm:inline">策略工作台</span>
-                    </button>
-                    <button id="tab3" onclick="switchView(3)" class="nav-pill" title="L6 · 个人工作台（一线员工）">
-                        <i class="fa fa-user mr-0 md:mr-1"></i><span class="hidden sm:inline">个人工作台</span>
+                    <button id="tab2" onclick="switchView(2)" class="nav-pill" title="管理看板 · 过程与异常">
+                        <i class="fa fa-dashboard mr-0 md:mr-1"></i><span class="hidden sm:inline">管理看板</span>
                     </button>
                 </div>
                 <span class="text-border hidden md:inline">|</span>
                 <div class="flex space-x-0.5 bg-bg1 rounded-lg p-0.5">
-                    <button id="tab4" onclick="switchView('org')" class="nav-pill" title="L3 组织模型 · OMTU/PMTU">
-                        <i class="fa fa-building-o mr-0 md:mr-1"></i><span class="hidden sm:inline">组织模型</span>
+                    <button id="tab-more" onclick="switchView('value')" class="nav-pill text-[10px]" title="经营闭环 · 战略扩展">
+                        <i class="fa fa-refresh mr-0 md:mr-1"></i><span class="hidden md:inline">经营闭环</span>
                     </button>
-                    <button id="tab5" onclick="switchView('project')" class="nav-pill" title="策略库 · 战役与 SOP">
-                        <i class="fa fa-book mr-0 md:mr-1"></i><span class="hidden sm:inline">策略库</span>
+                    <button id="tab-platform" onclick="switchView('platform')" class="nav-pill text-[10px]" title="IT 交付 · 架构与集成">
+                        <i class="fa fa-plug mr-0 md:mr-1"></i><span class="hidden md:inline">IT 交付</span>
                     </button>
                 </div>
             </div>
@@ -399,13 +428,10 @@
             <div class="flex items-center space-x-4">
                 <!-- 全局搜索框 -->
                 <div class="relative hidden md:block">
-                    <input type="text" placeholder="搜索 Strategy、Action、SOP、归因…" class="w-64 pl-10 pr-4 py-1.5 rounded-lg border border-border bg-bg1 text-sm focus:outline-none focus:border-primary transition-colors">
+                    <input type="text" placeholder="搜索场景套件、Playbook、集成…" class="w-64 pl-10 pr-4 py-1.5 rounded-lg border border-border bg-bg1 text-sm focus:outline-none focus:border-primary transition-colors">
                     <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-text3"></i>
                 </div>
                 <!-- 导出按钮 -->
-                <button class="text-text2 hover:text-primary transition-all px-2 py-1 rounded hover:bg-bg1 text-xs hidden md:inline" onclick="switchView('platform')" title="AIOS 六层架构 · 六大引擎 · UAS 底座">
-                    <i class="fa fa-cog mr-1"></i>系统架构
-                </button>
                 <button class="text-text2 hover:text-primary transition-all px-2 py-1 rounded hover:bg-bg1" onclick="showToast('info', '导出功能', '正在准备导出数据，请稍候...')">
                     <i class="fa fa-download text-lg"></i>
                 </button>
@@ -439,20 +465,104 @@
                 <span class="text-text2 hidden md:inline" id="stripRun">暂无进行中的闭环实例</span>
             </div>
             <div id="runtimeStripPipeline" class="flex flex-wrap items-center gap-1 text-[10px]"></div>
-            <button onclick="switchView('value')" class="text-primary hover:underline shrink-0">智慧闭环 →</button>
+            <button onclick="switchView('commercial')" class="text-primary hover:underline shrink-0" id="runtimeStripCta">场景中心 →</button>
         </div>
     </div>
 
     <!-- 内容区域 -->
     <main class="container mx-auto px-4 py-6">
-        <!-- 页面0：智慧闭环主控台（五大实体 · 六大引擎 · 角色自适应） -->
-        <div id="page-value" class="space-y-4">
-            <!-- AIOS 核心理念：断裂链 vs 修复链 -->
+        <!-- 页面：场景中心（商业叙事主入口 · 场景价值产品化闭环） -->
+        <div id="page-commercial" class="space-y-4">
+            <div class="bg-gradient-to-r from-primary/12 via-white to-success/10 rounded-xl p-5 card-shadow border border-primary/15">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div class="max-w-2xl">
+                        <div class="text-xs text-primary font-medium mb-1"><i class="fa fa-shopping-bag mr-1"></i>可售卖场景套件 · 90 天 PoC 可验收</div>
+                        <h1 class="text-xl md:text-2xl font-semibold" id="commercialHeadline">选一个痛点场景，跑通商业闭环</h1>
+                        <p class="text-sm text-text2 mt-2">不替换 CRM/ITSM/OA，在其之上用<strong class="text-text1">岗位 Playbook + 可审计 cs.*</strong>交付可量化 ROI。平台能力折叠在「IT 交付」视图。</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 shrink-0">
+                        <button class="primary-btn text-xs" onclick="runCommercialPoC()"><i class="fa fa-play mr-1"></i>一键跑试点</button>
+                        <button class="action-btn border border-border text-xs bg-white" onclick="generateAcceptanceReport()"><i class="fa fa-file-text-o mr-1"></i>生成验收报告</button>
+                    </div>
+                </div>
+                <div id="commercialLoopTrack" class="flex flex-wrap justify-between items-start gap-2 mt-5 pt-4 border-t border-border/60"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-4">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="bg-white rounded-xl p-4 card-shadow">
+                        <div class="font-medium text-sm mb-3"><i class="fa fa-th-large text-primary mr-2"></i>场景套件 SKU</div>
+                        <div id="commercialKitCards" class="space-y-3"></div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 card-shadow">
+                        <div class="font-medium text-sm mb-2"><i class="fa fa-calculator text-success mr-2"></i>ROI 测算器</div>
+                        <div class="text-[10px] text-text3 mb-2">采购委员会语言 · 基于套件默认参数可调价</div>
+                        <div id="commercialRoiInputs" class="space-y-2 text-xs mb-3"></div>
+                        <div id="commercialRoiResult" class="p-3 rounded-lg bg-success/5 border border-success/20 text-sm"></div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-white rounded-xl p-4 card-shadow">
+                        <div class="flex flex-wrap justify-between gap-2 mb-3">
+                            <div class="font-medium text-sm"><i class="fa fa-plug text-warning mr-2"></i>Day-1 集成清单</div>
+                            <span class="text-[10px] text-text3" id="commercialIntegrationProgress">0/0 必填项</span>
+                        </div>
+                        <div id="commercialIntegrationList" class="space-y-2 text-xs"></div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 card-shadow border border-primary/10">
+                        <div class="font-medium text-sm mb-2"><i class="fa fa-bullseye text-primary mr-2"></i>痛点 → 价值承诺</div>
+                        <div id="commercialPainValue" class="grid md:grid-cols-2 gap-3 text-xs"></div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 card-shadow">
+                        <div class="font-medium text-sm mb-2"><i class="fa fa-check-square-o text-secondary mr-2"></i>PoC 验收标准</div>
+                        <div id="commercialAcceptanceList" class="space-y-1 text-xs"></div>
+                        <div id="commercialAcceptanceReport" class="hidden mt-3 p-3 bg-bg1 rounded font-mono text-[10px] max-h-[200px] overflow-y-auto whitespace-pre-wrap"></div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 card-shadow">
+                        <div class="font-medium text-sm mb-2"><i class="fa fa-level-up text-success mr-2"></i>扩面路径</div>
+                        <div id="commercialExpansion" class="text-xs text-text2"></div>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <button class="primary-btn text-xs" onclick="switchView(3)"><i class="fa fa-external-link mr-1"></i>进入一线工作台执行</button>
+                            <button class="action-btn border border-border text-xs" onclick="switchView('platform')">查看 IT 交付视图</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面：经营闭环（战略扩展 · 第二阶段） -->
+        <div id="page-value" class="space-y-4 hidden">
+            <!-- 四适配层 + 产品矩阵条 -->
             <div class="bg-white rounded-xl p-4 card-shadow border border-border/60">
                 <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
                     <div>
-                        <div class="text-sm font-medium">AIOS 核心命题</div>
-                        <div class="text-xs text-text2 mt-1 max-w-3xl">企业最宝贵的资产不是数据，是<strong class="text-text1">决策智慧</strong> — 「为什么做、做了什么、效果如何、下次怎么改」。AIOS 让这条链从人脑隐含 → 系统显式 → 机器可学习。</div>
+                        <div class="text-sm font-medium">ΠPaw 产品承载 · 1核 + 四适配 + 三层应用 + N套件</div>
+                        <div class="text-xs text-text2 mt-1 max-w-3xl">企业经营逻辑自上而下贯通：战略意图 → 组织/管理/业务模式适配 → 场景套件执行 → Agent 经 <code class="text-[10px] bg-bg1 px-1 rounded">cs.*</code> 落地 → 双闭环价值核算与 SOP 沉淀。</div>
+                    </div>
+                    <div class="flex flex-wrap gap-1 text-[10px]">
+                        <span class="tag bg-secondary/10 text-secondary">UAS Kernel</span>
+                        <span class="tag bg-primary/10 text-primary">对内价值流</span>
+                        <span class="tag bg-success/10 text-success">对外价值流</span>
+                    </div>
+                </div>
+                <div id="adaptationLayersBar" class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3"></div>
+                <div class="grid md:grid-cols-2 gap-3 text-[10px]">
+                    <div class="p-2.5 rounded-lg bg-primary/5 border border-primary/15">
+                        <span class="text-primary font-medium">业务场景闭环</span>
+                        <div id="dualLoopBusiness" class="dual-loop-track mt-1.5"></div>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-secondary/5 border border-secondary/15">
+                        <span class="text-secondary font-medium">管理策略闭环</span>
+                        <div id="dualLoopMgmt" class="dual-loop-track mt-1.5"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- ΠPaw 核心理念：断裂链 vs 修复链 -->
+            <div class="bg-white rounded-xl p-4 card-shadow border border-border/60">
+                <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+                    <div>
+                        <div class="text-sm font-medium">ΠPaw 核心命题</div>
+                        <div class="text-xs text-text2 mt-1 max-w-3xl">企业最宝贵的资产不是数据，是<strong class="text-text1">决策智慧</strong> — 「为什么做、做了什么、效果如何、下次怎么改」。ΠPaw 让这条链从人脑隐含 → 系统显式 → Agent 可学习、可审计、可进化。</div>
                     </div>
                     <div class="flex flex-wrap gap-1 text-[10px]">
                         <span class="entity-pill border-primary/30 bg-primary/5 text-primary">Objective</span>
@@ -468,7 +578,7 @@
                         <span class="text-danger font-medium">断裂链（今天）</span>：经营分析会 → 飞书 Todo → 执行黑箱 → 结果无归因 → 智慧流失
                     </div>
                     <div class="p-2.5 rounded-lg bg-success/5 border border-success/15 text-text2">
-                        <span class="text-success font-medium">AIOS 闭环</span>：感知引擎检测 → 归因引擎分析 → 策略引擎推荐 → 编排引擎分派 → 7 天自动验证 → SOP 沉淀
+                        <span class="text-success font-medium">ΠPaw 双闭环</span>：感知引擎检测 → 归因分析 → 策略推荐 → Agent 编排分派 → 7 天验证 → SOP 沉淀 · 同步驱动管理策略迭代
                     </div>
                 </div>
             </div>
@@ -482,7 +592,9 @@
                     </div>
                     <div class="flex flex-wrap gap-2 shrink-0">
                         <button type="button" class="action-btn border border-border text-xs bg-white" onclick="toggleFocusCustomize()"><i class="fa fa-sliders mr-1"></i>自定义模块</button>
-                        <button class="primary-btn text-xs" onclick="demoFullChain()"><i class="fa fa-play mr-1"></i>演示智慧闭环</button>
+                        <button class="primary-btn text-xs" onclick="demoFullChain()"><i class="fa fa-play mr-1"></i>演示 PAC 闭环</button>
+                        <button class="action-btn border border-secondary text-secondary text-xs bg-white" onclick="demoCsEscalation()"><i class="fa fa-headphones mr-1"></i>客诉升级链路</button>
+                        <button class="action-btn border border-success text-success text-xs bg-white" onclick="demoOutwardGateway()"><i class="fa fa-globe mr-1"></i>对外会话路由</button>
                         <button class="action-btn border border-border text-xs bg-white" onclick="resetRuntime()">重置</button>
                     </div>
                 </div>
@@ -509,8 +621,8 @@
             <div class="bg-gradient-to-r from-primary/10 via-secondary/5 to-primary/5 rounded-lg p-4 card-shadow">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                        <div class="text-lg font-medium">组织模型 · OMTU/PMTU 与责权配置</div>
-                        <div class="text-xs text-text2 mt-1">L3 配置层：定义谁在什么层级对哪些 Objective 负责 · 编排引擎任务分派的组织骨架 · ΠPaw Agent 编制挂载点</div>
+                        <div class="text-lg font-medium">组织适配层 · OMTU/PMTU 与责权配置</div>
+                        <div class="text-xs text-text2 mt-1">四适配引擎之二：定义谁在什么层级对哪些 Objective 负责 · Agent 编制挂载点 · 支撑战略→部门→个人的目标拆解</div>
                     </div>
                     <div class="flex gap-2 text-xs">
                         <span class="tag bg-blue-100 text-blue-800">L1 SelfPaw</span>
@@ -658,12 +770,13 @@
         <!-- 页面6：系统架构（AIOS 六层 + 六大引擎 + UAS 底座） -->
         <div id="page-kernel" class="space-y-4 hidden">
             <div class="bg-bg1 border border-border rounded-lg p-3 text-xs text-text2 flex flex-wrap justify-between gap-2">
-                <span><i class="fa fa-lock text-primary mr-1"></i><strong>系统架构视图</strong> — L1~L6 全景 + 六大 AI 引擎运行态；经营者日常使用「智慧闭环」三工作台。</span>
-                <button class="text-primary hover:underline" onclick="switchView('value')">返回智慧闭环 →</button>
+                <span><i class="fa fa-plug text-primary mr-1"></i><strong>IT 交付视图</strong> — cs.* 能力目录 · Outward Gateway · UAS 底座（实施/架构师）</span>
+                <button class="text-primary hover:underline" onclick="switchView('commercial')">返回场景中心 →</button>
             </div>
             <div class="bg-gradient-to-r from-primary/15 to-secondary/10 rounded-lg p-4 card-shadow border border-primary/10">
-                <div class="text-lg font-medium">AIOS 六层架构 · 从数据底座到角色化界面</div>
-                <div class="text-xs text-text2 mt-1">L1 集成（CRM/飞书/BPMS）→ L2 数据（四大金刚宽表）→ L3 配置（组织/指标/策略规则）→ L4 模型（五大实体）→ L5 智能（六大引擎）→ L6 交互（三工作台）</div>
+                <div class="text-lg font-medium">ΠPaw 工程架构 · 1核3层N套件 + 六层栈</div>
+                <div class="text-xs text-text2 mt-1">UAS Kernel（I,K,R,A,S,G,E,Π）→ L1 集成 → L2 数据 → L3 四适配配置 → L4 五大实体 → L5 六大引擎 → L6 三层应用</div>
+                <div id="productStackBar" class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-3 text-[10px]"></div>
             </div>
             <div class="bg-white rounded-lg p-4 card-shadow">
                 <div class="font-medium mb-3 text-sm"><i class="fa fa-cogs text-primary mr-2"></i>L5 智能层 · 六大 AI 引擎矩阵</div>
@@ -702,6 +815,16 @@
                     </table>
                 </div>
             </div>
+            <div class="bg-white rounded-lg p-4 card-shadow border border-success/20">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div class="font-medium text-sm"><i class="fa fa-globe text-success mr-2"></i>Outward Gateway · PP-002 对外会话路由</div>
+                    <button class="primary-btn text-xs" onclick="demoOutwardGateway()"><i class="fa fa-play mr-1"></i>演示飞书 IM 入站</button>
+                </div>
+                <div class="text-xs text-text2 mb-2">对齐 <code class="bg-bg1 px-1 rounded">outward_gateway_routes.sample.json</code> · 渠道消息 → Intent → Agent 路由 → WorkingTask</div>
+                <div id="outwardGatewayRoutes" class="grid md:grid-cols-3 gap-2 mb-3 text-xs"></div>
+                <div id="outwardGatewayFlow" class="flex flex-wrap items-center gap-1 mb-2"></div>
+                <div id="outwardGatewayLog" class="p-2 bg-bg1 rounded font-mono text-[10px] text-text2 max-h-[120px] overflow-y-auto">等待演示…</div>
+            </div>
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12 lg:col-span-6 bg-white rounded-lg p-4 card-shadow max-h-[200px] overflow-y-auto">
                     <div class="font-medium mb-2 text-sm">实时审计尾迹（当前运行）</div>
@@ -739,7 +862,7 @@
             </div>
         </div>
 
-        <!-- 页面1：经营驾驶舱（L6 · CEO/BG） -->
+        <!-- 页面1：战略罗盘（L6 · CEO/BG） -->
         <div id="page1" class="space-y-6 hidden">
             <!-- 层级说明卡片 -->
             <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-4 mb-2">
@@ -749,7 +872,7 @@
                     </div>
                     <div class="flex-1">
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
-                            <div class="text-lg font-medium">经营驾驶舱 · 四大金刚与战略 Objective</div>
+                        <div class="text-lg font-medium">战略罗盘 · 四大金刚与战略 Objective</div>
                             <div class="flex gap-1 text-xs">
                                 <button onclick="switchView('org')" class="action-btn text-primary border border-primary/20">组织视图</button>
                                 <button onclick="switchView('value')" class="action-btn text-primary border border-primary/20">价值流工作台</button>
@@ -1095,7 +1218,7 @@
             </div>
         </div>
 
-        <!-- 页面2：策略工作台（L6 · BU/部门负责人） -->
+        <!-- 页面2：管理驾驶舱（L6 · BU/部门负责人） -->
         <div id="page2" class="space-y-6 hidden">
             <!-- 层级说明卡片 -->
             <div class="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-lg p-4 mb-2">
@@ -1105,7 +1228,7 @@
                     </div>
                     <div class="flex-1">
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
-                            <div class="text-lg font-medium">策略工作台 · Strategy 制定与 Action 编排</div>
+                            <div class="text-lg font-medium">管理驾驶舱 · 目标承接与过程管控</div>
                             <button onclick="jumpToRuntimeSlice('value')" class="text-xs primary-btn"><i class="fa fa-play-circle mr-1"></i>智慧闭环控制台</button>
                         </div>
                         <div class="grid grid-cols-5 gap-4 mt-2">
@@ -1185,32 +1308,32 @@
                         <i class="fa fa-list-ul text-warning mr-2"></i> 待办任务
                         <span class="ml-2 text-xs bg-danger text-white rounded-full px-1.5 py-0.5">8个</span>
                     </div>
-                    <div class="space-y-2 max-h-[250px] overflow-y-auto pr-2">
-                        <div class="p-3 bg-danger/5 rounded-md border border-danger/20 flex items-center justify-between">
+                    <div class="space-y-2 max-h-[250px] overflow-y-auto pr-2" id="managerTodoList">
+                        <div class="p-3 bg-danger/5 rounded-md border border-danger/20 flex items-center justify-between cursor-pointer" onclick="demoLtcPlaybook()">
                             <div class="flex-1">
-                                <div class="text-sm font-medium">解决生产线A频繁故障问题</div>
-                                <div class="text-xs text-text3">截止时间：今天 18:00 | 优先级：高</div>
+                                <div class="text-sm font-medium">LT-2024 大单折扣审批（G3）</div>
+                                <div class="text-xs text-text3">截止时间：6/14 | 优先级：高 · Action ACT-0612-001</div>
+                            </div>
+                            <button class="action-btn text-primary ml-2">执行</button>
+                        </div>
+                        <div class="p-3 bg-warning/5 rounded-md border border-warning/20 flex items-center justify-between cursor-pointer" onclick="demoCsEscalation()">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">VIP 客诉 C-1001 交付延期</div>
+                                <div class="text-xs text-text3">SLA：今日内 | 待升级 ΠPaw 客服 Agent</div>
                             </div>
                             <button class="action-btn text-primary ml-2">处理</button>
                         </div>
-                        <div class="p-3 bg-warning/5 rounded-md border border-warning/20 flex items-center justify-between">
+                        <div class="p-3 bg-bg1 rounded-md flex items-center justify-between cursor-pointer" onclick="demoFullChain()">
                             <div class="flex-1">
-                                <div class="text-sm font-medium">准备Q2季度汇报材料</div>
-                                <div class="text-xs text-text3">截止时间：6月10日 | 优先级：中</div>
+                                <div class="text-sm font-medium">PAC Q2 Margin 异常归因复核</div>
+                                <div class="text-xs text-text3">EVT-MRG-0612 · 策略 STR-PAC-0612-A</div>
                             </div>
-                            <button class="action-btn text-primary ml-2">处理</button>
+                            <button class="action-btn text-primary ml-2">推进</button>
                         </div>
                         <div class="p-3 bg-bg1 rounded-md flex items-center justify-between">
                             <div class="flex-1">
-                                <div class="text-sm font-medium">评审新业务流程方案</div>
-                                <div class="text-xs text-text3">截止时间：6月12日 | 优先级：中</div>
-                            </div>
-                            <button class="action-btn text-primary ml-2">处理</button>
-                        </div>
-                        <div class="p-3 bg-bg1 rounded-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">半年度人才盘点</div>
-                                <div class="text-xs text-text3">截止时间：6月20日 | 优先级：低</div>
+                                <div class="text-sm font-medium">TR 赛道深耕 SOP 沉淀评审</div>
+                                <div class="text-xs text-text3">进化引擎 ChangeSet · 待制度组确认</div>
                             </div>
                             <button class="action-btn text-primary ml-2">处理</button>
                         </div>
@@ -1337,9 +1460,9 @@
                             <tbody class="divide-y divide-border">
                                 <tr class="hover:bg-bg1/50 transition-all">
                                     <td class="p-2 text-xs">🔴 高</td>
-                                    <td class="p-2 text-xs">生产线A故障频发，本月已停产3次</td>
-                                    <td class="p-2 text-xs">张工</td>
-                                    <td class="p-2 text-xs text-danger">今天 18:00</td>
+                                    <td class="p-2 text-xs">PAC Q2 Margin 下跌 3.2pp，TR 赛道缺口 2.3 亿</td>
+                                    <td class="p-2 text-xs">张华东</td>
+                                    <td class="p-2 text-xs text-danger">6/14</td>
                                     <td class="p-2 text-xs"><span class="tag bg-danger/10 text-danger">待处理</span></td>
                                     <td class="p-2 text-xs">
                                         <button class="text-xs text-primary hover:text-primaryHover">跟进</button>
@@ -1417,8 +1540,8 @@
                                 <div class="text-text3">进度：70% | 截止：6月30日</div>
                             </div>
                             <div class="p-2 bg-white rounded text-xs">
-                                <div class="font-medium mb-1">生产线升级改造</div>
-                                <div class="text-text3">进度：40% | 截止：7月15日</div>
+                                <div class="font-medium mb-1">华东 Q2 销售缺口攻坚</div>
+                                <div class="text-text3">进度：58% | 截止：6月30日 · LT-2024</div>
                             </div>
                         </div>
                         <button class="w-full mt-3 text-xs py-1 border border-green-200 rounded text-green-700 hover:bg-green-100 transition-all">
@@ -1473,16 +1596,16 @@
             </div>
         </div>
 
-        <!-- 页面3：个人工作台（L6 · 一线员工/BD） -->
+        <!-- 页面3：一线工作台（Playbook 执行 · cs.* 审计） -->
         <div id="page3" class="space-y-6 hidden">
             <!-- 层级说明卡片 -->
             <div class="bg-gradient-to-r from-success/10 to-primary/10 rounded-lg p-4 mb-2">
                 <div class="flex items-start">
                     <div class="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center text-success mr-3 flex-shrink-0">
-                        <i class="fa fa-user-o text-xl"></i>
+                        <i class="fa fa-bolt text-xl"></i>
                     </div>
                     <div>
-                        <div class="text-lg font-medium mb-1">个人工作台 · Action 执行与结果反馈</div>
+                        <div class="text-lg font-medium mb-1">一线工作台 · 岗位 Playbook 逐步执行</div>
                         <div class="grid grid-cols-5 gap-4 mt-2">
                             <div class="bg-white/50 rounded p-2 text-sm">
                                 <i class="fa fa-check-square-o text-primary mr-1"></i> 待办任务清晰可执行
@@ -1501,66 +1624,47 @@
                             </div>
                         </div>
                         <div class="text-xs text-text2 mt-2">
-                            每个 Action 关联 Strategy 与 Objective · 执行完成触发归因验证 · ΠPaw 个人助手提供 SOP 与上下文
+                            场景套件落地态：Task Panel 结构化任务 · Playbook 步骤 → cs.* · 全链路 audit_id · 从<a class="text-primary hover:underline cursor-pointer" onclick="switchView('commercial')">场景中心</a>一键跑试点
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 个人工作面板 -->
+            <!-- Harness 数据流 + Task Panel（对齐 configs/ + schemas/） -->
+            <div class="bg-white rounded-lg p-4 card-shadow border border-primary/10">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div class="font-medium text-sm"><i class="fa fa-exchange text-primary mr-2"></i>Harness 业务数据流
+                        <span id="harnessFixtureBadge" class="ml-2 tag bg-bg1 text-text3 font-normal">fixtures: 内嵌</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <button class="primary-btn text-xs" onclick="demoCsEscalation()"><i class="fa fa-level-up mr-1"></i>SelfPaw → ΠPaw 客诉升级</button>
+                        <button class="action-btn border border-primary text-primary text-xs" onclick="demoFromRuntimeFixtures()"><i class="fa fa-database mr-1"></i>加载真实运行时</button>
+                        <button class="action-btn border border-secondary text-secondary text-xs" onclick="demoLtcPlaybook()"><i class="fa fa-handshake-o mr-1"></i>LTC 报价 Playbook</button>
+                        <button class="action-btn border border-success text-success text-xs" onclick="demoOutwardGateway()"><i class="fa fa-globe mr-1"></i>Outward Gateway</button>
+                        <button class="action-btn border border-border text-xs" onclick="openWorkingTask(EnterpriseRuntime.activeTaskId)">打开当前任务</button>
+                    </div>
+                </div>
+                <div id="harnessDataFlowStrip" class="flex flex-wrap items-center gap-1 mb-3"></div>
+                <div class="grid lg:grid-cols-3 gap-4">
+                    <div class="lg:col-span-1">
+                        <div class="text-xs font-medium mb-2 text-text3">待办 backlog · WorkingTask</div>
+                        <div id="executorBacklog" class="space-y-2 text-xs max-h-[320px] overflow-y-auto"></div>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <div class="text-xs font-medium mb-2 text-text3">【当前任务】Task Panel · Playbook 步骤 → cs.*</div>
+                        <div id="executorCurrentTask" class="text-xs min-h-[200px]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 个人工作面板（BD 静态 + 动态 KPI） -->
             <div class="grid grid-cols-3 gap-4">
-                <!-- 今日待办 -->
                 <div class="bg-white rounded-lg p-5 card-shadow">
                     <div class="font-medium mb-4 flex items-center">
-                        <i class="fa fa-calendar-check-o text-primary mr-2"></i> 今日待办任务
-                        <span class="ml-2 text-xs bg-danger text-white rounded-full px-1.5 py-0.5">6个</span>
+                        <i class="fa fa-calendar-check-o text-primary mr-2"></i> BD 行动待办
+                        <span class="ml-2 text-xs bg-primary/10 text-primary rounded-full px-1.5 py-0.5" id="executorTodoCount">—</span>
                     </div>
-                    <div class="space-y-2 max-h-[280px] overflow-y-auto pr-2">
-                        <div class="p-3 border-l-4 border-danger bg-danger/5 rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">维修生产线A故障 <span class="text-xs bg-danger/10 text-danger tag ml-1">紧急</span></div>
-                                <div class="text-xs text-text3">预计耗时：2小时 | 要求：今天18:00前完成</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                        <div class="p-3 border-l-4 border-warning bg-warning/5 rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">提交上月设备维护报告 <span class="text-xs bg-warning/10 text-warning tag ml-1">重要</span></div>
-                                <div class="text-xs text-text3">预计耗时：1小时 | 要求：今天12:00前完成</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                        <div class="p-3 border-l-4 border-success bg-success/5 rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">参加10:00生产部门周会</div>
-                                <div class="text-xs text-text3">预计耗时：1小时 | 会议号：123456</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                        <div class="p-3 border-l-4 border-border rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">巡检生产线B设备状态</div>
-                                <div class="text-xs text-text3">预计耗时：30分钟 | 要求：今天16:00前完成</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                        <div class="p-3 border-l-4 border-border rounded-r-md flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium">提交本周采购申请</div>
-                                <div class="text-xs text-text3">预计耗时：30分钟 | 要求：今天17:00前完成</div>
-                            </div>
-                            <input type="checkbox" class="w-4 h-4 ml-2">
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-border flex justify-between items-center">
-                        <div class="text-xs text-text2">今日完成率：0%</div>
-                        <div class="flex space-x-2">
-                            <button class="text-xs action-btn text-primary">
-                                <i class="fa fa-magic mr-1"></i> AI排程
-                            </button>
-                            <button class="text-xs action-btn text-primary">同步日历</button>
-                        </div>
-                    </div>
+                    <div id="executorBdTodos" class="space-y-2 max-h-[200px] overflow-y-auto pr-2 text-xs"></div>
                 </div>
 
                 <!-- 绩效进度 -->
@@ -1569,40 +1673,40 @@
                         <i class="fa fa-line-chart text-success mr-2"></i> 个人绩效进度
                     </div>
                     <div id="personalChart" class="w-full h-[120px] mb-4"></div>
-                    <div class="space-y-3">
+                    <div class="space-y-3" id="executorKpiBars">
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-sm">设备完好率≥99%</span>
-                                <span class="text-xs text-success">当前：99.2%</span>
+                                <span class="text-sm">季度签约额目标 3000 万</span>
+                                <span class="text-xs text-warning" id="executorKpiRevenue">当前：2180 万</span>
                             </div>
                             <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
-                                <div class="h-full bg-success rounded-full" style="width: 99.2%"></div>
+                                <div class="h-full bg-warning rounded-full" id="executorKpiRevenueBar" style="width: 72.7%"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-sm">故障响应时间≤30分钟</span>
-                                <span class="text-xs text-success">当前：22分钟</span>
+                                <span class="text-sm">LT-2024 大单推进</span>
+                                <span class="text-xs text-primary" id="executorKpiDeal">报价审批中</span>
                             </div>
                             <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
-                                <div class="h-full bg-success rounded-full" style="width: 90%"></div>
+                                <div class="h-full bg-primary rounded-full" id="executorKpiDealBar" style="width: 65%"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-sm">维修及时率≥98%</span>
-                                <span class="text-xs text-warning">当前：95%</span>
+                                <span class="text-sm">TR 赛道拜访 ≥5 家/周</span>
+                                <span class="text-xs text-success" id="executorKpiVisit">当前：3 家</span>
                             </div>
                             <div class="w-full h-2 bg-bg1 rounded-full overflow-hidden">
-                                <div class="h-full bg-warning rounded-full" style="width: 95%"></div>
+                                <div class="h-full bg-success rounded-full" id="executorKpiVisitBar" style="width: 60%"></div>
                             </div>
                         </div>
                     </div>
                     <div class="mt-4 pt-4 border-t border-border">
-                        <div class="text-xs text-text2 mb-2">提升建议</div>
-                        <div class="text-xs text-text1 bg-success/5 p-2 rounded-md border border-success/10">
-                            <i class="fa fa-lightbulb-o text-success mr-1"></i>
-                            维修及时率略低于目标，主要原因是备件出库时间长，建议提前备齐常用备件，预计可提升效率30%。
+                        <div class="text-xs text-text2 mb-2">ΠPaw 建议</div>
+                        <div class="text-xs text-text1 bg-primary/5 p-2 rounded-md border border-primary/10" id="executorKpiHint">
+                            <i class="fa fa-lightbulb-o text-primary mr-1"></i>
+                            优先完成 LT-2024 证据包与折扣审批，可填补 PAC Q2 Margin 缺口 8%。
                         </div>
                     </div>
                 </div>
@@ -1653,208 +1757,37 @@
                     <div class="mt-6 pt-4 border-t border-border">
                         <div class="text-sm font-medium mb-2">最近使用</div>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">设备维修记录</span>
-                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">备件申请单</span>
-                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">巡检记录表</span>
-                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all">故障处理SOP</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all" onclick="demoLtcPlaybook()">LT-2024 报价审批</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all" onclick="switchView(3)">商机证据包</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all" onclick="demoCsEscalation()">客诉升级 SOP</span>
+                            <span class="text-xs bg-bg1 px-2 py-1 rounded-full cursor-pointer hover:bg-border/50 transition-all" onclick="switchView('platform')">cs.* 能力目录</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 工作区 -->
+            <!-- BD 商机执行区（cs.* 调用结果） -->
             <div class="grid grid-cols-3 gap-4">
-                <!-- 任务执行区 -->
                 <div class="bg-white rounded-lg p-5 card-shadow col-span-2">
                     <div class="flex items-center justify-between mb-4">
                         <div class="font-medium flex items-center">
-                            <i class="fa fa-play-circle text-primary mr-2"></i> 【当前任务】维修生产线A故障
+                            <i class="fa fa-play-circle text-primary mr-2"></i> <span id="executorBizTitle">【当前商机】LT-2024</span>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs bg-warning/10 text-warning tag">剩余时间：4小时</span>
-                            <button class="primary-btn text-xs">完成提交</button>
-                        </div>
+                        <span class="text-xs bg-warning/10 text-warning tag" id="executorBizSla">报价至 6/14</span>
                     </div>
-                    <div class="p-4 bg-bg1 rounded-lg mb-4">
-                        <div class="text-sm font-medium mb-2">任务详情</div>
-                        <div class="text-sm text-text2 space-y-1">
-                            <div><span class="font-medium text-text1">故障现象：</span>生产线A电机异响，温度过高，已自动停机</div>
-                            <div><span class="font-medium text-text1">发生时间：</span>2025-06-01 08:30</div>
-                            <div><span class="font-medium text-text1">影响范围：</span>生产线A停产，每小时损失约5万</div>
-                            <div><span class="font-medium text-text1">历史处理记录：</span>本月已发生2次同类故障，上次更换轴承后恢复</div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <div class="text-sm font-medium mb-2">维修步骤指引 <span class="text-xs text-primary ml-2">(自动匹配SOP)</span></div>
-                            <div class="space-y-2">
-                                <div class="p-2 border border-border rounded-md flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4" checked>
-                                        <span class="text-sm">1. 切断设备主电源，悬挂维修警示牌</span>
-                                    </div>
-                                    <i class="fa fa-check-circle text-success"></i>
-                                </div>
-                                <div class="p-2 border border-border rounded-md flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4" checked>
-                                        <span class="text-sm">2. 拆卸电机防护罩，检查轴承和线圈状态</span>
-                                    </div>
-                                    <i class="fa fa-check-circle text-success"></i>
-                                </div>
-                                <div class="p-2 border border-primary rounded-md bg-primary/5 flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4">
-                                        <span class="text-sm text-primary font-medium">3. 检查发现轴承磨损严重，需要更换</span>
-                                    </div>
-                                    <span class="text-xs bg-primary/10 text-primary tag">当前步骤</span>
-                                </div>
-                                <div class="p-2 border border-border rounded-md flex items-center justify-between opacity-50">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4" disabled>
-                                        <span class="text-sm">4. 更换新轴承，添加润滑油</span>
-                                    </div>
-                                </div>
-                                <div class="p-2 border border-border rounded-md flex items-center justify-between opacity-50">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="mr-2 w-4 h-4" disabled>
-                                        <span class="text-sm">5. 试机运行，检查是否正常，清理现场</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-sm font-medium mb-2">所需资源 <span class="text-xs text-success ml-2">(已自动匹配)</span></div>
-                            <div class="space-y-2">
-                                <div class="p-2 border border-success rounded-md bg-success/5 flex items-center justify-between">
-                                    <div class="text-sm">
-                                        <i class="fa fa-wrench text-success mr-1"></i> 维修工具包
-                                    </div>
-                                    <span class="tag bg-success/10 text-success">已领取</span>
-                                </div>
-                                <div class="p-2 border border-success rounded-md bg-success/5 flex items-center justify-between">
-                                    <div class="text-sm">
-                                        <i class="fa fa-cubes text-success mr-1"></i> 型号6205轴承备件
-                                    </div>
-                                    <span class="tag bg-success/10 text-success">库存充足，已预留</span>
-                                </div>
-                                <div class="p-2 border border-warning rounded-md bg-warning/5 flex items-center justify-between">
-                                    <div class="text-sm">
-                                        <i class="fa fa-user text-warning mr-1"></i> 需要协助：电工班配合断电
-                                    </div>
-                                    <button class="text-xs px-2 py-0.5 bg-warning text-white rounded-md hover:bg-warning/90 transition-all">已通知</button>
-                                </div>
-                            </div>
-                            <div class="mt-4">
-                                <div class="text-sm font-medium mb-2">相关知识推荐</div>
-                                <div class="space-y-1">
-                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
-                                        <span class="text-xs">《电机常见故障处理手册》</span>
-                                        <i class="fa fa-external-link text-text3"></i>
-                                    </div>
-                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
-                                        <span class="text-xs">《轴承更换标准作业SOP》</span>
-                                        <i class="fa fa-external-link text-text3"></i>
-                                    </div>
-                                    <div class="p-1.5 rounded bg-bg1 hover:bg-border/30 cursor-pointer flex items-center justify-between">
-                                        <span class="text-xs">同类故障案例分析-2025年5月</span>
-                                        <i class="fa fa-external-link text-text3"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-border">
-                        <div class="text-sm font-medium mb-2">异常求助</div>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
-                                <i class="fa fa-video-camera mr-1"></i> 远程连线专家
-                            </button>
-                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
-                                <i class="fa fa-picture-o mr-1"></i> 上传故障照片
-                            </button>
-                            <button class="px-3 py-1.5 text-xs border border-border rounded-md hover:bg-bg1 transition-all flex items-center">
-                                <i class="fa fa-comment-o mr-1"></i> 发起群聊求助
-                            </button>
-                        </div>
-                    </div>
+                    <div id="executorBizDetail" class="p-4 bg-bg1 rounded-lg mb-3 text-sm text-text2"></div>
+                    <div id="executorCapResults" class="space-y-2 text-xs"></div>
                 </div>
-
-                <!-- 智能助手 -->
                 <div class="bg-white rounded-lg p-5 card-shadow">
-                    <div class="font-medium mb-4 flex items-center">
-                        <i class="fa fa-robot text-secondary mr-2"></i> 个人智能助手
-                    </div>
-                    <div class="h-[350px] overflow-y-auto pr-2 space-y-3 mb-4">
-                        <div class="flex justify-start">
-                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
-                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
-                                <div class="text-sm">
-                                    您好，我是您的个人智能助手，看到您正在处理生产线A的电机故障，我已经为您准备好了相关的SOP和备件信息，还有什么可以帮您的吗？
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <div class="bg-primary text-white rounded-lg p-2.5 rounded-tr-none max-w-[90%]">
-                                <div class="text-xs text-white/80 mb-1">我</div>
-                                <div class="text-sm">更换轴承需要注意什么？</div>
-                            </div>
-                        </div>
-                        <div class="flex justify-start">
-                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
-                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
-                                <div class="text-sm space-y-1.5">
-                                    <div>更换轴承需要注意以下几点：</div>
-                                    <div>1. 安装前要检查新轴承是否完好，型号是否匹配</div>
-                                    <div>2. 安装时要使用专用工具，禁止直接敲击轴承外圈</div>
-                                    <div>3. 轴承要安装到位，和轴肩贴合无间隙</div>
-                                    <div>4. 添加适量的专用润滑油，不要加过多</div>
-                                    <div>5. 安装后要手动转动检查是否灵活，有无异响</div>
-                                    <div class="mt-1">
-                                        <button class="text-xs text-primary hover:text-primaryHover">查看详细操作视频 →</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <div class="bg-primary text-white rounded-lg p-2.5 rounded-tr-none max-w-[90%]">
-                                <div class="text-xs text-white/80 mb-1">我</div>
-                                <div class="text-sm">有没有快速检查轴承是否合格的方法？</div>
-                            </div>
-                        </div>
-                        <div class="flex justify-start">
-                            <div class="bg-bg1 rounded-lg p-2.5 rounded-tl-none max-w-[90%]">
-                                <div class="text-xs text-text2 mb-1">ΠPaw助手</div>
-                                <div class="text-sm">
-                                    快速检查轴承的方法：
-                                    1. 看：外观有无裂纹、磕碰、锈蚀
-                                    2. 转：用手转动轴承，看是否转动灵活，有无卡顿异响
-                                    3. 晃：用手晃动轴承外圈，看是否有过大的间隙
-                                    4. 测：用游标卡尺测量轴承内径和外径，确认和旧轴承一致。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex items-center">
-                            <input type="text" placeholder="输入问题，直接对话..." class="flex-1 border border-border rounded-l-md px-3 py-2 text-sm focus:outline-none focus:border-primary">
-                            <button class="bg-primary text-white px-3 py-2 rounded-r-md text-sm hover:bg-primaryHover transition-all">
-                                发送
-                            </button>
-                        </div>
-                        <div class="mt-2 flex flex-wrap gap-1">
-                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">查看历史故障记录</span>
-                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">生成维修报告模板</span>
-                            <span class="text-xs bg-bg1 px-2 py-0.5 rounded-full cursor-pointer hover:bg-border/50 transition-all">下一步该做什么？</span>
-                        </div>
-                    </div>
+                    <div class="font-medium mb-3"><i class="fa fa-history text-secondary mr-2"></i>cs.* 调用审计</div>
+                    <div id="executorCapAudit" class="max-h-[240px] overflow-y-auto text-[10px] font-mono"></div>
                 </div>
             </div>
         </div>
     </main>
 
     <!-- 全局 AI 助手（感知当前视图上下文） -->
-    <button id="aiFab" onclick="toggleAiPanel()" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary text-white float-shadow flex items-center justify-center z-40 hover:scale-105 transition-transform" title="AIOS 智能助手 · ΠPaw Agent">
+    <button id="aiFab" onclick="toggleAiPanel()" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary text-white float-shadow flex items-center justify-center z-40 hover:scale-105 transition-transform" title="ΠPaw Agent · 基于当前闭环上下文">
         <i class="fa fa-magic text-lg"></i>
     </button>
     <div id="aiPanel" class="fixed bottom-20 right-6 w-80 bg-white rounded-lg card-shadow z-40 hidden transform transition-all duration-300 opacity-0 translate-y-2">
@@ -1875,7 +1808,7 @@
     <!-- 页脚 -->
     <footer class="bg-white border-t border-border py-4 mt-8">
         <div class="container mx-auto px-4 text-center text-text3 text-xs">
-            © 2026 AIOS · 企业智能经营操作系统 Demo · 基于 BP V1.0 · 智慧闭环 / 六大引擎 / ΠPaw Agent 执行层 · 系统架构见「系统架构」
+            © 2026 ΠPaw 场景套件 Demo · 岗位 Agent · 商业闭环 · docs/strategic/demo/README.md
         </div>
     </footer>
 
@@ -2129,25 +2062,25 @@
         ];
 
         const SCENARIOS = [
-            { id: 'scn-b2b-sales', title: 'B2B 线索 → 报价审批', layer: 'L3', track: 'Growth & Service',
+            { id: 'scn-b2b-sales', title: 'B2B 线索 → 报价审批', kit: '2B销售LTC套件', layer: 'L3', track: '对外价值流',
               chain: ['空间:租户/销售部', '时间:报价有效期7天', '主体:销售+合规Agent', '客体:Lead→Quote', '反馈:审批+KPI'],
               packs: ['Domain Pack: B2B', 'Workflow: sales_quote_approval', 'Law: 折扣红线', 'Agent: Sales Advisor'],
               capabilities: ['cs.lead.qualify', 'cs.quote.draft', 'cs.pricing.calculate', 'cs.approval.start'],
               flow: ['intent_created', 'evidence_checking', 'lead_qualifying', 'quote_drafting', 'policy_checking', 'approved', 'changeset_drafted'],
               kpi: '转化率 +12% · 报价合规 100%' },
-            { id: 'scn-cs', title: '客服工单 · SLA 履约', layer: 'L3', track: 'Growth & Service',
+            { id: 'scn-cs', title: '客服工单 · SLA 履约', kit: '客服SLA套件', layer: 'L3', track: '对外价值流',
               chain: ['主体:客服Agent+客户', '客体:Ticket', '反馈:SLA事件'],
               packs: ['Workflow: cs_customer_service', 'Agent: CS Agent Playbook'],
               capabilities: ['cs.ticket.escalate', 'cs.customer.get_profile', 'cs.evidence.collect'],
               flow: ['ticket_created', 'sla_monitor', 'escalate', 'resolved', 'kpi_attribute'],
               kpi: '首响 -35% · 升级可追溯' },
-            { id: 'scn-finance', title: '开票 · 财务审批', layer: 'L2', track: 'Workbench',
+            { id: 'scn-finance', title: '开票 · 财务审批', kit: '财务审批套件', layer: 'L2', track: '对内价值流',
               chain: ['客体:Invoice', '时间:账期', '反馈:approval_result'],
               packs: ['Workflow: finance_invoice_approval', 'Law: 信用规则'],
               capabilities: ['cs.invoice.get_status', 'cs.approval.start', 'cs.audit.append'],
               flow: ['draft', 'policy_check', 'approval_pending', 'approved'],
               kpi: '审批时效 2.1天' },
-            { id: 'scn-recruit', title: 'AI 招聘 OS 闭环', layer: 'L2', track: 'Workbench',
+            { id: 'scn-recruit', title: 'AI 招聘 OS 闭环', kit: '招聘OS套件', layer: 'L2', track: '对内价值流',
               chain: ['主体:HR+候选人', '客体:Offer', '反馈:评估审计'],
               packs: ['Domain:招聘世界模型', 'Evaluation Pack'],
               capabilities: ['cs.approval.start', 'cs.evidence.collect', 'cs.audit.append'],
@@ -2187,9 +2120,40 @@
             { id: 'sense', name: '感知引擎', en: 'Sense', status: '运行中', metric: '今日推送 3 异常', desc: '四大金刚异常检测' },
             { id: 'attribute', name: '归因引擎', en: 'Attribute', status: '运行中', metric: '归因覆盖 72%', desc: '维度下钻 + 行动归因' },
             { id: 'strategize', name: '策略引擎', en: 'Strategize', status: '运行中', metric: '策略库 48 条', desc: 'Top-N 方案推荐' },
-            { id: 'orchestrate', name: '编排引擎', en: 'Orchestrate', status: '运行中', metric: 'ΠPaw 5 Agent', desc: '任务分派 + SLA' },
+            { id: 'orchestrate', name: '编排引擎', en: 'Orchestrate', status: '运行中', metric: 'ΠPaw 24 Agent', desc: 'L1/L2/L3 分派 + SLA' },
             { id: 'alert', name: '预警引擎', en: 'Alert', status: '运行中', metric: '2 条 SLA 预警', desc: '指标/闭环断裂监控' },
             { id: 'evolve', name: '进化引擎', en: 'Evolve', status: '待审', metric: '3 条 SOP 候选', desc: '有效沉淀 · 无效淘汰' }
+        ];
+        const ADAPTATION_LAYERS = [
+            { id: 'strategy', name: '战略对齐层', mode: '营收100亿·新业务30%', metric: '对齐度 78%', active: true },
+            { id: 'org', name: '组织适配层', mode: '矩阵式·OMTU', metric: '3 事业部', active: false },
+            { id: 'mgmt', name: '管理模式层', mode: 'OKR + PDCA', metric: '季度复盘', active: false },
+            { id: 'biz', name: '业务模式层', mode: '2B LTC', metric: '销售套件', active: false }
+        ];
+        const DUAL_LOOPS = {
+            business: ['目标设定', '路径规划', '资源配置', 'Agent执行', '过程监控', '结果核算', '复盘优化'],
+            management: ['策略制定', '落地执行', '效果评估', '问题诊断', '策略优化']
+        };
+        const VALUE_FLOWS = {
+            internal: { label: '对内价值流', icon: 'fa-building', color: 'primary',
+                items: ['OKR 对齐与拆解', '跨部门协同审批', '管理成本核算', '合规审计链', '知识/SOP 沉淀'],
+                kpi: '管理颗粒度 月→日 · 协作效率 +50%' },
+            external: { label: '对外价值流', icon: 'fa-globe', color: 'success',
+                items: ['线索获客与打分', '商机跟进·报价', '合同履约·回款', '客户成功·续签', 'SLA 服务闭环'],
+                kpi: 'LTC 转化 +12% · Margin 闭环可验证' }
+        };
+        const PIPAW_PRODUCT_STACK = [
+            { k: 'Kernel', n: 'UAS 内核', v: 'I,K,R,A,S,G,E,Π' },
+            { k: 'Platform', n: '能力平台', v: '知识·Agent·治理' },
+            { k: 'Adapt', n: '四适配引擎', v: '战略/组织/管理/业务' },
+            { k: 'Apps', n: '三层应用', v: '罗盘/驾驶舱/助手' },
+            { k: 'Kits', n: '场景套件', v: 'LTC·OTD·交付·客服' }
+        ];
+        const SCENARIO_KITS = [
+            { id: 'kit-ltc', name: '2B销售LTC套件', cycle: '1周', scenes: '线索→回款', bound: 'scn-b2b-sales' },
+            { id: 'kit-cs', name: '客服SLA套件', cycle: '1周', scenes: '工单→闭环', bound: 'scn-cs' },
+            { id: 'kit-finance', name: '财务审批套件', cycle: '1周', scenes: '开票→入账', bound: 'scn-finance' },
+            { id: 'kit-recruit', name: '招聘OS套件', cycle: '2周', scenes: '需求→入职', bound: 'scn-recruit' }
         ];
         const VALUE_STREAM = {
             id: 'vs-pac-margin',
@@ -2237,9 +2201,423 @@
               capability: 'aios.evolve.sop', bizLog: 'SOP-PAC-TR-001 候选 · 策略库更新' }
         ];
 
+        /* ── Harness 对齐数据模型（configs/ + schemas/） ── */
+        const TENANT_ID = 't-acme-demo';
+        const HARNESS_INTENT_COMPLAINT = {
+            intent_id: 'int-complaint-demo-001', tenant_id: TENANT_ID, source: 'selfpaw_intent_hub',
+            intent_class: 'business_outward', goal: '处理 VIP 客户交付延期投诉并协调客服跟进',
+            summary: '客户 C-1001 反馈交付延期 3 天，要求今日内回复', urgency: 'high',
+            actor: { user_id: 'u-employee-1001', display_name: '张三', org_unit_id: 'ou-sales',
+                position_id: 'pos-sales-rep', product_track: 'selfpaw' },
+            business_context: { customer_id: 'C-1001', channel: 'im' },
+            escalation_target: { product_track: 'pipaw', position_id: 'pos-cs-agent',
+                domain_id: 'domain.customer_service', role_id: 'role.cs_agent' },
+            evidence_refs: [{ evidence_id: 'ev-chat-001', type: 'chat_transcript', ref_id: 'chat-thread-88',
+                summary: '客户 IM：交付已延期 3 天，请今日回复处理方案' }],
+            status: 'active'
+        };
+        const HARNESS_PLAYBOOK_CS = {
+            playbook_id: 'playbook.cs_complaint_v1', name: '客诉处理 SOP（VIP 交付延期）',
+            steps: [
+                { step_id: 's1_profile', label: '1. 获取客户画像与历史工单摘要', operation_ref: 'cs.customer.get_profile' },
+                { step_id: 's2_ticket', label: '2. 创建客服工单并绑定 SLA', operation_ref: 'cs.ticket.create' },
+                { step_id: 's3_escalate', label: '3. SLA 临近或无法自动结案时升级主管', operation_ref: 'cs.ticket.escalate', optional: true }
+            ]
+        };
+        const HARNESS_AGENT_CS = {
+            agent_id: 'agent.cs_specialist', name: '客服数字岗位 Agent（P1 标杆）',
+            position_id: 'pos-cs-agent', role_id: 'role.cs_agent', product_track: 'pipaw',
+            domain_id: 'domain.customer_service', outward: true,
+            bound_operations: ['cs.customer.get_profile', 'cs.ticket.create', 'cs.ticket.escalate'],
+            playbook_id: 'playbook.cs_complaint_v1'
+        };
+        const HARNESS_AGENT_SALES = {
+            agent_id: 'agent.sales_advisor', name: 'ΠPaw Sales Advisor',
+            position_id: 'pos-bd-a', role_id: 'role.sales_rep', product_track: 'pipaw',
+            domain_id: 'domain.b2b_sales', outward: false,
+            bound_operations: ['cs.lead.qualify_lead', 'cs.approval.submit', 'cs.process.start'],
+            playbook_id: 'playbook.sales_ltc_quote_v1'
+        };
+        const HARNESS_PLAYBOOK_SALES = {
+            playbook_id: 'playbook.sales_ltc_quote_v1', name: 'B2B 线索到报价审批（LTC）',
+            process_template_id: 'sales_quote_approval',
+            steps: [
+                { step_id: 's1_qualify', label: '1. 线索资格判定（lead_created → qualified）', operation_ref: 'cs.lead.qualify_lead' },
+                { step_id: 's2_process', label: '2. 启动报价审批流程（qualified → quote_drafting）', operation_ref: 'cs.process.start' },
+                { step_id: 's3_approval', label: '3. 提交折扣审批（approval_pending）', operation_ref: 'cs.approval.submit' }
+            ]
+        };
+        const HARNESS_OUTWARD_ROUTES = {
+            version: 'v1.0', registrar: 'pipaw_only',
+            routes: [
+                { channel_id: 'feishu_im', type: 'im', default_agent: 'agent.cs_specialist', tenant_header: 'X-Tenant-Id' },
+                { channel_id: 'wecom_im', type: 'im', default_agent: 'agent.cs_specialist', tenant_header: 'X-Tenant-Id' },
+                { channel_id: 'email_inbound', type: 'email', default_agent: 'agent.sales_advisor', tenant_header: 'X-Tenant-Id' }
+            ],
+            pii_mask_fields: ['contact_phone', 'contact_email', 'id_card']
+        };
+        const HARNESS_INTENT_OUTWARD = {
+            intent_id: 'int-outward-feishu-001', tenant_id: TENANT_ID, source: 'outward_gateway',
+            intent_class: 'business_outward', goal: '飞书 IM 客户咨询交付进度',
+            summary: '【飞书】客户 C-1001：请问订单 PO-8821 预计何时发货？', urgency: 'medium',
+            actor: { user_id: 'ext-c-1001', display_name: '华东智造·采购部', org_unit_id: 'customer-ext',
+                position_id: 'pos-customer', product_track: 'outward' },
+            business_context: { customer_id: 'C-1001', channel: 'feishu_im', order_id: 'PO-8821' },
+            escalation_target: { product_track: 'pipaw', position_id: 'pos-cs-agent',
+                domain_id: 'domain.customer_service', role_id: 'role.cs_agent' },
+            evidence_refs: [{ evidence_id: 'ev-feishu-001', type: 'im_message', ref_id: 'feishu-msg-442',
+                summary: '飞书 IM：订单 PO-8821 预计何时发货？' }],
+            status: 'active'
+        };
+        const HARNESS_AGENTS = {
+            'agent.cs_specialist': HARNESS_AGENT_CS,
+            'agent.sales_advisor': HARNESS_AGENT_SALES
+        };
+        const CAPABILITY_META = {
+            'cs.customer.get_profile': { approval_level: 'L1', gates: ['G1', 'G6'], source: 'crm' },
+            'cs.ticket.create': { approval_level: 'L2', gates: ['G1', 'G4', 'G6'], source: 'itsm' },
+            'cs.ticket.escalate': { approval_level: 'L2', gates: ['G6'], source: 'itsm' },
+            'cs.lead.qualify_lead': { approval_level: 'L1', gates: ['G4', 'G6'], source: 'crm' },
+            'cs.approval.submit': { approval_level: 'L2', gates: ['G1', 'G4', 'G6'], source: 'oa' },
+            'cs.process.start': { approval_level: 'L2', gates: ['G1', 'G4'], source: 'bpm' }
+        };
+        const CAPABILITY_MOCK = {
+            'cs.customer.get_profile': (p) => ({
+                customer_id: p.customer_id || 'C-1001', name: '华东智造集团（VIP）', segment: 'VIP',
+                tier: 'A', open_tickets: 1, last_order_delay_days: 3,
+                evidence: ['ev-chat-001', 'crm.profile.v2024']
+            }),
+            'cs.ticket.create': (p) => ({
+                ticket_id: 'TK-' + Math.floor(8800 + Math.random() * 200),
+                sla_due_at: new Date(Date.now() + 8 * 3600000).toISOString(),
+                subject: p.subject || 'VIP 客诉：交付延期跟进', priority: p.priority || 'high'
+            }),
+            'cs.ticket.escalate': (p) => ({
+                escalation_id: 'ESC-' + Date.now().toString().slice(-6),
+                assigned_to: 'role.cs_lead', ticket_id: p.ticket_id
+            }),
+            'cs.lead.qualify_lead': (p) => ({
+                qualified: true, score: 87, lead_id: p.lead_id || 'LT-2024',
+                evidence: ['crm.budget.confirmed', 'crm.decision_maker.met']
+            }),
+            'cs.approval.submit': (p) => ({
+                approval_id: 'APR-' + Math.floor(880 + Math.random() * 20),
+                status: 'pending', template_id: p.template_id || 'quote_discount'
+            }),
+            'cs.process.start': (p) => ({
+                process_instance_id: 'PI-' + Date.now().toString().slice(-8),
+                template_id: p.template_id || 'sales_quote_approval'
+            })
+        };
+        const DATA_FLOW_NODES = [
+            { id: 'intent', label: 'Intent', sub: 'SelfPaw' },
+            { id: 'evidence', label: 'Evidence', sub: 'ev-chat-001' },
+            { id: 'escalate', label: 'POST /intent/escalate', sub: 'ADR-001' },
+            { id: 'wt', label: 'WorkingTask', sub: 'pipaw' },
+            { id: 'playbook', label: 'Playbook', sub: 'SOP 步骤' },
+            { id: 'cs', label: 'cs.* invoke', sub: 'CapabilityRouter' },
+            { id: 'audit', label: 'Audit Chain', sub: 'audit_id' },
+            { id: 'result', label: 'Result', sub: 'SLA/工单' }
+        ];
+        const DATA_FLOW_NODES_OUTWARD = [
+            { id: 'channel', label: 'Channel', sub: 'feishu_im' },
+            { id: 'gateway', label: 'Outward Gateway', sub: 'PP-002' },
+            { id: 'intent', label: 'Intent', sub: 'outward_gateway' },
+            { id: 'route', label: 'Agent Route', sub: 'roster' },
+            { id: 'wt', label: 'WorkingTask', sub: 'pipaw' },
+            { id: 'playbook', label: 'Playbook', sub: 'cs_complaint_v1' },
+            { id: 'cs', label: 'cs.* invoke', sub: 'CapabilityRouter' },
+            { id: 'audit', label: 'Audit Chain', sub: 'audit_id' }
+        ];
+        const DATA_FLOW_NODES_B2B = [
+            { id: 'action', label: 'Action', sub: 'ACT-0612-001' },
+            { id: 'wt', label: 'WorkingTask', sub: 'sales_advisor' },
+            { id: 'playbook', label: 'Playbook', sub: 'sales_ltc_quote_v1' },
+            { id: 'cs', label: 'cs.* invoke', sub: 'LTC 三步' },
+            { id: 'audit', label: 'Audit Chain', sub: 'audit_id' },
+            { id: 'result', label: 'Result', sub: '审批/报价' }
+        ];
+
+        /* ── 商业叙事：场景价值产品化闭环（configs/commercial_scenario_catalog.json） ── */
+        const COMMERCIAL_LOOP = [
+            { step_id: 'select', label: '选场景', desc: '按痛点选 SKU' },
+            { step_id: 'prove', label: '证价值', desc: 'ROI 测算' },
+            { step_id: 'connect', label: '连系统', desc: 'Day-1 集成' },
+            { step_id: 'pilot', label: '跑试点', desc: 'Playbook 真链路' },
+            { step_id: 'accept', label: '验收扩面', desc: '审计报告' }
+        ];
+        const COMMERCIAL_KITS = [
+            {
+                kit_id: 'kit-cs-sla', sku_name: '客服 SLA 岗位 Agent 套件',
+                tagline: '飞书/IM 客诉 → 工单 → SLA → 审计，不替换 ITSM',
+                buyer_role: '客服负责人 / 运营 VP', budget_type: '业务 Opex · 降本增效',
+                pain_points: ['多渠道客诉分散，SLA 靠人工盯', '处理不可审计，复盘无证据', 'VIP 升级路径不清晰'],
+                value_promises: [
+                    { metric: '首次响应', baseline: '4.2h', target: '≤1h' },
+                    { metric: 'SLA 达标率', baseline: '82%', target: '≥95%' },
+                    { metric: '审计可追溯', baseline: '40%', target: '100%' }
+                ],
+                roi_model: { ticket_volume_monthly: 1200, minutes_saved_per_ticket: 18, labor_cost_per_hour: 85, sla_penalty_avoided_monthly: 15000 },
+                day1_integrations: [
+                    { id: 'feishu_im', system: '飞书/企微 IM', mode: '入站', capability: 'Outward Gateway', required: true },
+                    { id: 'itsm_ticket', system: 'ITSM/工单', mode: '读写', capability: 'cs.ticket.*', required: true },
+                    { id: 'crm_profile', system: 'CRM 客户主数据', mode: '只读', capability: 'cs.customer.get_profile', required: true },
+                    { id: 'oa_notify', system: 'OA/IM 通知', mode: '出站', capability: 'cs.notify.send_im', required: false }
+                ],
+                playbook_id: 'playbook.cs_complaint_v1', agent_id: 'agent.cs_specialist',
+                demo_entry: 'demoCsEscalation', poc_duration_days: 30,
+                acceptance_criteria: [
+                    'Intent 升级成功率 ≥99%', 'Playbook 三步 cs.* audit 可追溯',
+                    'Task Panel 结构化任务态', 'Outward Gateway 飞书入站可路由'
+                ],
+                expansion_path: '客诉 → 续费挽回 → 全渠道服务中台'
+            },
+            {
+                kit_id: 'kit-b2b-ltc', sku_name: 'B2B 报价审批 LTC 套件',
+                tagline: '线索资格 → 报价流程 → 折扣审批，CRM 仍是地主',
+                buyer_role: '销售运营 / BU 负责人', budget_type: '业务 Opex · 增收提效',
+                pain_points: ['大单报价周期长，审批卡在 OA', '线索资格靠经验，无证据', 'Margin 异常与执行脱节'],
+                value_promises: [
+                    { metric: '报价周期', baseline: '9.5天', target: '≤5天' },
+                    { metric: '大单赢单率', baseline: '28%', target: '+8pp' },
+                    { metric: '审批合规', baseline: '事后审计', target: '事前 Gate' }
+                ],
+                roi_model: { deals_per_quarter: 24, avg_deal_value_wan: 800, win_rate_lift_pp: 8, quote_cycle_days_saved: 4.5 },
+                day1_integrations: [
+                    { id: 'crm_lead', system: 'CRM 线索/商机', mode: '读写', capability: 'cs.lead.qualify_lead', required: true },
+                    { id: 'bpm_quote', system: 'BPM 报价审批', mode: '读写', capability: 'cs.process.start', required: true },
+                    { id: 'oa_approval', system: 'OA 折扣审批', mode: '读写', capability: 'cs.approval.submit', required: true },
+                    { id: 'bi_margin', system: 'BI Margin 只读', mode: '只读', capability: '指标接入', required: false }
+                ],
+                playbook_id: 'playbook.sales_ltc_quote_v1', agent_id: 'agent.sales_advisor',
+                demo_entry: 'demoLtcPlaybook', poc_duration_days: 45,
+                acceptance_criteria: [
+                    'qualify → process → approval 三步可执行', '超折扣自动 approval_pending',
+                    'cs.* 带 audit_id 与 Gate', '可与 PAC Action 分派联动'
+                ],
+                expansion_path: 'LTC 单场景 → 区域销售运营 → 经营分析闭环'
+            }
+        ];
+        const CommercialRuntime = {
+            activeKitId: 'kit-cs-sla',
+            loopStep: 0,
+            integrationChecked: {},
+            pocStarted: false,
+            acceptanceDone: false,
+            roiOverrides: {}
+        };
+
+        function getActiveKit() {
+            return COMMERCIAL_KITS.find(k => k.kit_id === CommercialRuntime.activeKitId) || COMMERCIAL_KITS[0];
+        }
+
+        function selectCommercialKit(kitId) {
+            CommercialRuntime.activeKitId = kitId;
+            CommercialRuntime.loopStep = Math.max(CommercialRuntime.loopStep, 0);
+            CommercialRuntime.integrationChecked = {};
+            renderCommercialHub();
+            setCommercialLoopStep('select');
+            showToast('info', '已选场景套件', getActiveKit().sku_name);
+        }
+
+        function setCommercialLoopStep(stepId) {
+            const idx = COMMERCIAL_LOOP.findIndex(s => s.step_id === stepId);
+            if (idx >= 0) CommercialRuntime.loopStep = Math.max(CommercialRuntime.loopStep, idx);
+            renderCommercialLoopTrack();
+        }
+
+        function renderCommercialLoopTrack() {
+            const el = document.getElementById('commercialLoopTrack');
+            if (!el) return;
+            const cur = CommercialRuntime.loopStep;
+            el.innerHTML = COMMERCIAL_LOOP.map((s, i) => {
+                let cls = 'commercial-step';
+                if (i < cur) cls += ' commercial-step-done';
+                else if (i === cur) cls += ' commercial-step-active';
+                const dot = i < cur ? '<i class="fa fa-check text-[10px]"></i>' : (i + 1);
+                return '<div class="' + cls + '"><div class="commercial-step-dot">' + dot + '</div>' +
+                    '<div class="text-[10px] font-medium mt-1">' + s.label + '</div>' +
+                    '<div class="text-[9px] text-text3">' + s.desc + '</div></div>';
+            }).join('');
+        }
+
+        function renderCommercialKitCards() {
+            const el = document.getElementById('commercialKitCards');
+            if (!el) return;
+            el.innerHTML = COMMERCIAL_KITS.map(k => {
+                const sel = k.kit_id === CommercialRuntime.activeKitId ? 'kit-card-selected' : '';
+                return '<div class="kit-card ' + sel + '" onclick="selectCommercialKit(\'' + k.kit_id + '\')">' +
+                    '<div class="font-medium text-sm">' + k.sku_name + '</div>' +
+                    '<div class="text-text2 text-xs mt-1">' + k.tagline + '</div>' +
+                    '<div class="flex flex-wrap gap-1 mt-2 text-[10px]">' +
+                    '<span class="tag bg-primary/10 text-primary">' + k.buyer_role + '</span>' +
+                    '<span class="tag bg-bg1 text-text3">' + k.poc_duration_days + ' 天 PoC</span></div></div>';
+            }).join('');
+        }
+
+        function renderCommercialPainValue() {
+            const kit = getActiveKit();
+            const el = document.getElementById('commercialPainValue');
+            if (!el) return;
+            el.innerHTML =
+                '<div class="p-3 rounded-lg bg-danger/5 border border-danger/15"><div class="font-medium text-danger mb-2">痛点</div><ul class="list-disc list-inside text-text2 space-y-1">' +
+                kit.pain_points.map(p => '<li>' + p + '</li>').join('') + '</ul></div>' +
+                '<div class="p-3 rounded-lg bg-success/5 border border-success/15"><div class="font-medium text-success mb-2">价值承诺</div>' +
+                kit.value_promises.map(v =>
+                    '<div class="flex justify-between py-1 border-b border-border/30 last:border-0"><span>' + v.metric + '</span>' +
+                    '<span><span class="text-text3">' + v.baseline + '</span> → <strong class="text-success">' + v.target + '</strong></span></div>'
+                ).join('') + '</div>';
+        }
+
+        function renderCommercialRoi() {
+            const kit = getActiveKit();
+            const m = { ...kit.roi_model, ...CommercialRuntime.roiOverrides };
+            const inputsEl = document.getElementById('commercialRoiInputs');
+            const resultEl = document.getElementById('commercialRoiResult');
+            if (!inputsEl || !resultEl) return;
+            if (kit.kit_id === 'kit-cs-sla') {
+                inputsEl.innerHTML =
+                    roiInputRow('ticket_volume_monthly', '月工单量', m.ticket_volume_monthly) +
+                    roiInputRow('minutes_saved_per_ticket', '每单节省(分钟)', m.minutes_saved_per_ticket) +
+                    roiInputRow('labor_cost_per_hour', '人力成本(元/时)', m.labor_cost_per_hour) +
+                    roiInputRow('sla_penalty_avoided_monthly', 'SLA 罚金规避/月', m.sla_penalty_avoided_monthly);
+                const laborSave = (m.ticket_volume_monthly * m.minutes_saved_per_ticket / 60) * m.labor_cost_per_hour;
+                const annual = (laborSave + m.sla_penalty_avoided_monthly) * 12;
+                resultEl.innerHTML = '<div class="font-medium text-success mb-1">年化收益约 <span class="text-lg">' + Math.round(annual / 10000) + '</span> 万元</div>' +
+                    '<div class="text-xs text-text2">人力节省 ' + Math.round(laborSave).toLocaleString() + ' 元/月 + SLA 规避 ' + m.sla_penalty_avoided_monthly.toLocaleString() + ' 元/月</div>' +
+                    '<div class="text-[10px] text-text3 mt-1">预算归属：' + kit.budget_type + ' · 决策人：' + kit.buyer_role + '</div>';
+            } else {
+                inputsEl.innerHTML =
+                    roiInputRow('deals_per_quarter', '季度商机数', m.deals_per_quarter) +
+                    roiInputRow('avg_deal_value_wan', '均单金额(万)', m.avg_deal_value_wan) +
+                    roiInputRow('win_rate_lift_pp', '赢单率提升(pp)', m.win_rate_lift_pp) +
+                    roiInputRow('quote_cycle_days_saved', '周期缩短(天)', m.quote_cycle_days_saved);
+                const incremental = m.deals_per_quarter * 4 * m.avg_deal_value_wan * 10000 * (m.win_rate_lift_pp / 100);
+                resultEl.innerHTML = '<div class="font-medium text-success mb-1">年化增量营收约 <span class="text-lg">' + Math.round(incremental / 10000) + '</span> 万元</div>' +
+                    '<div class="text-xs text-text2">报价周期缩短 ' + m.quote_cycle_days_saved + ' 天 · 赢单率 +' + m.win_rate_lift_pp + 'pp</div>' +
+                    '<div class="text-[10px] text-text3 mt-1">预算归属：' + kit.budget_type + ' · 决策人：' + kit.buyer_role + '</div>';
+            }
+            setCommercialLoopStep('prove');
+        }
+
+        function roiInputRow(key, label, val) {
+            return '<div class="flex items-center justify-between gap-2"><label class="text-text2 shrink-0">' + label + '</label>' +
+                '<input type="number" class="w-28 border border-border rounded px-2 py-1 text-right" value="' + val + '" onchange="updateRoiParam(\'' + key + '\',this.value)"></div>';
+        }
+
+        function updateRoiParam(key, val) {
+            CommercialRuntime.roiOverrides[key] = parseFloat(val) || 0;
+            renderCommercialRoi();
+        }
+
+        function renderCommercialIntegrations() {
+            const kit = getActiveKit();
+            const el = document.getElementById('commercialIntegrationList');
+            const prog = document.getElementById('commercialIntegrationProgress');
+            if (!el) return;
+            const required = kit.day1_integrations.filter(i => i.required);
+            const doneReq = required.filter(i => CommercialRuntime.integrationChecked[i.id]).length;
+            if (prog) prog.textContent = doneReq + '/' + required.length + ' 必填项';
+            el.innerHTML = kit.day1_integrations.map(i => {
+                const checked = !!CommercialRuntime.integrationChecked[i.id];
+                const cls = checked ? 'integration-check-done' : 'border-border';
+                const req = i.required ? '<span class="tag bg-danger/10 text-danger ml-1">必填</span>' : '<span class="tag bg-bg1 text-text3 ml-1">可选</span>';
+                return '<div class="p-2 rounded border ' + cls + ' flex items-start gap-2 cursor-pointer" onclick="toggleIntegrationCheck(\'' + i.id + '\')">' +
+                    '<input type="checkbox" class="mt-0.5" ' + (checked ? 'checked' : '') + ' onclick="event.stopPropagation();toggleIntegrationCheck(\'' + i.id + '\')">' +
+                    '<div class="flex-1"><div class="font-medium">' + i.system + req + '</div>' +
+                    '<div class="text-text3">' + i.mode + ' · <code class="bg-bg1 px-1 rounded">' + i.capability + '</code></div></div></div>';
+            }).join('');
+            if (doneReq >= required.length) setCommercialLoopStep('connect');
+        }
+
+        function toggleIntegrationCheck(id) {
+            CommercialRuntime.integrationChecked[id] = !CommercialRuntime.integrationChecked[id];
+            renderCommercialIntegrations();
+        }
+
+        function renderCommercialAcceptance() {
+            const kit = getActiveKit();
+            const el = document.getElementById('commercialAcceptanceList');
+            const exp = document.getElementById('commercialExpansion');
+            if (el) el.innerHTML = kit.acceptance_criteria.map((c, i) =>
+                '<div class="flex gap-2 py-1"><span class="text-primary">' + (i + 1) + '.</span><span>' + c + '</span></div>'
+            ).join('');
+            if (exp) exp.textContent = kit.expansion_path;
+        }
+
+        function renderCommercialHub() {
+            const kit = getActiveKit();
+            const headline = document.getElementById('commercialHeadline');
+            if (headline) headline.textContent = kit.sku_name + ' · 商业闭环';
+            renderCommercialLoopTrack();
+            renderCommercialKitCards();
+            renderCommercialPainValue();
+            renderCommercialRoi();
+            renderCommercialIntegrations();
+            renderCommercialAcceptance();
+        }
+
+        function runCommercialPoC() {
+            const kit = getActiveKit();
+            const required = kit.day1_integrations.filter(i => i.required);
+            const doneReq = required.filter(i => CommercialRuntime.integrationChecked[i.id]).length;
+            if (doneReq < required.length) {
+                showToast('warning', '请先勾选集成', 'Day-1 必填项 ' + doneReq + '/' + required.length);
+                renderCommercialIntegrations();
+                return;
+            }
+            setCommercialLoopStep('pilot');
+            CommercialRuntime.pocStarted = true;
+            if (kit.demo_entry === 'demoCsEscalation') demoCsEscalation();
+            else if (kit.demo_entry === 'demoLtcPlaybook') demoLtcPlaybook();
+            else demoCsEscalation();
+            const strip = document.getElementById('stripValueStream');
+            if (strip) strip.textContent = kit.sku_name;
+            showToast('success', '试点已启动', '已跳转一线工作台 · 请逐步执行 Playbook');
+        }
+
+        function generateAcceptanceReport() {
+            const kit = getActiveKit();
+            const caps = EnterpriseRuntime.capabilityCalls.length;
+            const tasks = EnterpriseRuntime.workingTasks.filter(t => t.playbook_id === kit.playbook_id);
+            const done = tasks.some(t => t.status === 'done');
+            const report = {
+                report_id: 'POC-RPT-' + Date.now().toString(36).slice(-8),
+                generated_at: new Date().toISOString(),
+                kit_id: kit.kit_id,
+                sku_name: kit.sku_name,
+                poc_duration_days: kit.poc_duration_days,
+                integration_ready: Object.keys(CommercialRuntime.integrationChecked).filter(k => CommercialRuntime.integrationChecked[k]),
+                capability_invocations: caps,
+                working_tasks: tasks.map(t => ({ task_id: t.task_id, status: t.status, audit_id: t.audit_id })),
+                acceptance_criteria: kit.acceptance_criteria.map((c, i) => ({
+                    criterion: c,
+                    status: (i < 2 && caps > 0) || (i >= 2 && done) ? 'pass' : 'pending'
+                })),
+                recommendation: done ? '建议进入扩面：' + kit.expansion_path : '请完成 Playbook 全部步骤后重新生成'
+            };
+            CommercialRuntime.acceptanceDone = done;
+            if (done) setCommercialLoopStep('accept');
+            const el = document.getElementById('commercialAcceptanceReport');
+            if (el) {
+                el.classList.remove('hidden');
+                el.textContent = JSON.stringify(report, null, 2);
+            }
+            pushAudit('PoC验收', 'REPORT', report.report_id + ' · cs.* ' + caps + ' 次');
+            showToast(done ? 'success' : 'info', '验收报告已生成', report.recommendation);
+            syncRuntimeUi();
+        }
+
         const EnterpriseRuntime = {
             run: null,
             audit: [],
+            capabilityCalls: [],
+            workingTasks: [],
+            activeTaskId: null,
+            dataFlowStep: -1,
+            dataFlowMode: 'cs_escalation',
+            lastAuditId: null,
+            outwardLog: [],
             changeSets: [
                 { id: 'sop_pac_tr_001', pack: 'SOP 库', status: '待审', reason: '「TR 赛道深耕」策略验证有效 · 进化引擎沉淀候选' }
             ],
@@ -2248,6 +2626,501 @@
             autoTimer: null
         };
 
+        function genAuditId() {
+            EnterpriseRuntime.lastAuditId = 'aud-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+            return EnterpriseRuntime.lastAuditId;
+        }
+
+        function invokeCapability(operationRef, payload, actor) {
+            const meta = CAPABILITY_META[operationRef] || { approval_level: 'L1', gates: ['G1'], source: 'platform' };
+            const agent = actor?.agent_id ? actor : HARNESS_AGENT_CS;
+            if (!agent.bound_operations?.includes(operationRef)) {
+                const err = { status: 'denied', deny_reason: 'OP_NOT_IN_ROSTER', operation_ref: operationRef };
+                pushAudit(operationRef, 'DENIED', err.deny_reason);
+                return err;
+            }
+            const mockFn = CAPABILITY_MOCK[operationRef];
+            const output = mockFn ? mockFn(payload || {}) : { ok: true };
+            const auditId = genAuditId();
+            const record = {
+                ts: new Date().toLocaleTimeString('zh-CN', { hour12: false }),
+                audit_id: auditId, operation_ref: operationRef,
+                actor: actor?.agent_id || agent.agent_id, tenant_id: TENANT_ID,
+                approval_level: meta.approval_level, gates: meta.gates,
+                payload, output, status: 'ok', source_system: meta.source
+            };
+            EnterpriseRuntime.capabilityCalls.unshift(record);
+            if (EnterpriseRuntime.capabilityCalls.length > 30) EnterpriseRuntime.capabilityCalls.pop();
+            pushAudit(operationRef, 'invoke', `audit_id=${auditId} · L${meta.approval_level.slice(1)} · ${JSON.stringify(output).slice(0, 80)}…`);
+            setDataFlowStep('cs');
+            return { status: 'ok', audit_id: auditId, output };
+        }
+
+        function getHarnessAgent(agentId) {
+            return HARNESS_AGENTS[agentId] || HARNESS_AGENT_CS;
+        }
+
+        const HARNESS_FIXTURES_BASE = 'fixtures/';
+        const HarnessFixtures = { loaded: false, manifest: null, escalate: null, panelCurrent: null, roster: null };
+
+        function workingTaskFromRuntime(wt, panelItem, agentId) {
+            const agent = getHarnessAgent(agentId || 'agent.cs_specialist');
+            const playbook = agent.playbook_id === HARNESS_PLAYBOOK_SALES.playbook_id
+                ? HARNESS_PLAYBOOK_SALES : HARNESS_PLAYBOOK_CS;
+            const steps = (panelItem?.steps || playbook.steps.map((s, i) => ({
+                step_id: s.step_id, label: s.label, operation_ref: s.operation_ref,
+                done: false, current: i === 0, optional: !!s.optional
+            })));
+            return {
+                task_id: wt.task_id, tenant_id: wt.tenant_id,
+                source: wt.source || 'selfpaw_escalation', product_track: 'pipaw',
+                status: panelItem?.status === 'in_progress' ? 'in_progress' : (wt.status || 'open'),
+                display_phase: panelItem?.display_phase || 'backlog',
+                intent_id: wt.source_intent_id || wt.intent_id,
+                source_intent_id: wt.source_intent_id,
+                playbook_id: playbook.playbook_id,
+                agent_id: agent.agent_id,
+                position_id: wt.position_id || agent.position_id,
+                assignee_role_id: wt.assignee_role_id || agent.role_id,
+                title: wt.title || wt.goal, subtitle: wt.goal || panelItem?.subtitle || '',
+                goal: wt.goal, priority: wt.priority || 'high',
+                sla_label: panelItem?.sla_label || '剩余时间：今日内',
+                due_at: panelItem?.due_at || wt.sla_due_at,
+                business_context: { ...(wt.business_context || {}), evidence_refs: wt.evidence_refs || [] },
+                evidence_refs: wt.evidence_refs || [],
+                steps, ticket_id: null, process_instance_id: null, approval_id: null,
+                audit_id: wt.audit_id,
+                created_at: wt.created_at, updated_at: wt.updated_at,
+                actions: panelItem?.actions || [{ label: '接手处理', action: 'open' }, { label: '执行当前步骤', action: 'complete_step' }]
+            };
+        }
+
+        async function loadHarnessFixtures() {
+            if (HarnessFixtures.loaded) return true;
+            try {
+                const manifest = await fetch(HARNESS_FIXTURES_BASE + 'manifest.json').then(r => {
+                    if (!r.ok) throw new Error('manifest');
+                    return r.json();
+                });
+                const [escalate, panelCurrent] = await Promise.all([
+                    fetch(HARNESS_FIXTURES_BASE + 'escalate_response.json').then(r => r.json()),
+                    fetch(HARNESS_FIXTURES_BASE + 'task_panel_current.json').then(r => r.json())
+                ]);
+                HarnessFixtures.manifest = manifest;
+                HarnessFixtures.escalate = escalate;
+                HarnessFixtures.panelCurrent = panelCurrent;
+                HarnessFixtures.loaded = true;
+                updateHarnessFixtureBadge('已加载 ' + (manifest.exported_at || '').slice(0, 10));
+                return true;
+            } catch (e) {
+                updateHarnessFixtureBadge('需 http.server');
+                return false;
+            }
+        }
+
+        function updateHarnessFixtureBadge(text) {
+            const el = document.getElementById('harnessFixtureBadge');
+            if (el) {
+                el.textContent = 'fixtures: ' + text;
+                el.className = 'ml-2 tag font-normal ' + (HarnessFixtures.loaded ? 'bg-success/10 text-success' : 'bg-bg1 text-text3');
+            }
+        }
+
+        async function demoFromRuntimeFixtures() {
+            const ok = await loadHarnessFixtures();
+            if (!ok || !HarnessFixtures.escalate?.working_task) {
+                showToast('warning', 'Fixtures 不可用', '请 cd docs/strategic/demo && python3 -m http.server 8080 后重试');
+                return;
+            }
+            resetRuntime(false);
+            EnterpriseRuntime.dataFlowMode = 'cs_escalation';
+            EnterpriseRuntime.dataFlowStep = -1;
+            const esc = HarnessFixtures.escalate;
+            const panel = HarnessFixtures.panelCurrent;
+            setDataFlowStep('intent');
+            setDataFlowStep('evidence');
+            setDataFlowStep('escalate');
+            pushAudit('intent/escalate', 'FIXTURE', 'runtime export · ' + (esc.audit_id || esc.working_task.audit_id));
+            const wt = workingTaskFromRuntime(esc.working_task, panel.current, panel.agent_id);
+            wt.display_phase = 'current';
+            wt.status = 'in_progress';
+            EnterpriseRuntime.workingTasks = [wt];
+            EnterpriseRuntime.activeTaskId = wt.task_id;
+            setDataFlowStep('wt');
+            setDataFlowStep('playbook');
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            renderExecutorPage();
+            switchView(3);
+            showToast('success', '真实运行时已导入', wt.task_id + ' · 来自 export_demo_harness_fixtures.py');
+        }
+
+        function buildWorkingTaskFromPlaybook(opts) {
+            const { playbook, agent, source, title, subtitle, priority, businessContext, intentId, slaLabel } = opts;
+            const wtId = 'wt-' + Date.now().toString(36);
+            const steps = playbook.steps.map((s, i) => ({
+                step_id: s.step_id, label: s.label, operation_ref: s.operation_ref,
+                done: false, current: i === 0, optional: !!s.optional
+            }));
+            return {
+                task_id: wtId, tenant_id: TENANT_ID, source: source || 'pipaw_manual',
+                product_track: 'pipaw', status: 'open', display_phase: 'backlog',
+                intent_id: intentId || null, source_intent_id: intentId || null,
+                playbook_id: playbook.playbook_id,
+                agent_id: agent.agent_id,
+                position_id: agent.position_id,
+                assignee_role_id: agent.role_id,
+                title, subtitle, goal: subtitle || title, priority: priority || 'high',
+                sla_label: slaLabel || '剩余时间：今日内',
+                due_at: new Date(Date.now() + 8 * 3600000).toISOString(),
+                business_context: businessContext || {},
+                steps, ticket_id: null, process_instance_id: null, approval_id: null, audit_id: null,
+                actions: [{ label: '接手处理', action: 'open' }, { label: '执行当前步骤', action: 'complete_step' }]
+            };
+        }
+
+        function buildWorkingTaskFromIntent(intent) {
+            const agent = getHarnessAgent(intent.escalation_target?.role_id === 'role.cs_agent'
+                ? 'agent.cs_specialist' : HARNESS_AGENT_CS.agent_id);
+            return buildWorkingTaskFromPlaybook({
+                playbook: HARNESS_PLAYBOOK_CS, agent,
+                source: 'selfpaw_escalation', intentId: intent.intent_id,
+                title: intent.summary || intent.goal, subtitle: intent.goal,
+                priority: intent.urgency,
+                businessContext: { ...intent.business_context, evidence_refs: intent.evidence_refs },
+                slaLabel: '剩余时间：今日内'
+            });
+        }
+
+        function dispatchSalesPlaybookTask(actionMeta) {
+            const b = EnterpriseRuntime.biz;
+            b.stage = 'action_running'; b.quoteId = 'QT-2024-0612'; b.amount = 1200; b.discount = 0.12;
+            EnterpriseRuntime.dataFlowMode = 'b2b_sales';
+            EnterpriseRuntime.dataFlowStep = -1;
+            setDataFlowStep('action');
+            const wt = buildWorkingTaskFromPlaybook({
+                playbook: HARNESS_PLAYBOOK_SALES, agent: HARNESS_AGENT_SALES,
+                source: 'pipaw_manual', intentId: actionMeta?.actionId || 'ACT-0612-001',
+                title: 'LT-2024 大单报价审批 · ' + (b.customerName || '华东某制造集团'),
+                subtitle: '策略 STR-PAC-0612-A 分派 · 金额 ' + b.amount + ' 万 · 折扣 ' + Math.round((b.discount || 0) * 100) + '%',
+                priority: 'high',
+                businessContext: { lead_id: b.leadId, customer_id: 'C-2001', amount: b.amount, discount: b.discount, quote_id: b.quoteId },
+                slaLabel: '报价至 ' + (b.deadline || '6/14')
+            });
+            wt.audit_id = genAuditId();
+            wt.display_phase = 'backlog';
+            EnterpriseRuntime.workingTasks.unshift(wt);
+            setDataFlowStep('wt');
+            setDataFlowStep('playbook');
+            pushAudit('action/dispatch', 'CREATE_WT', wt.task_id + ' · playbook.sales_ltc_quote_v1');
+            return wt;
+        }
+
+        function escalateIntentToPipaw(intentOverride) {
+            const intent = { ...(intentOverride || HARNESS_INTENT_COMPLAINT), status: 'escalated' };
+            EnterpriseRuntime.dataFlowMode = 'cs_escalation';
+            EnterpriseRuntime.dataFlowStep = -1;
+            const auditId = genAuditId();
+            setDataFlowStep('intent');
+            setDataFlowStep('evidence');
+            setDataFlowStep('escalate');
+            pushAudit('intent/escalate', 'POST', `intent_id=${intent.intent_id} · evidence_refs=${(intent.evidence_refs || []).length} · audit_id=${auditId}`);
+            const wt = buildWorkingTaskFromIntent(intent);
+            wt.audit_id = auditId;
+            EnterpriseRuntime.workingTasks.unshift(wt);
+            EnterpriseRuntime.activeTaskId = wt.task_id;
+            setDataFlowStep('wt');
+            setDataFlowStep('playbook');
+            return wt;
+        }
+
+        function routeOutwardMessage(channelId, body) {
+            const route = HARNESS_OUTWARD_ROUTES.routes.find(r => r.channel_id === channelId);
+            if (!route) return { status: 'error', reason: 'ROUTE_NOT_FOUND' };
+            EnterpriseRuntime.dataFlowMode = 'outward';
+            EnterpriseRuntime.dataFlowStep = -1;
+            setDataFlowStep('channel');
+            setDataFlowStep('gateway');
+            const intent = { ...HARNESS_INTENT_OUTWARD, intent_id: 'int-out-' + Date.now().toString(36).slice(-6),
+                summary: body || HARNESS_INTENT_OUTWARD.summary,
+                business_context: { ...HARNESS_INTENT_OUTWARD.business_context, channel: channelId } };
+            setDataFlowStep('intent');
+            const agent = getHarnessAgent(route.default_agent);
+            setDataFlowStep('route');
+            const logLine = `[${new Date().toLocaleTimeString('zh-CN', { hour12: false })}] ${channelId} → ${route.default_agent} · PII mask: ${HARNESS_OUTWARD_ROUTES.pii_mask_fields.join(',')}`;
+            EnterpriseRuntime.outwardLog.unshift(logLine);
+            pushAudit('outward.gateway', 'ROUTE', `${channelId} → ${agent.agent_id} · intent=${intent.intent_id}`);
+            const wt = buildWorkingTaskFromIntent(intent);
+            wt.source = 'outward_gateway';
+            wt.agent_id = agent.agent_id;
+            wt.audit_id = genAuditId();
+            EnterpriseRuntime.workingTasks.unshift(wt);
+            setDataFlowStep('wt');
+            setDataFlowStep('playbook');
+            renderOutwardGatewayUi();
+            return { status: 'ok', intent, working_task: wt, route };
+        }
+
+        function openWorkingTask(taskId) {
+            const wt = EnterpriseRuntime.workingTasks.find(t => t.task_id === taskId);
+            if (!wt) { showToast('warning', '无任务', '请先演示客诉升级链路'); return; }
+            EnterpriseRuntime.activeTaskId = taskId;
+            wt.display_phase = 'current';
+            wt.status = 'in_progress';
+            EnterpriseRuntime.workingTasks.forEach(t => {
+                if (t.task_id !== taskId && t.display_phase === 'current') {
+                    t.display_phase = 'backlog';
+                    if (t.status === 'in_progress') t.status = 'open';
+                }
+            });
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            if (currentView === 3 || currentView === 'value') syncRuntimeUi();
+            switchView(3);
+            showToast('info', '已打开任务', wt.title);
+        }
+
+        function buildPlaybookPayload(wt, step) {
+            const ctx = wt.business_context || {};
+            const op = step.operation_ref;
+            if (op === 'cs.customer.get_profile') return { customer_id: ctx.customer_id };
+            if (op === 'cs.ticket.create') return { subject: 'VIP 客诉：交付延期跟进', customer_id: ctx.customer_id, priority: 'high' };
+            if (op === 'cs.ticket.escalate') return { ticket_id: wt.ticket_id, reason: 'VIP SLA 临近' };
+            if (op === 'cs.lead.qualify_lead') return { lead_id: ctx.lead_id, criteria_ref: 'b2b-v1' };
+            if (op === 'cs.process.start') return {
+                template_id: 'sales_quote_approval', business_key: ctx.lead_id || 'LT-2024',
+                variables: { amount: ctx.amount, discount: ctx.discount, quote_id: ctx.quote_id }
+            };
+            if (op === 'cs.approval.submit') return {
+                template_id: 'quote_discount',
+                payload: { amount: ctx.amount, discount: ctx.discount, lead_id: ctx.lead_id, quote_id: ctx.quote_id }
+            };
+            return {};
+        }
+
+        function advancePlaybookStep(taskId) {
+            const wt = EnterpriseRuntime.workingTasks.find(t => t.task_id === taskId);
+            if (!wt) return;
+            const agent = getHarnessAgent(wt.agent_id);
+            const step = wt.steps.find(s => s.current);
+            if (!step) {
+                if (wt.status !== 'done') {
+                    wt.status = 'done'; wt.display_phase = 'completed';
+                    setDataFlowStep('result');
+                    showToast('success', '任务闭环', 'Playbook 全部步骤已完成');
+                }
+                renderTaskPanelUi();
+                renderExecutorPage();
+                return;
+            }
+            const payload = buildPlaybookPayload(wt, step);
+            const resp = invokeCapability(step.operation_ref, payload, agent);
+            if (resp.status !== 'ok') {
+                showToast('error', '能力调用被拒绝', resp.deny_reason || '');
+                return;
+            }
+            step.done = true; step.current = false; step.last_output = resp.output;
+            if (step.operation_ref === 'cs.ticket.create') wt.ticket_id = resp.output.ticket_id;
+            if (step.operation_ref === 'cs.process.start') wt.process_instance_id = resp.output.process_instance_id;
+            if (step.operation_ref === 'cs.approval.submit') wt.approval_id = resp.output.approval_id;
+            const nextIdx = wt.steps.findIndex(s => !s.done);
+            if (nextIdx >= 0) {
+                wt.steps[nextIdx].current = true;
+            } else {
+                wt.status = 'done'; wt.display_phase = 'completed';
+                setDataFlowStep('audit');
+                setDataFlowStep('result');
+                if (wt.playbook_id === HARNESS_PLAYBOOK_SALES.playbook_id) {
+                    const b = EnterpriseRuntime.biz;
+                    b.stage = 'approval_pending';
+                    const dealEl = document.getElementById('executorKpiDeal');
+                    if (dealEl) dealEl.textContent = '审批 ' + (wt.approval_id || '—');
+                }
+            }
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            renderExecutorPage();
+        }
+
+        function setDataFlowStep(nodeId) {
+            const idx = DATA_FLOW_NODES.findIndex(n => n.id === nodeId);
+            if (idx >= 0) EnterpriseRuntime.dataFlowStep = Math.max(EnterpriseRuntime.dataFlowStep, idx);
+        }
+
+        function getDataFlowNodes() {
+            if (EnterpriseRuntime.dataFlowMode === 'outward') return DATA_FLOW_NODES_OUTWARD;
+            if (EnterpriseRuntime.dataFlowMode === 'b2b_sales') return DATA_FLOW_NODES_B2B;
+            return DATA_FLOW_NODES;
+        }
+
+        function renderHarnessDataFlow() {
+            const stripIds = ['harnessDataFlowStrip', 'focusDataFlowStrip'];
+            const nodes = getDataFlowNodes();
+            const di = EnterpriseRuntime.dataFlowStep;
+            const html = nodes.map((n, i) => {
+                let cls = 'df-node border-border';
+                if (i < di) cls = 'df-node df-node-done border-success/40';
+                else if (i === di) cls = 'df-node df-node-active border-primary';
+                return '<span class="' + cls + '"><span class="font-medium">' + n.label + '</span>' +
+                    '<span class="block text-[9px] text-text3">' + n.sub + '</span></span>' +
+                    (i < nodes.length - 1 ? '<span class="df-arrow">→</span>' : '');
+            }).join('');
+            stripIds.forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = html; });
+        }
+
+        function renderOutwardGatewayUi() {
+            const routesEl = document.getElementById('outwardGatewayRoutes');
+            if (routesEl) {
+                routesEl.innerHTML = HARNESS_OUTWARD_ROUTES.routes.map(r =>
+                    '<div class="p-2 rounded border border-border hover:border-success/40 cursor-pointer" onclick="routeOutwardMessage(\'' + r.channel_id + '\')">' +
+                    '<div class="font-medium">' + r.channel_id + '</div>' +
+                    '<div class="text-text3">' + r.type + ' → ' + r.default_agent + '</div></div>'
+                ).join('');
+            }
+            const flowEl = document.getElementById('outwardGatewayFlow');
+            if (flowEl && EnterpriseRuntime.dataFlowMode === 'outward') {
+                flowEl.innerHTML = DATA_FLOW_NODES_OUTWARD.map((n, i) => {
+                    const di = EnterpriseRuntime.dataFlowStep;
+                    let cls = i <= di ? (i === di ? 'df-node-active border-primary' : 'df-node-done border-success/40') : 'border-border';
+                    return '<span class="df-node ' + cls + '">' + n.label + '</span>' +
+                        (i < DATA_FLOW_NODES_OUTWARD.length - 1 ? '<span class="df-arrow">→</span>' : '');
+                }).join('');
+            }
+            const logEl = document.getElementById('outwardGatewayLog');
+            if (logEl) {
+                logEl.innerHTML = EnterpriseRuntime.outwardLog.length
+                    ? EnterpriseRuntime.outwardLog.map(l => '<div>' + l + '</div>').join('')
+                    : '等待演示… 点击渠道卡片或「演示飞书 IM 入站」';
+            }
+        }
+
+        function renderTaskPanelUi() {
+            const backlogEl = document.getElementById('executorBacklog');
+            const currentEl = document.getElementById('executorCurrentTask');
+            const focusBacklog = document.getElementById('focusTaskBacklog');
+            const focusCurrent = document.getElementById('focusTaskCurrent');
+            const tasks = EnterpriseRuntime.workingTasks;
+            const renderBacklog = (el) => {
+                if (!el) return;
+                const items = tasks.filter(t => t.display_phase === 'backlog' || (t.task_id !== EnterpriseRuntime.activeTaskId && t.status === 'open'));
+                el.innerHTML = items.length ? items.map(t =>
+                    '<div class="p-2 rounded border border-border hover:border-primary/40 cursor-pointer" onclick="openWorkingTask(\'' + t.task_id + '\')">' +
+                    '<div class="font-medium">' + (t.title.length > 36 ? t.title.slice(0, 36) + '…' : t.title) + '</div>' +
+                    '<div class="text-text3 mt-0.5">' + t.task_id + ' · ' + (t.playbook_id || '—') + ' · ' + t.priority + '</div></div>'
+                ).join('') : '<div class="text-text3 p-2">暂无待办 · 点击「客诉升级链路」创建 WorkingTask</div>';
+            };
+            const renderCurrent = (el) => {
+                if (!el) return;
+                const wt = tasks.find(t => t.task_id === EnterpriseRuntime.activeTaskId);
+                if (!wt || wt.display_phase !== 'current') {
+                    el.innerHTML = '<div class="text-text3 p-4 bg-bg1 rounded-lg">选择 backlog 任务或运行客诉升级演示</div>';
+                    return;
+                }
+                const stepsHtml = wt.steps.map(s => {
+                    const cls = s.done ? 'tp-step-done border-success/30' : (s.current ? 'tp-step-current' : 'border-border opacity-60');
+                    const icon = s.done ? '<i class="fa fa-check text-success"></i>' : (s.current ? '●' : '○');
+                    let out = '';
+                    if (s.last_output) out = '<div class="cap-result">' + JSON.stringify(s.last_output, null, 0).slice(0, 200) + '</div>';
+                    return '<div class="p-2 mb-1 rounded border ' + cls + ' flex justify-between gap-2">' +
+                        '<div class="flex-1"><div>' + icon + ' ' + s.label + '</div>' +
+                        '<div class="text-[10px] text-text3 font-mono mt-0.5">' + (s.operation_ref || '') + '</div>' + out + '</div></div>';
+                }).join('');
+                el.innerHTML =
+                    '<div class="flex flex-wrap justify-between gap-2 mb-2">' +
+                    '<div><div class="font-medium text-sm">' + wt.title + '</div>' +
+                    '<div class="text-text3">' + wt.task_id + ' · ' + wt.playbook_id + ' · agent.' + wt.agent_id.replace('agent.', '') + '</div></div>' +
+                    '<span class="tag bg-warning/10 text-warning">' + wt.sla_label + '</span></div>' +
+                    '<div class="p-2 bg-bg1 rounded mb-2 text-text2"><strong>Evidence：</strong>' +
+                    ((wt.evidence_refs || wt.business_context.evidence_refs || []).map(e => e.summary).join(' · ') || '—') + '</div>' +
+                    stepsHtml +
+                    '<div class="flex gap-2 mt-3">' +
+                    '<button class="primary-btn text-xs" onclick="advancePlaybookStep(\'' + wt.task_id + '\')"><i class="fa fa-bolt mr-1"></i>执行当前步骤 (cs.*)</button>' +
+                    (wt.ticket_id ? '<span class="text-[10px] text-success self-center">工单 ' + wt.ticket_id + '</span>' : '') +
+                    '</div>';
+            };
+            renderBacklog(backlogEl);
+            renderBacklog(focusBacklog);
+            renderCurrent(currentEl);
+            renderCurrent(focusCurrent);
+        }
+
+        function renderExecutorPage() {
+            const b = EnterpriseRuntime.biz;
+            const titleEl = document.getElementById('executorBizTitle');
+            if (titleEl) titleEl.textContent = '【当前商机】' + b.leadId + ' · ' + b.customerName;
+            const slaEl = document.getElementById('executorBizSla');
+            if (slaEl) slaEl.textContent = b.quoteId ? ('报价 ' + b.quoteId + ' · 折扣 ' + Math.round((b.discount || 0) * 100) + '%') : ('报价至 ' + (b.deadline || '—'));
+            const detEl = document.getElementById('executorBizDetail');
+            if (detEl) {
+                detEl.innerHTML = '<div><strong>阶段：</strong>' + (b.stage || 'idle') + '</div>' +
+                    '<div><strong>金额：</strong>' + (b.amount ? b.amount + ' 万' : '待定') + ' · 主责 ' + b.owner + '</div>' +
+                    '<div class="text-text3 mt-1">经 CapabilityServiceRouter 调用，禁止直连 CRM</div>';
+            }
+            const capEl = document.getElementById('executorCapResults');
+            if (capEl) {
+                capEl.innerHTML = EnterpriseRuntime.capabilityCalls.length
+                    ? EnterpriseRuntime.capabilityCalls.slice(0, 5).map(c =>
+                        '<div class="p-2 border border-border rounded"><div class="font-mono text-primary">' + c.operation_ref + '</div>' +
+                        '<div class="text-[10px] text-text3">' + c.audit_id + ' · ' + c.approval_level + '</div>' +
+                        '<div class="cap-result">' + JSON.stringify(c.output).slice(0, 180) + '</div></div>'
+                    ).join('')
+                    : '<div class="text-text3">运行 PAC 闭环「行动」步或客诉 Playbook 后显示 cs.* 返回</div>';
+            }
+            const audEl = document.getElementById('executorCapAudit');
+            if (audEl) {
+                audEl.innerHTML = EnterpriseRuntime.capabilityCalls.length
+                    ? EnterpriseRuntime.capabilityCalls.map(c =>
+                        '<div class="py-0.5 border-b border-border/40"><span class="text-text3">' + c.ts + '</span> ' +
+                        '<strong>' + c.operation_ref + '</strong> ' + c.audit_id + '</div>'
+                    ).join('')
+                    : '<div class="text-text3">—</div>';
+            }
+            const todos = document.getElementById('executorBdTodos');
+            const todoCount = document.getElementById('executorTodoCount');
+            const bdActions = b.stage === 'action_running'
+                ? ['跟进 ' + (b.quoteId || '报价') + ' 经理审批', '补充 LT-2024 决策人证据包', '拜访 2 家 TR 赛道客户']
+                : ['完成 LT-2024 证据包', '跟进经理审批', '拜访决策人 2 家'];
+            if (todos) todos.innerHTML = bdActions.map((a, i) =>
+                '<div class="p-2 border-l-4 border-primary/40 bg-primary/5 rounded-r">' + (i + 1) + '. ' + a + '</div>'
+            ).join('');
+            if (todoCount) todoCount.textContent = bdActions.length + ' 项';
+            const kpiDeal = document.getElementById('executorKpiDeal');
+            const kpiDealBar = document.getElementById('executorKpiDealBar');
+            if (kpiDeal && b.stage) {
+                const stageMap = { idle: '待启动', strategy_confirmed: '策略确认', action_running: 'Playbook 执行中', approval_pending: '审批 ' + (b.quoteId || ''), attributed: '已归因验证' };
+                kpiDeal.textContent = stageMap[b.stage] || b.stage;
+                if (kpiDealBar) kpiDealBar.style.width = b.stage === 'attributed' ? '100%' : b.stage === 'approval_pending' ? '85%' : b.stage === 'action_running' ? '65%' : '40%';
+            }
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+        }
+
+        function demoCsEscalation() {
+            resetRuntime(false);
+            const wt = escalateIntentToPipaw();
+            openWorkingTask(wt.task_id);
+            showToast('success', '客诉升级完成', 'WorkingTask ' + wt.task_id + ' 已进入 ΠPaw Task Panel');
+        }
+
+        function demoLtcPlaybook() {
+            resetRuntime(false);
+            EnterpriseRuntime.biz = { leadId: 'LT-2024', customerName: '华东某制造集团', quoteId: 'QT-2024-0612', stage: 'idle', amount: 1200, discount: 0.12, owner: '王磊', deadline: '6/14' };
+            const wt = dispatchSalesPlaybookTask({ actionId: 'ACT-0612-001' });
+            openWorkingTask(wt.task_id);
+            switchView(3);
+            showToast('success', 'LTC Playbook 已创建', '执行「执行当前步骤」完成 qualify → process → approval');
+        }
+
+        function demoOutwardGateway() {
+            resetRuntime(false);
+            const resp = routeOutwardMessage('feishu_im', '【飞书】客户 C-1001：订单 PO-8821 预计何时发货？');
+            if (resp.status === 'ok') {
+                openWorkingTask(resp.working_task.task_id);
+                setFocusRole('cs_agent');
+                switchView('value');
+                showToast('success', 'Outward Gateway', '飞书 IM → agent.cs_specialist · WorkingTask 已创建');
+            }
+        }
         function getScenarioSteps(scenarioId) {
             if (scenarioId === 'scn-b2b-sales') return RUN_STEPS_B2B;
             const sc = SCENARIOS.find(s => s.id === scenarioId);
@@ -2331,7 +3204,10 @@
             const proj = PROJECTS.find(p => p.id === run.projectId);
             if (step.workflow === 'strategy_recommend') b.stage = 'strategy_confirmed';
             if (step.workflow === 'action_dispatch') {
-                b.stage = 'action_running'; b.quoteId = 'QT-2024-0612'; b.amount = 1200; b.discount = 0.12;
+                const wt = dispatchSalesPlaybookTask({ actionId: 'ACT-0612-001' });
+                EnterpriseRuntime.activeTaskId = wt.task_id;
+                showToast('info', 'Action 已分派', 'BD WorkingTask 已创建 · 切换「执行助手」逐步执行 LTC Playbook');
+                if (!EnterpriseRuntime.autoTimer) switchView(3);
             }
             if (step.workflow === 'result_attribute') { b.stage = 'attributed'; b.amount = 1200; }
             if (step.workflow === 'result_attribute' && proj) {
@@ -2390,10 +3266,21 @@
             }
             EnterpriseRuntime.run = null;
             EnterpriseRuntime.audit = [];
+            EnterpriseRuntime.capabilityCalls = [];
+            EnterpriseRuntime.workingTasks = [];
+            EnterpriseRuntime.activeTaskId = null;
+            EnterpriseRuntime.dataFlowStep = -1;
+            EnterpriseRuntime.dataFlowMode = 'cs_escalation';
+            EnterpriseRuntime.lastAuditId = null;
+            EnterpriseRuntime.outwardLog = [];
             EnterpriseRuntime.pdca = { org: 'C', project: 'P' };
             EnterpriseRuntime.biz = { leadId: 'LT-2024', customerName: '华东某制造集团', quoteId: null, stage: 'idle', amount: 0, discount: 0, owner: '王磊', deadline: '6/14' };
             document.getElementById('btnAdvanceRun')?.classList.add('hidden');
             document.getElementById('btnAutoRun')?.classList.add('hidden');
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            renderOutwardGatewayUi();
+            renderExecutorPage();
             syncRuntimeUi();
             if (showMsg !== false) showToast('info', '已重置', '运行时状态已恢复初始');
         }
@@ -2435,19 +3322,22 @@
 
         /* ── 智慧闭环 · 角色自适应模块（L6 交互层） ── */
         const FOCUS_ROLES = {
-            executive: { id: 'executive', label: 'CEO/BG', persona: '钛动 CEO · 经营驾驶舱', org: 'org-root',
-                defaultWidgets: ['kpi_pulse', 'portfolio', 'risk', 'linkage', 'improvement'] },
-            manager: { id: 'manager', label: 'BU 负责人', persona: 'PAC BU · 张华东', org: 'org-east',
+            executive: { id: 'executive', label: '战略罗盘', persona: '钛动 CEO · 战略罗盘', org: 'org-root',
+                defaultWidgets: ['kpi_pulse', 'value_flow_io', 'portfolio', 'risk', 'linkage', 'improvement'] },
+            manager: { id: 'manager', label: '管理驾驶舱', persona: 'PAC BU · 张华东', org: 'org-east',
                 defaultWidgets: ['kpi_pulse', 'campaign', 'value_stream', 'actions', 'linkage', 'pdca'] },
             owner: { id: 'owner', label: '策略主责', persona: '策略战役负责人 · 张华东', org: 'org-east',
                 defaultWidgets: ['campaign', 'value_stream', 'actions', 'object', 'audit'] },
-            executor: { id: 'executor', label: '一线 BD', persona: 'BD-A · 王磊', org: 'org-east',
-                defaultWidgets: ['actions', 'value_stream', 'object', 'approvals', 'audit'] },
+            executor: { id: 'executor', label: '执行助手', persona: 'BD-A · 王磊', org: 'org-east',
+                defaultWidgets: ['actions', 'task_panel', 'value_stream', 'object', 'audit'] },
+            cs_agent: { id: 'cs_agent', label: '客服 Agent', persona: 'agent.cs_specialist · 客服岗', org: 'org-root',
+                defaultWidgets: ['task_panel', 'data_flow', 'audit', 'risk'] },
             compliance: { id: 'compliance', label: '分析/职能', persona: '数据分析 · Black', org: 'org-root',
-                defaultWidgets: ['approvals', 'risk', 'audit', 'improvement', 'pdca'] }
+                defaultWidgets: ['approvals', 'risk', 'audit', 'improvement', 'pdca', 'value_flow_io'] }
         };
         const FOCUS_WIDGETS = {
             kpi_pulse: { title: '四大金刚', icon: 'fa-heartbeat', span: 'focus-widget-span-12', desc: 'Spend/Revenue/Margin/TR · 感知引擎输入' },
+            value_flow_io: { title: '内外价值流', icon: 'fa-exchange', span: 'focus-widget-span-8', desc: '对内协同 vs 对外经营 · 双轨 KPI' },
             portfolio: { title: '策略组合', icon: 'fa-th-list', span: 'focus-widget-span-8', desc: '在管 Strategy 与验证状态' },
             campaign: { title: '当前战役', icon: 'fa-flag', span: 'focus-widget-span-4', desc: 'Objective 载体 · 策略战役' },
             value_stream: { title: '智慧闭环', icon: 'fa-refresh', span: 'focus-widget-span-8', desc: '感知→归因→策略→行动→验证→进化' },
@@ -2459,6 +3349,8 @@
             risk: { title: '预警引擎', icon: 'fa-exclamation-triangle', span: 'focus-widget-span-4', desc: '指标/SLA/闭环断裂' },
             audit: { title: '归因审计', icon: 'fa-history', span: 'focus-widget-span-6', desc: '完整决策智慧链记录' },
             improvement: { title: 'SOP 沉淀', icon: 'fa-lightbulb-o', span: 'focus-widget-span-6', desc: '进化引擎产出 · 策略库更新' },
+            task_panel: { title: 'Task Panel', icon: 'fa-tasks', span: 'focus-widget-span-8', desc: 'WorkingTask · Playbook · cs.* 步骤' },
+            data_flow: { title: 'Harness 数据流', icon: 'fa-long-arrow-right', span: 'focus-widget-span-12', desc: 'Intent → Evidence → WorkingTask → cs.* → Audit' },
             platform: { title: '系统架构', icon: 'fa-cog', span: 'focus-widget-span-12', desc: 'L1~L6 + 六大引擎' }
         };
         let focusRoleId = 'manager';
@@ -2536,6 +3428,8 @@
             switch (id) {
             case 'kpi_pulse':
                 return focusWidgetShell(id, '<div id="focusKpiGrid" class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs"></div>');
+            case 'value_flow_io':
+                return focusWidgetShell(id, '<div id="focusValueFlowIo" class="grid md:grid-cols-2 gap-3 text-xs"></div>');
             case 'portfolio':
                 return focusWidgetShell(id, '<div id="focusPortfolioList" class="space-y-2 text-xs max-h-[220px] overflow-y-auto"></div>');
             case 'campaign':
@@ -2579,6 +3473,14 @@
                 return focusWidgetShell(id, '<div id="globalAuditLog" class="max-h-[200px] overflow-y-auto text-xs"></div>');
             case 'improvement':
                 return focusWidgetShell(id, '<div id="globalChangeSets" class="space-y-2 text-xs max-h-[200px] overflow-y-auto"></div>');
+            case 'task_panel':
+                return focusWidgetShell(id,
+                    '<div class="grid md:grid-cols-3 gap-3">' +
+                    '<div class="md:col-span-1"><div class="text-[10px] text-text3 mb-1">backlog</div><div id="focusTaskBacklog" class="space-y-1 max-h-[180px] overflow-y-auto"></div></div>' +
+                    '<div class="md:col-span-2"><div class="text-[10px] text-text3 mb-1">current · Playbook</div><div id="focusTaskCurrent"></div></div></div>');
+            case 'data_flow':
+                return focusWidgetShell(id, '<div id="focusDataFlowStrip" class="flex flex-wrap items-center gap-1 mb-2"></div>' +
+                    '<div class="text-[10px] text-text3">模式：cs_escalation · outward · b2b_sales · 对齐 intent_escalation / outward_gateway / sales_playbook</div>');
             case 'platform':
                 return focusWidgetShell(id,
                     '<details class="text-xs text-text3"><summary class="cursor-pointer hover:text-primary">UAS 架构师 / IT 运行详情</summary>' +
@@ -2594,6 +3496,52 @@
             el.innerHTML = Object.values(FOCUS_ROLES).map(r =>
                 '<button type="button" class="focus-role-pill ' + (r.id === focusRoleId ? 'focus-role-pill-active' : '') +
                 '" onclick="setFocusRole(\'' + r.id + '\')">' + r.label + '</button>'
+            ).join('');
+        }
+
+        function renderAdaptationLayersBar() {
+            const el = document.getElementById('adaptationLayersBar');
+            if (!el) return;
+            const r = EnterpriseRuntime.run;
+            const activeLayer = r && r.stepIndex >= 0
+                ? (r.stepIndex < 2 ? 'strategy' : r.stepIndex < 4 ? 'biz' : 'mgmt')
+                : 'strategy';
+            el.innerHTML = ADAPTATION_LAYERS.map(l => {
+                const act = l.id === activeLayer ? 'adapt-layer-active' : '';
+                return '<div class="adapt-layer ' + act + '"><div class="text-xs font-medium">' + l.name +
+                    '</div><div class="text-[10px] text-text3 mt-0.5">' + l.mode + '</div>' +
+                    '<div class="text-[10px] text-primary mt-1">' + l.metric + '</div></div>';
+            }).join('');
+        }
+
+        function renderDualLoops() {
+            const r = EnterpriseRuntime.run;
+            const bi = r && r.stepIndex >= 0 ? Math.min(r.stepIndex, DUAL_LOOPS.business.length - 1) : -1;
+            const mi = r && r.stepIndex >= 2 ? Math.min(r.stepIndex - 2, DUAL_LOOPS.management.length - 1) : -1;
+            const bizEl = document.getElementById('dualLoopBusiness');
+            if (bizEl) {
+                bizEl.innerHTML = DUAL_LOOPS.business.map((s, i) =>
+                    '<span class="dual-loop-step ' + (i === bi ? 'dual-loop-step-active' : i < bi ? 'text-success' : '') + '">' + s + '</span>' +
+                    (i < DUAL_LOOPS.business.length - 1 ? '<i class="fa fa-chevron-right text-text3 text-[8px]"></i>' : '')
+                ).join('');
+            }
+            const mgmtEl = document.getElementById('dualLoopMgmt');
+            if (mgmtEl) {
+                mgmtEl.innerHTML = DUAL_LOOPS.management.map((s, i) =>
+                    '<span class="dual-loop-step ' + (i === mi ? 'dual-loop-step-active' : i < mi ? 'text-success' : '') + '">' + s + '</span>' +
+                    (i < DUAL_LOOPS.management.length - 1 ? '<i class="fa fa-chevron-right text-text3 text-[8px]"></i>' : '')
+                ).join('');
+            }
+        }
+
+        function renderProductStackBar() {
+            const el = document.getElementById('productStackBar');
+            if (!el) return;
+            el.innerHTML = PIPAW_PRODUCT_STACK.map(p =>
+                '<div class="p-2 rounded-lg bg-bg1 border border-border text-center">' +
+                '<div class="font-medium text-primary">' + p.k + '</div>' +
+                '<div class="text-text2">' + p.n + '</div>' +
+                '<div class="text-text3 mt-0.5">' + p.v + '</div></div>'
             ).join('');
         }
 
@@ -2632,6 +3580,8 @@
         function renderFocusBoard() {
             const grid = document.getElementById('focusWidgetGrid');
             if (!grid) return;
+            renderAdaptationLayersBar();
+            renderDualLoops();
             renderFocusRolePicker();
             renderAiosLoopBanner();
             grid.innerHTML = getEnabledFocusWidgets().map(id => buildFocusWidgetHtml(id)).join('');
@@ -2719,6 +3669,17 @@
                     '<div class="p-2 rounded border border-warning/30 bg-warning/5"><span class="tag bg-danger/10 text-danger mr-1">' + r.level +
                     '</span>' + r.desc + '<div class="text-text3 mt-0.5">' + r.proj + ' · ' + r.owner + '</div></div>'
                 ).join('') : '<div class="text-text3">暂无风险</div>';
+            }
+            const vfEl = document.getElementById('focusValueFlowIo');
+            if (vfEl) {
+                vfEl.innerHTML = Object.values(VALUE_FLOWS).map(vf => {
+                    const c = vf.color === 'success' ? 'border-success/30 bg-success/5' : 'border-primary/30 bg-primary/5';
+                    const ic = vf.color === 'success' ? 'text-success' : 'text-primary';
+                    return '<div class="flow-io-card ' + c + '"><div class="font-medium mb-1"><i class="fa ' + vf.icon + ' ' + ic + ' mr-1"></i>' + vf.label +
+                        '</div><ul class="text-text2 space-y-0.5 list-disc list-inside">' +
+                        vf.items.map(it => '<li>' + it + '</li>').join('') +
+                        '</ul><div class="text-[10px] text-text3 mt-2">' + vf.kpi + '</div></div>';
+                }).join('');
             }
         }
 
@@ -2820,6 +3781,8 @@
 
             renderAiosLoopBanner();
             renderAiosEngines();
+            renderAdaptationLayersBar();
+            renderDualLoops();
 
             const stripVs = document.getElementById('stripValueStream');
             if (stripVs) stripVs.textContent = VALUE_STREAM.name;
@@ -2905,6 +3868,9 @@
                 if (selectedProjectId) selectProject(selectedProjectId, true);
             }
             if (currentView === 'scenario') renderScenarioDetail();
+            renderTaskPanelUi();
+            renderHarnessDataFlow();
+            if (currentView === 3) renderExecutorPage();
             updateFocusHeadline();
             updateFocusStaticWidgets();
             updateAiContext();
@@ -2917,7 +3883,9 @@
             const wi = r?.scenarioId === s.id && r.stepIndex >= 0 ? r.steps[r.stepIndex].bizTitle : null;
             document.getElementById('scenarioDetail').innerHTML = `
                 <div class="font-medium text-base mb-2">${s.title}</div>
-                <div class="text-xs text-text2 mb-2">价值流模板 · 验收 KPI：${s.kpi}</div>
+                <div class="text-xs text-text2 mb-2">场景套件 · <span class="tag bg-primary/10 text-primary">${s.kit || '—'}</span> · ${s.track} · 验收 KPI：${s.kpi}</div>
+                <div class="text-sm font-medium mb-1">四要素预匹配</div>
+                <div class="text-xs text-text3 mb-2">${(s.packs || []).join(' · ')}</div>
                 <div class="text-sm font-medium mb-1">流程节点（经营者可见名）</div>
                 <div class="flex flex-wrap gap-1 mb-2">${VALUE_STREAM.bizStages.map(lab => `<span class="tag bg-bg1">${lab}</span>`).join('')}</div>
                 <div class="text-xs p-2 bg-bg1 rounded">${r && r.scenarioId === s.id ? `当前节点：<strong>${wi}</strong> · ${EnterpriseRuntime.biz.leadId}` : '在价值流工作台启动'}</div>`;
@@ -2929,14 +3897,15 @@
         }
 
         const VIEW_PAGES = {
+            'commercial': 'page-commercial',
             'value': 'page-value', 'org': 'page-org', 'project': 'page-project',
             'platform': 'page-kernel', 'kernel': 'page-kernel', 'scenario': 'page-scenario',
             1: 'page1', 2: 'page2', 3: 'page3'
         };
-        const VIEW_TABS = { 'value': 'tab0', 'org': 'tab4', 'project': 'tab5', 1: 'tab1', 2: 'tab2', 3: 'tab3' };
+        const VIEW_TABS = { 'commercial': 'tab0', 'value': 'tab-more', 'platform': 'tab-platform', 'org': 'tab4', 'project': 'tab5', 1: 'tab1', 2: 'tab2', 3: 'tab3' };
 
         function switchView(view) {
-            if (view === 'loop') view = 'value';
+            if (view === 'loop') view = 'commercial';
             currentView = view;
             Object.values(VIEW_PAGES).forEach(pid => {
                 const el = document.getElementById(pid);
@@ -2949,14 +3918,15 @@
             const tabId = VIEW_TABS[view];
             if (pageId) document.getElementById(pageId).classList.remove('hidden');
             if (tabId) document.getElementById(tabId).classList.add('nav-pill-active');
-            if (view === 'value') renderFocusBoard();
+            if (view === 'commercial') renderCommercialHub();
+            else if (view === 'value') renderFocusBoard();
             else if (view === 'org') { renderOrgTree(); selectOrgNode(selectedOrgId); }
             else if (view === 'project') { initProjectFilters(); initProjectStatusFilters(); renderProjects(); }
-            else if (view === 'platform' || view === 'kernel') { renderAiosEngines(); renderWmDimensions(); renderCapabilities(); renderUasOctet(); initKernelFlowChart(); }
+            else if (view === 'platform' || view === 'kernel') { renderProductStackBar(); renderAiosEngines(); renderWmDimensions(); renderCapabilities(); renderUasOctet(); initKernelFlowChart(); }
             else if (view === 'scenario') { renderScenarioCards(); renderScenarioDetail(); }
             else if (view === 1) { initRevenueChart(); initHealthChart(); initDrillChart(1); }
             else if (view === 2) { initTeamChart(); }
-            else if (view === 3) { initPersonalChart(); }
+            else if (view === 3) { initPersonalChart(); renderExecutorPage(); }
             syncRuntimeUi();
             updateAiContext();
         }
@@ -3593,6 +4563,7 @@
                 const layerTag = s.layer === 'L3' ? 'bg-emerald-100 text-emerald-800' : 'bg-purple-100 text-purple-800';
                 return `<div class="p-3 bg-white rounded-lg card-shadow border cursor-pointer ${act}" onclick="selectScenario('${s.id}')">
                     <span class="tag ${layerTag}">${s.layer}</span>
+                    <span class="tag bg-bg1 text-text3 ml-1">${s.kit || ''}</span>
                     <div class="font-medium text-sm mt-2">${s.title}</div>
                     <div class="text-xs text-text3 mt-1">${s.track}</div>
                     <div class="text-xs text-success mt-2">${s.kpi}</div>
@@ -3643,10 +4614,10 @@
                 platform: `系统架构 · 六大引擎 · ${WM_DIMS[selectedWmDim]?.label} · 审计 ${EnterpriseRuntime.audit.length} 条`,
                 kernel: `系统架构 · L5 智能层 · ${WM_DIMS[selectedWmDim]?.label}`,
                 scenario: `场景模板 · ${SCENARIOS.find(s => s.id === selectedScenarioId)?.title}`,
-                1: '经营驾驶舱 L6 · 四大金刚 · CEO/BG', 2: '策略工作台 L6 · Strategy/Action 编排', 3: '个人工作台 L6 · Action 执行'
+                1: '战略罗盘 · 四大金刚 · 战略拆解', 2: '管理驾驶舱 · 目标承接 · 过程管控', 3: '执行助手 · Action 执行 · 待办驱动'
             };
             const el = document.getElementById('aiContextHint');
-            if (el) el.textContent = hints[currentView] || 'AIOS 企业智能经营操作系统';
+            if (el) el.textContent = hints[currentView] || 'ΠPaw Business AGI';
         }
 
         function toggleAiPanel() {
@@ -4074,13 +5045,20 @@
             }
         });
 
-        // 初始化页面（默认：智慧闭环主控台）
+        // 初始化页面（默认：场景中心 · 商业闭环）
         window.onload = function() {
+            renderCommercialHub();
+            renderAdaptationLayersBar();
+            renderDualLoops();
+            renderHarnessDataFlow();
+            renderOutwardGatewayUi();
+            loadHarnessFixtures();
             renderAiosLoopBanner();
             renderAiosEngines();
             renderFocusBoard();
+            renderExecutorPage();
             syncRuntimeUi();
-            switchView('value');
+            switchView('commercial');
         };
     </script>
 </body>
