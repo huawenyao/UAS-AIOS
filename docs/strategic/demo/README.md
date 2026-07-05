@@ -99,15 +99,38 @@ Demo 中 PAC Margin 场景演示业务闭环；销售提成策略示例在 READM
 
 ## 4. 推荐演示路径
 
-1. **智慧闭环** → 选「BU 负责人」→ 点「演示智慧闭环」— 跑通 PAC Margin 全链路  
-2. **组织模型** → 华东区 → 「由 KPI 缺口立项」— 看战略到战役的承接  
-3. **策略库** → 华东 Q2 攻坚 — 看战役 KPI 随闭环推进更新  
-4. **执行助手** → 王磊视角 — 看 Action 待办与报价审批  
-5. **系统架构** — 看 Agent、`cs.*`、审计链与演化 ChangeSet  
+### 路径 A · PAC Margin 经营闭环（B2B）
+
+1. **智慧闭环** →「管理驾驶舱」→「演示 PAC 闭环」  
+2. 「行动」步自动触发 `cs.lead.qualify_lead` + `cs.approval.submit`  
+3. **执行助手** → BD 商机区与 cs.* 审计尾迹  
+
+### 路径 B · SelfPaw → ΠPaw 客诉升级（REQ-EDH-PP-001）
+
+1. 点「客诉升级链路」— 数据流：Intent → Evidence → WorkingTask → Playbook → cs.*  
+2. 角色「客服 Agent」→ Task Panel 逐步「执行当前步骤」  
+3. 步骤与 `pipaw_cs_agent_playbook.json` 一致  
+
+### 路径 C · 组织与战役
+
+1. **组织适配** → 华东区 → 由缺口立项  
+2. **策略库** → 华东 Q2 攻坚 KPI 联动  
 
 ---
 
-## 5. 本地运行
+## 5. Harness 运行时模型（Demo 内嵌）
+
+| 模型 | 配置来源 | Demo API |
+|------|----------|----------|
+| IntentObject | `intent_samples/complaint_escalation.sample.json` | `escalateIntentToPipaw()` |
+| WorkingTask | `working_task.schema.json` | `EnterpriseRuntime.workingTasks` |
+| Agent Roster | `pipaw_business_agent_roster.json` | `HARNESS_AGENT_CS` + gate |
+| Playbook | `pipaw_cs_agent_playbook.json` | `advancePlaybookStep()` |
+| cs.* | `capability_registry.json` | `invokeCapability()` |
+
+---
+
+## 6. 本地运行
 
 ```bash
 # 语法检查（可选）
