@@ -82,6 +82,33 @@
       "reference_repo_absolute": "C:/Users/ranwu/XiaomiCloud/aipos/copaw-src",
       "implementation_note": "User AGI 主实现在 aipos/copaw-src；本仓库为企业集成与升级 ΠPaw 契约"
     },
+    "SelfPawExperienceDomain": {
+      "type": "domain-pack",
+      "description": "SelfPaw User AGI 消费体验域；LifeWake 是生命体验 Domain Pack 原型，不是第三产品轨",
+      "depends_on": ["UASKernel"],
+      "files": [
+        "docs/strategic/LIFEWAKE_USER_AGI_EXPERIENCE_DOMAIN.md",
+        "projects/lifewake/"
+      ],
+      "status": "prototype",
+      "product_track": "selfpaw",
+      "domain_id": "lifewake"
+    },
+    "ExperienceProtocolContracts": {
+      "type": "contract",
+      "description": "体验域上收 G/E/Π 的同意、仪式、情感影响与关系共创通用契约",
+      "depends_on": ["UASKernel", "SelfPawExperienceDomain"],
+      "files": [
+        "schemas/consent_record.schema.json",
+        "schemas/ritual_envelope.schema.json",
+        "schemas/emotion_impact.schema.json",
+        "schemas/bond_cocreation.schema.json",
+        "scripts/validate_experience_protocol_schemas.py",
+        "harness/knowledge/constraints/adr-uas-003-experience-protocol-boundary.md"
+      ],
+      "status": "baseline",
+      "uas_layers": ["G", "E", "Π"]
+    },
     "PiPawBusinessAGI": {
       "type": "product",
       "description": "Business AGI：经营数字岗位体系",
@@ -183,11 +210,23 @@
       "from": "PiPawBusinessAGI",
       "to": "OutwardGateway",
       "rule": "对外会话全量审计"
+    },
+    "LifeWake_to_ExperienceProtocols": {
+      "from": "SelfPawExperienceDomain",
+      "to": "ExperienceProtocolContracts",
+      "rule": "lw.* 保持领域隔离，通过 adapter 产出 G/E/Π 通用记录"
     }
   },
   "product_capability_ids": {
-    "platform": ["PL-01", "PL-02", "PL-03", "PL-04", "PL-06", "PL-07", "PL-08", "PL-10"],
-    "selfpaw": ["SP-01", "SP-02", "SP-03", "SP-04", "SP-07"],
+    "platform": ["PL-01", "PL-02", "PL-03", "PL-04", "PL-06", "PL-07", "PL-08", "PL-10", "PL-11", "PL-12", "PL-13", "PL-14"],
+    "selfpaw": ["SP-01", "SP-02", "SP-03", "SP-04", "SP-07", "SP-09"],
     "pipaw": ["PP-01", "PP-02", "PP-03", "PP-05", "PP-07", "PP-08"]
+  },
+  "capability_definitions": {
+    "PL-11": "主体同意与灵魂数据主权记录（G）",
+    "PL-12": "通用仪式协议信封（Π）",
+    "PL-13": "情感影响反馈与演化候选（E）",
+    "PL-14": "多主体关系共创治理（G/Π）",
+    "SP-09": "Experience Domain Pack 挂载与 LifeWake 原型"
   }
 }

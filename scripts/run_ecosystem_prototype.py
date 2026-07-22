@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +29,24 @@ def _run(cmd: list[str], *, cwd: Path | None = None, input_json: dict | None = N
     except (json.JSONDecodeError, IndexError):
         parsed = {"raw": body[:400]}
     return {"passed": r.returncode == 0, "exit_code": r.returncode, "result": parsed}
+
+
+def _run_lifewake_isolated() -> dict:
+    """Run the domain evaluator without writing generated reports to the source tree."""
+    source = ROOT / "projects" / "lifewake"
+    if not source.is_dir():
+        return {"passed": False, "exit_code": 2, "result": {"error": "missing_project:projects/lifewake"}}
+    with tempfile.TemporaryDirectory(prefix="uas-lifewake-") as tmp:
+        isolated = Path(tmp) / "lifewake"
+        shutil.copytree(
+            source,
+            isolated,
+            ignore=shutil.ignore_patterns("reports", "database", ".ruff_cache", "__pycache__"),
+        )
+        return _run(
+            [sys.executable, str(isolated / "scripts" / "evaluate_lifewake_mvp.py")],
+            cwd=isolated,
+        )
 
 
 def run_scenario(scenario: dict) -> dict:
@@ -74,6 +94,8 @@ def run_scenario(scenario: dict) -> dict:
         return {"id": sid, **_run([sys.executable, str(ROOT / "scripts" / "run_outward_gateway_mock.py")])}
     if runner == "value_loop_full":
         return {"id": sid, **_run([sys.executable, str(ROOT / "scripts" / "run_value_loop_full.py")])}
+    if runner == "lifewake_mvp":
+        return {"id": sid, **_run_lifewake_isolated()}
 
     return {"id": sid, "passed": False, "result": {"error": f"unknown_runner:{runner}"}}
 

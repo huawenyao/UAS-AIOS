@@ -20,6 +20,15 @@
       "verify": "working_task_created"
     },
     {
+      "id": "selfpaw-experience-lifewake",
+      "layer": "experience_domain",
+      "track": "selfpaw",
+      "title": "SelfPaw 生命体验域 · LifeWake",
+      "runner": "lifewake_mvp",
+      "app_id": "lifewake",
+      "verify": "mvp_cases_pass"
+    },
+    {
       "id": "L2-recruitment-os",
       "layer": "L2",
       "track": "pipaw",

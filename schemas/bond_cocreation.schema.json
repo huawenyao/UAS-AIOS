@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/bond_cocreation.schema.json",
+  "title": "UAS Bond Co-creation",
+  "description": "多个主体在独立授权、可追溯贡献和互惠约束下共同形成体验产物的通用记录。",
+  "type": "object",
+  "required": [
+    "cocreation_id",
+    "bond_ref",
+    "participant_ids",
+    "shared_intent",
+    "consent_refs",
+    "contributions",
+    "reciprocity",
+    "status",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "cocreation_id": {
+      "type": "string",
+      "pattern": "^cocreation-[a-zA-Z0-9._:-]+$"
+    },
+    "bond_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "关系引用；协议不规定关系类型。"
+    },
+    "participant_ids": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "shared_intent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "consent_refs": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "contributions": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/definitions/contribution" }
+    },
+    "reciprocity": {
+      "type": "object",
+      "required": ["status", "evaluated_at"],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pending", "balanced", "accepted_imbalance", "blocked"]
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "resolution": { "type": "string" }
+      }
+    },
+    "artifact_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "ownership": {
+      "type": "string",
+      "enum": ["shared", "participant_scoped", "explicit_agreement"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["proposed", "consent_pending", "active", "completed", "blocked", "withdrawn"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "audit_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "definitions": {
+    "contribution": {
+      "type": "object",
+      "required": ["contribution_id", "participant_id", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "contribution_id": { "type": "string", "minLength": 1 },
+        "participant_id": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": ["intent", "data", "creative_direction", "artifact", "feedback", "facilitation"]
+        },
+        "resource_ref": { "type": "string" },
+        "scope": { "type": "string" },
+        "recorded_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}
