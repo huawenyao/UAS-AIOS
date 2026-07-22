@@ -155,6 +155,7 @@
     materials.push(`今晚 ${state.time} 的时间决定`);
     $("#boundary-materials").textContent = state.revoked ? "已撤回本次策展材料" : materials.join("、");
     document.documentElement.dataset.atmosphere = state.atmosphere;
+    document.documentElement.dataset.subject = state.subject;
     document.title = `LifeWake · ${scene.label}`;
   };
 

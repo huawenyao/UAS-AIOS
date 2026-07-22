@@ -138,11 +138,29 @@ button:focus-visible, [tabindex]:focus-visible, input:focus-visible, textarea:fo
 .portrait-frame { padding: 12px 12px 9px; background: linear-gradient(120deg, #744227, #c0834a 24%, #62361f 48%, #a56335 75%, #57301e); border: 2px solid #4b281a; border-radius: 4px; box-shadow: inset 0 0 0 3px #d29a58, inset 0 0 0 6px #6b3c25, 0 8px 10px rgba(35,18,11,.36); }
 .portrait-mat { padding: 8px; background: #efe2c9; box-shadow: inset 0 0 8px rgba(69,43,27,.25); }
 .portrait-art { position: relative; height: 145px; overflow: hidden; background: linear-gradient(#bf8a76, #efc5a1 66%, #83634e); }
+.portrait-art::before, .portrait-art::after { content: ""; position: absolute; opacity: 0; transition: opacity .5s var(--ease), transform .5s var(--ease); }
 .portrait-sun { position: absolute; width: 72px; height: 72px; border-radius: 50%; right: -8px; top: 19px; background: rgba(255,218,159,.55); filter: blur(5px); }
 .portrait-hair { position: absolute; width: 75px; height: 105px; border-radius: 52% 48% 30% 35%; background: #352821; left: 47px; top: 22px; transform: rotate(-5deg); box-shadow: 19px 15px 0 #2d221c; }
 .portrait-face { position: absolute; width: 49px; height: 68px; border-radius: 48% 48% 44% 44%; background: linear-gradient(120deg,#f2c7aa,#d99b7f); left: 63px; top: 29px; transform: rotate(-4deg); }
 .portrait-face::after { content: ""; position: absolute; width: 16px; height: 5px; border-bottom: 1px solid #8a4b45; border-radius: 50%; bottom: 18px; left: 17px; }
 .portrait-shoulder { position: absolute; width: 112px; height: 70px; border-radius: 55% 55% 0 0; left: 31px; bottom: -40px; background: #694e4d; }
+
+html[data-subject="self"] .portrait-art { background: radial-gradient(circle at 50% 36%, #f2d2ad 0 21%, transparent 22%), linear-gradient(145deg,#8c6f66,#d8a67e 62%,#66524b); }
+html[data-subject="self"] .portrait-hair { width: 69px; height: 65px; left: 52px; top: 24px; border-radius: 48% 52% 28% 28%; box-shadow: none; }
+html[data-subject="self"] .portrait-face { left: 63px; top: 34px; }
+html[data-subject="self"] .portrait-shoulder { background: #5d6c65; }
+html[data-subject="self"] .portrait-art::after { opacity: .62; inset: 11px; border: 1px solid rgba(255,238,203,.62); border-radius: 50%; transform: scale(.82); }
+
+html[data-subject="parents"] .portrait-art { background: linear-gradient(#b58a72,#e7c49d 65%,#796652); }
+html[data-subject="parents"] .portrait-hair { width: 55px; height: 70px; left: 27px; top: 30px; border-radius: 45% 45% 28% 30%; box-shadow: none; background: #4b423b; }
+html[data-subject="parents"] .portrait-face { width: 40px; height: 59px; left: 36px; top: 38px; }
+html[data-subject="parents"] .portrait-shoulder { width: 77px; left: 18px; background: #6b5550; }
+html[data-subject="parents"] .portrait-art::before { opacity: 1; width: 43px; height: 58px; left: 99px; top: 39px; border-radius: 46% 46% 42% 42%; background: linear-gradient(120deg,#e5b99b,#c98f73); box-shadow: -7px -12px 0 3px #56473d, 2px 59px 0 20px #58645a; }
+
+html[data-subject="friend"] .portrait-art { background: linear-gradient(#82909a,#d5b28e 66%,#5d655d); }
+html[data-subject="friend"] .portrait-hair { width: 62px; height: 45px; left: 54px; top: 25px; border-radius: 48% 48% 23% 24%; box-shadow: none; background: #302d2a; }
+html[data-subject="friend"] .portrait-face { left: 61px; top: 34px; border-radius: 46% 46% 40% 40%; }
+html[data-subject="friend"] .portrait-shoulder { background: #465d67; }
 .frame-caption { padding-top: 8px; display: flex; justify-content: space-between; align-items: baseline; color: #fae8c8; }
 .frame-caption strong { font-size: 15px; font-weight: 500; letter-spacing: .15em; }
 .frame-caption span { font-size: 9px; opacity: .7; }
