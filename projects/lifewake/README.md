@@ -18,6 +18,17 @@ python3 scripts/run_emotion_kpi_snapshot.py
 python3 ../../scripts/run_uas_runtime_service.py list --projects-root projects
 ```
 
+## 高保真交互 Demo
+
+```bash
+cd projects/lifewake/prototype
+python3 -m http.server 8090
+```
+
+浏览器打开 <http://localhost:8090>。Demo 是无构建依赖的静态三件套，
+以“妻子 · 林妍 / 今晚给她一个惊喜”为默认生命情景；完整 walkthrough
+见 [`prototype/README.md`](prototype/README.md)。
+
 ## MVP 能力
 
 | 能力 | 说明 |
