@@ -13,7 +13,7 @@
 - `CASE-008` 低 wow: PASS → `emotion_impact_failed`
 - `CASE-009` 慢灵感 defer: PASS → `deferred`
 - `CASE-010` 共享撤回: PASS → `delivered`
-- `CASE-011` 交付→反馈→changeset 串联: PASS → `delivered`
-- `CASE-012` 未成年人: PASS → `minor_blocked`
-- `CASE-013` 设备断连: PASS → `device_not_linked`
-- `CASE-014` 违规 purpose: PASS → `policy_denied`
+- `CASE-011` 未成年人受限路径: PASS → `policy_denied`
+- `CASE-012` Pulse 设备断连: PASS → `device_disconnected`
+- `CASE-013` 高危信号停止娱乐化生成: PASS → `safety_hold`
+- `CASE-014` 交付→反馈→ChangeSet 串联: PASS → `delivered`

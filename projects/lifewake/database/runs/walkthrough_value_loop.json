@@ -75,11 +75,14 @@
     "wow_score": 0.895
   },
   "interaction_feedback": {
+    "feedback_id": "fb_001",
     "rating": 2,
+    "signal": "not_meaningful",
+    "reason_category": "too_generic",
     "comment": "灵感任务太空泛，不够可执行",
     "target_ref": "ritual_sur_bundle_consent_signals",
     "run_id": "walkthrough_value_loop",
-    "recorded_at": "2026-07-22T03:36:02.301804+00:00"
+    "recorded_at": "2026-07-22T03:42:13.012037+00:00"
   },
   "changeset": {
     "changeset_id": "cs_walkthrough_value_loop",
@@ -253,7 +256,7 @@
       "stage": "evolution_plan",
       "agent_id": "evolution_listener",
       "feedback_target": "ritual_sur_bundle_consent_signals",
-      "changeset_id": "cs_CASE-011"
+      "changeset_id": "cs_CASE-014"
     },
     {
       "stage": "render_report",
