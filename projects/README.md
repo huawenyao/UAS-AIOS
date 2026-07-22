@@ -36,6 +36,7 @@ python3 scripts/run_uas_runtime_service.py queue
 |------|------|------|
 | `ai-recruitment-os/` | 全流程招聘智能 OS | `pytest` + `run_uas_runtime_service` |
 | `enterprise-sales-os/` | B2B 线索→报价→审批 MVP v0.2 | `python projects/enterprise-sales-os/scripts/evaluate_sales_mvp.py` |
+| `lifewake/` | 生命回响：惊喜盲盒 + 心跳音乐情感共创 MVP v0.1 | `python projects/lifewake/scripts/evaluate_lifewake_mvp.py` |
 
 ## 标准约束
 

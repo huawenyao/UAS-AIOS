@@ -1,0 +1,22 @@
+{
+  "version": "v1.0",
+  "governance": {
+    "audit_required": true,
+    "permission_model": ["READ_ONLY", "WRITE_SAFE", "WRITE_RISK", "SYSTEM_OP"],
+    "require_explainability": true,
+    "require_traceability": true,
+    "high_risk_requires_human_approval": true,
+    "data_purpose_allowed": ["create_for_user"],
+    "data_purpose_denied": ["profile_user", "ads", "score_user"],
+    "wow_score_threshold": 0.7,
+    "max_surprises_per_day": 2,
+    "public_share_default": "deny",
+    "raw_biosignal_export": "deny",
+    "duet_requires_bidirectional_needs": true,
+    "consent_scopes": {
+      "surprise": ["signals.low_sensitivity"],
+      "pulse_solo": ["device.pulse"],
+      "pulse_duet": ["device.pulse", "share.partner"]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "run_id": "walkthrough_value_loop",
+  "latest_changeset": {
+    "changeset_id": "cs_walkthrough_value_loop",
+    "target_pack": "surprise_policy",
+    "summary": "提升作品可执行性并保留反馈证据",
+    "auto_apply": false,
+    "source": "delivered_user_feedback",
+    "evidence": {
+      "source_run_id": "walkthrough_value_loop",
+      "rating": 2,
+      "comment": "灵感任务太空泛，不够可执行"
+    }
+  },
+  "benefit_snapshot": {
+    "run_id": "walkthrough_value_loop",
+    "value_realized": true,
+    "delivered": true,
+    "feedback_captured": true,
+    "evolution_candidate_created": true,
+    "emotion_score": 0.895
+  },
+  "auto_applied": false
+}

@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/ritual_envelope.schema.json",
+  "title": "UAS Ritual Envelope",
+  "description": "跨体验域传递仪式目的、参与者、步骤、授权与交付状态的通用协议信封。",
+  "type": "object",
+  "required": [
+    "ritual_id",
+    "protocol_version",
+    "ritual_type",
+    "purpose",
+    "participant_ids",
+    "steps",
+    "status",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "ritual_id": {
+      "type": "string",
+      "pattern": "^ritual-[a-zA-Z0-9._:-]+$"
+    },
+    "protocol_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "ritual_type": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$"
+    },
+    "domain_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "participant_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "consent_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "context": {
+      "type": "object"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/ritualStep" }
+    },
+    "artifact_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "ready", "in_progress", "completed", "declined", "cancelled", "failed"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "emotion_impact_ref": {
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object",
+      "description": "领域命名空间下的可选扩展；不得改变信封必填语义。",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_-]*\\.[a-zA-Z0-9._-]+$"
+      }
+    }
+  },
+  "definitions": {
+    "ritualStep": {
+      "type": "object",
+      "required": ["step_id", "kind", "sequence"],
+      "additionalProperties": false,
+      "properties": {
+        "step_id": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": ["prepare", "present", "participate", "reflect", "close"]
+        },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "actor_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "instruction_ref": { "type": "string" },
+        "artifact_ref": { "type": "string" },
+        "requires_acknowledgement": { "type": "boolean", "default": false }
+      }
+    }
+  }
+}

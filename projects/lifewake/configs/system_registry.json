@@ -1,0 +1,24 @@
+{
+  "version": "v1.0",
+  "capabilities": [
+    "lw.consent.check",
+    "lw.surprise.compose",
+    "lw.pulse.compose",
+    "lw.pulse.duet",
+    "lw.ritual.render",
+    "lw.audit.append"
+  ],
+  "reserved_capabilities": [
+    {"id": "lw.memory.weave", "status": "reserved"},
+    {"id": "lw.bond.visualize", "status": "reserved"},
+    {"id": "lw.twin.draft", "status": "reserved"}
+  ],
+  "systems": [
+    {"id": "mock_wearable", "type": "biosignal", "mode": "mock"},
+    {"id": "mock_multimodal_gen", "type": "generative", "mode": "mock"},
+    {"id": "local_audit_store", "type": "audit", "mode": "native"},
+    {"id": "capability_registry", "type": "asui_knowledge", "mode": "native"}
+  ],
+  "connectors": ["mock_wearable", "mock_multimodal_gen"],
+  "deployment_mode": "local_mock"
+}

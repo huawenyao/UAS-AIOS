@@ -1,0 +1,49 @@
+{
+  "$schema": "https://asui.dev/schemas/evaluation_criteria.schema.json",
+  "version": "v1.0",
+  "evolution_threshold": 70,
+  "dimension_weights": {
+    "business": 0.25,
+    "product": 0.25,
+    "technology": 0.25,
+    "operational": 0.25
+  },
+  "dimensions": {
+    "business": {
+      "name": "业务",
+      "items": [
+        { "id": "goal_clarity", "name": "目标明确度", "max_score": 25 },
+        { "id": "value_loop", "name": "价值闭环", "max_score": 25 },
+        { "id": "stakeholder_coverage", "name": "主客体覆盖", "max_score": 25 },
+        { "id": "success_metrics", "name": "成功标准可量化", "max_score": 25 }
+      ]
+    },
+    "product": {
+      "name": "产品",
+      "items": [
+        { "id": "agent_fabric", "name": "Agent编织完整", "max_score": 25 },
+        { "id": "deliverable_clarity", "name": "交付物清晰", "max_score": 25 },
+        { "id": "evaluation_metrics", "name": "评估指标定义", "max_score": 25 },
+        { "id": "workflow_completeness", "name": "工作流闭环", "max_score": 25 }
+      ]
+    },
+    "technology": {
+      "name": "技术",
+      "items": [
+        { "id": "asui_compliance", "name": "ASUI技术底座", "max_score": 25 },
+        { "id": "autonomous_agent", "name": "autonomous_agent运行时", "max_score": 25 },
+        { "id": "governance_complete", "name": "治理完整", "max_score": 25 },
+        { "id": "knowledge_assets", "name": "知识资产完整", "max_score": 25 }
+      ]
+    },
+    "operational": {
+      "name": "运行效果",
+      "items": [
+        { "id": "run_completed", "name": "执行完成", "max_score": 25 },
+        { "id": "audit_trace", "name": "审计可追溯", "max_score": 25 },
+        { "id": "output_written", "name": "输出落盘", "max_score": 25 },
+        { "id": "evolution_ready", "name": "演化就绪", "max_score": 25 }
+      ]
+    }
+  }
+}

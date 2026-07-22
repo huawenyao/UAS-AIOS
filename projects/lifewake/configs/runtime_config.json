@@ -1,0 +1,10 @@
+{
+  "version": "v1.0",
+  "runtime_name": "autonomous_agent_runtime",
+  "execution_mode": "knowledge_driven",
+  "context_injection": true,
+  "state_isolation": "task_level",
+  "audit_enabled": true,
+  "rollback_enabled": true,
+  "human_checkpoints": ["WRITE_RISK", "SYSTEM_OP"]
+}

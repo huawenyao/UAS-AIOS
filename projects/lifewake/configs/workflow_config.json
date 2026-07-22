@@ -1,0 +1,84 @@
+{
+  "$schema": "https://asui.dev/schemas/workflow_config.schema.json",
+  "version": "v1.1",
+  "name": "LifeWake Value Loop Workflow",
+  "description": "理念 → 体验 → 功能 → 反馈 → 演化的九步 UAS 执行链",
+  "swarm": {
+    "mode": "lifewake-emotional-cocreation",
+    "methodology": "emotion-alchemy-bond-privacy",
+    "decision_policy": "consent-governed-slow-inspiration",
+    "audit_agent_participation": true,
+    "agents": [
+      {"id": "intent_guard", "name": "意图守恒智能体", "dimension": "intent"},
+      {"id": "signal_weaver", "name": "信号编织者", "dimension": "knowledge"},
+      {"id": "surprise_alchemist", "name": "惊喜炼金师", "dimension": "agent"},
+      {"id": "privacy_steward", "name": "隐私领土守卫", "dimension": "governance"},
+      {"id": "ritual_host", "name": "仪式主持", "dimension": "system"},
+      {"id": "evolution_listener", "name": "演化倾听者", "dimension": "evolution"}
+    ]
+  },
+  "steps": [
+    {
+      "id": "intent_activation",
+      "type": "llm",
+      "agent_id": "intent_guard",
+      "prompt_template": "归一化生命回响意图、对象、用途与情感成功标准。\n\n{{topic}}"
+    },
+    {
+      "id": "knowledge_binding",
+      "type": "llm",
+      "dependencies": ["intent_activation"],
+      "agent_id": "signal_weaver",
+      "prompt_template": "仅在 consent scope 内编织 SignalBundle，输出去重与独特性证据。"
+    },
+    {
+      "id": "agent_planning",
+      "type": "llm",
+      "dependencies": ["knowledge_binding"],
+      "agent_id": "surprise_alchemist",
+      "prompt_template": "规划创作、慢灵感时机、rubric 评估与失败分支。"
+    },
+    {
+      "id": "system_mapping",
+      "type": "llm",
+      "dependencies": ["agent_planning"],
+      "agent_id": "ritual_host",
+      "prompt_template": "映射 connector、RitualEnvelope、存储和报告能力。"
+    },
+    {
+      "id": "governance_check",
+      "type": "llm",
+      "dependencies": ["system_mapping"],
+      "agent_id": "privacy_steward",
+      "prompt_template": "检查 purpose、scope、撤回、未成年人和双向关系。"
+    },
+    {
+      "id": "lifewake_execute",
+      "type": "script",
+      "dependencies": ["governance_check"],
+      "agent_id": "surprise_alchemist",
+      "script": "scripts/run_lifewake_pipeline.py"
+    },
+    {
+      "id": "emotion_kpi_snapshot",
+      "type": "script",
+      "dependencies": ["lifewake_execute"],
+      "agent_id": "ritual_host",
+      "script": "scripts/run_emotion_kpi_snapshot.py"
+    },
+    {
+      "id": "evolution_plan",
+      "type": "llm",
+      "dependencies": ["emotion_kpi_snapshot"],
+      "agent_id": "evolution_listener",
+      "prompt_template": "将已交付体验的真实反馈转为不可自动应用的 ChangeSet 草案。"
+    },
+    {
+      "id": "render_report",
+      "type": "script",
+      "dependencies": ["evolution_plan"],
+      "agent_id": "ritual_host",
+      "script": "scripts/render_lifewake_report.py"
+    }
+  ]
+}

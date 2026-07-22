@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN" data-atmosphere="warm">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#b7683f">
+  <title>LifeWake · 今晚给她一个惊喜</title>
+  <meta name="description" content="LifeWake 生命情景空间高保真交互 Demo">
+  <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+  <a class="skip-link" href="#room">进入情景空间</a>
+
+  <header class="status-bar" aria-label="情景状态">
+    <button class="context-control" id="subject-switcher-trigger" type="button" aria-haspopup="dialog">
+      <span class="eyebrow">关注主体</span>
+      <strong id="subject-label">妻子 · 林妍</strong>
+      <span aria-hidden="true">⌄</span>
+    </button>
+    <div class="scene-heading" aria-live="polite">
+      <span class="scene-kicker" id="scene-kicker">惊喜时刻</span>
+      <h1 id="scene-title">今晚，给她一个惊喜</h1>
+      <p id="scene-subtitle">让记忆、时间和你的亲笔表达，在黄昏里相遇。</p>
+    </div>
+    <div class="top-actions">
+      <button class="quiet-button" id="scene-switcher-trigger" type="button" aria-haspopup="dialog">
+        <span aria-hidden="true">◐</span><span>切换情景</span>
+      </button>
+      <button class="quiet-button" id="sovereignty-trigger" type="button" aria-haspopup="dialog">
+        <span aria-hidden="true">⌾</span><span>主权与边界</span>
+      </button>
+      <button class="rehearse-button" id="rehearse-trigger" type="button">
+        <span aria-hidden="true">▷</span><span>预演惊喜</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="room" class="room" aria-label="LifeWake 自由桌面">
+    <div class="room-glow" aria-hidden="true"></div>
+    <div class="window" aria-hidden="true">
+      <div class="window-sky"><i></i><i></i><i></i></div>
+      <div class="curtain curtain-left"></div>
+      <div class="curtain curtain-right"></div>
+    </div>
+    <p class="space-note" id="space-note">黄昏留在窗边，桌上的每件物，都在等你的选择。</p>
+
+    <section class="desk" id="desk" aria-label="可自由摆放的情景对象">
+      <div class="desk-grain" aria-hidden="true"></div>
+
+      <article class="desk-object portrait-object" data-object="portrait" tabindex="0"
+        role="button" aria-label="打开林妍的人物与关系焦点" style="--x:41%;--y:4%">
+        <div class="portrait-frame">
+          <div class="portrait-mat">
+            <div class="portrait-art" aria-hidden="true">
+              <div class="portrait-sun"></div>
+              <div class="portrait-hair"></div>
+              <div class="portrait-face"></div>
+              <div class="portrait-shoulder"></div>
+            </div>
+          </div>
+          <div class="frame-caption"><strong id="frame-name">林妍</strong><span id="frame-relation">我所珍重的人</span></div>
+        </div>
+        <span class="object-label">关系焦点</span>
+      </article>
+
+      <article class="desk-object gramophone-object" data-object="music" tabindex="0"
+        role="button" aria-label="播放主题旋律" style="--x:9%;--y:39%">
+        <div class="gramophone">
+          <div class="horn" aria-hidden="true"></div>
+          <div class="turntable">
+            <div class="record"><i></i></div>
+            <div class="tonearm"></div>
+          </div>
+          <div class="music-waves" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <span class="object-label" id="music-label">主题旋律 · 静候</span>
+      </article>
+
+      <article class="desk-object gift-object" data-object="gift" tabindex="0"
+        role="button" aria-label="打开礼物盒与惊喜策展台" style="--x:69%;--y:30%">
+        <div class="gift-box" id="gift-visual">
+          <div class="gift-lid"><i></i></div>
+          <div class="gift-body"><i></i></div>
+          <div class="gift-glimmer" aria-hidden="true">✦</div>
+        </div>
+        <span class="object-label" id="gift-label">惊喜策展台</span>
+      </article>
+
+      <article class="desk-object photos-object" data-object="photos" tabindex="0"
+        role="button" aria-label="展开共同记忆照片" style="--x:25%;--y:61%">
+        <div class="photo-stack">
+          <div class="polaroid back"><span></span></div>
+          <div class="polaroid middle"><span></span></div>
+          <div class="polaroid front"><span></span><small>我们 · 2022</small></div>
+        </div>
+        <span class="object-label" id="photos-label">共同记忆 · 0/3</span>
+      </article>
+
+      <article class="desk-object clock-object" data-object="clock" tabindex="0"
+        role="button" aria-label="选择今晚的惊喜时刻" style="--x:83%;--y:56%">
+        <div class="brass-clock" aria-hidden="true">
+          <div class="clock-face"><i class="hand-hour"></i><i class="hand-minute"></i><b></b></div>
+          <div class="clock-feet"></div>
+        </div>
+        <span class="object-label" id="clock-label">今晚 · 20:30</span>
+      </article>
+
+      <article class="desk-object envelope-object" data-object="envelope" tabindex="0"
+        role="button" aria-label="写下并封缄给林妍的话" style="--x:54%;--y:63%">
+        <div class="envelope" id="envelope-visual">
+          <div class="envelope-back"></div>
+          <div class="letter-edge"></div>
+          <div class="envelope-front"></div>
+          <div class="wax-seal">妍</div>
+        </div>
+        <span class="object-label" id="envelope-label">一封未封缄的信</span>
+      </article>
+
+      <article class="desk-object lamp-object" data-object="lamp" tabindex="0"
+        role="button" aria-label="切换空间氛围" style="--x:4%;--y:6%">
+        <div class="table-lamp" aria-hidden="true">
+          <div class="lampshade"></div><div class="lamp-stem"></div><div class="lamp-base"></div>
+        </div>
+        <span class="object-label" id="lamp-label">暖光</span>
+      </article>
+
+      <article class="desk-object notebook-object" data-object="notebook" tabindex="0"
+        role="button" aria-label="打开惊喜策展手册" style="--x:66%;--y:68%">
+        <div class="notebook">
+          <div class="notebook-spine"></div>
+          <div class="notebook-page">
+            <span>TONIGHT</span><i></i><i></i><i></i>
+          </div>
+          <div class="notebook-band"></div>
+        </div>
+        <span class="object-label" id="notebook-label">策展手册 · 22%</span>
+      </article>
+    </section>
+
+    <aside class="whisper" id="whisper" aria-live="polite">
+      <span class="whisper-mark" aria-hidden="true">✦</span>
+      <div><span>策展低语</span><p id="whisper-text">先从你最想让她感受到的那一刻开始。选择始终属于你。</p></div>
+    </aside>
+
+    <nav class="object-dock" aria-label="情景对象 Dock">
+      <button type="button" data-focus-object="portrait"><span>▣</span><small>她</small></button>
+      <button type="button" data-focus-object="music"><span>◉</span><small>旋律</small></button>
+      <button type="button" data-focus-object="gift"><span>◇</span><small>策展</small></button>
+      <button type="button" data-focus-object="photos"><span>▧</span><small>记忆</small></button>
+      <button type="button" data-focus-object="clock"><span>◷</span><small>时刻</small></button>
+      <button type="button" data-focus-object="envelope"><span>✉</span><small>表达</small></button>
+      <button type="button" data-focus-object="lamp"><span>♢</span><small>氛围</small></button>
+      <button type="button" data-focus-object="notebook"><span>▤</span><small>手册</small></button>
+    </nav>
+  </main>
+
+  <aside class="detail-drawer" id="detail-drawer" aria-hidden="true" aria-labelledby="drawer-title">
+    <div class="drawer-handle" aria-hidden="true"></div>
+    <button class="icon-button drawer-close" type="button" data-close-drawer aria-label="关闭详情">×</button>
+    <div class="drawer-content" id="drawer-content"></div>
+  </aside>
+  <div class="drawer-scrim" id="drawer-scrim" data-close-drawer></div>
+
+  <dialog id="subject-dialog" class="selector-dialog" aria-labelledby="subject-dialog-title">
+    <form method="dialog">
+      <div class="dialog-heading"><div><span class="eyebrow">生命焦点</span><h2 id="subject-dialog-title">此刻，你关注谁？</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div>
+      <p>不是账户切换，而是把空间的注意力温柔地转向一个人。</p>
+      <div class="choice-list" id="subject-options"></div>
+    </form>
+  </dialog>
+
+  <dialog id="scene-dialog" class="selector-dialog" aria-labelledby="scene-dialog-title">
+    <form method="dialog">
+      <div class="dialog-heading"><div><span class="eyebrow">生命情景</span><h2 id="scene-dialog-title">把此刻变成一个空间</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div>
+      <div class="choice-list scene-choices" id="scene-options"></div>
+    </form>
+  </dialog>
+
+  <dialog id="gift-dialog" class="gift-dialog" aria-labelledby="gift-dialog-title">
+    <div class="dialog-heading"><div><span class="eyebrow">礼物盒已打开</span><h2 id="gift-dialog-title">选择今晚的叙事线</h2><p>它只是骨架。真正让她心动的，是你放进去的细节。</p></div><button class="icon-button" data-dialog-close aria-label="关闭">×</button></div>
+    <div class="curation-plans" id="curation-plans"></div>
+  </dialog>
+
+  <dialog id="rehearsal-dialog" class="rehearsal-dialog" aria-labelledby="rehearsal-title">
+    <div class="rehearsal-stage" id="rehearsal-stage">
+      <button class="rehearsal-exit" data-dialog-close type="button">返回桌面 <span>Esc</span></button>
+      <div class="rehearsal-center">
+        <span class="rehearsal-count" id="rehearsal-count">01 / 04</span>
+        <p class="rehearsal-phase" id="rehearsal-phase">起</p>
+        <h2 id="rehearsal-title">让房间先说晚安</h2>
+        <p id="rehearsal-copy">暖光落下，你选择的旋律开始转动。</p>
+        <div class="rehearsal-object" id="rehearsal-object" aria-hidden="true">◉</div>
+        <div class="rehearsal-controls">
+          <button id="rehearsal-prev" type="button">上一幕</button>
+          <div class="rehearsal-dots" id="rehearsal-dots"></div>
+          <button id="rehearsal-next" type="button">下一幕</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="sovereignty-dialog" class="sovereignty-dialog" aria-labelledby="sovereignty-title">
+    <div class="dialog-heading"><div><span class="eyebrow">清楚、有限、可撤回</span><h2 id="sovereignty-title">主权与边界</h2></div><button class="icon-button" data-dialog-close aria-label="关闭">×</button></div>
+    <p class="boundary-intro">这些材料只为你正在策展的情景服务。LifeWake 不推断她的情绪，不替你定义关系。</p>
+    <dl class="boundary-grid">
+      <div><dt>当前材料</dt><dd id="boundary-materials">共同照片、你的手写表达、今晚时间</dd></div>
+      <div><dt>唯一用途</dt><dd>在本设备预演并组织这次惊喜</dd></div>
+      <div><dt>受益者</dt><dd id="boundary-beneficiary">林妍与你</dd></div>
+      <div><dt>保留期限</dt><dd>本次浏览会话；关闭页面即结束</dd></div>
+    </dl>
+    <button class="danger-button" id="revoke-button" type="button">撤回本次材料使用</button>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <script src="app.js?v=2"></script>
+</body>
+</html>

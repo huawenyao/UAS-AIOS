@@ -28,3 +28,5 @@ constraints:
     title: ADR-EDH-001 SelfPaw 与 ΠPaw 双轨边界
   - file: constraints/adr-edh-002-capability-before-agent.md
     title: ADR-EDH-002 先能力服务化再挂 Agent 岗位
+  - file: constraints/adr-uas-003-experience-protocol-boundary.md
+    title: ADR-UAS-003 体验域通用机制上收 G/E/Π
