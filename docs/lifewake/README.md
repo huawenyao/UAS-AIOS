@@ -16,6 +16,7 @@
 
 | 文档 | 用途 |
 |---|---|
+| [USER_SCENARIO_AND_EXPERIENCE_SYSTEM](./USER_SCENARIO_AND_EXPERIENCE_SYSTEM.md) | 六维场景模型、五类场景族、P0 场景组合、核心场景卡、编排决策、研究与路线图 |
 | [PRODUCT_EXPERIENCE_DESIGN](./PRODUCT_EXPERIENCE_DESIGN.md) | 用户旅程、信息架构、液态 UI、`RitualView`、状态、可访问性与体验验收 |
 | [DERIVATION_AND_VALIDATION_MATRIX](./DERIVATION_AND_VALIDATION_MATRIX.md) | 理念→法则→体验→模块→功能→Agent→能力→实体→治理→CASE→KPI 全链路 |
 | [FUNCTIONAL_DESIGN](./FUNCTIONAL_DESIGN.md) | P0–P2 功能规格、用户故事、前后条件、异常与验收 |

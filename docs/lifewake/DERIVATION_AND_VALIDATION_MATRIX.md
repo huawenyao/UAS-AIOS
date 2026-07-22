@@ -131,3 +131,23 @@ flowchart TD
 - ChangeSet 有证据、影响范围、审批人、回滚点。
 - 产品负责人确认 UAS 仍是承载，不替代用户价值叙事。
 
+## 9. 用户场景体系追溯门禁
+
+场景定义详见 [USER_SCENARIO_AND_EXPERIENCE_SYSTEM](./USER_SCENARIO_AND_EXPERIENCE_SYSTEM.md)。场景进入功能设计前必须完成以下追溯：
+
+| 门禁 | 必填内容 | 失败结果 |
+|---|---|---|
+| `SCENE-PURPOSE` | 基础目的、现实触发、JTBD、反例 | 退回问题定义 |
+| `SCENE-SUBJECT` | 主体、关系结构、各方权利 | 禁止进入关系功能 |
+| `SCENE-TIMING` | pull/push 类型、时机、沉默/defer 规则 | 禁止主动触达 |
+| `SCENE-EXPERIENCE` | 前台触点、关键时刻、用户动作、体验结果 | 不能进入 UI 设计 |
+| `SCENE-SYSTEM` | 后台服务、实体、状态、能力与补偿 | 不能进入工程实现 |
+| `SCENE-GOVERNANCE` | consent、风险、退出、安全与护栏 | 发布否决 |
+| `SCENE-EVIDENCE` | CASE、KPI、现实研究方法、停止条件 | 仅保留为场景假设 |
+
+场景追溯链：
+
+`Scenario → JTBD → ExperienceMoment → ProductDomain → Feature → Agent → Capability → State → Governance → CASE → KPI`
+
+其中任何环节缺失均标记 `SCENARIO_TRACE_INCOMPLETE`。
+
