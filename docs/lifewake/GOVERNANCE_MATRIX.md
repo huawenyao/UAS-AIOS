@@ -1,4 +1,4 @@
-# 生命回响 · 治理矩阵
+# LifeWake 治理矩阵
 
 > 隐私即灵魂领土。本文把同意、用途限制、双向关系、共享与未成年人规则落为可执行策略。
 
@@ -50,38 +50,92 @@ MVP 不实现健康诊断、广告画像、监控类能力；疑似用途一律 
 | B-01 | duet 缺少任一方 `device.pulse` | `CONSENT_REQUIRED` |
 | B-02 | duet 缺少 `share.partner` | `CONSENT_REQUIRED` |
 | B-03 | 仅满足单方情感需求 | `BOND_ASYMMETRIC` |
-| B-04 | 任一方撤销共享 | keepsake 外链失效；各方本地副本保留 |
+| B-04 | 任一方撤销共享 | `SHARE_REVOKED`；所有共享 surface 立即失效，各方私有材料按各自 consent 处理 |
 | B-05 | 公开外发纪念物 | G4，MVP 返回 `POLICY_DENIED`（需人工通道，v0.1 不开放） |
 
 ---
 
-## 5. 情感冲击门禁
+## 5. 时机与慢灵感
+
+| 规则 ID | 条件 | 结果 |
+|---|---|---|
+| T-01 | quiet hours、频率已满或用户设为安静 | `SLOW_INSPIRATION_DEFERRED`，不得通知 |
+| T-02 | 内容尚未通过 impact gate | defer 或 rework，不得用“先交付再观察” |
+| T-03 | 到达重评时间 | 只重新计算 `TimingDecision`，不保证交付 |
+| T-04 | 用户取消 deferred item | `CANCELLED` 并清理未交付资产 |
+
+---
+
+## 6. 情感冲击可解释门禁
+
+**情感冲击测试不是模型真理，而是用户反馈 + 策展 rubric 的可解释门禁。**
 
 | 规则 ID | 条件 | 结果 |
 |---------|------|------|
-| E-01 | `wow_score < 0.7` 且场景为首次核心体验 | `EMOTION_IMPACT_FAILED`，不得标记为可上线交付 |
+| E-01 | 用户反馈为 `not_meaningful/uncomfortable` | `EMOTION_IMPACT_FAILED`；重炼、策展或删除 |
 | E-02 | 惊喜缺少 `uniqueness_refs` | `VALIDATION_ERROR` |
-| E-03 | 24h 内对同一用户惊喜推送 > 阈值阈值 | 延后推送（慢灵感） |
+| E-03 | rubric 的 source_fit/safety 不通过 | `rework/reject`，不得交付 |
+| E-04 | 只有模型辅助信号 | 不允许 `deliver`；进入 rubric/内测评审 |
+| E-05 | 用户反馈与模型/rubric 冲突 | 用户反馈优先；`superseded_by_feedback=true` |
 
-默认频率阈值：`max_surprises_per_day = 2`。
+模型可输出新颖度、来源覆盖和潜在风险，但不得输出“用户必然感动”等真理性结论。
 
 ---
 
-## 6. 未成年人与敏感场景
+## 7. 未成年人与敏感场景
 
 | 规则 ID | 条件 | 结果 |
 |---------|------|------|
-| M-01 | `age_gate == minor` | 禁用 duet 共享与代发；惊喜仅本地 |
-| M-02 | 信号暗示自伤等高危 | 不生成娱乐化内容；升级 `needs_human_review`（关怀路径占位） |
+| M-01 | `age_gate == minor` | 禁用 duet 与外部共享；只允许受限本地体验 |
+| M-02 | 信号暗示自伤等高危 | 停止娱乐化内容；`SAFETY_HUMAN_REVIEW`，提供非诊断支持选择 |
+| M-03 | age unknown 且请求关系/外发 | 采用更保守 minor 路径 |
 
 ---
 
-## 7. 审计要求
+## 8. 数据、保留与供应商
+
+| 规则 ID | 条件 | 结果 |
+|---|---|---|
+| D-01 | 原始连续 pulse | 仅会话内处理，默认不持久化、不入遥测 |
+| D-02 | 自由文本反馈 | 加密内容引用；指标只用结构化枚举 |
+| D-03 | 第三方生成 | 只传最小输入；要求保留期限、删除与再训练禁用承诺 |
+| D-04 | 导出/删除请求 | 不设付费墙；提供状态 receipt |
+| D-05 | 产品分析 | 可退出非必要分析；不得重建原始信号或伴侣拒绝原因 |
+
+---
+
+## 9. 演化治理
+
+| 规则 ID | 条件 | 结果 |
+|---|---|---|
+| EV-01 | feedback→ChangeSet | 必须含 feedback、EmotionImpact、rubric、影响范围、回滚点 |
+| EV-02 | `auto_apply=true` | `POLICY_DENIED` |
+| EV-03 | ChangeSet 扩大 purpose/scope | `POLICY_DENIED` |
+| EV-04 | 相关主权/安全护栏回归失败 | 禁止发布或自动回滚 |
+
+---
+
+## 10. 审计要求
 
 每次 capability 调用必须记录：
 
 - intent_ref、actor、on_behalf_of
 - consent_id / missing scopes
 - capability 名与结果摘要（不含原始 HR 连续值）
-- wow_score（如有）
+- `TimingDecision`、`EmotionImpact` 的证据类别与决策（不含私密正文）
 - 错误码与下一步建议
+- share revoke 的请求、生效时间与 surface
+
+审计不得包含原始连续 pulse、自由文本反馈、伴侣拒绝理由、精确年龄或诊断推断。
+
+任何可交付内容都必须封装为引用有效 `EmotionImpact` 与 `TimingDecision` 的 `RitualEnvelope`；缺任一引用即阻断。
+
+## 11. 治理否决权
+
+以下任一事件发生即停止相关能力并进入 L3/L4 回退：
+
+1. 撤回后仍有非审计处理。
+2. duet 缺任一方 consent 仍生成/共享。
+3. minor 可外发或进入 duet。
+4. 模型分覆盖用户 `uncomfortable` 反馈。
+5. ChangeSet 自动应用或扩大 `create_for_user`。

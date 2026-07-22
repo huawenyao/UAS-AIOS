@@ -1,4 +1,4 @@
-# 生命回响 · 能力服务合约
+# LifeWake 能力服务合约
 
 > Agent 不直连设备厂商或多模态厂商 SDK，只调用 `lw.*` 语义能力。本文定义 P0 能力的输入、输出、错误、权限、幂等与回滚。
 
@@ -53,7 +53,11 @@ audit:
 | `DEVICE_NOT_LINKED` | 心跳设备未连接 | 否 | 连接设备 |
 | `VALIDATION_ERROR` | 输入不合法 | 否 | 修正输入 |
 | `CONNECTOR_UNAVAILABLE` | mock/生成器不可用 | 是 | 重试或人工接管 |
-| `EMOTION_IMPACT_FAILED` | wow_score 未过门禁 | 否 | 重炼或人工策展 |
+| `DEVICE_DISCONNECTED` | 会话中设备断连 | 是 | 重连、双方确认降级或结束 |
+| `EMOTION_IMPACT_FAILED` | 用户反馈 + 策展 rubric 门禁未过 | 否 | 重炼、人工策展或删除 |
+| `SLOW_INSPIRATION_DEFERRED` | 时机、频率或质量尚不适合交付 | 否 | 到期重评或用户取消 |
+| `SHARE_REVOKED` | 任一权利人已撤回共同共享 | 否 | 禁止访问并展示权利说明 |
+| `SAFETY_HUMAN_REVIEW` | 高危情境停止娱乐化生成 | 否 | 安全资源/人工路径/退出 |
 | `FEATURE_RESERVED` | 扩展能力未启用 | 否 | 提示后续版本 |
 | `IDEMPOTENCY_CONFLICT` | 幂等冲突 | 否 | 人工审计 |
 
@@ -221,11 +225,68 @@ result:
 
 ---
 
-## 6. `lw.ritual.render`
+## 6. `lw.timing.decide`
 
 ### 目的
 
-将作品包装为自我确认仪式，并计算情感冲击分。
+在内容质量、安静期、频率和用户节奏约束下决定交付或延期。
+
+```yaml
+inputs:
+  person_id: person_ada
+  candidate_ref: sur_001
+  requested_window: commute
+  quiet_hours: false
+  deliveries_last_24h: 0
+  quality_ready: true
+result:
+  timing_id: timing_001
+  decision: DELIVER_NOW
+  reason_codes: [user_allowed_window, quality_ready]
+  reconsider_after: null
+```
+
+若延期，响应 status 仍为成功决策，业务结果码为 `SLOW_INSPIRATION_DEFERRED`；不得调用通知能力。
+
+---
+
+## 7. `lw.impact.evaluate`
+
+### 目的
+
+生成 `EmotionImpact`。情感冲击测试不是模型真理，而是**用户反馈 + 策展 rubric** 的可解释门禁；模型只提供辅助信号。
+
+```yaml
+inputs:
+  artifact_ref: sur_001
+  user_feedback:
+    - signal: not_meaningful
+      reason_category: too_generic
+  curation_rubric:
+    version: ritual_v1
+    dimensions:
+      source_fit: fail
+      specificity: fail
+      emotional_safety: pass
+  model_auxiliary:
+    predicted_wow: 0.88
+    uncertainty: 0.21
+result:
+  impact_id: impact_001
+  decision: rework
+  rationale: [user_feedback_not_meaningful, source_fit_failed]
+  superseded_by_feedback: true
+```
+
+硬约束：缺用户/同类反馈时可由 rubric 决定进入内测，但模型信号单独存在不能 `deliver`。
+
+---
+
+## 8. `lw.ritual.render`
+
+### 目的
+
+将已通过治理、时机和影响门禁的作品封装为 `RitualEnvelope`；不在渲染阶段伪造情感分。
 
 ### 输入
 
@@ -234,33 +295,79 @@ inputs:
   artifact_type: surprise
   artifact_ref: sur_001
   narrative_tone: gentle
+  timing_decision_ref: timing_001
+  emotion_impact_ref: impact_001
 ```
 
 ### 输出
 
 ```yaml
 result:
+  envelope_id: renv_001
   ritual_id: ritual_001
-  narrative: "这是你潜意识写给自己的回信。"
-  inspiration_trace: []
-  emotion_impact:
-    wow_score: 0.86
-    passed: true
-    threshold: 0.7
+  content_blocks:
+    - {type: audio, asset_ref: "mock://audio/sur_001.wav", autoplay: false}
+  inspiration_trace:
+    - {source_category: hum_melody, explanation: "保留了四音动机"}
+  consent_refs: [consent_001]
+  timing_decision_ref: timing_001
+  emotion_impact_ref: impact_001
+  owners: [person_ada]
+  actions: [reveal, save, feedback, delete]
 ```
 
 ---
 
-## 7. `lw.audit.append`
+## 9. `lw.share.revoke`
 
-追加审计事件；始终允许（G0），但 payload 不得包含原始连续生物流。
+### 目的
+
+任一共同权利人撤回后，使所有共享 surface 立即失效。
+
+```yaml
+inputs:
+  keepsake_id: keep_duet_001
+  requested_by: person_lee
+  share_grant_refs: [share_ada, share_lee]
+result:
+  status: SHARE_REVOKED
+  revoked_surfaces: [bond_space, expiring_link]
+  enforced_at: 2026-07-22T03:00:01Z
+  receipts: [receipt_ada, receipt_lee]
+```
+
+幂等键按 `keepsake_id:requested_by:revoke`；重复调用仍返回同一生效结果，不披露撤回理由。
 
 ---
 
-## 8. 预留能力
+## 10. `lw.feedback.capture` 与 `lw.changeset.draft`
+
+`lw.feedback.capture` 只接收结构化枚举与可选加密正文引用；正文不得进入遥测。
+
+`lw.changeset.draft` 必须输入 feedback、EmotionImpact、rubric 版本、目标 pack、假设、护栏、回归 CASE 和 rollback；输出 `auto_apply: false`。扩大 purpose/scope 返回 `POLICY_DENIED`。
+
+---
+
+## 11. `lw.audit.append`
+
+追加审计事件；始终允许（G0），但 payload 不得包含原始连续生物流、自由文本反馈、伴侣拒绝理由或诊断推断。
+
+---
+
+## 12. 预留能力
 
 | 能力 | 状态 | 调用结果 |
 |------|------|----------|
 | `lw.memory.weave` | reserved | `FEATURE_RESERVED` |
-| `lw.bond.visualize` | reserved | `FEATURE_RESERVED` |
+| `lw.bond.async_create` | reserved | `FEATURE_RESERVED` |
 | `lw.twin.draft` | reserved | `FEATURE_RESERVED` |
+| `lw.template.publish` | reserved | `FEATURE_RESERVED` |
+
+## 13. 合约不变量
+
+1. compose 能力不得直接通知；必须依次生成 `EmotionImpact`、`TimingDecision`、`RitualEnvelope`。
+2. duet 输入必须含双方 consent refs 与 active Bond。
+3. `EmotionImpact` 的三类证据分别存储，模型不得冒充 user feedback。
+4. `SLOW_INSPIRATION_DEFERRED` 是有效业务结果，不进入重试队列。
+5. `SHARE_REVOKED` 后任何 read/share 能力都必须拒绝。
+6. 所有补偿动作保持审计，但清除未交付内容和超范围数据。
