@@ -1,3 +1,4 @@
 # 报告目录
 
-Markdown 版 sub uas app 方案会输出到这里。
+验收摘要、情感 KPI 快照、价值闭环 Markdown 与可直接打开的
+`*_ritual.html` RitualEnvelope 预览会输出到这里。

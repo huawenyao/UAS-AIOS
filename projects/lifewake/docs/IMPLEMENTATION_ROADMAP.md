@@ -2,13 +2,16 @@
 
 ## Phase 0 — 工程定义（本版本）
 
-- [x] `docs/lifewake/` 规约包
-- [x] `projects/lifewake/` UAS subapp scaffold
-- [x] mock 闭环 + CASE-001～008
+- `docs/lifewake/` 规约包
+- `projects/lifewake/` UAS subapp scaffold
+- 可执行价值闭环 + CASE-001～014
+- Consent/SignalBundle/TimingDecision/Bond/Connector 策略红线
+- RitualEnvelope schema 与可打开的静态 HTML 仪式预览
+- 情感 KPI 快照和反馈驱动的 ChangeSet 草案
 
 ## Phase 1 — 体验深化
 
-- 惊喜种类策略与时机推荐可配置化
+- 惊喜种类策略与跨日时机历史持久化
 - 情感冲击测试样本集与策展工作流
 - 邀请制内测账号与同意文案 A/B（仍本地 mock）
 

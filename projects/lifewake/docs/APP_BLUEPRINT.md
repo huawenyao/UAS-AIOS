@@ -9,24 +9,30 @@
 
 技术底座：ASUI · 运行架构：autonomous_agent runtime · 规约：`docs/lifewake/`
 
+完整产品 BP：`../../../docs/lifewake/LIFEWAKE_PRODUCT_BLUEPRINT.md`。本文只描述
+`projects/lifewake` 的可运行映射与验收入口。
+
 ## 关键闭环
 
 ```text
-同意授权 → 信号/设备就绪 → lw.surprise | lw.pulse → 仪式渲染 → 情感冲击校验 → 审计 / ChangeSet
+理念/意图 → 同意授权 → SignalBundle/设备 → 慢灵感时机 → 创作 →
+RitualEnvelope → rubric 情感冲击 → 交付反馈 → ChangeSet 草案 → 收益快照
 ```
 
 ## UAS 映射
 
-| 层 | 落点 |
-|----|------|
-| I | 惊喜探索、心跳共鸣、关系共创 |
-| K | 哲学宪章、同意策略、风格与仪式模板 |
-| R | mock 穿戴 + mock 多模态生成 |
-| A | Privacy / Signal / Surprise / Pulse / Bond / Ritual / Evolution |
-| S | `lw.*` capability mesh |
-| G | 用途限制、撤回、双向门禁、wow 门禁 |
-| E | wow/meh → ChangeSet（不自动写回） |
-| Π | 能力契约与仪式输出协议 |
+
+| 层   | 落点                                                              |
+| --- | --------------------------------------------------------------- |
+| I   | 惊喜探索、心跳共鸣、关系共创                                                  |
+| K   | 哲学宪章、同意策略、风格与仪式模板                                               |
+| R   | mock 穿戴 + mock 多模态生成                                            |
+| A   | Privacy / Signal / Surprise / Pulse / Bond / Ritual / Evolution |
+| S   | `lw.*` capability mesh                                          |
+| G   | 用途/scope/撤回、未成年人、双向需求确认、情感 rubric 门禁                           |
+| E   | wow/meh → ChangeSet（不自动写回）                                      |
+| Π   | 能力契约与仪式输出协议                                                     |
+
 
 ## 非目标（v0.1）
 
@@ -37,4 +43,12 @@
 
 ## 验收
 
-`python scripts/evaluate_lifewake_mvp.py` → CASE-001～008 全部通过。
+```bash
+pytest -q
+python scripts/evaluate_lifewake_mvp.py
+python scripts/run_value_loop_prototype.py --run-id walkthrough_value_loop
+python scripts/run_emotion_kpi_snapshot.py
+```
+
+CASE-001～014 覆盖正常与治理红线。原型命令必须产生运行、反馈、认知状态、
+静态 HTML 仪式预览和收益快照，且 ChangeSet 只生成草案、不自动应用。

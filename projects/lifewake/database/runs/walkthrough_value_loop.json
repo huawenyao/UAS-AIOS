@@ -1,0 +1,265 @@
+{
+  "run_id": "walkthrough_value_loop",
+  "input": {
+    "intent": "把潜意识旋律变成可感知回响",
+    "signals": [
+      {
+        "kind": "hum_melody",
+        "value": "motif_jazzy_03"
+      },
+      {
+        "kind": "favorite_artist_style",
+        "value": "jazz_vocal"
+      }
+    ]
+  },
+  "simulation": {
+    "connector": "mock_multimodal",
+    "device": "not_required",
+    "delivery_count_today": 0
+  },
+  "generation": {
+    "ok": true,
+    "surprise_id": "sur_bundle_consent_signals",
+    "kind": "song",
+    "payload": {
+      "asset_ref": "mock://song/bundle_consent_signals",
+      "title": "潜意识旋律 · 回响",
+      "summary": "在 boredom 窗口炼成的 song 惊喜"
+    },
+    "consent_ref": "consent_signals",
+    "inspiration_trace": [
+      {
+        "signal": "hum_melody",
+        "explanation": "授权信号「hum_melody」被转译为作品动机"
+      },
+      {
+        "signal": "favorite_artist_style",
+        "explanation": "授权信号「favorite_artist_style」被转译为作品动机"
+      }
+    ],
+    "uniqueness_refs": [
+      "hum_melody",
+      "favorite_artist_style"
+    ],
+    "timing_window": "boredom",
+    "actionability": 0.9,
+    "emotion_impact": {
+      "score": 0.895,
+      "threshold": 0.7,
+      "passed": true,
+      "code": "EMOTION_IMPACT_PASSED",
+      "breakdown": {
+        "uniqueness": {
+          "score": 1.0,
+          "weight": 0.3
+        },
+        "traceability": {
+          "score": 1.0,
+          "weight": 0.25
+        },
+        "actionability": {
+          "score": 0.9,
+          "weight": 0.2
+        },
+        "user_feedback": {
+          "score": 0.5,
+          "weight": 0.15
+        },
+        "curator_score": {
+          "score": 0.9,
+          "weight": 0.1
+        }
+      }
+    },
+    "wow_score": 0.895
+  },
+  "interaction_feedback": {
+    "rating": 2,
+    "comment": "灵感任务太空泛，不够可执行",
+    "target_ref": "ritual_sur_bundle_consent_signals",
+    "run_id": "walkthrough_value_loop",
+    "recorded_at": "2026-07-22T03:36:02.301804+00:00"
+  },
+  "changeset": {
+    "changeset_id": "cs_walkthrough_value_loop",
+    "target_pack": "surprise_policy",
+    "summary": "提升作品可执行性并保留反馈证据",
+    "auto_apply": false,
+    "source": "delivered_user_feedback",
+    "evidence": {
+      "source_run_id": "walkthrough_value_loop",
+      "rating": 2,
+      "comment": "灵感任务太空泛，不够可执行"
+    }
+  },
+  "output": {
+    "schema_version": "1.0",
+    "ritual_id": "ritual_sur_bundle_consent_signals",
+    "title": "潜意识旋律 · 回响",
+    "narrative": "这是你潜意识写给自己的回信。",
+    "artifact": {
+      "type": "surprise",
+      "ref": "mock://song/bundle_consent_signals"
+    },
+    "inspiration_trace": [
+      {
+        "signal": "hum_melody",
+        "explanation": "授权信号「hum_melody」被转译为作品动机"
+      },
+      {
+        "signal": "favorite_artist_style",
+        "explanation": "授权信号「favorite_artist_style」被转译为作品动机"
+      }
+    ],
+    "emotion_impact": {
+      "score": 0.895,
+      "threshold": 0.7,
+      "passed": true,
+      "code": "EMOTION_IMPACT_PASSED",
+      "breakdown": {
+        "uniqueness": {
+          "score": 1.0,
+          "weight": 0.3
+        },
+        "traceability": {
+          "score": 1.0,
+          "weight": 0.25
+        },
+        "actionability": {
+          "score": 0.9,
+          "weight": 0.2
+        },
+        "user_feedback": {
+          "score": 0.5,
+          "weight": 0.15
+        },
+        "curator_score": {
+          "score": 0.9,
+          "weight": 0.1
+        }
+      }
+    },
+    "actions": [
+      {
+        "id": "feedback",
+        "label": "记录此刻感受"
+      },
+      {
+        "id": "keep",
+        "label": "珍藏回响"
+      }
+    ]
+  },
+  "benefit_snapshot": {
+    "run_id": "walkthrough_value_loop",
+    "value_realized": true,
+    "delivered": true,
+    "feedback_captured": true,
+    "evolution_candidate_created": true,
+    "emotion_score": 0.895
+  },
+  "state": {
+    "final": "delivered"
+  },
+  "audit": [
+    {
+      "stage": "intent_activation",
+      "agent_id": "intent_guard",
+      "intent_type": "surprise_delivery"
+    },
+    {
+      "stage": "governance_check",
+      "agent_id": "privacy_steward",
+      "allowed": true,
+      "code": null,
+      "detail": {
+        "consent_id": "consent_signals",
+        "purpose": "create_for_user",
+        "scopes": [
+          "signals.low_sensitivity"
+        ]
+      }
+    },
+    {
+      "stage": "agent_planning",
+      "agent_id": "signal_weaver",
+      "timing": {
+        "allowed": true,
+        "code": "TIMING_ALLOWED",
+        "delivery_count_today": 0,
+        "slot": 1
+      }
+    },
+    {
+      "stage": "system_mapping",
+      "agent_id": "connector_orchestrator",
+      "connector": {
+        "ok": true,
+        "recovered": false,
+        "exhausted": false,
+        "retries": 0,
+        "attempts": 1,
+        "errors": [],
+        "error": null
+      }
+    },
+    {
+      "stage": "knowledge_binding",
+      "agent_id": "signal_weaver",
+      "bundle": {
+        "bundle_id": "bundle_consent_signals",
+        "deduplicated_count": 2
+      }
+    },
+    {
+      "stage": "lifewake_execute",
+      "agent_id": "surprise_alchemist",
+      "artifact_id": "sur_bundle_consent_signals"
+    },
+    {
+      "stage": "emotion_kpi_snapshot",
+      "agent_id": "ritual_host",
+      "impact": {
+        "score": 0.895,
+        "threshold": 0.7,
+        "passed": true,
+        "code": "EMOTION_IMPACT_PASSED",
+        "breakdown": {
+          "uniqueness": {
+            "score": 1.0,
+            "weight": 0.3
+          },
+          "traceability": {
+            "score": 1.0,
+            "weight": 0.25
+          },
+          "actionability": {
+            "score": 0.9,
+            "weight": 0.2
+          },
+          "user_feedback": {
+            "score": 0.5,
+            "weight": 0.15
+          },
+          "curator_score": {
+            "score": 0.9,
+            "weight": 0.1
+          }
+        }
+      }
+    },
+    {
+      "stage": "evolution_plan",
+      "agent_id": "evolution_listener",
+      "feedback_target": "ritual_sur_bundle_consent_signals",
+      "changeset_id": "cs_CASE-011"
+    },
+    {
+      "stage": "render_report",
+      "agent_id": "ritual_host",
+      "ritual_id": "ritual_sur_bundle_consent_signals"
+    }
+  ],
+  "delivery_date": "2026-07-22"
+}

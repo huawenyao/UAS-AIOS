@@ -11,9 +11,14 @@
   "app": {
     "id": "lifewake",
     "name": "生命回响 LifeWake",
-    "mvp_version": "v0.1",
+    "mvp_version": "v0.2",
     "spec_root": "docs/lifewake",
-    "positioning": "User AGI 情感共创子应用（SelfPaw 相邻消费体验轨）"
+    "full_blueprint": "docs/lifewake/LIFEWAKE_PRODUCT_BLUEPRINT.md",
+    "acceptance_cases": "CASE-001..CASE-014",
+    "value_loop_command": "python3 scripts/run_value_loop_prototype.py",
+    "product_track": "selfpaw",
+    "domain_type": "experience_domain",
+    "positioning": "SelfPaw User AGI 的生命体验 Domain Pack 原型"
   },
   "capability_dependencies": [
     "lw.consent.check",

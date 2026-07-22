@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uas-aios.local/lifewake/ritual_envelope.schema.json",
+  "title": "LifeWake RitualEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ritual_id",
+    "title",
+    "narrative",
+    "artifact",
+    "inspiration_trace",
+    "emotion_impact",
+    "actions"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "ritual_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "narrative": {"type": "string", "minLength": 1},
+    "artifact": {
+      "type": "object",
+      "required": ["type", "ref"],
+      "properties": {
+        "type": {"enum": ["surprise", "pulse"]},
+        "ref": {"type": ["string", "null"]}
+      }
+    },
+    "inspiration_trace": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["signal", "explanation"],
+        "properties": {
+          "signal": {"type": "string"},
+          "explanation": {"type": "string"}
+        }
+      }
+    },
+    "emotion_impact": {
+      "type": "object",
+      "required": ["score", "threshold", "passed", "code", "breakdown"],
+      "properties": {
+        "score": {"type": "number", "minimum": 0, "maximum": 1},
+        "threshold": {"type": "number", "minimum": 0, "maximum": 1},
+        "passed": {"type": "boolean"},
+        "code": {
+          "enum": ["EMOTION_IMPACT_PASSED", "EMOTION_IMPACT_FAILED"]
+        },
+        "breakdown": {"type": "object"}
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "properties": {
+          "id": {"type": "string"},
+          "label": {"type": "string"}
+        }
+      }
+    }
+  }
+}

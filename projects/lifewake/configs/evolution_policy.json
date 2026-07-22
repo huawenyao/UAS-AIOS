@@ -9,14 +9,25 @@
   "iteration": {
     "enabled": true,
     "require_validation_before_evolution": true,
-    "default_loop": ["intent_activation", "governance_check", "lifewake_execute", "render_report"],
+    "default_loop": [
+      "intent_activation",
+      "knowledge_binding",
+      "agent_planning",
+      "system_mapping",
+      "governance_check",
+      "lifewake_execute",
+      "emotion_kpi_snapshot",
+      "evolution_plan",
+      "render_report"
+    ],
     "auto_apply_changeset": false
   },
   "emotion_kpis": [
-    "first_wow_pass_rate",
-    "zero_leak_after_revoke",
-    "duet_bidirectional_rate",
-    "slow_inspiration_compliance"
+    "validated_uniqueness_rate",
+    "consent_violation_count",
+    "bidirectional_bond_rate",
+    "slow_inspiration_compliance",
+    "changeset_draft_count"
   ],
   "evolution_phases": {
     "drive": "intent_activation",
