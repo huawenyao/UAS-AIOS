@@ -1,0 +1,37 @@
+{
+  "$schema": "https://asui.dev/schemas/uas_platform_manifest.schema.json",
+  "version": "v1.0",
+  "platform": {
+    "name": "UAS-Platform",
+    "formal_definition": ["I", "K", "R", "A", "S", "G", "E", "Π"],
+    "enterprise_agi_definition": "目标驱动 + 知识驱动 + Agent协作 + 系统执行 + 审计治理 + 演化闭环",
+    "technical_base": "ASUI",
+    "runtime": "autonomous_agent"
+  },
+  "app": {
+    "id": "lifewake",
+    "name": "生命回响 LifeWake",
+    "mvp_version": "v0.1",
+    "spec_root": "docs/lifewake",
+    "positioning": "User AGI 情感共创子应用（SelfPaw 相邻消费体验轨）"
+  },
+  "capability_dependencies": [
+    "lw.consent.check",
+    "lw.surprise.compose",
+    "lw.pulse.compose",
+    "lw.pulse.duet",
+    "lw.ritual.render",
+    "lw.audit.append"
+  ],
+  "reserved_capabilities": [
+    "lw.memory.weave",
+    "lw.bond.visualize",
+    "lw.twin.draft"
+  ],
+  "defaults": {
+    "require_governance": true,
+    "require_evolution": true,
+    "require_audit": true,
+    "data_purpose": "create_for_user"
+  }
+}

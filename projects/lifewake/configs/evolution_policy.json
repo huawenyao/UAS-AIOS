@@ -1,0 +1,27 @@
+{
+  "version": "v1.0",
+  "goal_guard": {
+    "enabled": true,
+    "require_goal_statement": true,
+    "require_success_metrics": true,
+    "north_star": "让独特性可感知、可分享、可传承；AI 为隐形艺术家"
+  },
+  "iteration": {
+    "enabled": true,
+    "require_validation_before_evolution": true,
+    "default_loop": ["intent_activation", "governance_check", "lifewake_execute", "render_report"],
+    "auto_apply_changeset": false
+  },
+  "emotion_kpis": [
+    "first_wow_pass_rate",
+    "zero_leak_after_revoke",
+    "duet_bidirectional_rate",
+    "slow_inspiration_compliance"
+  ],
+  "evolution_phases": {
+    "drive": "intent_activation",
+    "feedback": ["wow_rating", "consent_friction", "bond_resonance"],
+    "reflexivity": "changeset_draft"
+  },
+  "human_feedback_path": "database/feedback/{topic_slug}.json"
+}
