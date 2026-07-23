@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#b7683f">
   <title>LifeWake · 今晚给她一个惊喜</title>
   <meta name="description" content="LifeWake 生命情景空间高保真交互 Demo">
-  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <a class="skip-link" href="#room">进入情景空间</a>
@@ -26,7 +26,7 @@
       <button class="quiet-button" id="scene-switcher-trigger" type="button" aria-haspopup="dialog">
         <span aria-hidden="true">◐</span><span>切换情景</span>
       </button>
-      <button class="quiet-button" id="sovereignty-trigger" type="button" aria-haspopup="dialog">
+      <button class="quiet-button" id="sovereignty-trigger" type="button" aria-haspopup="dialog" title="主权与边界" aria-label="主权与边界">
         <span aria-hidden="true">⌾</span><span>主权与边界</span>
       </button>
       <button class="rehearse-button" id="rehearse-trigger" type="button">
@@ -195,6 +195,7 @@
           <div class="rehearsal-dots" id="rehearsal-dots"></div>
           <button id="rehearsal-next" type="button">下一幕</button>
         </div>
+        <button id="rehearsal-deliver" class="rehearsal-deliver" type="button" style="display:none">完成交付仪式</button>
       </div>
     </div>
   </dialog>
@@ -211,7 +212,17 @@
     <button class="danger-button" id="revoke-button" type="button">撤回本次材料使用</button>
   </dialog>
 
+  <dialog id="keepsake-dialog" class="keepsake-dialog" aria-labelledby="keepsake-title">
+    <div class="dialog-heading"><div><span class="eyebrow">只属于你和此刻</span><h2 id="keepsake-title">交付仪式</h2></div><button class="icon-button" data-dialog-close aria-label="关闭">×</button></div>
+    <p class="keepsake-intro">预演已经走完。把这次策展封存为一件可重访的纪念物——它只在本设备、本次会话存在，不外发、不替你送达。</p>
+    <div class="keepsake-envelope" aria-hidden="true">
+      <div class="keepsake-wax">妍</div>
+    </div>
+    <div class="keepsake-summary" id="keepsake-summary"></div>
+    <button class="primary-action" id="keepsake-deliver" type="button">封存为纪念物</button>
+  </dialog>
+
   <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
-  <script src="app.js?v=2"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

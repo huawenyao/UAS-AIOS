@@ -46,6 +46,7 @@ def main():
         "gift-dialog",
         "rehearsal-dialog",
         "sovereignty-dialog",
+        "keepsake-dialog",
         "toast-region",
     }
     required_objects = {
@@ -64,6 +65,7 @@ def main():
         "主权与边界",
         "预演惊喜",
         "策展低语",
+        "交付仪式",
     }
     required_bindings = {
         "toggleMusic",
@@ -72,12 +74,18 @@ def main():
         "revokeMaterials",
         "onPointerMove",
         "sessionStorage",
+        "openDeliver",
+        "finalizeDelivery",
+        "sanitizeState",
+        "stopAllAudio",
+        "trapFocus",
+        "restoreRevokedMaterials",
     }
 
     assert required_ids <= parser.ids, f"missing DOM ids: {required_ids - parser.ids}"
     assert parser.objects == required_objects, f"unexpected object set: {parser.objects}"
-    assert parser.scripts == ["app.js?v=2"], f"unexpected scripts: {parser.scripts}"
-    assert parser.stylesheets == ["styles.css?v=2"], f"unexpected stylesheets: {parser.stylesheets}"
+    assert parser.scripts == ["app.js?v=6"], f"unexpected scripts: {parser.scripts}"
+    assert parser.stylesheets == ["styles.css?v=6"], f"unexpected stylesheets: {parser.stylesheets}"
     assert all(copy in html for copy in required_copy), "required product copy missing"
     assert all(binding in js for binding in required_bindings), "core interaction binding missing"
     assert "@media (max-width: 760px)" in css, "mobile layout missing"

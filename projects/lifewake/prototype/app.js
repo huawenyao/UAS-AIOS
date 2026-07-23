@@ -84,19 +84,47 @@
     positions: {},
     rehearsalStep: 0,
     revoked: false,
+    delivered: false,
+  };
+
+  const VALID_SUBJECTS = new Set(["wife", "self", "parents", "friend"]);
+  const VALID_SCENES = new Set(["surprise", "distance", "family", "self"]);
+  const VALID_ATMOSPHERES = new Set(["warm", "moon", "stars"]);
+
+  const sanitizeState = (loaded) => {
+    if (!loaded || typeof loaded !== "object") return { ...initialState };
+    const merged = { ...initialState, ...loaded, musicPlaying: false };
+    if (!VALID_SUBJECTS.has(merged.subject)) merged.subject = "wife";
+    if (!VALID_SCENES.has(merged.scene)) merged.scene = "surprise";
+    if (!VALID_ATMOSPHERES.has(merged.atmosphere)) merged.atmosphere = "warm";
+    if (typeof merged.letter !== "string") merged.letter = "";
+    if (typeof merged.time !== "string" || !/^\d{2}:\d{2}$/.test(merged.time)) merged.time = "20:30";
+    if (!Array.isArray(merged.selectedMemories)) merged.selectedMemories = [];
+    merged.selectedMemories = merged.selectedMemories.filter((id) => memories.some((m) => m.id === id));
+    if (merged.plan && !plans.some((p) => p.id === merged.plan)) merged.plan = null;
+    if (typeof merged.positions !== "object" || merged.positions === null) merged.positions = {};
+    if (typeof merged.rehearsalStep !== "number" || merged.rehearsalStep < 0 || merged.rehearsalStep > 3) merged.rehearsalStep = 0;
+    if (typeof merged.sealed !== "boolean") merged.sealed = false;
+    if (typeof merged.revoked !== "boolean") merged.revoked = false;
+    if (typeof merged.delivered !== "boolean") merged.delivered = false;
+    return merged;
   };
 
   const loadState = () => {
     try {
-      return { ...initialState, ...JSON.parse(sessionStorage.getItem("lifewake-state") || "{}"), musicPlaying: false };
+      const raw = sessionStorage.getItem("lifewake-state");
+      return sanitizeState(raw ? JSON.parse(raw) : {});
     } catch {
       return { ...initialState };
     }
   };
 
   const state = loadState();
-  let audio = { context: null, timer: null, nodes: [] };
+  let audio = { context: null, timer: null, nodes: new Set() };
   let drag = null;
+  let saveTimer = null;
+  let revokeSnapshot = null;
+  const toastTimers = new WeakMap();
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -106,17 +134,49 @@
   const saveState = () => {
     try { sessionStorage.setItem("lifewake-state", JSON.stringify(state)); } catch { /* private session fallback */ }
   };
+
+  const saveStateDebounced = () => {
+    if (saveTimer) window.clearTimeout(saveTimer);
+    saveTimer = window.setTimeout(() => { saveTimer = null; saveState(); }, 300);
+  };
+
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;",
   })[char]);
 
-  const toast = (message) => {
+  const dismissToast = (item) => {
+    const timerId = toastTimers.get(item);
+    if (timerId) window.clearTimeout(timerId);
+    toastTimers.delete(item);
+    if (!item?.isConnected) return;
+    item.classList.add("is-leaving");
+    window.setTimeout(() => item.remove(), 300);
+  };
+
+  const toast = (message, action) => {
     const region = $("#toast-region");
     const item = document.createElement("div");
     item.className = "toast";
-    item.textContent = message;
+    item.setAttribute("role", "status");
+
+    const text = document.createElement("span");
+    text.textContent = message;
+    item.append(text);
+
+    if (action) {
+      const button = document.createElement("button");
+      button.className = "toast-action";
+      button.type = "button";
+      button.textContent = action.label;
+      item._toastAction = action.handler;
+      item.append(button);
+    }
+
     region.append(item);
-    window.setTimeout(() => item.remove(), 3600);
+
+    const dismissMs = action ? 30000 : 3600;
+    toastTimers.set(item, window.setTimeout(() => dismissToast(item), dismissMs));
+    return item;
   };
 
   const whisper = (message) => {
@@ -171,7 +231,10 @@
     $("#envelope-label").textContent = state.sealed ? "已封缄 · 只待亲手交付" : state.letter ? "信已写好 · 等你封缄" : "一封未封缄的信";
     const atmosphereNames = { warm: "暖光", moon: "月光", stars: "星光" };
     $("#lamp-label").textContent = atmosphereNames[state.atmosphere];
-    $("#notebook-label").textContent = `策展手册 · ${completion()}%`;
+    const progress = completion();
+    $("#notebook-label").textContent = state.delivered ? `已交付 · 可重访` : `策展手册 · ${progress}%`;
+    const notebookObject = $(".notebook-object");
+    if (notebookObject) notebookObject.classList.toggle("is-delivered", Boolean(state.delivered));
   };
 
   const renderPositions = () => {
@@ -240,7 +303,7 @@
       <div class="drawer-section">
         <label for="letter-input" class="eyebrow">亲笔表达</label>
         <textarea id="letter-input" class="letter-textarea" maxlength="220" placeholder="从一个真实的瞬间开始……" ${state.sealed ? "disabled" : ""}>${escapeHtml(state.letter)}</textarea>
-        <div class="letter-meta"><span>温和提示：说一件具体的小事</span><span id="letter-count">${state.letter.length} / 220</span></div>
+        <div class="letter-meta"><span id="letter-save-status" class="save-status" aria-live="polite">${state.sealed ? "蜡封已落下" : "温和提示：说一件具体的小事"}</span><span id="letter-count">${state.letter.length} / 220</span></div>
         ${state.sealed
           ? `<div class="seal-status">蜡封已落下。文字不会再被自动修改。</div><button class="secondary-action" id="unseal-letter" type="button">由我亲手拆封修改</button>`
           : `<button class="primary-action" id="seal-letter" type="button" ${state.letter.trim() ? "" : "disabled"}>确认文字，并落下蜡封</button>`}
@@ -258,18 +321,22 @@
       </div>`,
     notebook: () => {
       const progress = completion();
+      const ready = progress >= 60;
+      const delivered = Boolean(state.delivered);
       return `
         <span class="drawer-kicker">今晚的策展结构</span>
         <h2 id="drawer-title">惊喜手册</h2>
         <div class="manual-progress">
           <div class="progress-ring" style="--progress:${progress}"><strong>${progress}%</strong></div>
-          <p>${progress < 60 ? "骨架正在形成。你不必把每一项都填满。" : "仪式已经有了清晰轮廓，剩下的留给现场。"}</p>
+          <p>${delivered ? "已交付。这件纪念物可在 Keepsake Vault 重访。" : progress < 60 ? "骨架正在形成。你不必把每一项都填满。" : "仪式已经有了清晰轮廓，剩下的留给现场。"}</p>
         </div>
         <div class="chapter-list">
           ${manualChapters().map((chapter) => `
-            <div class="chapter"><span class="chapter-mark">${chapter.phase}</span><span><strong>${chapter.title}</strong><small>${chapter.copy}</small></span><em>${chapter.done ? "已就绪" : "待选择"}</em></div>`).join("")}
+            <div class="chapter ${chapter.done ? "is-done" : ""}"><span class="chapter-mark">${chapter.phase}</span><span><strong>${chapter.title}</strong><small>${chapter.copy}</small></span><em>${chapter.done ? "已就绪" : "待选择"}</em></div>`).join("")}
         </div>
-        <button class="primary-action" type="button" data-open-rehearsal>预演这份惊喜</button>`;
+        ${delivered
+          ? `<button class="secondary-action" type="button" data-open-rehearsal>再次预演</button><button class="primary-action" type="button" data-open-keepsake>重访这件纪念物</button>`
+          : `<button class="primary-action" type="button" data-open-rehearsal>${ready ? "预演并交付" : "预演这份惊喜"}</button>`}`;
     },
   };
 
@@ -326,13 +393,24 @@
     }
     if (type === "envelope") {
       const input = $("#letter-input");
-      if (input) input.addEventListener("input", () => {
-        state.letter = input.value;
-        state.revoked = false;
-        $("#letter-count").textContent = `${state.letter.length} / 220`;
-        $("#seal-letter").disabled = !state.letter.trim();
-        saveState(); renderObjectStates();
-      });
+      if (input) {
+        input.addEventListener("input", () => {
+          state.letter = input.value;
+          state.revoked = false;
+          $("#letter-count").textContent = `${state.letter.length} / 220`;
+          const sealButton = $("#seal-letter");
+          if (sealButton) sealButton.disabled = !state.letter.trim();
+          const status = $("#letter-save-status");
+          if (status) status.textContent = "正在保存…";
+          saveStateDebounced();
+          renderObjectStates();
+          if (saveTimer) window.clearTimeout(saveTimer);
+          saveTimer = window.setTimeout(() => {
+            const s = $("#letter-save-status");
+            if (s && !state.sealed) s.textContent = "已保存到本次会话";
+          }, 350);
+        });
+      }
       $("#seal-letter")?.addEventListener("click", () => {
         if (!state.letter.trim()) return;
         state.sealed = true; saveState(); renderObjectStates(); openDrawer("envelope");
@@ -354,6 +432,7 @@
       }));
     }
     $("[data-open-rehearsal]", $("#drawer-content"))?.addEventListener("click", openRehearsal);
+    $("[data-open-keepsake]", $("#drawer-content"))?.addEventListener("click", openDeliver);
   };
 
   const renderSelectors = () => {
@@ -387,16 +466,24 @@
   };
 
   const playTone = (frequency, start, duration) => {
-    const oscillator = audio.context.createOscillator();
-    const gain = audio.context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.value = frequency;
-    gain.gain.setValueAtTime(0.0001, start);
-    gain.gain.exponentialRampToValueAtTime(0.035, start + 0.04);
-    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-    oscillator.connect(gain).connect(audio.context.destination);
-    oscillator.start(start); oscillator.stop(start + duration + 0.03);
-    audio.nodes.push(oscillator);
+    if (!audio.context) return;
+    try {
+      const oscillator = audio.context.createOscillator();
+      const gain = audio.context.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.035, start + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+      oscillator.connect(gain).connect(audio.context.destination);
+      oscillator.start(start);
+      oscillator.stop(start + duration + 0.03);
+      audio.nodes.add(oscillator);
+      oscillator.onended = () => {
+        audio.nodes.delete(oscillator);
+        try { oscillator.disconnect(); gain.disconnect(); } catch { /* already disconnected */ }
+      };
+    } catch { /* audio context unavailable */ }
   };
 
   const playPhrase = () => {
@@ -405,22 +492,33 @@
     [261.63, 329.63, 392, 329.63, 293.66, 349.23].forEach((note, index) => playTone(note, now + index * 0.42, 0.7));
   };
 
+  const stopAllAudio = () => {
+    if (audio.timer) { window.clearInterval(audio.timer); audio.timer = null; }
+    audio.nodes.forEach((node) => { try { node.stop(); } catch { /* already stopped */ } });
+    audio.nodes.clear();
+  };
+
   const toggleMusic = async () => {
     state.musicPlaying = !state.musicPlaying;
     if (state.musicPlaying) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        audio.context = audio.context || new AudioContext();
-        await audio.context.resume();
-        playPhrase();
-        audio.timer = window.setInterval(playPhrase, 3200);
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          audio.context = audio.context || new AudioContext();
+          await audio.context.resume();
+          playPhrase();
+          audio.timer = window.setInterval(playPhrase, 3200);
+        }
+      } catch {
+        state.musicPlaying = false;
+        toast("音频未能启动 · 旋律视觉仍在");
       }
-      whisper("旋律开始转动。它只是铺底，真正的主题仍是你想说的话。");
-      toast("主题旋律正在回响 · 再次轻触可暂停");
+      if (state.musicPlaying) {
+        whisper("旋律开始转动。它只是铺底，真正的主题仍是你想说的话。");
+        toast("主题旋律正在回响 · 再次轻触可暂停");
+      }
     } else {
-      window.clearInterval(audio.timer);
-      audio.nodes.forEach((node) => { try { node.stop(); } catch { /* already stopped */ } });
-      audio.nodes = [];
+      stopAllAudio();
       whisper("旋律停在这里。安静也可以成为今晚的一部分。");
       toast("主题旋律已暂停");
     }
@@ -429,11 +527,35 @@
 
   const rehearsalSlides = () => {
     const chapters = manualChapters();
+    const plan = currentPlan();
+    const memory = memories.find((item) => state.selectedMemories.includes(item.id));
+    const atmosphereName = { warm: "暖光", moon: "月光", stars: "星光" }[state.atmosphere];
+    const letterExcerpt = state.letter.trim() ? (state.letter.trim().length > 28 ? `${state.letter.trim().slice(0, 28)}…` : state.letter.trim()) : "";
     return [
-      { ...chapters[0], object: state.musicPlaying ? "♫" : "◉" },
-      { ...chapters[1], object: state.selectedMemories.length ? "▧" : "□" },
-      { ...chapters[2], object: currentPlan()?.symbol || "◇" },
-      { ...chapters[3], object: state.sealed ? "◉" : "✉" },
+      {
+        phase: chapters[0].phase,
+        title: chapters[0].title,
+        copy: `${atmosphereName}已经铺开，${state.musicPlaying ? "主题旋律正在回响" : "旋律静候你的轻触"}`,
+        object: state.musicPlaying ? "♫" : "◉",
+      },
+      {
+        phase: chapters[1].phase,
+        title: chapters[1].title,
+        copy: memory ? `${memory.title}（${memory.date}）` : "选择一段共同记忆放入桌面",
+        object: memory ? "▧" : "□",
+      },
+      {
+        phase: chapters[2].phase,
+        title: plan ? plan.title : "惊喜揭晓",
+        copy: plan ? plan.description : "从礼物盒选择一条叙事线",
+        object: plan?.symbol || "◇",
+      },
+      {
+        phase: chapters[3].phase,
+        title: chapters[3].title,
+        copy: state.sealed ? (letterExcerpt || "蜡封已落下") : "等待一封由你写下的信",
+        object: state.sealed ? "◉" : "✉",
+      },
     ];
   };
 
@@ -447,26 +569,98 @@
     $("#rehearsal-object").textContent = slide.object;
     $("#rehearsal-dots").innerHTML = slides.map((_, index) => `<i class="${index === state.rehearsalStep ? "is-active" : ""}"></i>`).join("");
     $("#rehearsal-prev").disabled = state.rehearsalStep === 0;
-    $("#rehearsal-next").textContent = state.rehearsalStep === 3 ? "回到第一幕" : "下一幕";
+    const isLast = state.rehearsalStep === 3;
+    $("#rehearsal-next").textContent = isLast ? "回到第一幕" : "下一幕";
+    const deliverButton = $("#rehearsal-deliver");
+    if (deliverButton) {
+      const ready = completion() >= 60;
+      deliverButton.style.display = isLast ? "inline-flex" : "none";
+      deliverButton.textContent = ready ? "完成交付仪式" : "先补齐策展再交付";
+      deliverButton.disabled = !ready;
+    }
   };
 
   const openRehearsal = () => {
     closeDrawer();
     state.rehearsalStep = 0;
     renderRehearsal();
-    $("#rehearsal-dialog").showModal();
+    try { $("#rehearsal-dialog").showModal(); } catch { /* already open */ }
+  };
+
+  const buildKeepsakeSummary = () => {
+    const plan = currentPlan();
+    const memory = memories.find((item) => state.selectedMemories.includes(item.id));
+    const atmosphereName = { warm: "暖光", moon: "月光", stars: "星光" }[state.atmosphere];
+    const lines = [];
+    lines.push(`<div class="keepsake-row"><span>关注主体</span><strong>${escapeHtml(currentSubject().name)}</strong></div>`);
+    lines.push(`<div class="keepsake-row"><span>生命情景</span><strong>${escapeHtml(currentScene().label)}</strong></div>`);
+    lines.push(`<div class="keepsake-row"><span>空间气息</span><strong>${atmosphereName}</strong></div>`);
+    lines.push(`<div class="keepsake-row"><span>惊喜时刻</span><strong>今晚 ${escapeHtml(state.time)}</strong></div>`);
+    if (plan) lines.push(`<div class="keepsake-row"><span>叙事线</span><strong>${escapeHtml(plan.title)}</strong></div>`);
+    if (memory) lines.push(`<div class="keepsake-row"><span>共同记忆</span><strong>${escapeHtml(memory.title)}</strong></div>`);
+    if (state.letter.trim()) {
+      const excerpt = state.letter.trim().length > 40 ? `${state.letter.trim().slice(0, 40)}…` : state.letter.trim();
+      lines.push(`<div class="keepsake-row keepsake-letter"><span>你的话</span><strong>「${escapeHtml(excerpt)}」</strong></div>`);
+    }
+    return lines.join("");
+  };
+
+  const openDeliver = () => {
+    const summary = buildKeepsakeSummary();
+    $("#keepsake-summary").innerHTML = summary;
+    $("#keepsake-dialog").dataset.sealed = state.sealed ? "true" : "false";
+    try { $("#keepsake-dialog").showModal(); } catch { /* already open */ }
+  };
+
+  const finalizeDelivery = () => {
+    state.delivered = true;
+    saveState();
+    $("#keepsake-dialog").close();
+    whisper("仪式已落下。这件纪念物只属于你和此刻。");
+    toast("已交付 · 本次策展已成为一件可重访的纪念物");
+    renderObjectStates();
+  };
+
+  const restoreRevokedMaterials = () => {
+    if (!revokeSnapshot) return;
+    const snapshot = revokeSnapshot;
+    revokeSnapshot = null;
+    state.plan = snapshot.plan;
+    state.selectedMemories = [...snapshot.selectedMemories];
+    state.letter = snapshot.letter;
+    state.sealed = snapshot.sealed;
+    state.delivered = snapshot.delivered;
+    state.revoked = false;
+    saveState();
+    renderContext();
+    renderObjectStates();
+    whisper("材料已恢复。桌面回到撤回之前的样子。");
+    toast("已恢复本次策展材料");
   };
 
   const revokeMaterials = () => {
+    revokeSnapshot = {
+      plan: state.plan,
+      selectedMemories: [...state.selectedMemories],
+      letter: state.letter,
+      sealed: state.sealed,
+      delivered: state.delivered,
+    };
     state.plan = null;
     state.selectedMemories = [];
     state.letter = "";
     state.sealed = false;
     state.revoked = true;
-    saveState(); renderContext(); renderObjectStates();
-    $("#sovereignty-dialog").close();
+    state.delivered = false;
+    saveState();
+    renderContext();
+    renderObjectStates();
+    try { $("#sovereignty-dialog").close(); } catch { /* already closed */ }
     whisper("本次策展材料已撤回。桌面保留为空白，是否重新开始由你决定。");
-    toast("已撤回：照片选择、表达与策展方案已从本次会话移除");
+    toast("已撤回 · 30 秒内可恢复", {
+      label: "恢复",
+      handler: restoreRevokedMaterials,
+    });
   };
 
   const activateObject = (object) => {
@@ -527,20 +721,55 @@
     drag = null;
   };
 
+  const trapFocus = (dialog) => {
+    if (!dialog || typeof dialog.showModal !== "function") return;
+    const focusable = dialog.querySelectorAll('button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
+    if (!focusable.length) return;
+    const handler = (event) => {
+      if (event.key !== "Tab") return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    dialog.addEventListener("keydown", handler);
+    dialog._focusTrap = handler;
+  };
+
+  const releaseFocusTrap = (dialog) => {
+    if (dialog && dialog._focusTrap) { dialog.removeEventListener("keydown", dialog._focusTrap); delete dialog._focusTrap; }
+  };
+
   const bindEvents = () => {
-    $("#subject-switcher-trigger").addEventListener("click", () => { renderSelectors(); $("#subject-dialog").showModal(); });
-    $("#scene-switcher-trigger").addEventListener("click", () => { renderSelectors(); $("#scene-dialog").showModal(); });
-    $("#sovereignty-trigger").addEventListener("click", () => $("#sovereignty-dialog").showModal());
+    $("#toast-region").addEventListener("click", (event) => {
+      const button = event.target.closest(".toast-action");
+      if (!button) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const item = button.closest(".toast");
+      const handler = item?._toastAction;
+      if (!handler) return;
+      dismissToast(item);
+      handler();
+    });
+
+    $("#subject-switcher-trigger").addEventListener("click", () => { renderSelectors(); try { $("#subject-dialog").showModal(); } catch { /* already open */ } });
+    $("#scene-switcher-trigger").addEventListener("click", () => { renderSelectors(); try { $("#scene-dialog").showModal(); } catch { /* already open */ } });
+    $("#sovereignty-trigger").addEventListener("click", () => { try { $("#sovereignty-dialog").showModal(); } catch { /* already open */ } });
     $("#rehearse-trigger").addEventListener("click", openRehearsal);
     $("#revoke-button").addEventListener("click", revokeMaterials);
     $$("[data-close-drawer]").forEach((button) => button.addEventListener("click", closeDrawer));
-    $$("[data-dialog-close]").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+    $$("[data-dialog-close]").forEach((button) => button.addEventListener("click", () => {
+      const dialog = button.closest("dialog");
+      if (dialog) { releaseFocusTrap(dialog); try { dialog.close(); } catch { /* already closed */ } }
+    }));
 
     $("#subject-options").addEventListener("click", (event) => {
       const button = event.target.closest("[data-subject]");
       if (!button) return;
       state.subject = button.dataset.subject;
       if (state.subject === "self") state.scene = "self";
+      state.delivered = false;
       saveState(); renderAll(); $("#subject-dialog").close();
       whisper(`空间的焦点已转向${currentSubject().name}。${currentScene().suggestion}`);
       toast(`关注主体已切换为「${currentSubject().name}」`);
@@ -550,6 +779,7 @@
       if (!button) return;
       state.scene = button.dataset.scene;
       state.atmosphere = currentScene().atmosphere;
+      state.delivered = false;
       saveState(); renderAll(); $("#scene-dialog").close();
       whisper(`${currentScene().whisper} ${currentScene().suggestion}`);
       toast(`生命情景已切换为「${currentScene().label}」`);
@@ -557,7 +787,7 @@
 
     $$(".desk-object").forEach((object) => {
       object.addEventListener("pointerdown", onPointerDown);
-      object.addEventListener("pointermove", onPointerMove);
+      object.addEventListener("pointermove", onPointerMove, { passive: true });
       object.addEventListener("pointerup", onPointerUp);
       object.addEventListener("pointercancel", onPointerUp);
       object.addEventListener("click", () => {
@@ -578,12 +808,47 @@
     $("#rehearsal-next").addEventListener("click", () => {
       state.rehearsalStep = state.rehearsalStep === 3 ? 0 : state.rehearsalStep + 1; renderRehearsal();
     });
+    $("#rehearsal-deliver")?.addEventListener("click", () => {
+      try { $("#rehearsal-dialog").close(); } catch { /* already closed */ }
+      openDeliver();
+    });
+    $("#keepsake-deliver")?.addEventListener("click", finalizeDelivery);
+
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeDrawer();
+      if (event.key === "Escape") {
+        if ($("#rehearsal-dialog").open) return;
+        closeDrawer();
+      }
+      if (event.key === "ArrowLeft" && $("#rehearsal-dialog").open) {
+        state.rehearsalStep = Math.max(0, state.rehearsalStep - 1); renderRehearsal();
+      }
+      if (event.key === "ArrowRight" && $("#rehearsal-dialog").open) {
+        state.rehearsalStep = state.rehearsalStep === 3 ? 0 : state.rehearsalStep + 1; renderRehearsal();
+      }
+    });
+
+    [$("#subject-dialog"), $("#scene-dialog"), $("#gift-dialog"), $("#rehearsal-dialog"), $("#sovereignty-dialog"), $("#keepsake-dialog")].forEach((dialog) => {
+      if (dialog) dialog.addEventListener("close", () => releaseFocusTrap(dialog));
+    });
+    [$("#subject-dialog"), $("#scene-dialog"), $("#gift-dialog"), $("#rehearsal-dialog"), $("#sovereignty-dialog"), $("#keepsake-dialog")].forEach((dialog) => {
+      if (dialog) dialog.addEventListener("show", () => trapFocus(dialog));
     });
   };
 
   renderAll();
   renderSelectors();
   bindEvents();
+
+  window.addEventListener("beforeunload", () => {
+    stopAllAudio();
+    if (saveTimer) window.clearTimeout(saveTimer);
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && state.musicPlaying) {
+      stopAllAudio();
+      state.musicPlaying = false;
+      saveState();
+      renderObjectStates();
+    }
+  });
 })();
