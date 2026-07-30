@@ -1,0 +1,94 @@
+{
+  "version": "1.0.0",
+  "product_line": "ΠPaw 岗位 Agent 场景套件",
+  "positioning": "嵌入现有 CRM/OA/IM 的可售卖场景包，90 天可验收 ROI",
+  "commercial_loop": [
+    { "step_id": "select", "label": "选场景", "desc": "按痛点选 SKU，明确预算归属" },
+    { "step_id": "prove", "label": "证价值", "desc": "ROI 测算与对标基线" },
+    { "step_id": "connect", "label": "连系统", "desc": "Day-1 集成清单勾选" },
+    { "step_id": "pilot", "label": "跑试点", "desc": "Playbook + Task Panel 真链路" },
+    { "step_id": "accept", "label": "验收扩面", "desc": "审计报告 + 扩面路线图" }
+  ],
+  "kits": [
+    {
+      "kit_id": "kit-cs-sla",
+      "sku_name": "客服 SLA 岗位 Agent 套件",
+      "tagline": "飞书/IM 客诉 → 工单 → SLA → 审计，不替换 ITSM",
+      "buyer_role": "客服负责人 / 运营 VP",
+      "budget_type": "业务 Opex · 降本增效",
+      "pain_points": [
+        "多渠道客诉进线分散，SLA 靠人工盯",
+        "处理过程不可审计，复盘无证据链",
+        "VIP 升级路径不清晰，跨部门扯皮"
+      ],
+      "value_promises": [
+        { "metric": "首次响应时长", "baseline": "4.2h", "target": "≤1h", "unit": "小时" },
+        { "metric": "SLA 达标率", "baseline": "82%", "target": "≥95%", "unit": "%" },
+        { "metric": "审计可追溯率", "baseline": "40%", "target": "100%", "unit": "%" }
+      ],
+      "roi_model": {
+        "ticket_volume_monthly": 1200,
+        "minutes_saved_per_ticket": 18,
+        "labor_cost_per_hour": 85,
+        "sla_penalty_avoided_monthly": 15000
+      },
+      "day1_integrations": [
+        { "id": "feishu_im", "system": "飞书/企微 IM", "mode": "入站", "capability": "Outward Gateway", "required": true },
+        { "id": "itsm_ticket", "system": "ITSM/工单", "mode": "读写", "capability": "cs.ticket.*", "required": true },
+        { "id": "crm_profile", "system": "CRM 客户主数据", "mode": "只读", "capability": "cs.customer.get_profile", "required": true },
+        { "id": "oa_notify", "system": "OA/IM 通知", "mode": "出站", "capability": "cs.notify.send_im", "required": false }
+      ],
+      "playbook_id": "playbook.cs_complaint_v1",
+      "agent_id": "agent.cs_specialist",
+      "demo_entry": "demoCsEscalation",
+      "poc_duration_days": 30,
+      "acceptance_criteria": [
+        "Intent 升级成功率 ≥99%",
+        "Playbook 三步 cs.* 全链路 audit_id 可追溯",
+        "Task Panel 无日志流，仅结构化任务态",
+        "Outward Gateway 飞书入站可路由到 cs_agent"
+      ],
+      "expansion_path": "客诉 → 续费挽回 → 全渠道服务中台"
+    },
+    {
+      "kit_id": "kit-b2b-ltc",
+      "sku_name": "B2B 报价审批 LTC 套件",
+      "tagline": "线索资格 → 报价流程 → 折扣审批，CRM 仍是地主",
+      "buyer_role": "销售运营 / BU 负责人",
+      "budget_type": "业务 Opex · 增收提效",
+      "pain_points": [
+        "大单报价周期长，审批卡在 OA",
+        "线索资格判断靠经验，无量化证据",
+        "Margin 异常与一线执行脱节"
+      ],
+      "value_promises": [
+        { "metric": "报价周期", "baseline": "9.5天", "target": "≤5天", "unit": "天" },
+        { "metric": "大单赢单率", "baseline": "28%", "target": "+8pp", "unit": "百分点" },
+        { "metric": "审批合规拦截", "baseline": "事后审计", "target": "事前 Gate", "unit": "" }
+      ],
+      "roi_model": {
+        "deals_per_quarter": 24,
+        "avg_deal_value_wan": 800,
+        "win_rate_lift_pp": 8,
+        "quote_cycle_days_saved": 4.5
+      },
+      "day1_integrations": [
+        { "id": "crm_lead", "system": "CRM 线索/商机", "mode": "读写", "capability": "cs.lead.qualify_lead", "required": true },
+        { "id": "bpm_quote", "system": "BPM 报价审批", "mode": "读写", "capability": "cs.process.start", "required": true },
+        { "id": "oa_approval", "system": "OA 折扣审批", "mode": "读写", "capability": "cs.approval.submit", "required": true },
+        { "id": "bi_margin", "system": "BI Margin 只读", "mode": "只读", "capability": "指标接入", "required": false }
+      ],
+      "playbook_id": "playbook.sales_ltc_quote_v1",
+      "agent_id": "agent.sales_advisor",
+      "demo_entry": "demoLtcPlaybook",
+      "poc_duration_days": 45,
+      "acceptance_criteria": [
+        "qualify → process → approval 三步可逐步执行",
+        "超折扣阈值自动进入 approval_pending",
+        "每条 cs.* 调用带 audit_id 与 Gate 记录",
+        "与 PAC 经营闭环 Action 分派可联动"
+      ],
+      "expansion_path": "LTC 单场景 → 区域销售运营 → 经营分析闭环"
+    }
+  ]
+}

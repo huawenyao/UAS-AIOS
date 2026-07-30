@@ -1,0 +1,66 @@
+{
+  "tenant_id": "t-acme-demo",
+  "assignee_role_id": "role.cs_agent",
+  "agent_id": "agent.cs_specialist",
+  "summary": {
+    "backlog_count": 1,
+    "has_current": false,
+    "sla_at_risk": 1
+  },
+  "backlog": [
+    {
+      "item_id": "wt-390fd006e6c3",
+      "source_type": "working_task",
+      "status": "open",
+      "display_phase": "backlog",
+      "title": "客户 C-1001 反馈交付延期 3 天，要求今日内回复",
+      "subtitle": "处理 VIP 客户交付延期投诉并协调客服跟进",
+      "priority": "high",
+      "due_at": null,
+      "sla_label": "剩余时间：今日内",
+      "business_context": {
+        "customer_id": "C-1001",
+        "channel": "im"
+      },
+      "evidence_count": 1,
+      "steps": [
+        {
+          "step_id": "s1_profile",
+          "label": "1. 获取客户画像与历史工单摘要",
+          "operation_ref": "cs.customer.get_profile",
+          "done": false,
+          "current": true
+        },
+        {
+          "step_id": "s2_ticket",
+          "label": "2. 创建客服工单并绑定 SLA",
+          "operation_ref": "cs.ticket.create",
+          "done": false,
+          "current": false
+        },
+        {
+          "step_id": "s3_escalate",
+          "label": "3. SLA 临近或无法自动结案时升级主管",
+          "operation_ref": "cs.ticket.escalate",
+          "done": false,
+          "current": false
+        }
+      ],
+      "actions": [
+        {
+          "label": "处理",
+          "action": "open"
+        },
+        {
+          "label": "完成当前步骤",
+          "action": "complete_step"
+        },
+        {
+          "label": "升级主管",
+          "action": "escalate"
+        }
+      ]
+    }
+  ],
+  "current": null
+}

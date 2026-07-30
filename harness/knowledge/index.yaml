@@ -20,6 +20,8 @@ technical:
     title: Intent Hub 与升级 ΠPaw API 草案
   - file: technical/pipaw-cs-agent-benchmark.md
     title: ΠPaw 客服岗位 Agent 标杆（P1）
+  - file: ../../docs/strategic/design/BusinessAGI_Standardized_Architecture_AND_TOGAF_Delivery.md
+    title: Business AGI 标准化架构与 TOGAF 交付设计（基线）
 domain:
   - file: domain/glossary.md
     title: 数字人生态术语表
