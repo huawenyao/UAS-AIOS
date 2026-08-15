@@ -1,0 +1,112 @@
+{
+  "version": "v1.0",
+  "domain": "inventory_replenishment",
+  "ontology": {
+    "classes": [
+      "SKU",
+      "Warehouse",
+      "Supplier",
+      "InventoryPosition",
+      "DemandForecast",
+      "PurchaseOrder",
+      "Budget"
+    ],
+    "relations": [
+      "storedAt",
+      "suppliedBy",
+      "forecasts",
+      "covers"
+    ]
+  },
+  "situation": {
+    "id": "wm:warehouse-W1:2026-08-15",
+    "timestamp": "2026-08-15T00:00:00Z",
+    "subjects": [
+      { "id": "agent:replenishment", "role": "planner", "stake": "service_level" },
+      { "id": "role:procurement", "role": "approver", "stake": "budget" }
+    ],
+    "objects": [
+      { "id": "sku:A", "type": "SKU" },
+      { "id": "wh:W1", "type": "Warehouse" },
+      { "id": "sup:S1", "type": "Supplier" },
+      { "id": "pos:A-W1", "type": "InventoryPosition" },
+      { "id": "fc:A-W1-14d", "type": "DemandForecast" },
+      { "id": "bud:ops-2026q3", "type": "Budget" }
+    ],
+    "facts": {
+      "sku_id": "sku:A",
+      "warehouse_id": "wh:W1",
+      "supplier_id": "sup:S1",
+      "on_hand": 40,
+      "inbound": 10,
+      "forecast_demand_14d": 120,
+      "stockout_risk": 0.18,
+      "risk_threshold": 0.05,
+      "unit_cost": 80,
+      "reorder_qty": 80,
+      "budget_remaining": 500000,
+      "lead_time_days": 7
+    },
+    "feedback_channels": ["erp.inventory_snapshot", "pos.sales_stream", "approval.queue"]
+  },
+  "intent": {
+    "goal": "两周内将 A 仓缺货风险降至 5% 以下",
+    "constraints": {
+      "max_budget": 500000,
+      "deadline": "2026-08-29"
+    },
+    "success_metric": "stockout_risk_p90 < 0.05",
+    "deadline": "2026-08-29",
+    "acceptable_risk": "medium"
+  },
+  "action_types": [
+    {
+      "id": "query.stockout_risk",
+      "kind": "query",
+      "input_schema": { "sku_id": "id", "warehouse_id": "id" },
+      "preconditions": [],
+      "effects": ["return stockout_risk"],
+      "risk": "low",
+      "approval": false,
+      "tool_binding": "sparql.inventory.risk"
+    },
+    {
+      "id": "replenishment.create_purchase_order",
+      "kind": "act",
+      "input_schema": {
+        "sku_id": "id",
+        "warehouse_id": "id",
+        "supplier_id": "id",
+        "quantity": "positive_int"
+      },
+      "preconditions": [
+        "stockout_risk > threshold",
+        "budget_remaining >= estimated_cost"
+      ],
+      "effects": [
+        "PurchaseOrder.status=created",
+        "expected_on_hand += quantity"
+      ],
+      "risk": "medium",
+      "approval": true,
+      "idempotency_key": "sku_id+warehouse_id+day",
+      "rollback": "replenishment.cancel_purchase_order",
+      "tool_binding": "erp.create_po"
+    },
+    {
+      "id": "notify.procurement",
+      "kind": "notify",
+      "input_schema": { "purchase_order_ref": "id" },
+      "preconditions": [],
+      "effects": ["notify.procurement"],
+      "risk": "low",
+      "approval": false,
+      "tool_binding": "ticket.notify"
+    }
+  ],
+  "policies": {
+    "auto_execute_max_risk": "low",
+    "deny_unregistered_actions": true,
+    "predict_writes_facts": false
+  }
+}
