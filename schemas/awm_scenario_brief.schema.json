@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/awm_scenario_brief.schema.json",
+  "title": "AWM Scenario Match Brief",
+  "description": "SIO-MMOS/DIKW 场景匹配输入：用结构信号而不是行业名决定 SKU 与 UX 模式。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "domain_hint", "subjects", "named_objects", "hard_constraints", "executable_actions"],
+  "properties": {
+    "id": { "type": "string" },
+    "domain_hint": { "type": "string" },
+    "customer_type": {
+      "type": "string",
+      "enum": ["enterprise_ops", "mid_market", "platform_team", "individual"]
+    },
+    "subjects": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "named_objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "has_system_id"],
+        "properties": {
+          "name": { "type": "string" },
+          "has_system_id": { "type": "boolean" }
+        }
+      }
+    },
+    "hard_constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "success_metric": { "type": "string" },
+    "executable_actions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "writeback_systems": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "irreversible_actions": { "type": "boolean" },
+    "has_approver": { "type": "boolean" },
+    "has_compensation": { "type": "boolean" },
+    "feedback_hours": { "type": "number" },
+    "data_sources": { "type": "integer" },
+    "asked_autonomy": {
+      "type": "string",
+      "enum": ["none", "suggest", "gated", "full"]
+    }
+  }
+}

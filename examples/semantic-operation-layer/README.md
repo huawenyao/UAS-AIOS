@@ -9,5 +9,6 @@
 
 ```bash
 python3 scripts/semantic_operation_layer.py
-python3 -m pytest examples/semantic-operation-layer/test_semantic_operation_layer.py -v
+python3 scripts/awm_scenario_matcher.py --brief examples/semantic-operation-layer/briefs/replenishment_brief.json
+python3 -m pytest examples/semantic-operation-layer -v
 ```

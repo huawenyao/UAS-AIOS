@@ -1,0 +1,20 @@
+{
+  "id": "brief:full-auto-no-rollback",
+  "domain_hint": "replenishment",
+  "customer_type": "enterprise_ops",
+  "subjects": ["planner", "finance"],
+  "named_objects": [
+    { "name": "SKU", "has_system_id": true },
+    { "name": "Warehouse", "has_system_id": true }
+  ],
+  "hard_constraints": ["max_budget"],
+  "success_metric": "fill_rate > 0.95",
+  "executable_actions": ["create_purchase_order"],
+  "writeback_systems": ["erp"],
+  "irreversible_actions": true,
+  "has_approver": false,
+  "has_compensation": false,
+  "feedback_hours": 24,
+  "data_sources": 2,
+  "asked_autonomy": "full"
+}
