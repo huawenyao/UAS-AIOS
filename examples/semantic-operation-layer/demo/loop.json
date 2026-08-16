@@ -1,0 +1,321 @@
+{
+  "product": "AWM",
+  "tagline": "人与 Agent 共用的可操作世界",
+  "loop": [
+    "match",
+    "lens",
+    "intent",
+    "plan",
+    "stage",
+    "gate",
+    "observe"
+  ],
+  "match": {
+    "brief_id": "brief:replenishment-p0",
+    "match_score": 1.0,
+    "sio": {
+      "situation": 1.0,
+      "intent": 1.0,
+      "operation": 1.0
+    },
+    "dikw": {
+      "data": 1.0,
+      "information": 1.0,
+      "knowledge": 1.0,
+      "wisdom": 1.0
+    },
+    "sku": "gate",
+    "ux_mode": "gate",
+    "domain_pack": "inventory_replenishment",
+    "first_objects": [
+      "SKU",
+      "Warehouse",
+      "Supplier",
+      "PurchaseOrder"
+    ],
+    "first_actions": [
+      "query.stockout_risk",
+      "replenishment.create_purchase_order",
+      "notify.procurement"
+    ],
+    "reasons": [
+      "情境与意图可计算：进入 Stage，用推演证明价值",
+      "具备审批、反馈与补偿/可逆性：可签 Gate"
+    ],
+    "out_of_scope": [
+      "全自主替代部门",
+      "未登记动作直连生产",
+      "把预测当事实写入"
+    ],
+    "publish_gate": true,
+    "sku_rank": 3
+  },
+  "beats": [
+    {
+      "id": "match",
+      "title": "90 秒匹配",
+      "sku": "gate",
+      "ux_mode": "gate",
+      "highlight": "先匹配世界结构，不先打开聊天",
+      "reasons": [
+        "情境与意图可计算：进入 Stage，用推演证明价值",
+        "具备审批、反馈与补偿/可逆性：可签 Gate"
+      ],
+      "domain_pack": "inventory_replenishment"
+    },
+    {
+      "id": "lens",
+      "title": "看见世界",
+      "highlight": "对象必具名：sku:A / wh:W1，缺口在情境条上",
+      "situation": "wm:warehouse-W1:2026-08-15",
+      "subjects": [
+        {
+          "id": "agent:replenishment",
+          "role": "planner",
+          "stake": "service_level"
+        },
+        {
+          "id": "role:procurement",
+          "role": "approver",
+          "stake": "budget"
+        }
+      ],
+      "objects": [
+        {
+          "id": "sku:A",
+          "type": "SKU"
+        },
+        {
+          "id": "wh:W1",
+          "type": "Warehouse"
+        },
+        {
+          "id": "sup:S1",
+          "type": "Supplier"
+        },
+        {
+          "id": "pos:A-W1",
+          "type": "InventoryPosition"
+        },
+        {
+          "id": "fc:A-W1-14d",
+          "type": "DemandForecast"
+        },
+        {
+          "id": "bud:ops-2026q3",
+          "type": "Budget"
+        }
+      ],
+      "facts": {
+        "sku_id": "sku:A",
+        "warehouse_id": "wh:W1",
+        "supplier_id": "sup:S1",
+        "on_hand": 40,
+        "inbound": 10,
+        "forecast_demand_14d": 120,
+        "stockout_risk": 0.18,
+        "risk_threshold": 0.05,
+        "unit_cost": 80,
+        "reorder_qty": 80,
+        "budget_remaining": 500000,
+        "lead_time_days": 7
+      },
+      "gaps": [
+        "ERP.on_hand=40 与 Excel.on_hand=52 未对齐"
+      ]
+    },
+    {
+      "id": "intent",
+      "title": "意图作曲",
+      "highlight": "约束是芯片，改芯片即重编译，不是再聊一轮",
+      "intent": {
+        "goal": "两周内将 A 仓缺货风险降至 5% 以下",
+        "constraints": {
+          "max_budget": 500000,
+          "deadline": "2026-08-29"
+        },
+        "success_metric": "stockout_risk_p90 < 0.05",
+        "deadline": "2026-08-29",
+        "acceptable_risk": "medium"
+      }
+    },
+    {
+      "id": "plan",
+      "title": "封闭计划",
+      "highlight": "动作是卡片；未注册动作返回类型错误",
+      "operations": [
+        {
+          "id": "step-1",
+          "action": "query.stockout_risk",
+          "input": {
+            "sku_id": "sku:A",
+            "warehouse_id": "wh:W1"
+          }
+        },
+        {
+          "id": "step-2",
+          "action": "replenishment.create_purchase_order",
+          "input": {
+            "sku_id": "sku:A",
+            "warehouse_id": "wh:W1",
+            "supplier_id": "sup:S1",
+            "quantity": 80
+          }
+        },
+        {
+          "id": "step-3",
+          "action": "notify.procurement",
+          "input": {
+            "purchase_order_ref": "po:pending"
+          }
+        }
+      ],
+      "policy": {
+        "steps": [
+          {
+            "step": "step-1",
+            "action": "query.stockout_risk",
+            "decision": "allow",
+            "risk": "low",
+            "kind": "query"
+          },
+          {
+            "step": "step-2",
+            "action": "replenishment.create_purchase_order",
+            "decision": "escalate",
+            "risk": "medium",
+            "kind": "act"
+          },
+          {
+            "step": "step-3",
+            "action": "notify.procurement",
+            "decision": "allow",
+            "risk": "low",
+            "kind": "notify"
+          }
+        ]
+      },
+      "type_error": "plan invalid: unregistered action: erp.drop_table"
+    },
+    {
+      "id": "stage",
+      "title": "先演后做",
+      "highlight": "Now ≠ Maybe：仿真不写事实",
+      "now": {
+        "on_hand": 40,
+        "inbound": 10,
+        "stockout_risk": 0.18
+      },
+      "maybe": {
+        "expected_on_hand": 130,
+        "stockout_risk": 0.0
+      },
+      "writes_facts": false,
+      "meets_intent": true
+    },
+    {
+      "id": "gate",
+      "title": "门控写回",
+      "highlight": "审批是托盘：无批准则 blocked",
+      "blocked": {
+        "mode": "execute",
+        "status": "blocked",
+        "reason": "approval required",
+        "blocked_steps": [
+          {
+            "step": "step-2",
+            "action": "replenishment.create_purchase_order",
+            "decision": "escalate",
+            "risk": "medium",
+            "kind": "act"
+          }
+        ]
+      },
+      "committed": {
+        "status": "committed",
+        "purchase_order": {
+          "status": "created",
+          "quantity": 80
+        }
+      }
+    },
+    {
+      "id": "observe",
+      "title": "世界回看",
+      "highlight": "预测与观测叠合，闭环进入下一螺旋",
+      "observe": {
+        "mode": "observe",
+        "writes_facts": false,
+        "predicted": {
+          "expected_on_hand": 130,
+          "stockout_risk": 0.0
+        },
+        "actual": {
+          "on_hand": 118,
+          "inbound": 0,
+          "stockout_risk": 0.03,
+          "purchase_order_status": "created"
+        },
+        "delta": {
+          "stockout_risk": 0.03,
+          "on_hand": -12
+        },
+        "meets_intent": true,
+        "calibrated": true
+      },
+      "dikw": {
+        "data": 1.0,
+        "information": 1.0,
+        "knowledge": 1.0,
+        "wisdom": 1.0,
+        "publishable": true
+      },
+      "explain": {
+        "situation": "wm:warehouse-W1:2026-08-15",
+        "intent": "两周内将 A 仓缺货风险降至 5% 以下",
+        "operations": [
+          "query.stockout_risk",
+          "replenishment.create_purchase_order",
+          "notify.procurement"
+        ]
+      }
+    }
+  ],
+  "audit": [
+    {
+      "op": "compile",
+      "plan_id": "plan:wm:warehouse-W1:2026-08-15",
+      "ok": true
+    },
+    {
+      "op": "simulate",
+      "plan_id": "plan:wm:warehouse-W1:2026-08-15",
+      "ok": true
+    },
+    {
+      "op": "execute",
+      "plan_id": "plan:wm:warehouse-W1:2026-08-15",
+      "ok": false
+    },
+    {
+      "op": "simulate",
+      "plan_id": "plan:wm:warehouse-W1:2026-08-15",
+      "ok": true
+    },
+    {
+      "op": "execute",
+      "plan_id": "plan:wm:warehouse-W1:2026-08-15",
+      "ok": true
+    },
+    {
+      "op": "simulate",
+      "plan_id": "plan:wm:warehouse-W1:2026-08-15",
+      "ok": true
+    },
+    {
+      "op": "observe",
+      "plan_id": "execute",
+      "ok": true
+    }
+  ]
+}

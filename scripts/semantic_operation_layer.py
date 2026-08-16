@@ -324,6 +324,43 @@ class SemanticOperationLayer:
         self._audit("execute", plan["plan_id"], True)
         return result
 
+    def observe(
+        self,
+        committed: Dict[str, Any],
+        actual: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """把预测与观测叠在一起；观测不得回写成预测。"""
+        predicted = committed.get("simulation", {}).get("projected_facts", {})
+        facts = committed.get("facts", {})
+        actual = actual or {
+            "on_hand": int(facts.get("expected_on_hand", 0)) - 12,
+            "inbound": 0,
+            "stockout_risk": 0.03,
+            "purchase_order_status": facts.get("purchase_order", {}).get(
+                "status", "created"
+            ),
+        }
+        predicted_risk = float(predicted.get("projected_stockout_risk", 1.0))
+        actual_risk = float(actual.get("stockout_risk", 1.0))
+        result = {
+            "mode": "observe",
+            "writes_facts": False,
+            "predicted": {
+                "expected_on_hand": predicted.get("expected_on_hand"),
+                "stockout_risk": predicted_risk,
+            },
+            "actual": actual,
+            "delta": {
+                "stockout_risk": round(actual_risk - predicted_risk, 4),
+                "on_hand": actual.get("on_hand", 0)
+                - int(predicted.get("expected_on_hand") or 0),
+            },
+            "meets_intent": actual_risk < 0.05,
+            "calibrated": abs(actual_risk - predicted_risk) <= 0.05,
+        }
+        self._audit("observe", committed.get("mode", "execute"), True)
+        return result
+
     def explain(self, plan: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         plan = plan or self.compile()
         sim = self.simulate(plan)
@@ -378,12 +415,14 @@ def run_replenishment_demo(spec_path: str) -> Dict[str, Any]:
     blocked = layer.execute(plan, approved=False)
     committed = layer.execute(plan, approved=True)
     explained = layer.explain(plan)
+    observed = layer.observe(committed)
     return {
         "domain": layer.spec["domain"],
         "plan": plan,
         "simulate": simulated,
         "blocked_without_approval": blocked,
         "committed_with_approval": committed,
+        "observe": observed,
         "explain": explained,
         "audit": layer.audit,
     }

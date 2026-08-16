@@ -41,6 +41,8 @@ def test_replenishment_closed_loop_requires_approval() -> None:
     assert result["simulate"]["meets_intent"] is True
     assert result["blocked_without_approval"]["status"] == "blocked"
     assert result["committed_with_approval"]["status"] == "committed"
+    assert result["observe"]["mode"] == "observe"
+    assert result["observe"]["meets_intent"] is True
     dikw = result["explain"]["dikw"]
     assert dikw["data"] == 1.0
     assert dikw["information"] == 1.0
