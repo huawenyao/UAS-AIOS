@@ -28,7 +28,7 @@ UAS-AIOS 以**世界模型**为认知内核、以**双轨 AGI**（User / Busines
 | **三元张力与范式跃迁** | AI 应用本质；认知/执行/知识摩擦；范式相变→UAS-AIOS | [AI_APPLICATION_PARADIGM_REPORT](../AI_APPLICATION_PARADIGM_REPORT.md) |
 | **价值闭环（7 步）** | 从问题输入到收益反哺的完整回路 | 讨论沉淀、本文 §二 |
 | **DIKW方法论** | 智慧↔数据双向回路；构建确认回路；可创造/可运行/可适应/可进化 | 本文 §4.4 |
-| **SIO-MMOS/DIKW** | 主体–交互–客体与情境–意图–操作同构；多层级元模型本体操作系统；语义操作层产品化 | [SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer](./strategic/SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer.md) |
+| **SIO-MMOS/DIKW** | 主体–交互–客体与情境–意图–操作同构；多层级元模型本体操作系统；语义操作层产品化 | [SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer](./strategic/SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer.md) · 产品定义 [AWM_PRODUCT_DEFINITION_CUSTOMERS_SCENARIOS_UX](./strategic/AWM_PRODUCT_DEFINITION_CUSTOMERS_SCENARIOS_UX.md) |
 | **推动—反馈—反身螺旋** | 世界模型下的演化机制 | [AGI_WORLD_MODEL_UAS](./AGI_WORLD_MODEL_UAS.md) §2.3 |
 | **UAS Platform 标准** | 所有业务应用的技术与运行标准 | [UAS_PLATFORM_STANDARD](./UAS_PLATFORM_STANDARD.md) |
 | **企业级 Agent 生态 L1-L3** | 个人数字分身、职能数字人、经营数字人的产品化闭环 | [UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3](./UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md) |
@@ -772,6 +772,7 @@ flowchart TB
 | 三维协议 | examples/triadic-ideal-reality-swarm/.claude/skills/triadic_protocol.md |
 | 招聘 OS 方法论基础 | projects/ai-recruitment-os/docs/METHODOLOGY_FOUNDATION.md |
 | SIO-MMOS/DIKW：Agent 世界模型与语义操作层 | [docs/strategic/SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer.md](./strategic/SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer.md) |
+| Agent 世界模型产品定义 | [docs/strategic/AWM_PRODUCT_DEFINITION_CUSTOMERS_SCENARIOS_UX.md](./strategic/AWM_PRODUCT_DEFINITION_CUSTOMERS_SCENARIOS_UX.md) |
 
 ---
 

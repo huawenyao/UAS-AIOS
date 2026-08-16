@@ -571,6 +571,7 @@ DreamerV3 (Nature 2025)；V-JEPA 2；NVIDIA Cosmos / World-Action Models；Wayve
 | `wm_theory.md` / `wm_system_logic_and_product_stack.md` | 主客本体与 L0–L5 |
 | `world_model_research.md` 等 | 早期产品形态推演 |
 | **本文** | 用 SIO-MMOS/DIKW 收束行业进展，并给出 SOL 产品与参考实现 |
+| `AWM_PRODUCT_DEFINITION_CUSTOMERS_SCENARIOS_UX.md` | 把世界模型定义为可售卖产品：客户、场景、SKU、竞争与 UX |
 
 ---
 
