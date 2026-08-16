@@ -773,6 +773,7 @@ flowchart TB
 | 招聘 OS 方法论基础 | projects/ai-recruitment-os/docs/METHODOLOGY_FOUNDATION.md |
 | SIO-MMOS/DIKW：Agent 世界模型与语义操作层 | [docs/strategic/SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer.md](./strategic/SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer.md) |
 | Agent 世界模型产品定义 | [docs/strategic/AWM_PRODUCT_DEFINITION_CUSTOMERS_SCENARIOS_UX.md](./strategic/AWM_PRODUCT_DEFINITION_CUSTOMERS_SCENARIOS_UX.md) |
+| AWM 产品 Demo 闭环 | [docs/strategic/AWM_PRODUCT_DEMO_DESIGN.md](./strategic/AWM_PRODUCT_DEMO_DESIGN.md) |
 
 ---
 

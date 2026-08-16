@@ -217,6 +217,7 @@ execution → monitoring → render_report → evaluation
 | LifeWake · SelfPaw 生命体验域与 G/E/Π 协议扩展 | docs/strategic/LIFEWAKE_USER_AGI_EXPERIENCE_DOMAIN.md |
 | SIO-MMOS/DIKW · Agent 世界模型与本体论语义操作层 | docs/strategic/SIO_MMOS_DIKW_Agent_World_Model_And_Semantic_Operation_Layer.md · `scripts/semantic_operation_layer.py` |
 | Agent 世界模型产品定义（客户/场景/体验） | docs/strategic/AWM_PRODUCT_DEFINITION_CUSTOMERS_SCENARIOS_UX.md · `scripts/awm_scenario_matcher.py` |
+| AWM 产品 Demo（补货闭环） | docs/strategic/AWM_PRODUCT_DEMO_DESIGN.md · `website/awm-demo/` · `python3 scripts/awm_demo_loop.py` |
 | 数字人生态 reqharness 基线 | harness/README.md · `python harness/invariants/run-all.py` |
 
 ---
