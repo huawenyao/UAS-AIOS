@@ -1,0 +1,29 @@
+{
+  "version": "v1.0",
+  "registrar": "pipaw_only",
+  "routes": [
+    {
+      "channel_id": "feishu_im",
+      "type": "im",
+      "default_agent": "ppaw_cs_agent",
+      "tenant_header": "X-Tenant-Id"
+    },
+    {
+      "channel_id": "wecom_im",
+      "type": "im",
+      "default_agent": "ppaw_cs_agent",
+      "tenant_header": "X-Tenant-Id"
+    },
+    {
+      "channel_id": "email_inbound",
+      "type": "email",
+      "default_agent": "ppaw_sales_advisor",
+      "tenant_header": "X-Tenant-Id"
+    }
+  ],
+  "pii_mask_fields": [
+    "contact_phone",
+    "contact_email",
+    "id_card"
+  ]
+}
