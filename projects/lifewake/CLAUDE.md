@@ -11,6 +11,8 @@ UAS subapp：将「惊喜盲盒」与「心跳音乐」收敛为可审计、可�
 
 - `/intent [情感议题]` — 归一化惊喜或心跳共鸣意图
 - `python scripts/evaluate_lifewake_mvp.py` — 行为验收 CASE-001～014
+- `python scripts/run_memory_chest_demo.py --pretty --write-report` — 时空记忆匣三位一体闭环
+- `pytest -q` — 策略红线、14 CASE、记忆匣与价值闭环测试
 - `python scripts/run_value_loop_prototype.py` — 输入→体验→反馈→演化完整闭环
 - `python scripts/run_emotion_kpi_snapshot.py` — 从运行事实生成情感 KPI
 - `pytest -q` — 策略红线、14 CASE 与价值闭环测试

@@ -1,0 +1,155 @@
+{
+  "version": "v0.1",
+  "person_id": "person_ada",
+  "consent": {
+    "consent_id": "consent_chest_001",
+    "person_id": "person_ada",
+    "scopes": ["memory.revisit", "memory.rewrite", "memory.itemize"],
+    "purpose": "create_for_user",
+    "status": "granted",
+    "withdrawable": true,
+    "expires_at": "2027-08-19T00:00:00Z"
+  },
+  "palace_templates": {
+    "real_memory": {
+      "wing": "现实记忆层",
+      "rooms": ["人生展厅", "人物回廊", "情绪井"]
+    },
+    "fantasy": {
+      "wing": "幻想故事层",
+      "rooms": ["创世工坊", "跨界桥"]
+    },
+    "history": {
+      "wing": "历史穿梭层",
+      "rooms": ["时间栈厅"]
+    },
+    "future": {
+      "wing": "未来创作层",
+      "rooms": ["未完成之翼"]
+    }
+  },
+  "items": [
+    {
+      "item_id": "item_moon_hairpin",
+      "item_type": "character",
+      "title": "月光发卡",
+      "vessel": "人物信物",
+      "inscription": "她侧脸被月光镀亮的那一夜",
+      "is_real_memory": true,
+      "layer": "real_memory",
+      "weight": "high",
+      "source_timeline_id": "tl_linyan_dusk",
+      "parallel_branch_id": "br_linyan_origin",
+      "entity_graph_ref": "person_linyan",
+      "user_edit_note": "妻子 · 林妍的人物信物，仅本人可唤醒。",
+      "atmosphere": "warm_moonlight",
+      "scene": {
+        "scene_id": "scene_dusk_window",
+        "title": "黄昏窗边",
+        "setting": "私人居所窗台，暮色与月光交替",
+        "weather": "晴，薄雾",
+        "era": "当下",
+        "style": "现实·私密",
+        "mood": "珍重而安静",
+        "opening": "窗玻璃上还留着傍晚的暖色。林妍把发卡别回耳侧，没有说话，只是看向你。",
+        "characters": ["person_linyan"],
+        "events": ["event_hairpin_gift"]
+      }
+    },
+    {
+      "item_id": "item_rain_scroll",
+      "item_type": "story",
+      "title": "雨夜爵士回响卷轴",
+      "vessel": "剧情卷轴",
+      "inscription": "你无意识哼出的动机，被编成只属于你的爵士",
+      "is_real_memory": true,
+      "layer": "real_memory",
+      "weight": "medium",
+      "source_timeline_id": "tl_rain_jazz",
+      "parallel_branch_id": "br_rain_origin",
+      "entity_graph_ref": "event_hum_to_jazz",
+      "user_edit_note": "来自一次授权的低敏感哼唱，不是诊断或画像。",
+      "atmosphere": "rain_jazz",
+      "scene": {
+        "scene_id": "scene_rain_cafe",
+        "title": "雨夜咖啡馆",
+        "setting": "邻里咖啡馆，玻璃上全是雨痕",
+        "weather": "夜雨",
+        "era": "当下",
+        "style": "现实·都市",
+        "mood": "孤独而好奇",
+        "opening": "雨点打在窗外。你随口哼出的三个音，在空气里慢慢长成一段爵士主题。",
+        "characters": ["person_ada"],
+        "events": ["event_hum_to_jazz"]
+      }
+    },
+    {
+      "item_id": "item_city_compass",
+      "item_type": "scene",
+      "title": "城市寻宝罗盘",
+      "vessel": "场景罗盘",
+      "inscription": "把一次尚未发生的约会，折进可穿梭的夜色地图",
+      "is_real_memory": false,
+      "layer": "fantasy",
+      "weight": "medium",
+      "source_timeline_id": "tl_city_quest",
+      "parallel_branch_id": "br_city_origin",
+      "entity_graph_ref": "scene_night_map",
+      "user_edit_note": "幻想创作层。可改写、可融合，不冒充原始记忆。",
+      "atmosphere": "neon_quest",
+      "scene": {
+        "scene_id": "scene_night_map",
+        "title": "夜色寻宝图",
+        "setting": "被折成罗盘的城市夜图，巷口亮着一盏琥珀灯",
+        "weather": "微风",
+        "era": "可改写的今晚",
+        "style": "幻想·都市奇遇",
+        "mood": "期待与玩心",
+        "opening": "罗盘指针停在「月光晚餐」与「心跳唱片」之间。这座城还没有被写完。",
+        "characters": ["person_ada", "person_linyan"],
+        "events": ["event_quest_unfolds"]
+      }
+    }
+  ],
+  "entities": [
+    {
+      "id": "person_linyan",
+      "kind": "person",
+      "name": "林妍",
+      "traits": ["安静", "被珍重", "不接受被分析"],
+      "relation": "妻子",
+      "alive": true,
+      "is_real_memory": true
+    },
+    {
+      "id": "person_ada",
+      "kind": "person",
+      "name": "本人",
+      "traits": ["解释主权", "慢灵感", "创作者"],
+      "relation": "self",
+      "alive": true,
+      "is_real_memory": true
+    },
+    {
+      "id": "event_hairpin_gift",
+      "kind": "event",
+      "name": "发卡被别回耳侧",
+      "summary": "一次无声的确认：她在，这一刻属于你们。",
+      "is_real_memory": true
+    },
+    {
+      "id": "event_hum_to_jazz",
+      "kind": "event",
+      "name": "哼唱被织成爵士",
+      "summary": "授权的低敏感旋律动机成为仪式主题，而非用户画像。",
+      "is_real_memory": true
+    },
+    {
+      "id": "event_quest_unfolds",
+      "kind": "event",
+      "name": "寻宝图展开",
+      "summary": "幻想约会尚未发生，允许改写与融合。",
+      "is_real_memory": false
+    }
+  ]
+}

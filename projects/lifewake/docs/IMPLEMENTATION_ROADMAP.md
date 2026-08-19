@@ -23,6 +23,6 @@
 
 ## Phase 3 — 扩展能力启用
 
-- `lw.memory.weave` 记忆时光机
+- `lw.memory.weave` 时空记忆匣（宫殿 / 百宝箱 / 穿梭）已在 Memory P1 启用
 - `lw.bond.visualize` 关系纽带
 - `lw.twin.draft` 数字孪生（强制人工审核发送）

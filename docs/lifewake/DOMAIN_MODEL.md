@@ -193,6 +193,18 @@ Intent
 | `Keepsake` | `keepsake_id`、`envelope_ref`、`owners`、`retention`、`status` | 支持导出/删除；共同资产不能由平台单方改权 |
 | `ShareGrant` | `share_id`、`keepsake_ref`、`grantor`、`surface`、`expires_at`、`status` | 每位共同权利人独立授权；任一方 revoke 触发 `SHARE_REVOKED` |
 
+### 2.12.1 时空记忆匣（Memory P1）
+
+`ChestItem` 是 `Keepsake` 的叙事可计算投影：道具是入口，事实在图谱。
+
+| 实体 | 关键字段 | 约束 |
+|---|---|---|
+| `ChestItem` | `item_id`、`item_type`、`is_real_memory`、`layer`、`source_timeline_id`、`parallel_branch_id`、`entity_graph_ref`、`sealed`、`archived` | 真实记忆必须落在 `real_memory` 层；幻想产物不得占用该层 |
+| `TimelineBranch` | `branch_id`、`parent_branch_id`、`readonly`、`is_real_memory` | 原点真实分支只读；改写 COW 生成幻想子图 |
+| `PalaceRoom` | `room_id`、`wing`、`layer`、`item_ids`、`grown_from_item` | 模板房间人工预设；高权重信物增量生长，禁止全量重建 |
+
+完整机制见 [LIFEWAKE_MEMORY_CHEST](./LIFEWAKE_MEMORY_CHEST.md)。
+
 ### 2.13 PolicyDecision 与 ChangeSet
 
 | 实体 | 关键字段 | 约束 |

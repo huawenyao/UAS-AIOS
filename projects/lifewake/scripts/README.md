@@ -11,6 +11,7 @@
 | `run_subapp.py` | 模板自带 UAS runtime 入口 |
 | `evaluate_evolution.py` | 演化评估占位 |
 | `render_uas_plan.py` | 通用方案渲染 |
+| `run_memory_chest_demo.py` | 时空记忆匣：三件种子道具穿梭 / 改写 / 抓取 / 融合 |
 
 验收：
 
@@ -19,4 +20,5 @@ python3 scripts/evaluate_lifewake_mvp.py
 pytest -q
 python3 scripts/run_value_loop_prototype.py
 python3 scripts/run_emotion_kpi_snapshot.py
+python3 scripts/run_memory_chest_demo.py --pretty --write-report
 ```
