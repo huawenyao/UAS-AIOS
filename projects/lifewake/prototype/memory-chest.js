@@ -1,285 +1,290 @@
-/* LifeWake 时空记忆匣前端。无外部依赖；状态在内存中模拟引擎不变量。 */
+/* 空间互动：走门、拾物、投入裂隙/匣子/另一件物。没有选项卡。 */
 (function () {
   "use strict";
 
-  var SEED = {
-    items: [
-      {
-        item_id: "item_moon_hairpin",
-        item_type: "character",
-        title: "月光发卡",
-        vessel: "人物信物",
-        glyph: "钗",
-        inscription: "她侧脸被月光镀亮的那一夜",
-        is_real_memory: true,
-        layer: "real_memory",
-        wing: "现实记忆层",
-        room: "林妍专属锚点",
-        grown: true,
-        sceneTitle: "黄昏窗边",
-        opening: "窗玻璃上还留着傍晚的暖色。林妍把发卡别回耳侧，没有说话，只是看向你。"
-      },
-      {
-        item_id: "item_rain_scroll",
-        item_type: "story",
-        title: "雨夜爵士回响卷轴",
-        vessel: "剧情卷轴",
-        glyph: "卷",
-        inscription: "你无意识哼出的动机，被编成只属于你的爵士",
-        is_real_memory: true,
-        layer: "real_memory",
-        wing: "现实记忆层",
-        room: "人生展厅",
-        grown: false,
-        sceneTitle: "雨夜咖啡馆",
-        opening: "雨点打在窗外。你随口哼出的三个音，在空气里慢慢长成一段爵士主题。"
-      },
-      {
-        item_id: "item_city_compass",
-        item_type: "scene",
-        title: "城市寻宝罗盘",
-        vessel: "场景罗盘",
-        glyph: "盘",
-        inscription: "把一次尚未发生的约会，折进可穿梭的夜色地图",
-        is_real_memory: false,
-        layer: "fantasy",
-        wing: "幻想故事层",
-        room: "创世工坊",
-        grown: false,
-        sceneTitle: "夜色寻宝图",
-        opening: "罗盘指针停在「月光晚餐」与「心跳唱片」之间。这座城还没有被写完。"
-      }
-    ]
+  var ITEMS = {
+    item_moon_hairpin: {
+      title: "月光发卡",
+      relive: "dusk",
+      rewrite: "dusk-fork",
+      origin: true,
+      home: "reality"
+    },
+    item_rain_scroll: {
+      title: "雨夜爵士回响卷轴",
+      relive: "rain",
+      rewrite: "dusk-fork",
+      origin: true,
+      home: "reality"
+    },
+    item_city_compass: {
+      title: "城市寻宝罗盘",
+      relive: "city",
+      rewrite: "city",
+      origin: false,
+      home: "fantasy"
+    }
+  };
+
+  var PLACE_COPY = {
+    hall: ["记忆宫殿 · 门厅", "你站在自己的精神家园里", "四扇门通向不同时空。拾起匣中或翼里的物，投进窗台或裂隙。"],
+    reality: ["现实记忆层", "原始记忆被玻璃罩着", "把发卡或卷轴放到窗台上重温；投进未写下的门，只生成平行世界。"],
+    fantasy: ["幻想故事层", "这座城还没有写完", "罗盘没有玻璃罩。把它叠到真实信物上，会走出跨界时空。"],
+    dusk: ["黄昏窗边", "重温 · 原点只读", "窗玻璃上还留着傍晚的暖色。空气里有一枚可拾取的碎片。"],
+    rain: ["雨夜咖啡馆", "重温 · 原点只读", "雨点打在窗外。把杯沿的余韵拾起，丢进百宝箱。"],
+    city: ["夜色寻宝图", "幻想可改写", "罗盘指向尚未发生的约会。抓取巷口那张未写完的菜单。"],
+    "dusk-fork": ["黄昏窗边 · 平行分支", "改写已发生，原点仍在", "她这次先开口。玻璃匣里的发卡没有被覆盖。"],
+    fused: ["跨界夜图", "创作，不是原始记忆", "发卡的月光落到寻宝图上。这是派生时空。"]
   };
 
   var state = {
-    view: "palace",
-    selected: "item_moon_hairpin",
-    mode: "relive",
-    items: SEED.items.slice(),
-    log: [],
-    originPreserved: true
+    place: "hall",
+    holding: null,
+    chestOpen: false,
+    inChest: [],
+    originPreserved: true,
+    captured: []
   };
 
-  function $(id) {
-    return document.getElementById(id);
+  var drag = { active: false, node: null, dx: 0, dy: 0 };
+
+  function $(sel, root) {
+    return (root || document).querySelector(sel);
+  }
+  function $$(sel, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(sel));
   }
 
-  function selectedItem() {
-    return state.items.filter(function (item) {
-      return item.item_id === state.selected;
-    })[0];
+  function whisper(text) {
+    $("whisper-text").textContent = text;
   }
 
-  function log(message) {
-    state.log.unshift(message);
-    renderLog();
+  function toast(text) {
+    var host = $("toast-region");
+    var node = document.createElement("div");
+    node.className = "toast";
+    node.textContent = text;
+    host.appendChild(node);
+    setTimeout(function () { node.remove(); }, 2800);
   }
 
-  function setView(view) {
-    state.view = view;
-    ["palace", "chest", "shuttle"].forEach(function (name) {
-      $( "view-" + name ).setAttribute("aria-pressed", String(view === name));
-      $(name + "-root").hidden = view !== name;
+  function warp(then) {
+    var overlay = $("warp");
+    overlay.hidden = false;
+    setTimeout(function () {
+      overlay.hidden = true;
+      if (then) then();
+    }, 520);
+  }
+
+  function showPlace(place) {
+    state.place = place;
+    document.documentElement.setAttribute("data-place", place);
+    $$("[data-place-panel]").forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-place-panel") !== place;
     });
-    $("primary-title").textContent = {
-      palace: "记忆宫殿",
-      chest: "智能百宝箱",
-      shuttle: "时空穿梭机"
-    }[view];
-    $("primary-hint").textContent = {
-      palace: "四层私有空间。高权重信物会在对应翼里长出专属锚点，不会全量重建宫殿。",
-      chest: "一切可物品化。道具不是装饰，而是故事的物理锚点，携带完整溯源元数据。",
-      shuttle: "正向：点击道具进入原生时空。反向：在场景中抓取片段，封装为新道具。"
-    }[view];
+    var copy = PLACE_COPY[place];
+    $("place-kicker").textContent = copy[0];
+    $("place-title").textContent = copy[1];
+    whisper(copy[2]);
   }
 
-  function renderPalace() {
-    var wings = {};
-    state.items.forEach(function (item) {
-      wings[item.wing] = wings[item.wing] || [];
-      wings[item.wing].push(item);
-    });
-    $("palace-root").innerHTML = Object.keys(wings).map(function (wing) {
-      var rooms = wings[wing].map(function (item) {
-        return (
-          '<button class="room-chip' + (item.grown ? " grown" : "") + '" data-select="' + item.item_id + '" type="button">' +
-          "<strong>" + item.room + "</strong><span>" + item.title + "</span></button>"
-        );
-      }).join("");
-      return '<div class="wing"><div class="wing-title">' + wing + '</div><div class="rooms">' + rooms + "</div></div>";
-    }).join("");
+  function walk(place) {
+    if (place === "dormant") {
+      whisper("这座翼还在生长。宫殿只在你真正留下记忆时向外展开，不会凭空长出大厅。");
+      return;
+    }
+    warp(function () { showPlace(place); });
+  }
+
+  function setHolding(itemId, node) {
+    state.holding = itemId;
+    document.documentElement.setAttribute("data-holding", itemId || "");
+    $$(".space-object").forEach(function (el) { el.classList.remove("is-held"); });
+    if (itemId) {
+      if (node) node.classList.add("is-held");
+      $("hand-hint").hidden = false;
+      $("hand-name").textContent = ITEMS[itemId] ? ITEMS[itemId].title : itemId;
+      whisper("手里握着" + $("hand-name").textContent + "。把它放到窗台、裂隙、未写下的门，或另一件物上。");
+    } else {
+      $("hand-hint").hidden = true;
+    }
+  }
+
+  function pick(itemId, node) {
+    if (state.holding === itemId) {
+      setHolding(null, null);
+      return;
+    }
+    setHolding(itemId, node);
+  }
+
+  function dropOn(kind) {
+    var itemId = state.holding;
+    if (!itemId) {
+      whisper("先拾起一件物。空着手推门，门不会为你打开时空。");
+      return false;
+    }
+    var spec = ITEMS[itemId];
+    if (kind === "chest") {
+      if (state.inChest.indexOf(itemId) === -1) state.inChest.push(itemId);
+      openChest(true);
+      renderChest();
+      setHolding(null, null);
+      toast(spec.title + " 被放进匣中");
+      whisper("匣子是你的携带空间。下次穿梭，可以从匣中再取出。");
+      return true;
+    }
+    if (kind === "rift-relive") {
+      setHolding(null, null);
+      warp(function () { showPlace(spec.relive); });
+      toast("重温「" + spec.title + "」· 原点只读");
+      return true;
+    }
+    if (kind === "rift-rewrite") {
+      if (spec.origin) {
+        state.originPreserved = true;
+        setHolding(null, null);
+        warp(function () { showPlace(spec.rewrite); });
+        toast("平行分支已打开。原点仍在玻璃匣里。");
+        whisper("改写发生在未写下的门后。玻璃罩里的发卡与卷轴没有被覆盖。");
+      } else {
+        setHolding(null, null);
+        warp(function () { showPlace(spec.relive); });
+        whisper("幻想物本来就可改写，你走进了尚未写完的城。");
+      }
+      return true;
+    }
+    if (kind === "fuse") {
+      fuseHeld();
+      return true;
+    }
+    return false;
+  }
+
+  function fuseHeld() {
+    var a = state.holding;
+    if (!a) return;
+    var other = a === "item_moon_hairpin" ? "item_city_compass" : "item_moon_hairpin";
+    if (state.inChest.indexOf(other) === -1 && state.holding !== other) {
+      whisper("把另一件物先放进匣子，或把发卡与罗盘叠在合成石上。");
+      return;
+    }
+    state.originPreserved = true;
+    setHolding(null, null);
+    warp(function () { showPlace("fused"); });
+    toast("跨界时空生成。这是创作，不是原始记忆。");
+  }
+
+  function capture(label) {
+    var id = "capture_" + String(state.captured.length + 1);
+    state.captured.push({ id: id, title: label });
+    state.inChest.push(id);
+    ITEMS[id] = { title: label, relive: state.place, rewrite: state.place, origin: false, home: "hall" };
+    openChest(true);
+    renderChest();
+    toast("碎片「" + label + "」被抓进匣中");
+    whisper("一次穿梭，无限产出。碎片已是可携带的新道具。");
+  }
+
+  function openChest(force) {
+    state.chestOpen = force === undefined ? !state.chestOpen : force;
+    $("chest-visual").classList.toggle("is-open", state.chestOpen);
   }
 
   function renderChest() {
-    $("chest-root").innerHTML =
-      '<div class="chest-list">' +
-      state.items.map(function (item) {
-        return (
-          '<button class="item-card" type="button" data-select="' + item.item_id + '" aria-pressed="' +
-          String(item.item_id === state.selected) + '">' +
-          '<span class="vessel" aria-hidden="true">' + item.glyph + "</span>" +
-          "<span><strong>" + item.title + "</strong><div class='meta'>" + item.inscription + "</div></span>" +
-          '<span class="badge ' + (item.is_real_memory ? "real" : "fantasy") + '">' +
-          (item.is_real_memory ? "原始记忆" : "幻想/平行") +
-          "</span></button>"
-        );
-      }).join("") +
-      "</div>";
-  }
-
-  function renderDetail() {
-    var item = selectedItem();
-    if (!item) {
-      $("item-detail").textContent = "";
-      return;
-    }
-    $("item-detail").innerHTML =
-      "<p><strong>" + item.title + "</strong> · " + item.vessel + "</p>" +
-      "<p class='meta'>item_type=" + item.item_type +
-      " · layer=" + item.layer +
-      " · is_real_memory=" + item.is_real_memory + "</p>" +
-      "<p class='meta'>溯源：场景「" + item.sceneTitle + "」可被穿梭、抓取、封存，但不能覆盖原点。</p>";
-  }
-
-  function renderLog() {
-    $("event-log").innerHTML = state.log.slice(0, 8).map(function (line) {
-      return "<li>" + line + "</li>";
-    }).join("");
-  }
-
-  function renderScene(opening) {
-    var item = selectedItem();
-    $("scene-kicker").textContent = item.vessel + " · " + (state.mode === "relive" ? "重温" : "平行分支");
-    $("scene-title").textContent = item.sceneTitle;
-    $("scene-opening").textContent = opening || item.opening;
-  }
-
-  function selectItem(itemId) {
-    state.selected = itemId;
-    renderChest();
-    renderDetail();
-    renderScene();
-    log("选中道具：" + selectedItem().title);
-  }
-
-  function shuttle() {
-    var item = selectedItem();
-    if (state.mode === "relive") {
-      renderScene(item.opening);
-      log("重温「" + item.title + "」。原始时间线只读，未写入图谱。");
-      return;
-    }
-    if (item.is_real_memory) {
-      var child = {
-        item_id: item.item_id + "_fork_" + String(state.items.length),
-        item_type: item.item_type,
-        title: item.title + " · 平行分支",
-        vessel: item.vessel,
-        glyph: item.glyph,
-        inscription: "她这次先开口，把发卡放回你掌心。",
-        is_real_memory: false,
-        layer: "fantasy",
-        wing: "幻想故事层",
-        room: "跨界桥",
-        grown: false,
-        sceneTitle: item.sceneTitle + " · 平行宇宙",
-        opening: "平行分支已打开。原点「" + item.title + "」完整保留，互不覆盖。"
-      };
-      state.items.push(child);
-      state.selected = child.item_id;
-      state.originPreserved = true;
-      renderPalace();
-      renderChest();
-      renderDetail();
-      renderScene(child.opening);
-      log("改写采用写时复制。子道具 " + child.title + " 已存入幻想层。");
-      return;
-    }
-    renderScene(item.opening + " 故事在幻想层继续生长。");
-    log("幻想层允许续写，仍不触碰现实记忆库。");
-  }
-
-  function capture() {
-    var item = selectedItem();
-    var gem = {
-      item_id: "item_capture_" + String(state.items.length),
-      item_type: "emotion",
-      title: item.title + " · 新片段",
-      vessel: "情绪宝石",
-      glyph: "晶",
-      inscription: "从当前场景抓取的可携带片段",
-      is_real_memory: false,
-      layer: "fantasy",
-      wing: "幻想故事层",
-      room: "跨界桥",
-      grown: false,
-      sceneTitle: "抓取后的私有片段",
-      opening: "一键封装完成。新道具进入百宝箱，宫殿库存被扩容，原点仍在。"
-    };
-    state.items.push(gem);
-    state.selected = gem.item_id;
-    renderPalace();
-    renderChest();
-    setView("chest");
-    renderDetail();
-    log("反向封装：场景 → 新物品「" + gem.title + "」。");
-  }
-
-  function fuse() {
-    var fused = {
-      item_id: "item_fused_city_hairpin",
-      item_type: "scene",
-      title: "林妍走进夜色寻宝图",
-      vessel: "场景罗盘",
-      glyph: "界",
-      inscription: "真实信物与幻想罗盘合成后，必须标注为派生创作",
-      is_real_memory: false,
-      layer: "fantasy",
-      wing: "幻想故事层",
-      room: "跨界桥",
-      grown: false,
-      sceneTitle: "跨界夜图",
-      opening: "发卡的月光落到寻宝图上。这是创作，不是原始记忆。"
-    };
-    state.items.push(fused);
-    state.selected = fused.item_id;
-    renderPalace();
-    renderChest();
-    renderDetail();
-    renderScene(fused.opening);
-    setView("shuttle");
-    log("融合完成。真实记忆标记被降为 false，防止认知混淆。");
-  }
-
-  function onClick(event) {
-    var target = event.target.closest("[data-select]");
-    if (target) {
-      selectItem(target.getAttribute("data-select"));
-      if (state.view === "palace") setView("chest");
-    }
-  }
-
-  $("view-palace").addEventListener("click", function () { setView("palace"); });
-  $("view-chest").addEventListener("click", function () { setView("chest"); });
-  $("view-shuttle").addEventListener("click", function () { setView("shuttle"); renderScene(); });
-  $("shuttle-trigger").addEventListener("click", shuttle);
-  $("capture-trigger").addEventListener("click", capture);
-  $("fuse-trigger").addEventListener("click", fuse);
-  document.querySelectorAll("input[name='mode']").forEach(function (input) {
-    input.addEventListener("change", function (event) {
-      state.mode = event.target.value;
-      $("mode-warning").textContent = state.mode === "relive"
-        ? "重温不会改写原始记忆。改写将复制子图，原点完整保留。"
-        : "改写模式会生成平行宇宙。原始发卡、雨夜卷轴不会被覆盖。";
+    var cavity = $("chest-cavity");
+    cavity.innerHTML = "";
+    state.inChest.forEach(function (id) {
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "space-object is-in-chest";
+      chip.setAttribute("data-item", id);
+      chip.textContent = (ITEMS[id] && ITEMS[id].title.charAt(0)) || "物";
+      chip.setAttribute("aria-label", "从匣中取出 " + (ITEMS[id] ? ITEMS[id].title : id));
+      chip.addEventListener("click", function (event) {
+        event.stopPropagation();
+        pick(id, chip);
+      });
+      cavity.appendChild(chip);
     });
-  });
-  $("palace-root").addEventListener("click", onClick);
-  $("chest-root").addEventListener("click", onClick);
+  }
 
-  renderPalace();
-  renderChest();
-  renderDetail();
-  log("三件初始道具已锚定：月光发卡、雨夜爵士回响卷轴、城市寻宝罗盘。");
-  setView("palace");
+  function onPointerDown(event) {
+    var node = event.currentTarget;
+    var itemId = node.getAttribute("data-item");
+    if (!itemId) return;
+    pick(itemId, node);
+    drag.active = true;
+    drag.node = node;
+    drag.dx = 0;
+    drag.dy = 0;
+    node.setPointerCapture(event.pointerId);
+  }
+
+  function onPointerMove(event) {
+    if (!drag.active || !drag.node) return;
+    drag.dx += event.movementX;
+    drag.dy += event.movementY;
+    drag.node.style.transform = "translate(" + drag.dx + "px," + drag.dy + "px)";
+  }
+
+  function onPointerUp(event) {
+    if (!drag.active) return;
+    var target = null;
+    if (drag.node) {
+      drag.node.style.pointerEvents = "none";
+      target = document.elementFromPoint(event.clientX, event.clientY);
+      drag.node.style.pointerEvents = "";
+      drag.node.style.transform = "";
+    }
+    drag.active = false;
+    drag.node = null;
+    var zone = target && target.closest("[data-drop]");
+    if (zone) dropOn(zone.getAttribute("data-drop"));
+  }
+
+  function bind() {
+    $$("[data-walk]").forEach(function (btn) {
+      btn.addEventListener("click", function () { walk(btn.getAttribute("data-walk")); });
+    });
+    $$("[data-item]").forEach(function (obj) {
+      obj.addEventListener("pointerdown", onPointerDown);
+      obj.addEventListener("pointermove", onPointerMove);
+      obj.addEventListener("pointerup", onPointerUp);
+      obj.addEventListener("dblclick", function () {
+        var spec = ITEMS[obj.getAttribute("data-item")];
+        if (spec) {
+          setHolding(null, null);
+          warp(function () { showPlace(spec.relive); });
+        }
+      });
+    });
+    $("treasure-chest").addEventListener("click", function (event) {
+      if (event.target.closest("[data-item]")) return;
+      if (state.holding) {
+        dropOn("chest");
+        return;
+      }
+      openChest();
+      whisper(state.chestOpen ? "匣盖打开。里面是你携带的时空锚点。" : "匣盖合上。物还在，只是暂时看不见。");
+    });
+    $$("[data-drop]").forEach(function (zone) {
+      zone.addEventListener("click", function (event) {
+        if (state.holding) {
+          event.preventDefault();
+          dropOn(zone.getAttribute("data-drop"));
+        }
+      });
+    });
+    $$("[data-capture]").forEach(function (shard) {
+      shard.addEventListener("click", function () {
+        capture(shard.getAttribute("data-capture"));
+        shard.hidden = true;
+      });
+    });
+  }
+
+  bind();
+  showPlace("hall");
 })();

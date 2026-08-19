@@ -96,10 +96,18 @@ def main():
     assert "http://" not in html + css + js and "https://" not in html + css + js, "external dependency found"
     assert "memory-chest.html" in html
     assert "时空记忆匣" in chest_html
-    assert "item_moon_hairpin" in chest_js
-    assert "item_rain_scroll" in chest_js
-    assert "item_city_compass" in chest_js
+    assert 'data-place="hall"' in chest_html
+    assert 'data-item="item_moon_hairpin"' in chest_html
+    assert 'data-item="item_rain_scroll"' in chest_html
+    assert 'data-item="item_city_compass"' in chest_html
+    assert 'data-walk="reality"' in chest_html
+    assert 'data-drop="rift-relive"' in chest_html
+    assert "未写下的门" in chest_html
+    assert "type=\"radio\"" not in chest_html
+    assert "view-palace" not in chest_html
     assert "originPreserved" in chest_js
+    assert "function walk" in chest_js or "walk(place)" in chest_js
+    assert "data-drop" in chest_js
     assert "@media (max-width: 960px)" in chest_css
     assert "@media (prefers-reduced-motion: reduce)" in chest_css
     assert "http://" not in chest_html + chest_css + chest_js

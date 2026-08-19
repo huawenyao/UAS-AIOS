@@ -1,66 +1,180 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-place="hall" data-holding="">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#5c3224">
+  <meta name="theme-color" content="#3a2418">
   <title>LifeWake · 时空记忆匣</title>
-  <meta name="description" content="记忆宫殿、智能百宝箱与时空穿梭机三位一体原型">
+  <meta name="description" content="可漫游的记忆宫殿：拾取信物，投入裂隙，穿梭时空">
   <link rel="stylesheet" href="memory-chest.css">
 </head>
 <body>
-  <a class="skip-link" href="#stage">进入记忆匣</a>
-  <div class="shell">
-    <header class="topbar">
-      <div>
-        <div class="eyebrow" id="product-kicker">LifeWake Memory P1</div>
-        <h1 id="product-title">时空记忆匣</h1>
-        <p class="lede" id="slogan">以记忆筑宫殿，以万物为宝箱，以道具穿时空，人人皆为自己故事的造物主。</p>
-      </div>
-      <nav class="nav-links" aria-label="产品空间">
-        <a href="index.html">返回情景桌面</a>
-        <span class="chip">私有 · 可撤回 · 原点只读</span>
-      </nav>
-    </header>
+  <a class="skip-link" href="#world">进入宫殿空间</a>
 
-    <div class="views" role="tablist" aria-label="三视图">
-      <button type="button" id="view-palace" aria-pressed="true">记忆宫殿</button>
-      <button type="button" id="view-chest" aria-pressed="false">智能百宝箱</button>
-      <button type="button" id="view-shuttle" aria-pressed="false">时空穿梭</button>
-    </div>
-
-    <main id="stage" class="grid">
-      <section class="panel" id="primary-panel">
-        <h2 id="primary-title">记忆宫殿</h2>
-        <p class="hint" id="primary-hint">四层私有空间。高权重信物会在对应翼里长出专属锚点，不会全量重建宫殿。</p>
-        <div id="palace-root"></div>
-        <div id="chest-root" hidden></div>
-        <div id="shuttle-root" hidden>
-          <div class="mode-switch">
-            <label><input type="radio" name="mode" value="relive" checked> 重温原始（只读）</label>
-            <label><input type="radio" name="mode" value="rewrite"> 开启新平行分支</label>
-          </div>
-          <div class="scene-stage" id="scene-stage">
-            <div class="eyebrow" id="scene-kicker">选择一件道具</div>
-            <h3 id="scene-title">尚未穿梭</h3>
-            <p id="scene-opening">点击百宝箱中的信物、卷轴或罗盘。道具携带完整溯源码，是进入故事的物理锚点。</p>
-          </div>
-          <div class="actions">
-            <button type="button" id="shuttle-trigger">穿梭进入</button>
-            <button type="button" class="ghost" id="capture-trigger">抓取当前片段</button>
-            <button type="button" class="ghost" id="fuse-trigger">融合发卡 × 罗盘</button>
-          </div>
-          <p class="warning" id="mode-warning">重温不会改写原始记忆。改写将复制子图，原点完整保留。</p>
-        </div>
-      </section>
-      <aside class="panel" id="side-panel">
-        <h2>溯源与资产</h2>
-        <p class="hint">每件道具都带时空溯源码。真实记忆与幻想创作分层隔离。</p>
-        <div id="item-detail"></div>
-        <ol class="log" id="event-log" aria-live="polite"></ol>
-      </aside>
-    </main>
+  <div id="warp" class="warp" hidden aria-hidden="true">
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
   </div>
+
+  <header class="place-plaque" aria-live="polite">
+    <span class="eyebrow" id="place-kicker">记忆宫殿 · 门厅</span>
+    <strong id="place-title">你站在自己的精神家园里</strong>
+  </header>
+
+  <p class="hand-hint" id="hand-hint" hidden>手里握着：<b id="hand-name"></b> · 把它放到裂隙、宝箱或另一件物上</p>
+
+  <main id="world" class="world">
+
+    <!-- HALL -->
+    <section class="place hall" data-place-panel="hall" aria-label="记忆宫殿门厅">
+      <div class="hall-vault" aria-hidden="true"></div>
+      <div class="hall-columns" aria-hidden="true"><b></b><b></b></div>
+      <div class="moon-oculus" aria-hidden="true"></div>
+      <p class="space-note">四扇门通向不同时空。脚下的匣子是你的百宝箱。没有菜单，只有可以走进去的地方。</p>
+
+      <button class="arch-door reality-door" type="button" data-walk="reality" aria-label="走进现实记忆层">
+        <span class="arch-inner"></span>
+        <small>现实记忆层</small>
+      </button>
+      <button class="arch-door fantasy-door" type="button" data-walk="fantasy" aria-label="走进幻想故事层">
+        <span class="arch-inner"></span>
+        <small>幻想故事层</small>
+      </button>
+      <button class="arch-door history-door is-dormant" type="button" data-walk="dormant" aria-label="尚未生长的历史穿梭层">
+        <span class="arch-inner"></span>
+        <small>历史穿梭层 · 未生长</small>
+      </button>
+      <button class="arch-door future-door is-dormant" type="button" data-walk="dormant" aria-label="尚未生长的未来创作层">
+        <span class="arch-inner"></span>
+        <small>未来创作层 · 未生长</small>
+      </button>
+
+      <a class="exit-door" href="index.html" aria-label="走回情景桌面">
+        <span>回桌面</span>
+      </a>
+
+      <article class="space-object chest-object" id="treasure-chest" data-object="chest" tabindex="0" role="button" aria-label="打开智能百宝箱" style="--x:42%;--y:68%">
+        <div class="chest" id="chest-visual">
+          <div class="chest-lid" id="chest-lid"></div>
+          <div class="chest-body">
+            <div class="chest-cavity" id="chest-cavity" data-drop="chest"></div>
+          </div>
+          <div class="chest-lock" aria-hidden="true"></div>
+        </div>
+        <span class="object-label">智能百宝箱</span>
+      </article>
+    </section>
+
+    <!-- REALITY WING -->
+    <section class="place reality" data-place-panel="reality" hidden aria-label="现实记忆层">
+      <div class="wing-window dusk-window" data-drop="rift-relive" aria-label="窗：投入信物即可重温">
+        <div class="window-sky dusk"><i></i><i></i></div>
+        <span class="drop-hint">把信物放到窗台上 · 重温原点</span>
+      </div>
+      <button class="unwritten-door" type="button" data-drop="rift-rewrite" aria-label="未写下的门：投入信物开启平行分支">
+        <span>未写下的门</span>
+        <small>改写从这里开始，原点留在玻璃匣里</small>
+      </button>
+      <p class="space-note">发卡在丝绒座上，卷轴摊在书案。它们被玻璃罩着——那是原始记忆，只能重温，不能覆盖。</p>
+
+      <article class="space-object hairpin-object" data-item="item_moon_hairpin" tabindex="0" role="button" aria-label="拾取月光发卡" style="--x:18%;--y:48%">
+        <div class="vitrine" aria-hidden="true"></div>
+        <div class="pedestal" aria-hidden="true"></div>
+        <div class="hairpin" aria-hidden="true"><i></i><b></b></div>
+        <span class="object-label">月光发卡</span>
+      </article>
+
+      <article class="space-object scroll-object" data-item="item_rain_scroll" tabindex="0" role="button" aria-label="拾取雨夜爵士回响卷轴" style="--x:58%;--y:54%">
+        <div class="vitrine" aria-hidden="true"></div>
+        <div class="script-desk" aria-hidden="true"></div>
+        <div class="scroll" aria-hidden="true"><i></i></div>
+        <span class="object-label">雨夜爵士回响卷轴</span>
+      </article>
+
+      <button class="walk-back" type="button" data-walk="hall">走回门厅</button>
+    </section>
+
+    <!-- FANTASY WING -->
+    <section class="place fantasy" data-place-panel="fantasy" hidden aria-label="幻想故事层">
+      <div class="city-portal" data-drop="rift-relive" aria-label="城门裂隙：投入罗盘即可穿梭">
+        <span class="drop-hint">把罗盘投入夜色 · 走进还未写完的城</span>
+      </div>
+      <p class="space-note">这里允许改写。罗盘没有玻璃罩。把它拖到另一件真实信物上，会生成跨界时空。</p>
+
+      <article class="space-object compass-object" data-item="item_city_compass" tabindex="0" role="button" aria-label="拾取城市寻宝罗盘" style="--x:38%;--y:52%">
+        <div class="map-table" aria-hidden="true"></div>
+        <div class="compass" aria-hidden="true"><i></i><b></b></div>
+        <span class="object-label">城市寻宝罗盘</span>
+      </article>
+
+      <div class="fuse-plinth" data-drop="fuse" aria-label="把两件道具叠放在此合成">
+        <small>把两件物叠在这里</small>
+      </div>
+
+      <button class="walk-back" type="button" data-walk="hall">走回门厅</button>
+    </section>
+
+    <!-- DUSK SCENE (relive) -->
+    <section class="place dusk" data-place-panel="dusk" hidden aria-label="黄昏窗边">
+      <div class="scene-window" aria-hidden="true"></div>
+      <div class="linyan" aria-hidden="true">
+        <div class="linyan-hair"></div>
+        <div class="linyan-face"></div>
+        <div class="linyan-shoulder"></div>
+      </div>
+      <p class="space-note" id="dusk-note">窗玻璃上还留着傍晚的暖色。林妍把发卡别回耳侧，没有说话，只是看向你。</p>
+      <button class="shard" type="button" data-capture="发卡落下的温度" aria-label="拾取空气里的记忆碎片">✦</button>
+      <button class="walk-back" type="button" data-walk="reality">退回现实层</button>
+    </section>
+
+    <!-- RAIN SCENE -->
+    <section class="place rain" data-place-panel="rain" hidden aria-label="雨夜咖啡馆">
+      <div class="rain-glass" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="cafe-cup" aria-hidden="true"></div>
+      <p class="space-note">雨点打在窗外。你随口哼出的三个音，在空气里慢慢长成一段爵士主题。</p>
+      <button class="shard" type="button" data-capture="杯沿上的爵士余韵" aria-label="拾取雨停后的余韵碎片">♪</button>
+      <button class="walk-back" type="button" data-walk="reality">退回现实层</button>
+    </section>
+
+    <!-- CITY SCENE -->
+    <section class="place city" data-place-panel="city" hidden aria-label="夜色寻宝图">
+      <div class="lanterns" aria-hidden="true"><b></b><b></b><b></b></div>
+      <p class="space-note">罗盘指针停在「月光晚餐」与「心跳唱片」之间。这座城还没有被写完。</p>
+      <button class="shard" type="button" data-capture="未写完的菜单" aria-label="拾取巷口菜单碎片">◇</button>
+      <button class="walk-back" type="button" data-walk="fantasy">退回幻想层</button>
+    </section>
+
+    <!-- PARALLEL DUSK -->
+    <section class="place dusk fork" data-place-panel="dusk-fork" hidden aria-label="黄昏窗边平行分支">
+      <div class="scene-window" aria-hidden="true"></div>
+      <div class="linyan is-turned" aria-hidden="true">
+        <div class="linyan-hair"></div>
+        <div class="linyan-face"></div>
+        <div class="linyan-shoulder"></div>
+      </div>
+      <p class="space-note">她这次先开口，把发卡放回你掌心。原点仍在玻璃匣里，完整、只读。</p>
+      <button class="shard" type="button" data-capture="发卡落下的下一句" aria-label="抓取平行分支片段">✦</button>
+      <button class="walk-back" type="button" data-walk="reality">退回现实层</button>
+    </section>
+
+    <!-- FUSED SCENE -->
+    <section class="place fused" data-place-panel="fused" hidden aria-label="跨界夜图">
+      <div class="lanterns" aria-hidden="true"><b></b><b></b></div>
+      <div class="linyan is-small" aria-hidden="true">
+        <div class="linyan-hair"></div>
+        <div class="linyan-face"></div>
+        <div class="linyan-shoulder"></div>
+      </div>
+      <p class="space-note">发卡的月光落到寻宝图上。这是创作，不是原始记忆。</p>
+      <button class="walk-back" type="button" data-walk="fantasy">退回幻想层</button>
+    </section>
+  </main>
+
+  <aside class="whisper" id="whisper" aria-live="polite">
+    <span class="whisper-mark" aria-hidden="true">✦</span>
+    <div><span>空间低语</span><p id="whisper-text">推开一扇门。拾起一件物。把它投进窗台或裂隙，时空会跟着打开。</p></div>
+  </aside>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
   <script src="memory-chest.js"></script>
 </body>
 </html>

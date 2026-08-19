@@ -54,7 +54,7 @@ python3 -m http.server 8090
 浏览器打开 <http://localhost:8090>。Demo 是无构建依赖的静态三件套，
 以“妻子 · 林妍 / 今晚给她一个惊喜”为默认生命情景；完整 walkthrough
 见 [`prototype/README.md`](prototype/README.md)。
-时空记忆匣三视图：<http://localhost:8090/memory-chest.html>。
+时空记忆匣是可走入的宫殿（不是选项卡）：<http://localhost:8090/memory-chest.html>。
 
 ## MVP 能力
 
