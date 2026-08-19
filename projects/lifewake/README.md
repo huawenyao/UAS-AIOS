@@ -2,7 +2,33 @@
 
 情感共创型 UAS 子应用。完整产品 BP 见
 [`LIFEWAKE_PRODUCT_BLUEPRINT.md`](../../docs/lifewake/LIFEWAKE_PRODUCT_BLUEPRINT.md)，
-项目实现摘要见 [`docs/APP_BLUEPRINT.md`](docs/APP_BLUEPRINT.md)。
+项目实现摘要见 [`docs/APP_BLUEPRINT.md`](docs/APP_BLUEPRINT.md)，
+正式项目开发计划见 [`docs/DEVELOPMENT_PLAN.md`](docs/DEVELOPMENT_PLAN.md)。
+
+## 正式项目包（`lifewake/`）
+
+类型化领域模型 + `lw.*` 能力契约 + 状态机编排 + 结构化存储 + 指标 + 真实输入边界。
+治理核心复用 `scripts/lifewake_policy.py`，规约对齐 `docs/lifewake/`。
+
+```bash
+cd projects/lifewake
+# 真实输入边界（非仅 CASE 夹具）
+python3 -m lifewake.cli --intent '{"intent_type":"surprise_delivery","consent":{...},"raw_signals":[...]}' --pretty
+# 指标快照（MRCR + M-01~M-18 + 护栏否决）
+python3 -m lifewake.cli --metrics --pretty
+# 正式层 + 14 CASE 回归测试
+python3 -m pytest -q
+```
+
+| 模块 | 职责 |
+|------|------|
+| `lifewake/domain.py` | 15 类型化实体 + 6 不变量 |
+| `lifewake/schemas.py` | jsonschema 校验（红线 15/16） |
+| `lifewake/capabilities.py` | `lw.*` 注册表 + 调用/响应信封 + 幂等 + 审计 |
+| `lifewake/orchestrator.py` | 状态机 intent→closed + 顺序不变量 |
+| `lifewake/store.py` | 仓储模式持久化 |
+| `lifewake/metrics.py` | MRCR + M-01~M-18 + 护栏否决 |
+| `lifewake/cli.py` | 真实输入边界 |
 
 ## 快速验证
 
