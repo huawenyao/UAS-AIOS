@@ -105,8 +105,15 @@ def main():
     assert "未写下的门" in chest_html
     assert "type=\"radio\"" not in chest_html
     assert "view-palace" not in chest_html
+    assert "place-plaque" not in chest_html
+    assert "walk-back" not in chest_html
+    assert 'id="hall-chamber"' in chest_html
+    assert "path-reality" in chest_html
+    assert 'class="threshold"' in chest_html
+    assert "fp-floor" in chest_css
     assert "originPreserved" in chest_js
-    assert "function walk" in chest_js or "walk(place)" in chest_js
+    assert "function walk" in chest_js
+    assert "#whisper-text" in chest_js
     assert "data-drop" in chest_js
     assert "@media (max-width: 960px)" in chest_css
     assert "@media (prefers-reduced-motion: reduce)" in chest_css

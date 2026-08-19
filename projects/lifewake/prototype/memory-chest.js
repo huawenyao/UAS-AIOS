@@ -1,4 +1,4 @@
-/* 空间互动：走门、拾物、投入裂隙/匣子/另一件物。没有选项卡。 */
+/* 空间互动：点地走路、拾物、投入窗台/裂隙/匣子。没有选项卡、没有系统菜单。 */
 (function () {
   "use strict";
 
@@ -27,14 +27,14 @@
   };
 
   var PLACE_COPY = {
-    hall: ["记忆宫殿 · 门厅", "你站在自己的精神家园里", "四扇门通向不同时空。拾起匣中或翼里的物，投进窗台或裂隙。"],
-    reality: ["现实记忆层", "原始记忆被玻璃罩着", "把发卡或卷轴放到窗台上重温；投进未写下的门，只生成平行世界。"],
-    fantasy: ["幻想故事层", "这座城还没有写完", "罗盘没有玻璃罩。把它叠到真实信物上，会走出跨界时空。"],
-    dusk: ["黄昏窗边", "重温 · 原点只读", "窗玻璃上还留着傍晚的暖色。空气里有一枚可拾取的碎片。"],
-    rain: ["雨夜咖啡馆", "重温 · 原点只读", "雨点打在窗外。把杯沿的余韵拾起，丢进百宝箱。"],
-    city: ["夜色寻宝图", "幻想可改写", "罗盘指向尚未发生的约会。抓取巷口那张未写完的菜单。"],
-    "dusk-fork": ["黄昏窗边 · 平行分支", "改写已发生，原点仍在", "她这次先开口。玻璃匣里的发卡没有被覆盖。"],
-    fused: ["跨界夜图", "创作，不是原始记忆", "发卡的月光落到寻宝图上。这是派生时空。"]
+    hall: "你站在门厅中央。地面通向两扇看得见里面的门。脚边是匣子。",
+    reality: "发卡和卷轴被玻璃罩着。把它们放到窗台上，就会重温；投进未写下的门，只打开平行世界。",
+    fantasy: "罗盘没有玻璃罩。把它投入夜色城门，或叠到合成石上。",
+    dusk: "你站在窗边。林妍把发卡别回耳侧，没有说话。空气里有一枚可拾的碎片。",
+    rain: "雨打在玻璃上。杯沿还留着你随口哼出的三个音。",
+    city: "罗盘停在「月光晚餐」与「心跳唱片」之间。巷口有一张未写完的菜单。",
+    "dusk-fork": "她这次先开口，把发卡放回你掌心。原点仍在玻璃匣里。",
+    fused: "发卡的月光落到寻宝图上。这是创作，不是原始记忆。"
   };
 
   var state = {
@@ -56,11 +56,11 @@
   }
 
   function whisper(text) {
-    $("whisper-text").textContent = text;
+    $("#whisper-text").textContent = text;
   }
 
   function toast(text) {
-    var host = $("toast-region");
+    var host = $("#toast-region");
     var node = document.createElement("div");
     node.className = "toast";
     node.textContent = text;
@@ -69,7 +69,7 @@
   }
 
   function warp(then) {
-    var overlay = $("warp");
+    var overlay = $("#warp");
     overlay.hidden = false;
     setTimeout(function () {
       overlay.hidden = true;
@@ -83,16 +83,22 @@
     $$("[data-place-panel]").forEach(function (panel) {
       panel.hidden = panel.getAttribute("data-place-panel") !== place;
     });
-    var copy = PLACE_COPY[place];
-    $("place-kicker").textContent = copy[0];
-    $("place-title").textContent = copy[1];
-    whisper(copy[2]);
+    var chamber = $("#hall-chamber");
+    if (chamber) {
+      chamber.classList.remove("is-entering-reality", "is-entering-fantasy");
+    }
+    whisper(PLACE_COPY[place] || "");
   }
 
   function walk(place) {
     if (place === "dormant") {
-      whisper("这座翼还在生长。宫殿只在你真正留下记忆时向外展开，不会凭空长出大厅。");
+      whisper("这座翼还在生长。宫殿只在你真正留下记忆时向外展开。");
       return;
+    }
+    if (place === state.place) return;
+    var chamber = $("#hall-chamber");
+    if (chamber && state.place === "hall" && (place === "reality" || place === "fantasy")) {
+      chamber.classList.add("is-entering-" + place);
     }
     warp(function () { showPlace(place); });
   }
@@ -103,11 +109,11 @@
     $$(".space-object").forEach(function (el) { el.classList.remove("is-held"); });
     if (itemId) {
       if (node) node.classList.add("is-held");
-      $("hand-hint").hidden = false;
-      $("hand-name").textContent = ITEMS[itemId] ? ITEMS[itemId].title : itemId;
-      whisper("手里握着" + $("hand-name").textContent + "。把它放到窗台、裂隙、未写下的门，或另一件物上。");
+      $("#hand-hint").hidden = false;
+      $("#hand-name").textContent = ITEMS[itemId] ? ITEMS[itemId].title : itemId;
+      whisper("手里握着" + $("#hand-name").textContent + "。把它放到窗台、未写下的门、城门或匣子上。");
     } else {
-      $("hand-hint").hidden = true;
+      $("#hand-hint").hidden = true;
     }
   }
 
@@ -122,7 +128,7 @@
   function dropOn(kind) {
     var itemId = state.holding;
     if (!itemId) {
-      whisper("先拾起一件物。空着手推门，门不会为你打开时空。");
+      whisper("先拾起一件物。空着手推门，时空不会打开。");
       return false;
     }
     var spec = ITEMS[itemId];
@@ -132,7 +138,7 @@
       renderChest();
       setHolding(null, null);
       toast(spec.title + " 被放进匣中");
-      whisper("匣子是你的携带空间。下次穿梭，可以从匣中再取出。");
+      whisper("匣子是你的携带空间。下次可以从匣中再取出。");
       return true;
     }
     if (kind === "rift-relive") {
@@ -189,11 +195,11 @@
 
   function openChest(force) {
     state.chestOpen = force === undefined ? !state.chestOpen : force;
-    $("chest-visual").classList.toggle("is-open", state.chestOpen);
+    $("#chest-visual").classList.toggle("is-open", state.chestOpen);
   }
 
   function renderChest() {
-    var cavity = $("chest-cavity");
+    var cavity = $("#chest-cavity");
     cavity.innerHTML = "";
     state.inChest.forEach(function (id) {
       var chip = document.createElement("button");
@@ -244,6 +250,16 @@
     if (zone) dropOn(zone.getAttribute("data-drop"));
   }
 
+  function lookAround(event) {
+    if (state.place !== "hall" || drag.active) return;
+    var chamber = $("#hall-chamber");
+    if (!chamber) return;
+    var x = (event.clientX / window.innerWidth - 0.5) * 28;
+    var y = (event.clientY / window.innerHeight - 0.5) * 16;
+    chamber.style.setProperty("--look-x", String(-x));
+    chamber.style.setProperty("--look-y", String(-y));
+  }
+
   function bind() {
     $$("[data-walk]").forEach(function (btn) {
       btn.addEventListener("click", function () { walk(btn.getAttribute("data-walk")); });
@@ -260,7 +276,7 @@
         }
       });
     });
-    $("treasure-chest").addEventListener("click", function (event) {
+    $("#treasure-chest").addEventListener("click", function (event) {
       if (event.target.closest("[data-item]")) return;
       if (state.holding) {
         dropOn("chest");
@@ -283,6 +299,7 @@
         shard.hidden = true;
       });
     });
+    document.addEventListener("pointermove", lookAround);
   }
 
   bind();
