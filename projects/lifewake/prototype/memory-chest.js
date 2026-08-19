@@ -244,10 +244,11 @@
       drag.node.style.pointerEvents = "";
       drag.node.style.transform = "";
     }
+    var moved = Math.abs(drag.dx) + Math.abs(drag.dy) > 18;
     drag.active = false;
     drag.node = null;
     var zone = target && target.closest("[data-drop]");
-    if (zone) dropOn(zone.getAttribute("data-drop"));
+    if (zone && moved) dropOn(zone.getAttribute("data-drop"));
   }
 
   function lookAround(event) {
