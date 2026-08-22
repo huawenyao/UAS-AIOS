@@ -219,6 +219,7 @@ execution → monitoring → render_report → evaluation
 | 企业级数字人生态 · SelfPaw/ΠPaw 产品定义 | docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md（ΠPaw 器层已改指向 Studio） |
 | World Model Studio（Business AGI 产品原型） | [WORLD_MODEL_PRODUCT.md](./docs/WORLD_MODEL_PRODUCT.md) · `examples/world-model-studio/` |
 | LifeWake · SelfPaw 生命体验域与 G/E/Π 协议扩展 | docs/strategic/LIFEWAKE_USER_AGI_EXPERIENCE_DOMAIN.md |
+| LifeWake 时空记忆匣（宫殿/百宝箱/穿梭） | docs/lifewake/LIFEWAKE_MEMORY_CHEST.md · `projects/lifewake/scripts/run_memory_chest_demo.py` |
 | 数字人生态 reqharness 基线 | harness/README.md · `python harness/invariants/run-all.py` |
 | AI 产品宪章（道/德层决策法） | [AI_PRODUCT_CHARTER.md](./docs/AI_PRODUCT_CHARTER.md) |
 

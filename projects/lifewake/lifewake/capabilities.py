@@ -14,6 +14,11 @@ from dataclasses import dataclass, field
 from typing import Any, Callable
 
 from . import schemas
+from .memory_chest import (
+    ChestError,
+    MemoryChestEngine,
+    build_seeded_engine,
+)
 
 # 复用现有治理引擎（scripts/lifewake_policy.py）
 _POLICY_PATH = __file__.replace(
@@ -509,6 +514,92 @@ def _lw_keepsake_save(call: CapabilityCall) -> CapabilityResponse:
 # === 构建默认注册表 ===
 
 
+def _chest_response(fn):
+    try:
+        result = fn()
+    except ChestError as exc:
+        return CapabilityResponse(
+            status="failed",
+            error={"code": exc.code, "message": str(exc), "retryable": False},
+        )
+    return CapabilityResponse(status="success", result=result)
+
+
+_chest_engine: MemoryChestEngine | None = None
+
+
+def reset_chest_engine() -> None:
+    global _chest_engine
+    _chest_engine = None
+
+
+def chest_engine() -> MemoryChestEngine:
+    global _chest_engine
+    if _chest_engine is None:
+        _chest_engine = build_seeded_engine()
+    return _chest_engine
+
+
+def _lw_memory_weave(call: CapabilityCall) -> CapabilityResponse:
+    engine = chest_engine()
+    if call.inputs.get("consent"):
+        engine.consent = call.inputs["consent"]
+    return _chest_response(
+        lambda: engine.itemize(
+            source_text=str(call.inputs.get("source_text", "")),
+            item_type=call.inputs.get("item_type", "story"),
+            title=str(call.inputs.get("title", "未命名记忆")),
+            is_real_memory=bool(call.inputs.get("is_real_memory", False)),
+            user_edit_note=str(call.inputs.get("user_edit_note", "")),
+        )
+    )
+
+
+def _lw_memory_shuttle(call: CapabilityCall) -> CapabilityResponse:
+    engine = chest_engine()
+    if call.inputs.get("consent"):
+        engine.consent = call.inputs["consent"]
+    return _chest_response(
+        lambda: engine.shuttle(
+            str(call.inputs.get("item_id", "")),
+            call.inputs.get("mode", "relive"),
+            mutation=str(call.inputs.get("mutation", "")),
+        )
+    )
+
+
+def _lw_memory_capture(call: CapabilityCall) -> CapabilityResponse:
+    engine = chest_engine()
+    if call.inputs.get("consent"):
+        engine.consent = call.inputs["consent"]
+    return _chest_response(
+        lambda: engine.capture(
+            str(call.inputs.get("session_id", "")),
+            fragment=str(call.inputs.get("fragment", "")),
+            item_type=call.inputs.get("item_type", "story"),
+            title=str(call.inputs.get("title", "")),
+        )
+    )
+
+
+def _lw_memory_fuse(call: CapabilityCall) -> CapabilityResponse:
+    engine = chest_engine()
+    if call.inputs.get("consent"):
+        engine.consent = call.inputs["consent"]
+    return _chest_response(
+        lambda: engine.fuse(
+            str(call.inputs.get("item_a", "")),
+            str(call.inputs.get("item_b", "")),
+            str(call.inputs.get("title", "跨界时空")),
+        )
+    )
+
+
+def _lw_palace_snapshot(call: CapabilityCall) -> CapabilityResponse:
+    engine = chest_engine()
+    return CapabilityResponse(status="success", result=engine.snapshot())
+
+
 def build_registry() -> CapabilityRegistry:
     reg = CapabilityRegistry()
     reg.register("lw.consent.check", _lw_consent_check)
@@ -525,12 +616,34 @@ def build_registry() -> CapabilityRegistry:
     reg.register("lw.changeset.draft", _lw_changeset_draft)
     reg.register("lw.audit.append", _lw_audit_append)
     reg.register("lw.keepsake.save", _lw_keepsake_save)
+    # Memory P1 · 时空记忆匣（记忆宫殿 / 百宝箱 / 穿梭机）
+    reg.register("lw.memory.weave", _lw_memory_weave)
+    reg.register("lw.memory.shuttle", _lw_memory_shuttle)
+    reg.register("lw.memory.capture", _lw_memory_capture)
+    reg.register("lw.memory.fuse", _lw_memory_fuse)
+    reg.register("lw.palace.snapshot", _lw_palace_snapshot)
     return reg
 
 
-# P1/P2 保留能力（返回 FEATURE_RESERVED）
+P0_CAPABILITIES = (
+    "lw.consent.check",
+    "lw.consent.revoke",
+    "lw.policy.check",
+    "lw.surprise.compose",
+    "lw.pulse.compose",
+    "lw.pulse.duet",
+    "lw.timing.decide",
+    "lw.impact.evaluate",
+    "lw.ritual.render",
+    "lw.share.revoke",
+    "lw.feedback.capture",
+    "lw.changeset.draft",
+    "lw.audit.append",
+    "lw.keepsake.save",
+)
+
+# P2 保留能力（返回 FEATURE_RESERVED）
 RESERVED = {
-    "lw.memory.weave",
     "lw.bond.async_create",
     "lw.twin.draft",
     "lw.template.publish",

@@ -47,6 +47,8 @@ LifeWake Domain Pack 遵循“知识即配置、构建即运行”：
 
 LifeWake 暴露了个人体验场景中可跨领域复用的四类机制。这些机制上收为 UAS 协议扩展，领域实现仍留在 Domain Pack。
 
+Memory P1 **时空记忆匣** 是 Domain Pack 内的体验配方（宫殿 + 百宝箱 + 穿梭），不新增产品轨道，也不把 `lw.memory.*` 写入企业 `cs.*`。配方规约见 `docs/lifewake/LIFEWAKE_MEMORY_CHEST.md`。
+
 ### 3.1 G：灵魂数据主权
 
 “灵魂数据”指与个人身份、记忆、情绪、关系和身体信号相关、可影响主体自我表达的数据集合；它是治理语义，不是新增数据层。

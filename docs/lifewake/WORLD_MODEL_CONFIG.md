@@ -8,10 +8,10 @@
 
 | 维 | LifeWake 含义 | 配置要点 |
 |----|---------------|----------|
-| **空间** | 个人灵魂领土 / 关系共创空间 | `personal_space`、`bond_space`；数据不出用途边界 |
+| **空间** | 个人灵魂领土 / 关系共创空间 / 四层记忆宫殿 | `personal_space`、`bond_space`、`memory_palace_layers`；数据不出用途边界 |
 | **时间** | 慢灵感节奏、会话时刻、纪念日 | `TimingDecision`、安静期、频率阈值、重评时间 |
 | **主体** | 自我、伴侣、隐形艺术家 Agent | Person + Agents；禁止「系统操控者」主体位 |
-| **客体** | 信号、惊喜、心跳作品、仪式、共同纪念物 | Surprise / PulseSession / `RitualEnvelope` / Keepsake |
+| **客体** | 信号、惊喜、心跳作品、仪式、共同纪念物、可穿梭道具 | Surprise / PulseSession / `RitualEnvelope` / Keepsake / `ChestItem` |
 | **反馈** | 用户意义反馈、策展 rubric、撤回事件 | `EmotionImpact`、Consent/Share revoke、ChangeSet |
 
 ---
@@ -32,7 +32,7 @@
 |------|------|
 | 推动（Drive） | 无聊信号、思念、创作欲、纪念日 |
 | 阻碍（Blocker） | 无同意、非双向、设备断连、时机不合、impact 门禁不足 |
-| 连接（Connector） | `lw.surprise.compose`、`lw.pulse.duet`、`RitualEnvelope`、ShareGrant |
+| 连接（Connector） | `lw.surprise.compose`、`lw.pulse.duet`、`lw.memory.shuttle`、`RitualEnvelope`、ShareGrant |
 
 ---
 

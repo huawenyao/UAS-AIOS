@@ -26,10 +26,11 @@
     "lw.pulse.compose",
     "lw.pulse.duet",
     "lw.ritual.render",
-    "lw.audit.append"
+    "lw.audit.append",
+    "lw.memory.weave",
+    "lw.memory.shuttle"
   ],
   "reserved_capabilities": [
-    "lw.memory.weave",
     "lw.bond.visualize",
     "lw.twin.draft"
   ],
