@@ -1,0 +1,20 @@
+{
+  "topic": "惊喜盲盒演示",
+  "lifewake_case_id": "CASE-001",
+  "lifewake_result": {
+    "passed": true,
+    "audit": [
+      {
+        "event": "intent"
+      }
+    ],
+    "report": {
+      "conclusion": "ok"
+    },
+    "ritual": {
+      "emotion_impact": {
+        "wow_score": 0.86
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "version": "v1.0",
+  "entities": {
+    "Person": {
+      "required": ["person_id", "display_name"],
+      "properties": {
+        "person_id": "string",
+        "display_name": "string",
+        "persona_tags": "string[]",
+        "style_prefs": "object"
+      }
+    },
+    "Consent": {
+      "required": ["consent_id", "person_id", "scopes", "purpose", "status", "withdrawable"],
+      "properties": {
+        "consent_id": "string",
+        "person_id": "string",
+        "scopes": "string[]",
+        "purpose": "enum:create_for_user",
+        "status": "enum:granted,revoked,expired",
+        "withdrawable": "boolean"
+      }
+    },
+    "SignalBundle": {
+      "required": ["bundle_id", "person_id", "signals", "sensitivity", "consent_ref"],
+      "properties": {
+        "sensitivity": "enum:low"
+      }
+    },
+    "Surprise": {
+      "required": ["surprise_id", "person_id", "kind", "payload", "inspiration_trace", "status"],
+      "properties": {
+        "kind": "enum:song,artwork,inspiration_task",
+        "wow_score": "number"
+      }
+    },
+    "PulseSession": {
+      "required": ["session_id", "mode", "participants", "style", "status"],
+      "properties": {
+        "mode": "enum:solo,duet",
+        "style": "enum:classical,electronic,nature"
+      }
+    },
+    "Bond": {
+      "required": ["bond_id", "members", "needs", "status"]
+    },
+    "Ritual": {
+      "required": ["ritual_id", "intent_ref", "artifact_ref", "narrative", "emotion_impact"]
+    }
+  }
+}

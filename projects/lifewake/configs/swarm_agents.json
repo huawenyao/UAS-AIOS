@@ -1,0 +1,77 @@
+{
+  "version": "v1.0",
+  "swarm_name": "lifewake_emotional_fabric",
+  "methodology": "emotion-alchemy-bond-privacy",
+  "governance": {
+    "require_goal_guard": true,
+    "require_governance_audit": true,
+    "require_evolution_loop": true,
+    "data_purpose_only": "create_for_user"
+  },
+  "agents": [
+    {
+      "id": "intent_guard",
+      "name": "意图守恒智能体",
+      "dimension": "intent",
+      "stance": "情感目标监督者",
+      "mission": "确保每次交互服务于被看见、被连接与自我发现，而非效率堆砌",
+      "deliverable": "情感意图单"
+    },
+    {
+      "id": "privacy_steward",
+      "name": "隐私领土守卫",
+      "dimension": "governance",
+      "stance": "灵魂领土守护者",
+      "mission": "强制同意、撤回、用途限制；禁止用数据定义用户",
+      "deliverable": "ConsentDecision"
+    },
+    {
+      "id": "signal_weaver",
+      "name": "信号编织者",
+      "dimension": "knowledge",
+      "stance": "隐性独特性倾听者",
+      "mission": "在授权范围内编织低敏感信号，提炼可创作动机",
+      "deliverable": "SignalBundle"
+    },
+    {
+      "id": "surprise_alchemist",
+      "name": "惊喜炼金师",
+      "dimension": "agent",
+      "stance": "隐形的艺术家",
+      "mission": "将信号炼成歌曲/画作/灵感任务，并附灵感来源解析",
+      "deliverable": "SurpriseArtifact"
+    },
+    {
+      "id": "pulse_composer",
+      "name": "心跳作曲家",
+      "dimension": "agent",
+      "stance": "生物韵律翻译者",
+      "mission": "将心跳映射为可听可感的单人/双人作品",
+      "deliverable": "PulseComposition"
+    },
+    {
+      "id": "bond_guardian",
+      "name": "关系编织守卫",
+      "dimension": "governance",
+      "stance": "双向情感流动守护者",
+      "mission": "拒绝单方输出的共创；保障双方需求与共享撤回权",
+      "deliverable": "BondCheckResult"
+    },
+    {
+      "id": "ritual_host",
+      "name": "仪式主持",
+      "dimension": "system",
+      "stance": "自我确认仪式设计者",
+      "mission": "将作品包装为仪式，并执行情感冲击测试",
+      "deliverable": "RitualView"
+    },
+    {
+      "id": "evolution_listener",
+      "name": "演化倾听者",
+      "dimension": "evolution",
+      "stance": "慢灵感反馈收集者",
+      "mission": "将 wow/meh 转化为 ChangeSet 草案且不自动写回",
+      "deliverable": "ChangeSetDraft"
+    }
+  ]
+}

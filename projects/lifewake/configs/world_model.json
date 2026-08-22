@@ -1,0 +1,45 @@
+{
+  "world_model_id": "lifewake_mvp",
+  "dimensions": {
+    "space": {
+      "personal_space": "soul_territory",
+      "bond_space": "shared_creation",
+      "systems": ["mock_wearable", "mock_multimodal_gen", "local_audit_store"]
+    },
+    "time": {
+      "slow_inspiration": true,
+      "max_surprises_per_day": 2,
+      "timing_windows": ["morning", "commute", "boredom"]
+    },
+    "subject": [
+      {"id": "person_self", "type": "human", "permissions": ["lw.surprise.compose", "lw.pulse.compose"]},
+      {"id": "partner", "type": "human", "permissions": ["lw.pulse.duet"]},
+      {"id": "privacy_steward", "type": "agent", "permissions": ["lw.consent.check", "lw.audit.append"]},
+      {"id": "surprise_alchemist", "type": "agent", "permissions": ["lw.surprise.compose"]},
+      {"id": "pulse_composer", "type": "agent", "permissions": ["lw.pulse.compose", "lw.pulse.duet"]},
+      {"id": "bond_guardian", "type": "agent", "permissions": ["lw.pulse.duet"]}
+    ],
+    "object": [
+      {"id": "consent", "lifecycle": ["granted", "revoked", "expired"]},
+      {"id": "surprise", "lifecycle": ["queued", "composed", "delivered", "saved", "dismissed"]},
+      {"id": "pulse_session", "lifecycle": ["linking", "live", "completed", "aborted"]},
+      {"id": "ritual", "lifecycle": ["rendered", "impact_checked", "closed"]}
+    ],
+    "feedback": [
+      {"id": "wow_rating", "type": "human_emotion"},
+      {"id": "consent_revoked", "type": "human_decision"},
+      {"id": "bond_resonance", "type": "relationship_signal"},
+      {"id": "manual_feedback", "type": "human_feedback"}
+    ]
+  },
+  "identities": {
+    "mirror": "audit 与 ritual 映照用户独特性与关系状态",
+    "lens": "Privacy Steward + Bond Guardian 揭示同意与双向需求",
+    "furnace": "惊喜/心跳作品与 ChangeSet 草案重塑可分享情感现实"
+  },
+  "drive_blocker_connectors": {
+    "example_drive": "无聊或思念触发慢灵感",
+    "example_blocker": "无同意或非双向关系",
+    "example_connector": "lw.surprise.compose / lw.pulse.duet"
+  }
+}

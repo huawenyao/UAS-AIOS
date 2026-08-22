@@ -1,0 +1,38 @@
+{
+  "version": "v1.0",
+  "goal_guard": {
+    "enabled": true,
+    "require_goal_statement": true,
+    "require_success_metrics": true,
+    "north_star": "让独特性可感知、可分享、可传承；AI 为隐形艺术家"
+  },
+  "iteration": {
+    "enabled": true,
+    "require_validation_before_evolution": true,
+    "default_loop": [
+      "intent_activation",
+      "knowledge_binding",
+      "agent_planning",
+      "system_mapping",
+      "governance_check",
+      "lifewake_execute",
+      "emotion_kpi_snapshot",
+      "evolution_plan",
+      "render_report"
+    ],
+    "auto_apply_changeset": false
+  },
+  "emotion_kpis": [
+    "validated_uniqueness_rate",
+    "consent_violation_count",
+    "bidirectional_bond_rate",
+    "slow_inspiration_compliance",
+    "changeset_draft_count"
+  ],
+  "evolution_phases": {
+    "drive": "intent_activation",
+    "feedback": ["wow_rating", "consent_friction", "bond_resonance"],
+    "reflexivity": "changeset_draft"
+  },
+  "human_feedback_path": "database/feedback/{topic_slug}.json"
+}

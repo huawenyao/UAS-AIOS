@@ -218,6 +218,7 @@ execution → monitoring → render_report → evaluation
 | Server·CLI·AI 统一架构（× AIPOS × SelfPaw） | docs/strategic/UAS_AIPOS_SelfPaw_Integrated_Product_Tech_Architecture.md |
 | 企业级数字人生态 · SelfPaw/ΠPaw 产品定义 | docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md（ΠPaw 器层已改指向 Studio） |
 | World Model Studio（Business AGI 产品原型） | [WORLD_MODEL_PRODUCT.md](./docs/WORLD_MODEL_PRODUCT.md) · `examples/world-model-studio/` |
+| LifeWake · SelfPaw 生命体验域与 G/E/Π 协议扩展 | docs/strategic/LIFEWAKE_USER_AGI_EXPERIENCE_DOMAIN.md |
 | 数字人生态 reqharness 基线 | harness/README.md · `python harness/invariants/run-all.py` |
 | AI 产品宪章（道/德层决策法） | [AI_PRODUCT_CHARTER.md](./docs/AI_PRODUCT_CHARTER.md) |
 

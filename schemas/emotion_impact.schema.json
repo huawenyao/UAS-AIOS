@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/emotion_impact.schema.json",
+  "title": "UAS Emotion Impact",
+  "description": "体验对主体产生的情感影响及其证据，用于受治理的价值评估与演化。",
+  "type": "object",
+  "required": [
+    "impact_id",
+    "target_ref",
+    "subject_ids",
+    "method",
+    "dimensions",
+    "outcome",
+    "measured_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "impact_id": {
+      "type": "string",
+      "pattern": "^impact-[a-zA-Z0-9._:-]+$"
+    },
+    "target_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "被评估的体验、仪式或产物引用。"
+    },
+    "subject_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "method": {
+      "type": "string",
+      "enum": ["self_report", "participant_report", "facilitator_observation", "behavioral_signal", "mixed"]
+    },
+    "dimensions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/definitions/dimensionScore" },
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_-]*$"
+      }
+    },
+    "overall_score": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["positive", "mixed", "neutral", "negative", "inconclusive"]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "feedback": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "comment": { "type": "string" },
+        "continue_preference": {
+          "type": "string",
+          "enum": ["continue", "adjust", "pause", "stop", "unspecified"]
+        }
+      }
+    },
+    "measured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "measurement_window": {
+      "type": "string"
+    },
+    "consent_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "evolution_candidate_ref": {
+      "type": "string",
+      "description": "基于影响记录形成的 ChangeSet 候选；存在引用不代表已自动应用。"
+    }
+  },
+  "definitions": {
+    "dimensionScore": {
+      "type": "object",
+      "required": ["score"],
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence_ref": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
