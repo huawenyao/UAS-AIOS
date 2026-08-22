@@ -22,7 +22,7 @@
 | L1-escalate-to-pipaw | L1→L3 | `scripts/run_edh_dual_track_loop.py` |
 | L2-recruitment-os | L2 | `examples/ai-recruitment/.../run_entity_closed_loop.py` |
 | L3-sales-b2b | L3 | `evaluate_sales_mvp.py` 8/8 |
-| L3-cs-ticket | L3 | `test_pipaw_cs_agent.py` |
+| L3-world-model-studio | L3 | `examples/world-model-studio/scripts/run_cognitive_cycle.py` |
 | L3-finance-approval | L3 | `run_finance_prototype.py` |
 | L3-outward-notify | L3 | `run_outward_gateway_mock.py` |
 | platform-value-loop | 平台 | `run_value_loop_full.py` |
@@ -31,4 +31,4 @@
 
 ## 产品原型页
 
-浏览器打开：`docs/strategic/demo/EDH_Ecosystem_Prototype.html`
+浏览器打开：`examples/world-model-studio/ui/index.html`（World Model Studio）。旧 `ΠPaw_Enterprise_Demo.html` 已废止。

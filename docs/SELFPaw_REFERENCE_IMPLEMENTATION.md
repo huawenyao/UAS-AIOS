@@ -11,10 +11,10 @@
 | 范围 | 仓库 | 职责 |
 |------|------|------|
 | **SelfPaw 产品实现** | `aipos/copaw-src` | User AGI（UAS-U）：个人助理、记忆、Skills、Domain/Project、AEE、多端通道、Console |
-| **UAS-AIOS 本仓库** | `UAS-AIOS` | UAS 内核、ΠPaw（Business AGI）、企业数据平面、`cs.*`、Intent 升级契约、subapp 样板 |
+| **UAS-AIOS 本仓库** | `UAS-AIOS` | UAS 内核、World Model Studio（ΠPaw 编排身份）、企业数据平面、`cs.*`、Intent 升级契约、subapp 样板 |
 | **企业版桥接** | `projects/selfpaw-enterprise` + `asui-cli/.../org_identity.py` | 租户/岗位 Domain、升级 ΠPaw；**不重复实现** copaw-src 已有能力 |
 
-**结论**：SelfPaw **已实现**，不在 UAS-AIOS 内从零建设 U 层；UAS-AIOS 负责与 ΠPaw 及企业治理的**集成与契约**。
+**结论**：SelfPaw **已实现**，不在 UAS-AIOS 内从零建设 U 层；UAS-AIOS 负责与 **World Model Studio（Business AGI）** 及企业治理的**集成与契约**。
 
 ---
 
@@ -35,7 +35,7 @@
 
 ## 与 UAS-AIOS 的集成点
 
-1. **Intent 升级 ΠPaw**：`asui-cli/src/asui/intent_hub.py` ← 企业员工从 SelfPaw 侧提交经营类意图  
+1. **Intent 升级 Business AGI**：`asui-cli/src/asui/intent_hub.py` ← 经营类意图带证据升级，落地 World Model Studio  
 2. **实体图谱**：`harness/entity-map.json` 中 `aipos_mapping` 指向 copaw-src  
 3. **战略对齐**：`docs/strategic/UAS_AIPOS_SelfPaw_Integrated_Product_Tech_Architecture.md`  
 4. **设计详设**：`docs/strategic/detailed-design/SelfPaw_Personal_Cognitive_OS_Detailed_Design.md`
@@ -45,7 +45,7 @@
 ## 开发时如何选用
 
 - 改 **个人助理、记忆、Skills、通道** → 在 `copaw-src` 开发  
-- 改 **企业租户、cs.\*、ΠPaw 岗位、销售/客服闭环** → 在 `UAS-AIOS` 开发  
+- 改 **企业租户、cs.\*、World Model Studio、销售/招聘闭环** → 在 `UAS-AIOS` 开发  
 - 改 **L1 企业身份 + 升级协议** → UAS-AIOS `org_identity` / `intent_hub` + copaw-src 会话上下文对齐
 
 ---

@@ -123,21 +123,18 @@
     },
     "pipaw_business": {
       "status": "completed",
-      "description": "ΠPaw 经营 AGI：岗位 Agent · 对外通道 · 经营流程 · KPI 闭环",
+      "description": "ΠPaw 编排身份 + World Model Studio（招聘短名单认知实践闭环）",
       "invariants": {
-        "agent_roster_spec": "passed",
-        "pipaw_cs_agent": "passed",
-        "outward_gateway_spec": "passed"
+        "world_model_studio": "passed",
+        "agent_roster_spec": "superseded"
       },
       "requirements": ["REQ-EDH-PP-001", "REQ-EDH-PP-002", "REQ-EDH-PP-003"],
       "requirements_status": {"REQ-EDH-PP-001": "completed", "REQ-EDH-PP-002": "ac_draft_complete", "REQ-EDH-PP-003": "ac_draft_complete"},
       "artifacts": [
-        "configs/pipaw_business_agent_roster.json",
-        "configs/pipaw_cs_agent_playbook.json",
-        "asui-cli/src/asui/pipaw_task_panel.py",
-        "asui-cli/src/asui/pipaw_cs_agent.py",
-        "harness/knowledge/technical/pipaw-cs-agent-benchmark.md",
-        "scripts/validate_pipaw_cs_agent.py"
+        "docs/WORLD_MODEL_PRODUCT.md",
+        "examples/world-model-studio/",
+        "harness/knowledge/technical/world-model-studio.md",
+        "scripts/run_cognitive_cycle.py"
       ]
     },
     "ecosystem_prototype": {
@@ -150,7 +147,7 @@
       "artifacts": [
         "configs/ecosystem_scenario_catalog.json",
         "scripts/run_ecosystem_prototype.py",
-        "docs/strategic/demo/EDH_Ecosystem_Prototype.html"
+        "examples/world-model-studio/ui/index.html"
       ]
     },
     "uas_kernel_integration": {

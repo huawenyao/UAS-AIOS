@@ -63,10 +63,13 @@ def run_scenario(scenario: dict) -> dict:
             "id": sid,
             **_run([sys.executable, str(ROOT / "projects" / "enterprise-sales-os" / "scripts" / "evaluate_sales_mvp.py")]),
         }
-    if runner == "pipaw_cs_agent":
+    if runner == "world_model_studio":
         return {
             "id": sid,
-            **_run([sys.executable, "-m", "pytest", "tests/test_pipaw_cs_agent.py", "-q"], cwd=ROOT / "asui-cli"),
+            **_run(
+                [sys.executable, str(ROOT / "examples" / "world-model-studio" / "scripts" / "run_cognitive_cycle.py")],
+                cwd=ROOT / "examples" / "world-model-studio",
+            ),
         }
     if runner == "finance_prototype":
         return {"id": sid, **_run([sys.executable, str(ROOT / "scripts" / "run_finance_prototype.py")])}

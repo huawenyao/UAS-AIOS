@@ -1,0 +1,518 @@
+{
+  "world_model_id": "wm.hiring.shortlist.staff-eng-2026q3",
+  "version": "v0.1.0",
+  "product_form": "world_model_studio",
+  "orchestration_identity": "pipaw",
+  "product_track": "pipaw",
+  "scenario": "招聘短名单 · Staff Engineer",
+  "north_star": "quality-adjusted hiring success",
+  "identities": {
+    "mirror": "当前 Rec 管道：3 名候选人已初筛，短名单未冻结，文化分全部为默认 60。",
+    "lens": "真正张力不是「缺人」，而是「学历硬门槛 vs 工程证据」与「未接地的文化分冒充确定性」。",
+    "furnace": "人确认后才能把短名单写成组织承诺；驳回未接地字段必须回写法则。"
+  },
+  "dimensions": {
+    "space": {
+      "tenant_id": "t-acme-demo",
+      "org": "Acme Demo · Platform Engineering",
+      "team": "Core Runtime",
+      "location": "上海 / 可远程",
+      "channels": [
+        "内部招聘工作台",
+        "候选人邮件（经 Outward Gateway，未执行）"
+      ]
+    },
+    "time": {
+      "cycle_id": "HIRING-SE-2026Q3",
+      "freeze_by": "2026-08-25",
+      "onsite_window": "2026-08-27..2026-09-05",
+      "rollback_window_hours": 48,
+      "sla": "短名单决策 ≤ 3 个工作日"
+    },
+    "subject": [
+      {
+        "id": "sub.hiring-manager",
+        "name": "陈可",
+        "role": "hiring_manager",
+        "stake": "承责：录用质量与团队负载",
+        "loop": "in",
+        "track": "pipaw"
+      },
+      {
+        "id": "sub.recruiter",
+        "name": "周岚",
+        "role": "recruiter",
+        "stake": "推进管道、解释证据",
+        "loop": "on",
+        "track": "pipaw"
+      },
+      {
+        "id": "cand.zhang-san",
+        "name": "张三",
+        "role": "candidate",
+        "stake": "被评价与被承诺的客体—主体：有权获得可解释结果",
+        "loop": "affected",
+        "track": "external"
+      },
+      {
+        "id": "cand.li-si",
+        "name": "李四",
+        "role": "candidate",
+        "stake": "被评价与被承诺的客体—主体",
+        "loop": "affected",
+        "track": "external"
+      },
+      {
+        "id": "cand.wang-min",
+        "name": "王敏",
+        "role": "candidate",
+        "stake": "被评价与被承诺的客体—主体",
+        "loop": "affected",
+        "track": "external"
+      }
+    ],
+    "object": [
+      {
+        "id": "obj.req.staff-eng",
+        "type": "requisition",
+        "title": "Staff Engineer · Runtime",
+        "mutable": true,
+        "ideal": {
+          "degree": "本科及以上",
+          "years": 8,
+          "skills": [
+            "Python",
+            "分布式系统",
+            "可观测性"
+          ],
+          "headcount": 1
+        }
+      },
+      {
+        "id": "obj.shortlist",
+        "type": "shortlist",
+        "mutable": true,
+        "status": "frozen_pending_platform",
+        "slots": 2
+      },
+      {
+        "id": "obj.evidence-pack",
+        "type": "evidence_pack",
+        "mutable": true,
+        "description": "简历事实 + 风险旗标；不含虚构面试"
+      }
+    ],
+    "feedback": [
+      {
+        "source": "screening_evidence",
+        "delay": "已发生",
+        "reliability": "high",
+        "grounded": true
+      },
+      {
+        "source": "culture_fit_default",
+        "delay": "未发生面试",
+        "reliability": "none",
+        "grounded": false
+      },
+      {
+        "source": "hiring_manager_decision",
+        "delay": "本闭环第 4 步",
+        "reliability": "pending",
+        "grounded": false
+      },
+      {
+        "source": "offer_accept_rate",
+        "delay": "输出之后",
+        "reliability": "not_yet",
+        "grounded": false
+      }
+    ]
+  },
+  "reality": {
+    "candidates": [
+      {
+        "id": "cand.zhang-san",
+        "name": "张三",
+        "degree": "专科",
+        "years": 7,
+        "skills": [
+          "Python",
+          "TensorFlow",
+          "NLP",
+          "项目管理"
+        ],
+        "management": true,
+        "evidence": [
+          "学历不足：要求本科及以上",
+          "经验接近：要求 8 年，实际约 7 年（简历 2019 起）",
+          "技能：分布式不足，算法/NLP 偏强"
+        ],
+        "risk_flags": [
+          "education_below_requirement"
+        ],
+        "scores": {
+          "ability": 65.6,
+          "context": 95.0,
+          "culture_fit": 60.0,
+          "overall": 72.49
+        },
+        "ungrounded": [
+          "culture_fit"
+        ]
+      },
+      {
+        "id": "cand.li-si",
+        "name": "李四",
+        "degree": "专科",
+        "years": 7,
+        "skills": [
+          "Python",
+          "Django",
+          "后端开发"
+        ],
+        "management": false,
+        "evidence": [
+          "学历不足：要求本科及以上",
+          "工程证据强：后端闭环、可运行系统",
+          "Staff 技能覆盖不足：必备项大量缺失"
+        ],
+        "risk_flags": [
+          "education_below_requirement",
+          "insufficient_skills"
+        ],
+        "scores": {
+          "ability": 36.0,
+          "context": 95.0,
+          "culture_fit": 60.0,
+          "overall": 57.65
+        },
+        "ungrounded": [
+          "culture_fit"
+        ]
+      },
+      {
+        "id": "cand.wang-min",
+        "name": "王敏",
+        "degree": "本科",
+        "years": 9,
+        "skills": [
+          "Python",
+          "分布式系统",
+          "可观测性",
+          "Kubernetes"
+        ],
+        "management": true,
+        "evidence": [
+          "学历满足本科要求",
+          "年限满足 Staff 门槛",
+          "技能与 Runtime 需求对齐；无现场面试记录"
+        ],
+        "risk_flags": [],
+        "scores": {
+          "ability": 88.0,
+          "context": 80.0,
+          "culture_fit": null,
+          "overall": null
+        },
+        "ungrounded": []
+      }
+    ]
+  },
+  "ideal": {
+    "shortlist_rule": "2 人进入 onsite：必须同时满足技能对齐与可解释风险",
+    "degree_gate": "本科硬门槛",
+    "culture_known": false,
+    "auto_reject_without_human": false
+  },
+  "gaps": [
+    {
+      "id": "gap.degree-vs-evidence",
+      "ideal": "本科硬门槛自动生效",
+      "reality": "张三/李四学历不足但工程证据不等价；不得静默淘汰",
+      "tension": "德-社会-1 vs 德-组织-2"
+    },
+    {
+      "id": "gap.ungrounded-culture",
+      "ideal": "文化契合已知",
+      "reality": "张三/李四 culture_fit=60 为默认值，无面试",
+      "tension": "道-6 理念必须对冲现实"
+    }
+  ],
+  "laws": [
+    {
+      "id": "LAW-EDU-001",
+      "text": "学历硬门槛不得自动淘汰；不足则标风险，升 G3 由用人经理确认。",
+      "source": "宪章·德-社会-1 / 红线-4"
+    },
+    {
+      "id": "LAW-EVD-001",
+      "text": "culture_fit 无面试证据一律 UNGROUNDED，不得写入 overall。",
+      "source": "宪章·INV-05 / 德-用户-4"
+    },
+    {
+      "id": "LAW-SUB-001",
+      "text": "候选人是主体维度，不是通知附件；拒绝/承诺须可解释。",
+      "source": "宪章·道-2 / 德-社会-1"
+    },
+    {
+      "id": "LAW-GATE-001",
+      "text": "短名单冻结 = 组织承诺，默认 In the loop · G3；回滚窗口 48h。",
+      "source": "宪章·势-1 / INV-04 / INV-10"
+    },
+    {
+      "id": "LAW-EXEC-001",
+      "text": "模型只提议；写入短名单/发候选人通知必须走平台动作 + 门禁。",
+      "source": "宪章·德-组织-3 / ADR-EDH-002"
+    }
+  ],
+  "cycle": {
+    "current_step": "yield",
+    "completed": [
+      "input",
+      "simulate",
+      "generate",
+      "interact",
+      "evolve",
+      "output",
+      "yield"
+    ],
+    "loop": "above",
+    "gate": "G0",
+    "finished_at": "2026-08-18T16:04:24+00:00"
+  },
+  "decision": {
+    "schemes": [
+      {
+        "id": "scheme.grounded",
+        "title": "证据优先短名单",
+        "advance": [
+          "cand.wang-min",
+          "cand.zhang-san"
+        ],
+        "hold": [
+          "cand.li-si"
+        ],
+        "rationale": "王敏技能与门槛对齐；张三学历风险须人确认但工程/领域证据强于李四。文化分全部剔除。",
+        "ungrounded_stripped": true,
+        "gate": "G3"
+      },
+      {
+        "id": "scheme.degree-hard",
+        "title": "学历硬门槛短名单",
+        "advance": [
+          "cand.wang-min"
+        ],
+        "hold": [
+          "cand.zhang-san",
+          "cand.li-si"
+        ],
+        "rationale": "仅王敏满足本科。其余自动淘汰——违反 LAW-EDU-001，仅作对冲对照。",
+        "violates": [
+          "LAW-EDU-001"
+        ],
+        "gate": "G4"
+      }
+    ],
+    "selected_scheme_id": "scheme.grounded",
+    "human_confirmed": true,
+    "rollback_until": "T+48h",
+    "human_action": "confirm_with_uncertainty",
+    "evidence_box": [
+      "王敏：学历/年限/Runtime 技能均有简历事实。",
+      "张三：领域技能证据在，学历不足 → 须人确认而非自动淘汰。",
+      "李四：Staff 必备技能覆盖不足 → 默认不进短名单。",
+      "culture_fit=60：未接地，已从建议中剥离。"
+    ],
+    "uncertainties": [
+      "无人现场面试，文化与协作未知。",
+      "张三年限按简历推算，非 HRIS 核对。"
+    ]
+  },
+  "changeset": [
+    {
+      "changeset_id": "cs.wm.20260818T160424",
+      "signal": "reject_ungrounded_culture_fit",
+      "from_step": "interact",
+      "patches": [
+        {
+          "path": "laws",
+          "op": "upsert",
+          "law_id": "LAW-EVD-001",
+          "text": "culture_fit 无面试证据一律 UNGROUNDED，不得写入 overall。"
+        },
+        {
+          "path": "ideal.culture_known",
+          "op": "set",
+          "value": false,
+          "reason": "现实尚未发生面试，理念层不得假装已知"
+        }
+      ],
+      "rollback": "restore previous laws snapshot"
+    }
+  ],
+  "audit": [
+    {
+      "ts": "2026-08-18T16:04:24+00:00",
+      "step": "input",
+      "event": "intent_bound",
+      "intent": "冻结 Staff Engineer 短名单（2 人 onsite）"
+    },
+    {
+      "ts": "2026-08-18T16:04:24+00:00",
+      "step": "simulate",
+      "event": "laws_compiled",
+      "n": 5
+    },
+    {
+      "ts": "2026-08-18T16:04:24+00:00",
+      "step": "generate",
+      "event": "schemes_ready",
+      "ids": [
+        "scheme.grounded",
+        "scheme.degree-hard"
+      ]
+    },
+    {
+      "ts": "2026-08-18T16:04:24+00:00",
+      "step": "interact",
+      "event": "human_review",
+      "action": "confirm_with_uncertainty",
+      "selected": "scheme.grounded",
+      "confirmed": true
+    },
+    {
+      "ts": "2026-08-18T16:04:24+00:00",
+      "step": "evolve",
+      "event": "changeset_applied",
+      "changeset_id": "cs.wm.20260818T160424"
+    },
+    {
+      "ts": "2026-08-18T16:04:24+00:00",
+      "step": "output",
+      "event": "shortlist_proposed",
+      "shortlist": [
+        "王敏",
+        "张三"
+      ]
+    },
+    {
+      "ts": "2026-08-18T16:04:24+00:00",
+      "step": "yield",
+      "event": "benefit_attributed",
+      "explainable_shortlist": true,
+      "ungrounded_scores_in_recommendation": 0,
+      "auto_rejects": 0,
+      "human_confirmed": true
+    }
+  ],
+  "intent": {
+    "work": "冻结 Staff Engineer 短名单（2 人 onsite）",
+    "success": "用人经理能解释每位候选人的证据与风险；候选人得到体面下一步",
+    "anti_pattern": "黑箱分数排序或自动淘汰学历不足者",
+    "north_star": "quality-adjusted hiring success"
+  },
+  "simulation": {
+    "compiled_at": "2026-08-18T16:04:24+00:00",
+    "findings": [
+      {
+        "law": "LAW-EVD-001",
+        "subject": "cand.zhang-san",
+        "verdict": "EVIDENCE_REQUIRED",
+        "note": "culture_fit 未接地，不得进入建议"
+      },
+      {
+        "law": "LAW-EDU-001",
+        "subject": "cand.zhang-san",
+        "verdict": "HUMAN_CONFIRM",
+        "note": "学历不足：禁止自动淘汰"
+      },
+      {
+        "law": "LAW-EVD-001",
+        "subject": "cand.li-si",
+        "verdict": "EVIDENCE_REQUIRED",
+        "note": "culture_fit 未接地，不得进入建议"
+      },
+      {
+        "law": "LAW-EDU-001",
+        "subject": "cand.li-si",
+        "verdict": "HUMAN_CONFIRM",
+        "note": "学历不足：禁止自动淘汰"
+      },
+      {
+        "law": "LAW-GATE-001",
+        "subject": "cand.li-si",
+        "verdict": "NOT_SHORTLIST_DEFAULT",
+        "note": "Staff 技能覆盖不足，默认不进短名单"
+      }
+    ],
+    "low_dim": {
+      "decision": "谁进入 onsite（2 席）",
+      "blockers": [
+        {
+          "law": "LAW-EVD-001",
+          "subject": "cand.zhang-san",
+          "verdict": "EVIDENCE_REQUIRED",
+          "note": "culture_fit 未接地，不得进入建议"
+        },
+        {
+          "law": "LAW-EVD-001",
+          "subject": "cand.li-si",
+          "verdict": "EVIDENCE_REQUIRED",
+          "note": "culture_fit 未接地，不得进入建议"
+        }
+      ],
+      "human_required": [
+        {
+          "law": "LAW-EDU-001",
+          "subject": "cand.zhang-san",
+          "verdict": "HUMAN_CONFIRM",
+          "note": "学历不足：禁止自动淘汰"
+        },
+        {
+          "law": "LAW-EDU-001",
+          "subject": "cand.li-si",
+          "verdict": "HUMAN_CONFIRM",
+          "note": "学历不足：禁止自动淘汰"
+        }
+      ]
+    }
+  },
+  "output": {
+    "status": "ready",
+    "shortlist": [
+      "王敏",
+      "张三"
+    ],
+    "hold": [
+      "李四"
+    ],
+    "candidate_facing": {
+      "advance": "邀请 onsite，说明评价维度与时间窗",
+      "hold": "暂不推进，保留可解释理由，不发送自动拒绝"
+    },
+    "cs_preview": {
+      "operation": "cs.process.start",
+      "object": "obj.shortlist",
+      "gate": "G3",
+      "executed": false,
+      "note": "模型提议，平台执行；本原型不写生产库"
+    },
+    "rollback_window_hours": 48
+  },
+  "yield": {
+    "north_star": "quality-adjusted hiring success",
+    "attributed": true,
+    "metrics": {
+      "explainable_shortlist": true,
+      "ungrounded_scores_in_recommendation": 0,
+      "auto_rejects": 0,
+      "human_confirmed": true
+    },
+    "pending_feedback": [
+      "onsite 出现率",
+      "用人经理接受短名单",
+      "候选人申诉"
+    ]
+  }
+}

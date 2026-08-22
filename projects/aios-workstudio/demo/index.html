@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>WorkStudio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./workstudio.css" />
+</head>
+<body>
+  <a class="skip" href="#main">跳到主区</a>
+
+  <header class="appbar">
+    <div class="brand" translate="no">
+      <span class="logo">WS</span>
+      <strong>WorkStudio</strong>
+    </div>
+    <nav class="layer-switch" aria-label="工作台层级">
+      <button type="button" data-layer="scene" class="is-on">场景态</button>
+      <button type="button" data-layer="execute">执行态</button>
+    </nav>
+    <div class="appbar-right">
+      <label>空间
+        <select id="pack">
+          <option value="ops">经营 / 人才流</option>
+          <option value="pmo">组织 / 项目</option>
+          <option value="invest">投研 / 组合</option>
+        </select>
+      </label>
+      <span class="tenant">衡川</span>
+    </div>
+  </header>
+
+  <div class="workspace" id="workspace">
+    <aside class="rail" aria-label="导航">
+      <p class="nav-space" id="nav-space">衡川 · 经营管理工作台</p>
+      <nav id="rail-nav"></nav>
+    </aside>
+    <div class="stage">
+      <main id="main" class="main"></main>
+      <form class="dock" id="dock" hidden>
+        <div class="dock-meta">
+          <span id="dock-hint">补充挂在当前任务上，不改世界模型状态。</span>
+          <span class="perm" id="perm-badge">sandbox · 禁写生产</span>
+        </div>
+        <div class="dock-row">
+          <textarea id="composer-input" name="note" rows="2" placeholder="把补充写进当前任务，不是新开一段对话。"></textarea>
+          <div class="dock-actions">
+            <button type="button" class="ghost" data-act="plan">生成计划</button>
+            <button type="submit" class="primary">写入任务</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <aside class="inspector" id="inspector" aria-label="对象"></aside>
+  </div>
+
+  <div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+  <script src="./workstudio.js"></script>
+</body>
+</html>

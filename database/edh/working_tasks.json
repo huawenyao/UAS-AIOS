@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "tasks": [
     {
-      "task_id": "wt-5e5358797c22",
+      "task_id": "wt-da2033f1a6c8",
       "tenant_id": "t-acme-demo",
       "source_intent_id": "int-complaint-demo-001",
       "source": "selfpaw_escalation",
@@ -26,9 +26,9 @@
           "summary": "客户 IM：交付已延期 3 天，请今日回复处理方案"
         }
       ],
-      "audit_id": "aud-2c5fa2f4d6c7",
-      "created_at": "2026-06-04T14:32:04Z",
-      "updated_at": "2026-06-04T14:32:04Z"
+      "audit_id": "aud-8603c367fb04",
+      "created_at": "2026-08-18T16:02:31Z",
+      "updated_at": "2026-08-18T16:02:31Z"
     }
   ]
 }

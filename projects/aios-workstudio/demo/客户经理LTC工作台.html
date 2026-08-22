@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客户经理 LTC 工作台</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1a1f36; --primary-light:#252d4a;
+  --accent:#f59e0b; --accent2:#10b981; --accent3:#ef4444; --accent4:#3b82f6;
+  --q1:#10b981; --q2:#f59e0b; --q3:#ef4444; --q4:#8b5cf6;
+  --bg:#f0f2f8; --card:#fff; --border:#e2e8f0;
+  --text:#1a1f36; --text-muted:#64748b; --text-light:#94a3b8;
+  --shadow:0 2px 12px rgba(26,31,54,0.08); --shadow-lg:0 8px 32px rgba(26,31,54,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);font-size:13px;min-height:100vh}
+.mono{font-family:'JetBrains Mono',monospace}
+.header{background:var(--primary);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.2)}
+.hbrand{display:flex;align-items:center;gap:10px}
+.hlogo{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#f97316);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:12px}
+.htitle{color:#fff;font-size:16px;font-weight:600} .hsub{color:rgba(255,255,255,0.5);font-size:12px;margin-left:4px}
+.hright{display:flex;align-items:center;gap:12px} .htime{color:rgba(255,255,255,0.6);font-size:12px;font-family:'JetBrains Mono',monospace}
+.btn{height:32px;padding:0 16px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.btn-accent{background:var(--accent);color:#fff}
+.main{padding:14px 24px 32px;max-width:1800px;margin:0 auto}
+.section-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.section-title{font-size:14px;font-weight:600} .section-badge{background:var(--primary);color:#fff;font-size:10px;padding:2px 8px;border-radius:20px} .section-note{font-size:11px;color:var(--text-muted);margin-left:auto}
+.kpi-strip{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.ktile{background:var(--card);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden}
+.ktile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kt1::before{background:linear-gradient(90deg,var(--accent4),var(--accent2))} .kt2::before{background:var(--accent2)} .kt3::before{background:var(--accent)} .kt4::before{background:var(--accent3)}
+.kt-label{font-size:11px;color:var(--text-muted);margin-bottom:4px} .kt-val{font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace} .kt-sub{font-size:11px;margin-top:2px}
+.up{color:var(--q1)} .down{color:var(--q3)}
+.ktile.composite{padding:12px 16px}
+.kt-comp-head{font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.kt-comp-head b{color:var(--text)}
+.km-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.km{background:var(--bg);border-radius:8px;padding:8px 10px;border:1px solid var(--border)}
+.km-l{font-size:10px;color:var(--text-muted);margin-bottom:2px;display:flex;justify-content:space-between}
+.km-tip{font-size:9px;color:var(--text-light)}
+.km-v{font-size:20px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1.1}
+.km-sub{font-size:10px;margin-top:1px}
+.filter-panel{background:var(--card);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:14px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:4px} .fl{font-size:11px;font-weight:500;color:var(--text-muted)}
+.fc{height:32px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;color:var(--text);outline:none;min-width:140px}
+.btn-primary{background:var(--primary);color:#fff} .btn-outline{background:#fff;color:var(--text);border:1px solid var(--border)}
+.legend{display:flex;gap:14px;font-size:11px;color:var(--text-muted);margin-left:auto;align-items:center}
+.ldot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.funnel{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:14px}
+.fp{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 6px;text-align:center;cursor:pointer;position:relative;overflow:hidden;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
+.fp::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent2)}
+.fp.gate::before{background:var(--q3)} .fp.gate{background:#fff5f5;border-color:rgba(239,68,68,0.3)}
+.fp:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.fp.sel{outline:2px solid var(--accent4);outline-offset:-2px}
+.fp-num{font-size:9px;color:var(--text-light);font-family:'JetBrains Mono',monospace}
+.fp-name{font-size:11px;font-weight:600;margin:1px 0} .fp-cnt{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.fp.gate .fp-cnt{color:#dc2626}
+.workbench{display:grid;grid-template-columns:380px 1fr;gap:14px;align-items:start}
+.clist{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;max-height:760px}
+.clist-head{padding:10px 14px;border-bottom:1px solid var(--border);background:#fafbfd;display:flex;align-items:center;justify-content:space-between}
+.clist-title{font-size:13px;font-weight:600} .clist-cnt{font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+.clist-body{overflow-y:auto;flex:1;padding:6px}
+.crow{background:#fff;border:1px solid var(--border);border-left:3px solid var(--q1);border-radius:8px;padding:9px 11px;margin-bottom:6px;cursor:pointer;transition:box-shadow .15s,transform .15s}
+.crow:hover{box-shadow:0 3px 8px rgba(0,0,0,0.1);transform:translateY(-1px)}
+.crow.warn{border-left-color:var(--q2)} .crow.gate{border-left-color:var(--q3);background:#fff5f5}
+.crow.sel{outline:2px solid var(--accent4);outline-offset:-2px}
+.cr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.cr-name{font-size:13px;font-weight:600}
+.cr-tag{font-size:9px;padding:1px 6px;border-radius:3px;background:rgba(59,130,246,0.1);color:var(--accent4)}
+.cr-tag.gate{background:rgba(239,68,68,0.12);color:#dc2626} .cr-tag.warn{background:rgba(245,158,11,0.12);color:#d97706}
+.cr-mid{font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between;margin-bottom:4px}
+.cr-stage{font-weight:500;color:var(--text)}
+.cr-bot{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--text-light);font-family:'JetBrains Mono',monospace}
+.cr-days{font-weight:600} .cr-days.gate{color:#dc2626}
+.cr-sig{font-family:'Noto Sans SC';font-size:10px;color:var(--text-muted);max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.detail{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden}
+.detail-head{background:var(--primary);color:#fff;padding:14px 20px}
+.detail-title{font-size:15px;font-weight:600}
+.detail-sub{font-size:11px;color:rgba(255,255,255,0.6);margin-top:3px}
+.stage-tabs{display:flex;gap:3px;margin-top:10px;flex-wrap:wrap}
+.stab{font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);cursor:pointer}
+.stab.active{background:var(--accent);color:#fff}
+.detail-body{padding:18px 20px}
+.dblock{margin-bottom:18px}
+.db-h{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.verdict{border-left:6px solid var(--q1);background:linear-gradient(90deg,rgba(16,185,129,0.12),#fff 55%);border-radius:8px;padding:12px 16px;margin-bottom:18px;border:1px solid rgba(16,185,129,0.25)}
+.verdict.gate{border-left-color:var(--q3);background:linear-gradient(90deg,rgba(239,68,68,0.12),#fff 55%);border-color:rgba(239,68,68,0.25)}
+.verdict.warn{border-left-color:var(--q2);background:linear-gradient(90deg,rgba(245,158,11,0.12),#fff 55%);border-color:rgba(245,158,11,0.25)}
+.verdict-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.verdict.gate .verdict-title{color:#dc2626} .verdict.warn .verdict-title{color:#d97706} .verdict:not(.gate):not(.warn) .verdict-title{color:#059669}
+.verdict-desc{font-size:12px;color:var(--text);line-height:1.5}
+.dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dtile{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px}
+.dtile-l{font-size:11px;color:var(--text-muted);margin-bottom:3px}
+.dtile-v{font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.dtile-sub{font-size:10px;color:var(--text-light);margin-top:2px}
+.spark{width:100%;height:40px;margin-top:8px}
+.act{display:flex;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;align-items:flex-start}
+.act.p0{border-left:4px solid var(--q3);background:#fff5f5} .act.p1{border-left:4px solid var(--q2);background:#fffaf3} .act.p2{border-left:4px solid var(--accent4);background:rgba(59,130,246,0.04)}
+.act-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;color:#fff;flex-shrink:0}
+.act-tag.p0{background:var(--q3)} .act-tag.p1{background:var(--q2)} .act-tag.p2{background:var(--accent4)}
+.act-txt{font-size:13px;line-height:1.5} .act-owner{font-size:11px;color:var(--text-muted);margin-top:3px}
+.ptable{width:100%;border-collapse:collapse;font-size:12px}
+.ptable th{background:#e8edf5;color:#3a4a6b;font-weight:600;text-align:left;padding:7px 10px;font-size:11px;border:1px solid #d1d9e8}
+.ptable td{padding:7px 10px;border:1px solid var(--border);vertical-align:middle}
+.ptable tr:hover td{background:rgba(59,130,246,0.04)}
+.pbadge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500}
+.pbadge.todo{background:rgba(245,158,11,0.12);color:#d97706} .pbadge.doing{background:rgba(59,130,246,0.12);color:#3b82f6} .pbadge.done{background:rgba(16,185,129,0.12);color:#059669} .pbadge.overdue{background:rgba(239,68,68,0.12);color:#dc2626}
+@media (max-width:1100px){
+  .workbench{grid-template-columns:1fr}
+  .clist{max-height:360px}
+  .kpi-strip{grid-template-columns:1fr 1fr}
+  .funnel{grid-template-columns:repeat(5,1fr)}
+}
+@media (max-width:680px){
+  .kpi-strip{grid-template-columns:1fr}
+  .funnel{grid-template-columns:repeat(2,1fr)}
+  .dgrid{grid-template-columns:1fr 1fr}
+  .main{padding:10px}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="hbrand"><div class="hlogo">LTC</div><div><span class="htitle">客户经理 LTC 工作台</span><span class="hsub">· 线索到现金全流程</span></div></div>
+  <div class="hright"><span class="htime" id="hdrTime"></span><button class="btn btn-accent" onclick="exportCSV()">导出报告</button></div>
+</header>
+<div class="main">
+  <div class="section-header"><span class="section-title">📊 全局经营</span><span class="section-badge">客户经理视角</span><span class="section-note" id="hdrNote"></span></div>
+  <div class="kpi-strip" id="kpiStrip"></div>
+  <div class="filter-panel">
+    <div class="fg"><div class="fl">客户经理</div><select class="fc" id="fCM"><option>cowen.hua (我)</option><option>全部</option></select></div>
+    <div class="fg"><div class="fl">客户</div><input class="fc" id="fQ" placeholder="搜索客户名/编码"></div>
+    <div class="fg"><div class="fl">状态</div><select class="fc" id="fStatus"><option value="">全部</option><option value="gate">仅卡口</option><option value="warn">仅预警</option></select></div>
+    <button class="btn btn-primary" onclick="renderAll()">查询</button><button class="btn btn-outline" onclick="resetFilter()">重置</button>
+    <div class="legend"><span><span class="ldot" style="background:var(--q1)"></span>正常</span><span><span class="ldot" style="background:var(--q2)"></span>预警</span><span><span class="ldot" style="background:var(--q3)"></span>卡口</span></div>
+  </div>
+  <div class="section-header"><span class="section-title">🛣️ LTC 管线</span><span class="section-badge">10 阶段漏斗</span><span class="section-note">点击阶段 pill → 按阶段筛选客户列表</span></div>
+  <div class="funnel" id="funnel"></div>
+  <div id="workbench"></div>
+</div>
+<script>
+let DATA = {
+  "meta": {
+    "data_period": "近30天",
+    "view_cm": "cowen.hua",
+    "generated_at": "2026-08-21T09:30:00",
+    "caliber": {
+      "spend": "Σspend(bus_mtc,近30天)",
+      "margin": "Σmargin(bus_mtc,近30天)",
+      "som": "钛动行业消耗/行业市场总消耗(teyan-dashboard)",
+      "adoption": "已覆盖服务项数/行业peer_P50(service_coverage_opportunity)"
+    }
+  },
+  "global_kpi": {
+    "spend": {
+      "value": 4290000,
+      "unit": "USD",
+      "mom": 0.124
+    },
+    "margin": {
+      "value": 612000,
+      "unit": "USD",
+      "mom": 0.071
+    },
+    "som": {
+      "value": 0.186,
+      "mom_pp": 1.2
+    },
+    "adoption": {
+      "value": 2.03,
+      "peer_p50": 2.5,
+      "status": "low"
+    },
+    "conv_rate_30d": {
+      "value": 0.38,
+      "delta_pp": 4.2
+    },
+    "avg_cycle_days": {
+      "value": 23,
+      "delta": -2
+    },
+    "gate_count": 8
+  },
+  "funnel": [
+    {
+      "stage": "01_线索",
+      "count": 0,
+      "gate": false
+    },
+    {
+      "stage": "02_建联",
+      "count": 0,
+      "gate": false
+    },
+    {
+      "stage": "03_拜访",
+      "count": 2,
+      "gate": true
+    },
+    {
+      "stage": "04_纪要",
+      "count": 0,
+      "gate": false
+    },
+    {
+      "stage": "05_合同",
+      "count": 1,
+      "gate": true
+    },
+    {
+      "stage": "06_授信",
+      "count": 0,
+      "gate": false
+    },
+    {
+      "stage": "07_下户",
+      "count": 1,
+      "gate": false
+    },
+    {
+      "stage": "08_开跑",
+      "count": 0,
+      "gate": false
+    },
+    {
+      "stage": "09_涨量",
+      "count": 0,
+      "gate": false
+    },
+    {
+      "stage": "10_服务",
+      "count": 1,
+      "gate": true
+    }
+  ],
+  "customers": [
+    {
+      "customer_uec": "UEC-10293",
+      "customer_name": "客户A · Shopline",
+      "current_stage": "03_拜访",
+      "days_in_stage": 28,
+      "owner_cm": "cowen.hua",
+      "owner_bd": "张三",
+      "health": "gate",
+      "signal_summary": "阶段停留28天超阈值14天，流失风险↑；仅BD到场·决策链未覆盖；37天未拜访",
+      "stages": {
+        "03_拜访": {
+          "data": {
+            "visit_count": 3,
+            "last_visit_days": 37,
+            "attendee_level": "BD_only",
+            "avg_duration_min": 45,
+            "trend": [
+              {
+                "month": "2026-03",
+                "value": 1
+              },
+              {
+                "month": "2026-04",
+                "value": 1
+              },
+              {
+                "month": "2026-05",
+                "value": 0
+              },
+              {
+                "month": "2026-06",
+                "value": 0
+              },
+              {
+                "month": "2026-07",
+                "value": 1
+              }
+            ]
+          },
+          "verdict": {
+            "level": "gate",
+            "health": "gate",
+            "title": "决策信号 · 卡口",
+            "desc": "阶段停留28天超阈值14天，流失风险↑；仅BD到场·决策链未覆盖；37天未拜访",
+            "signals": [
+              {
+                "id": "days_in_stage",
+                "level": "gate",
+                "msg": "阶段停留28天超阈值14天，流失风险↑"
+              },
+              {
+                "id": "bd_only",
+                "level": "gate",
+                "msg": "仅BD到场·决策链未覆盖"
+              },
+              {
+                "id": "no_visit_30d",
+                "level": "gate",
+                "msg": "37天未拜访"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "p": "P0",
+              "text": "本周安排 CM + 客户 C-level 拜访，补齐决策链覆盖",
+              "owner": "cowen.hua",
+              "collab": "BD·张三"
+            },
+            {
+              "p": "P1",
+              "text": "补全 KDM 关系图，识别关键决策人与阻力点",
+              "owner": "BD·张三"
+            },
+            {
+              "p": "P2",
+              "text": "同步上次拜访纪要，确认未闭环需求项",
+              "owner": "cowen.hua"
+            }
+          ],
+          "plan": [
+            {
+              "task": "约 C-level 拜访会议",
+              "owner": "cowen.hua",
+              "due": "08-23",
+              "p": "P0",
+              "status": "overdue"
+            },
+            {
+              "task": "KDM 关系图梳理",
+              "owner": "BD·张三",
+              "due": "08-25",
+              "p": "P1",
+              "status": "doing"
+            },
+            {
+              "task": "纪要需求闭环确认",
+              "owner": "cowen.hua",
+              "due": "08-20",
+              "p": "P2",
+              "status": "done"
+            }
+          ]
+        }
+      },
+      "stage_history": [
+        {
+          "stage": "01_线索",
+          "entered": "06-10",
+          "left": "06-12",
+          "days": 2
+        },
+        {
+          "stage": "02_建联",
+          "entered": "06-12",
+          "left": "06-15",
+          "days": 3
+        },
+        {
+          "stage": "03_拜访",
+          "entered": "07-15",
+          "left": null,
+          "days": 28
+        }
+      ]
+    },
+    {
+      "customer_uec": "UEC-20114",
+      "customer_name": "Kwai · PH",
+      "current_stage": "03_拜访",
+      "days_in_stage": 10,
+      "owner_cm": "cowen.hua",
+      "owner_bd": "王五",
+      "health": "ok",
+      "signal_summary": "正常推进",
+      "stages": {
+        "03_拜访": {
+          "data": {
+            "visit_count": 1,
+            "last_visit_days": 10,
+            "attendee_level": "CM",
+            "avg_duration_min": 30,
+            "trend": [
+              {
+                "month": "2026-07",
+                "value": 1
+              }
+            ]
+          },
+          "verdict": {
+            "level": "ok",
+            "health": "ok",
+            "title": "决策信号 · 正常",
+            "desc": "无异常信号，阶段推进正常。",
+            "signals": []
+          },
+          "actions": [
+            {
+              "p": "P1",
+              "text": "安排二访并定级",
+              "owner": "BD·王五"
+            }
+          ],
+          "plan": [
+            {
+              "task": "二访日程",
+              "owner": "BD·王五",
+              "due": "08-24",
+              "p": "P1",
+              "status": "todo"
+            }
+          ]
+        }
+      },
+      "stage_history": [
+        {
+          "stage": "03_拜访",
+          "entered": "08-11",
+          "left": null,
+          "days": 10
+        }
+      ]
+    },
+    {
+      "customer_uec": "UEC-30021",
+      "customer_name": "Lazada · TH",
+      "current_stage": "05_合同",
+      "days_in_stage": 9,
+      "owner_cm": "cowen.hua",
+      "owner_bd": "张三",
+      "health": "gate",
+      "signal_summary": "合同周转9天超阈值7天；合同卡审批中",
+      "stages": {
+        "05_合同": {
+          "data": {
+            "approval_status": "pending",
+            "contract_amount": 420000
+          },
+          "verdict": {
+            "level": "gate",
+            "health": "gate",
+            "title": "决策信号 · 卡口",
+            "desc": "合同周转9天超阈值7天；合同卡审批中",
+            "signals": [
+              {
+                "id": "days_in_stage",
+                "level": "gate",
+                "msg": "合同周转9天超阈值7天"
+              },
+              {
+                "id": "approval_stuck",
+                "level": "gate",
+                "msg": "合同卡审批中"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "p": "P0",
+              "text": "催法务加急审批",
+              "owner": "cowen.hua",
+              "collab": "法务"
+            }
+          ],
+          "plan": [
+            {
+              "task": "法务审批跟进",
+              "owner": "cowen.hua",
+              "due": "08-22",
+              "p": "P0",
+              "status": "overdue"
+            }
+          ]
+        }
+      },
+      "stage_history": [
+        {
+          "stage": "05_合同",
+          "entered": "08-12",
+          "left": null,
+          "days": 9
+        }
+      ]
+    },
+    {
+      "customer_uec": "UEC-40088",
+      "customer_name": "Shopee · SG",
+      "current_stage": "07_下户",
+      "days_in_stage": 2,
+      "owner_cm": "cowen.hua",
+      "owner_bd": "张三",
+      "health": "ok",
+      "signal_summary": "正常推进",
+      "stages": {
+        "07_下户": {
+          "data": {
+            "qual_ready": true,
+            "setup_progress": 0.8
+          },
+          "verdict": {
+            "level": "ok",
+            "health": "ok",
+            "title": "决策信号 · 正常",
+            "desc": "无异常信号，阶段推进正常。",
+            "signals": []
+          },
+          "actions": [
+            {
+              "p": "P2",
+              "text": "确认账户搭建收尾",
+              "owner": "AO·赵六"
+            }
+          ],
+          "plan": [
+            {
+              "task": "搭建验收",
+              "owner": "AO·赵六",
+              "due": "08-25",
+              "p": "P2",
+              "status": "doing"
+            }
+          ]
+        }
+      },
+      "stage_history": [
+        {
+          "stage": "07_下户",
+          "entered": "08-19",
+          "left": null,
+          "days": 2
+        }
+      ]
+    },
+    {
+      "customer_uec": "UEC-50102",
+      "customer_name": "Sea Limited",
+      "current_stage": "10_服务",
+      "days_in_stage": 0,
+      "owner_cm": "cowen.hua",
+      "owner_bd": "张三",
+      "health": "gate",
+      "signal_summary": "流失风险；健康度下降；5个工单积压",
+      "stages": {
+        "10_服务": {
+          "data": {
+            "churn_risk": true,
+            "health_trend": -1,
+            "open_tickets": 5
+          },
+          "verdict": {
+            "level": "gate",
+            "health": "gate",
+            "title": "决策信号 · 卡口",
+            "desc": "流失风险；健康度下降；5个工单积压",
+            "signals": [
+              {
+                "id": "churn_risk",
+                "level": "gate",
+                "msg": "流失风险"
+              },
+              {
+                "id": "health_down",
+                "level": "warn",
+                "msg": "健康度下降"
+              },
+              {
+                "id": "ticket_backlog",
+                "level": "warn",
+                "msg": "5个工单积压"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "p": "P0",
+              "text": "启动续费挽回，CM 本周上门",
+              "owner": "cowen.hua"
+            }
+          ],
+          "plan": [
+            {
+              "task": "挽回方案",
+              "owner": "cowen.hua",
+              "due": "08-23",
+              "p": "P0",
+              "status": "todo"
+            }
+          ]
+        }
+      },
+      "stage_history": [
+        {
+          "stage": "10_服务",
+          "entered": "2025-09-01",
+          "left": null,
+          "days": 0
+        }
+      ]
+    }
+  ]
+};
+const STAGES=["01_线索","02_建联","03_拜访","04_纪要","05_合同","06_授信","07_下户","08_开跑","09_涨量","10_服务"];
+function $(s){return document.querySelector(s)}
+function fmtMoney(v,unit){return (unit==='USD'?'$':'')+Math.round(v).toLocaleString()}
+function fmtPct(v){return (v*100).toFixed(1)+'%'}
+function fmtDelta(v,pp){return pp?`↑${v.toFixed(1)}pp`:(v>=0?`↑${(v*100).toFixed(1)}%`:`↓${Math.abs(v*100).toFixed(1)}%`)}
+function renderKPI(){
+  const g=DATA.global_kpi;
+  document.getElementById('hdrNote').textContent=`数据周期：${DATA.meta.data_period} · 视角：${DATA.meta.view_cm}`;
+  const adopLow = g.adoption.value < g.adoption.peer_p50;
+  document.getElementById('kpiStrip').innerHTML=`
+    <div class="ktile kt1 composite">
+      <div class="kt-comp-head">💼 经营概览 <b>Spend / Margin / SOM / Adoption</b><span class="section-note" style="margin-left:auto">近30天</span></div>
+      <div class="km-grid">
+        <div class="km"><div class="km-l">Spend <span class="km-tip">消耗</span></div><div class="km-v">${fmtMoney(g.spend.value,g.spend.unit)}</div><div class="km-sub ${g.spend.mom>=0?'up':'down'}">${fmtDelta(g.spend.mom)}</div></div>
+        <div class="km"><div class="km-l">Margin <span class="km-tip">利润</span></div><div class="km-v">${fmtMoney(g.margin.value,g.margin.unit)}</div><div class="km-sub ${g.margin.mom>=0?'up':'down'}">${fmtDelta(g.margin.mom)}</div></div>
+        <div class="km"><div class="km-l">SOM <span class="km-tip">市场份额</span></div><div class="km-v">${fmtPct(g.som.value)}</div><div class="km-sub ${g.som.mom_pp>=0?'up':'down'}">${g.som.mom_pp>=0?'↑':'↓'}${Math.abs(g.som.mom_pp).toFixed(1)}pp</div></div>
+        <div class="km"><div class="km-l">Adoption <span class="km-tip">服务项采纳</span></div><div class="km-v">${g.adoption.value}</div><div class="km-sub ${adopLow?'down':'up'}">${adopLow?'低于P50':'高于P50'}</div></div>
+      </div>
+    </div>
+    <div class="ktile kt2"><div class="kt-label">阶段转化率(30d)</div><div class="kt-val">${fmtPct(g.conv_rate_30d.value)}</div><div class="kt-sub up">↑${g.conv_rate_30d.delta_pp.toFixed(1)}pp</div></div>
+    <div class="ktile kt3"><div class="kt-label">平均流转周期</div><div class="kt-val">${g.avg_cycle_days.value}天</div><div class="kt-sub up">↓${Math.abs(g.avg_cycle_days.delta)}天</div></div>
+    <div class="ktile kt4"><div class="kt-label">卡口客户</div><div class="kt-val" style="color:#dc2626">${g.gate_count}</div><div class="kt-sub down">需立即处理</div></div>`;
+}
+function exportCSV(){
+  const fc=filteredCustomers();
+  const headers=['customer_uec','customer_name','current_stage','days_in_stage','owner_cm','owner_bd','health','signal_summary'];
+  const rows=fc.map(c=>headers.map(h=>`"${(c[h]??'')}"`).join(','));
+  const csv='﻿'+[headers.join(','),...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='CM_LTC_工作台.csv';a.click();
+}
+let FILTERS={stage:null,status:'',q:''};
+function filteredCustomers(){
+  return DATA.customers.filter(c=>{
+    if(FILTERS.stage && c.current_stage!==FILTERS.stage) return false;
+    if(FILTERS.status && c.health!==FILTERS.status) return false;
+    if(FILTERS.q){const n=(c.customer_name+c.customer_uec).toLowerCase();if(!n.includes(FILTERS.q.toLowerCase()))return false}
+    return true;
+  });
+}
+function renderFunnel(){
+  const fc=filteredCustomers();
+  const counts={};DATA.funnel.forEach(f=>counts[f.stage]=0);
+  fc.forEach(c=>counts[c.current_stage]=(counts[c.current_stage]||0)+1);
+  document.getElementById('funnel').innerHTML=DATA.funnel.map(f=>{
+    const sel=FILTERS.stage===f.stage?'sel':'';
+    return `<div class="fp ${f.gate?'gate':''} ${sel}" onclick="toggleStage('${f.stage}')"><div class="fp-num">${f.stage.slice(0,2)}</div><div class="fp-name">${f.stage.slice(3)}</div><div class="fp-cnt">${counts[f.stage]||0}</div></div>`;
+  }).join('');
+}
+function toggleStage(s){FILTERS.stage=FILTERS.stage===s?null:s;renderAll()}
+function resetFilter(){FILTERS={stage:null,status:'',q:''};document.getElementById('fQ').value='';document.getElementById('fStatus').value='';renderAll()}
+['fQ','fStatus'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{FILTERS.q=document.getElementById('fQ').value;FILTERS.status=document.getElementById('fStatus').value;renderAll()}));
+function renderAll(){renderKPI();renderFunnel();renderList();renderDetail()}
+let SEL_UEC=null;
+function tagLabel(h){return h==='gate'?'卡口':h==='warn'?'预警':'正常'}
+function renderList(){
+  const fc=filteredCustomers();
+  if(!SEL_UEC || !fc.find(c=>c.customer_uec===SEL_UEC)) SEL_UEC=fc[0]?.customer_uec||null;
+  const cnt=fc.length;
+  const stageTxt=FILTERS.stage?`${FILTERS.stage} 阶段`:'全部';
+  document.getElementById('workbench').innerHTML=`<div class="workbench"><div class="clist"><div class="clist-head"><span class="clist-title">客户列表</span><span class="clist-cnt">${cnt} 条 · ${stageTxt}</span></div><div class="clist-body">${fc.map(c=>{
+    const sel=c.customer_uec===SEL_UEC?'sel':'';
+    const days=c.days_in_stage?`停留 ${c.days_in_stage}天`:'稳态';
+    return `<div class="crow ${c.health} ${sel}" onclick="selectCustomer('${c.customer_uec}')"><div class="cr-top"><span class="cr-name">${c.customer_name}</span><span class="cr-tag ${c.health}">${tagLabel(c.health)}</span></div><div class="cr-mid"><span class="cr-stage">${c.current_stage}</span><span>${c.owner_cm?'CM·'+c.owner_cm:''}</span></div><div class="cr-bot"><span class="cr-days ${c.health==='gate'?'gate':''}">${days}</span><span class="cr-sig">${c.signal_summary}</span></div></div>`;
+  }).join('')||'<div style="padding:20px;text-align:center;color:var(--text-light)">无匹配客户</div>'}</div></div><div id="detailSlot"></div></div>`;
+  renderDetail();
+}
+function selectCustomer(uec){SEL_UEC=uec;renderList();renderDetail()}
+let VIEW_STAGE=null;
+function renderDetail(){
+  const slot=document.getElementById('detailSlot');if(!slot)return;
+  const c=DATA.customers.find(x=>x.customer_uec===SEL_UEC);
+  if(!c){slot.innerHTML='<div style="padding:40px;text-align:center;color:var(--text-light)">选择左侧客户查看详情</div>';return}
+  const stage=VIEW_STAGE||c.current_stage;
+  const sb=c.stages[stage];
+  if(!sb){slot.innerHTML=`<div style="padding:40px;text-align:center;color:var(--text-light)">该客户在 ${stage} 无快照数据</div>`;return}
+  const v=sb.verdict;
+  const d=sb.data;
+  const tabs=STAGES.map(s=>`<span class="stab ${s===stage?'active':''}" onclick="setViewStage('${s}')">${s.slice(3)}</span>`).join('');
+  const dEntries=Object.entries(d).filter(([k])=>k!=='trend');
+  const dtiles=dEntries.map(([k,val])=>`<div class="dtile"><div class="dtile-l">${fieldLabel(k)}</div><div class="dtile-v">${fmtFieldVal(k,val)}</div></div>`).join('');
+  const trend=d.trend||[];
+  const spark=trend.length>=2?sparkSVG(trend.map(t=>t.value),30):'';
+  const acts=sb.actions.map(a=>`<div class="act ${a.p}"><span class="act-tag ${a.p}">${a.p}</span><div><div class="act-txt">${a.text}</div><div class="act-owner">负责人：${a.owner}${a.collab?' · 协作：'+a.collab:''}</div></div></div>`).join('');
+  const rows=sb.plan.map(p=>`<tr><td>${p.task}</td><td>${p.owner}</td><td class="mono">${p.due}</td><td><span class="pbadge" style="background:rgba(239,68,68,0.12);color:#dc2626">${p.p}</span></td><td><span class="pbadge ${p.status}">${statusLabel(p.status)}</span></td></tr>`).join('');
+  slot.innerHTML=`<div class="detail"><div class="detail-head"><div class="detail-title">${c.customer_name}</div><div class="detail-sub">CM: ${c.owner_cm} · BD: ${c.owner_bd} · ${stage} ${stage===c.current_stage?`· 进入 ${c.days_in_stage} 天`:''} · 编码 ${c.customer_uec}</div><div class="stage-tabs">${tabs}</div></div><div class="detail-body">
+    <div class="verdict ${v.level==='ok'?'':v.level}"><div class="verdict-title">${v.title}</div><div class="verdict-desc">${v.desc}</div></div>
+    <div class="dblock"><div class="db-h">📊 数据看板</div><div class="dgrid">${dtiles}</div>${spark?`<div style="margin-top:8px"><div style="font-size:10px;color:var(--text-light);margin-bottom:4px">趋势</div>${spark}</div>`:''}</div>
+    <div class="dblock"><div class="db-h">🎯 行动策略</div>${acts||'<div style="color:var(--text-light)">无行动项</div>'}</div>
+    <div class="dblock"><div class="db-h">📝 计划跟踪</div><table class="ptable"><thead><tr><th>任务</th><th>负责人</th><th>截止</th><th>优先级</th><th>状态</th></tr></thead><tbody>${rows||'<tr><td colspan=5>无任务</td></tr>'}</tbody></table></div>
+  </div></div>`;
+}
+function setViewStage(s){VIEW_STAGE=(s===(DATA.customers.find(c=>c.customer_uec===SEL_UEC)||{}).current_stage)?null:s;renderDetail()}
+function fieldLabel(k){return {visit_count:'拜访次数',last_visit:'最近拜访',last_visit_days:'最近拜访(天前)',attendee_level:'到场级别',avg_duration_min:'平均时长',connect_rate:'建联率',minutes_done:'纪要完成',unconfirmed_req_count:'未确认需求',approval_status:'审批状态',contract_amount:'合同金额',credit_usage_rate:'授信使用率',qual_ready:'资质齐备',setup_progress:'搭建进度',launch_spend:'首跑Spend',roi:'ROI',churn_risk:'流失风险',health_trend:'健康趋势',open_tickets:'工单',lead_pool_count:'线索池',high_score_stale_days:'高分滞留(天)'}[k]||k}
+function fmtFieldVal(k,v){if(typeof v==='boolean')return v?'是':'否';if(k==='avg_duration_min')return v+'min';if(k==='contract_amount'||k==='launch_spend')return '$'+Number(v).toLocaleString();if(k==='connect_rate'||k==='credit_usage_rate'||k==='roi')return (v*100).toFixed(1)+'%';if(k==='setup_progress')return (v*100)+'%';return String(v)}
+function statusLabel(s){return {todo:'待执行',doing:'进行中',done:'已完成',overdue:'逾期'}[s]||s}
+function sparkSVG(vals,h){const w=300,mn=Math.min(...vals),mx=Math.max(...vals),r=mx-mn||1;const pts=vals.map((v,i)=>`${(i/(vals.length-1))*w},${h-((v-mn)/r)*(h-4)-2}`);return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs><path d="M${pts.join(' L')}" fill="none" stroke="#3b82f6" stroke-width="2"/><path d="M${pts.join(' L')} L${w},${h} L0,${h}Z" fill="url(#sg)"/></svg>`}
+document.getElementById('hdrTime').textContent='2026-08-21 09:30';
+renderAll();
+</script>
+</body>
+</html>

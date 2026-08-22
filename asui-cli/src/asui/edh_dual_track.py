@@ -1,4 +1,8 @@
-"""企业数字人生态双轨闭环：SelfPaw → ΠPaw → cs.*（原型）。"""
+"""双轨闭环：SelfPaw（个人轨）→ Business AGI 工作任务（经营轨）。
+
+ΠPaw 仅保留编排身份；执行不再走客服数字人 / Task Panel。
+经营动作落地到 World Model Studio（认知实践世界模型），禁止模型直连业务系统。
+"""
 
 from __future__ import annotations
 
@@ -9,10 +13,11 @@ from typing import Any
 from .domain_binding import DomainBindingLoader
 from .intent_hub import EscalateContext, IntentEscalationHub
 from .org_identity import OrgIdentityResolver, OrgSessionRequest
-from .pipaw_cs_agent import PipawCsAgentRuntime
+
+WORLD_MODEL_STUDIO = "examples/world-model-studio"
 
 
-def run_dual_track_cs_loop(
+def run_dual_track_loop(
     workspace_root: Path,
     *,
     intent_path: Path | None = None,
@@ -66,19 +71,23 @@ def run_dual_track_cs_loop(
             "domain": domain_ctx,
         }
 
-    agent = PipawCsAgentRuntime(root)
-    task_id = (esc.working_task or {}).get("task_id", "")
-    if task_id:
-        agent.panel.open_task(task_id)
-    step = agent.run_current_step(tenant_id=tenant_id)
+    task = esc.working_task or {}
+    studio = root / WORLD_MODEL_STUDIO
+    handoff = {
+        "product_form": "world_model_studio",
+        "orchestration_identity": "pipaw",
+        "path": WORLD_MODEL_STUDIO,
+        "exists": studio.is_dir(),
+        "next": "run_cognitive_cycle",
+        "note": "经营轨不执行数字人对话；进入世界模型 7 步闭环",
+    }
     audit_chain = [
         {"event": "org_identity", "user_id": user_id, "position": session.position_code},
         {"event": "domain_bound", "domain_id": domain_ctx.get("domain_id")},
-        {"event": "intent_escalated", "task_id": esc.working_task.get("task_id")},
-        {"event": "pipaw_cs_step", "operation_ref": step.operation_ref, "status": step.status},
+        {"event": "intent_escalated", "task_id": task.get("task_id"), "product_track": "pipaw"},
+        {"event": "handoff_world_model_studio", "path": WORLD_MODEL_STUDIO},
     ]
-
-    ok = step.status == "ok" and esc.working_task is not None
+    ok = bool(task.get("task_id"))
     return {
         "status": "completed" if ok else "failed",
         "org_session": {
@@ -88,12 +97,12 @@ def run_dual_track_cs_loop(
             "role_ids": session.role_ids,
         },
         "domain": domain_ctx,
-        "working_task_id": (esc.working_task or {}).get("task_id"),
-        "cs_step": {
-            "status": step.status,
-            "operation_ref": step.operation_ref,
-            "deny_reason": step.deny_reason,
-        },
+        "working_task_id": task.get("task_id"),
+        "handoff": handoff,
         "audit_chain": audit_chain,
         "business_closed_loop": ok,
     }
+
+
+# 兼容旧测试名：不再调用客服 Agent
+run_dual_track_cs_loop = run_dual_track_loop

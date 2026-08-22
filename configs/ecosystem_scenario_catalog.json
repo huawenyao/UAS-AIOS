@@ -15,7 +15,7 @@
       "id": "L1-escalate-to-pipaw",
       "layer": "L1",
       "track": "dual_track",
-      "title": "经营意图升级 ΠPaw",
+      "title": "经营意图升级 Business AGI（World Model Studio）",
       "runner": "dual_track_cs",
       "verify": "working_task_created"
     },
@@ -23,7 +23,7 @@
       "id": "L2-recruitment-os",
       "layer": "L2",
       "track": "pipaw",
-      "title": "职能数字人 · AI 招聘闭环",
+      "title": "职能域 · AI 招聘实体闭环",
       "runner": "recruitment_entity",
       "path": "examples/ai-recruitment/scripts/run_entity_closed_loop.py"
     },
@@ -31,23 +31,23 @@
       "id": "L3-sales-b2b",
       "layer": "L3",
       "track": "pipaw",
-      "title": "经营数字人 · B2B 线索到报价",
+      "title": "经营轨 · B2B 线索到报价",
       "runner": "sales_mvp",
       "app_id": "enterprise-sales-os"
     },
     {
-      "id": "L3-cs-ticket",
+      "id": "L3-world-model-studio",
       "layer": "L3",
       "track": "pipaw",
-      "title": "经营数字人 · 客服工单履约",
-      "runner": "pipaw_cs_agent",
-      "verify": "cs_step_ok"
+      "title": "World Model Studio · 招聘短名单认知实践闭环",
+      "runner": "world_model_studio",
+      "verify": "seven_steps_world_model_mutated"
     },
     {
       "id": "L3-finance-approval",
       "layer": "L3",
       "track": "pipaw",
-      "title": "经营数字人 · 开票审批原型",
+      "title": "经营轨 · 开票审批原型",
       "runner": "finance_prototype",
       "verify": "approval_submitted"
     },

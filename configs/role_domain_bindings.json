@@ -23,7 +23,7 @@
       "position_code": "CS_AGENT",
       "domain_id": "domain.customer_service",
       "display_name": "客服岗位域",
-      "ontology_ref": "pipaw_cs_agent_playbook",
+      "ontology_ref": "projects/customer-service-optimizer",
       "capability_whitelist": [
         "cs.customer.get_profile",
         "cs.ticket.create",

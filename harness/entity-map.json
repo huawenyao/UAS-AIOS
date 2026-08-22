@@ -84,13 +84,23 @@
     },
     "PiPawBusinessAGI": {
       "type": "product",
-      "description": "Business AGI：经营数字岗位体系",
-      "depends_on": ["UASKernel", "CapabilityServiceRegistry", "OutwardGateway"],
+      "description": "Business AGI 编排身份：产品形态为 World Model Studio，不是数字人",
+      "depends_on": ["UASKernel", "CapabilityServiceRegistry", "OutwardGateway", "WorldModelStudio"],
       "files": [
-        "docs/strategic/demo/ΠPaw_Enterprise_Demo.html",
-        "asui-cli/src/asui/pipaw_task_panel.py",
-        "schemas/task_panel_view.schema.json"
+        "docs/WORLD_MODEL_PRODUCT.md",
+        "examples/world-model-studio/"
       ]
+    },
+    "WorldModelStudio": {
+      "type": "product",
+      "description": "认知实践世界模型产品原型：五维一级公民 + 价值闭环 7 步",
+      "depends_on": ["UASKernel"],
+      "files": [
+        "examples/world-model-studio/",
+        "docs/WORLD_MODEL_PRODUCT.md",
+        "scripts/run_cognitive_cycle.py"
+      ],
+      "status": "prototype"
     },
     "Domain": {
       "type": "concept",
@@ -120,13 +130,13 @@
     },
     "BusinessAgentRoster": {
       "type": "concept",
-      "description": "ΠPaw 岗位 Agent 编制：销售/客服/合规/调度等",
+      "description": "已废止的 ΠPaw 岗位 Agent 编制；职责改由世界模型法则 Pack + 环位承担",
       "depends_on": ["Domain", "PiPawBusinessAGI"],
       "files": [
-        "schemas/business_agent_roster.schema.json",
-        "configs/pipaw_business_agent_roster.json",
-        "harness/knowledge/technical/pipaw-cs-agent-benchmark.md"
-      ]
+        "examples/world-model-studio/knowledge/hiring_shortlist_laws.md",
+        "docs/WORLD_MODEL_PRODUCT.md"
+      ],
+      "status": "superseded_by_world_model_studio"
     },
     "IntentHub": {
       "type": "service",

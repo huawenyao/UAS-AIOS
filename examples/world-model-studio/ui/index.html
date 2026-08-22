@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Model Studio · 法则编译器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./studio.css" />
+</head>
+<body>
+  <div class="folio">
+    <header class="mast">
+      <div class="mast-mark">
+        <span class="kicker">UAS · 器层原型</span>
+        <h1>World Model Studio</h1>
+        <p class="lede">法则编译器 · 情景透镜 · 对冲熔炉</p>
+      </div>
+      <div class="mast-meta">
+        <div><span class="lbl">编排身份</span><strong>ΠPaw</strong> · 非数字人</div>
+        <div><span class="lbl">轨道</span>Business AGI · 不混个人记忆</div>
+        <div><span class="lbl">北极星</span>quality-adjusted hiring success</div>
+      </div>
+    </header>
+
+    <nav class="steps" id="steps" aria-label="价值闭环 7 步"></nav>
+
+    <main class="spread">
+      <section class="decision" aria-labelledby="decision-title">
+        <p class="eyebrow">当前低维结构 · 道-3</p>
+        <h2 id="decision-title">谁进入 onsite</h2>
+        <p class="intent" id="intent-line">尚未编译意图。</p>
+        <div class="gate-row" id="gate-row"></div>
+        <ol class="shortlist" id="shortlist"></ol>
+        <aside class="explain" id="explain">
+          <h3>先解释</h3>
+          <ul id="evidence-box"></ul>
+          <h3>不确定点</h3>
+          <ul id="uncertainty-box"></ul>
+        </aside>
+        <div class="actions" id="actions"></div>
+      </section>
+
+      <section class="hedge" aria-labelledby="hedge-title">
+        <h2 id="hedge-title">理念 <em>vs</em> 现实</h2>
+        <div class="hedge-grid">
+          <article>
+            <h3>Ought</h3>
+            <div id="ideal-pane"></div>
+          </article>
+          <article>
+            <h3>Is</h3>
+            <div id="reality-pane"></div>
+          </article>
+        </div>
+        <div class="gaps" id="gaps"></div>
+      </section>
+    </main>
+
+    <section class="ledger">
+      <details>
+        <summary>五维世界模型（展开）</summary>
+        <div class="dims" id="dims"></div>
+      </details>
+      <details>
+        <summary>法则 Pack · 知识即配置</summary>
+        <table class="laws" id="laws"></table>
+      </details>
+      <details>
+        <summary>ChangeSet 与审计（过程折叠）</summary>
+        <pre id="changeset" class="mono"></pre>
+        <pre id="audit" class="mono"></pre>
+      </details>
+    </section>
+
+    <footer class="colophon">
+      演示数据来自招聘短名单情景。冻结短名单为组织承诺，须用人经理确认。模型不执行生产写入。
+    </footer>
+  </div>
+  <script src="./studio.js"></script>
+</body>
+</html>

@@ -37,8 +37,8 @@
                           │
         ┌─────────────────┴─────────────────┐
         ▼                                   ▼
-   User AGI (selfpaw)               Business AGI (Πpaw)
-   蜂群智能体（五智能体）              多专业Agent编排
+   User AGI (selfpaw)               Business AGI (Πpaw / World Model Studio)
+   蜂群智能体（五智能体）              认知实践世界模型 · 编排身份而非数字人
         │                                   │
         └─────────────────┬─────────────────┘
                           ▼
@@ -114,7 +114,7 @@ E  - 演化回路（Evolution）
 | 轨道 | 定义 | 工程实现 |
 |------|------|----------|
 | **User AGI** | 面向个人的通用智能体 | selfpaw（蜂群形态）|
-| **Business AGI** | 面向组织的专业智能体 | Πpaw（多Agent编排）|
+| **Business AGI** | 面向组织的认知实践 OS | Πpaw 编排身份 → World Model Studio |
 
 ---
 
@@ -133,11 +133,14 @@ E  - 演化回路（Evolution）
 ├── examples/                    # 示例应用
 │   ├── selfpaw-cognitive-swarm/    # 蜂群智能体（User AGI）
 │   ├── triadic-ideal-reality-swarm/ # 三维理念现实
-│   └── ai-recruitment/              # 招聘OS业务应用
+│   ├── ai-recruitment/              # 招聘OS业务应用
+│   └── world-model-studio/          # Business AGI 产品原型：认知实践世界模型
 ├── docs/
 │   ├── THEORY_SYSTEM.md             # 理论体系总纲 ← 核心必读
 │   ├── AGI_WORLD_MODEL_UAS.md       # 世界模型与双轨AGI
 │   ├── ASUI_ARCHITECTURE.md         # ASUI架构
+│   ├── AI_PRODUCT_CHARTER.md        # AI 产品宪章
+│   ├── WORLD_MODEL_PRODUCT.md       # World Model Studio 产品定义
 │   ├── TEMPLATE_PROJECT_RELATIONSHIP.md  # 模板与项目关系（从运行逻辑推导）
 │   ├── UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md  # 企业级Agent生态L1-L3
 │   ├── UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md  # 企业级产品方案与工程蓝图
@@ -213,8 +216,10 @@ execution → monitoring → render_report → evaluation
 | 领域构建评估技能 | .claude/skills/domain_builder.md |
 | Agent注册表 | .claude/agents/domain_agent_registry.json |
 | Server·CLI·AI 统一架构（× AIPOS × SelfPaw） | docs/strategic/UAS_AIPOS_SelfPaw_Integrated_Product_Tech_Architecture.md |
-| 企业级数字人生态 · SelfPaw/ΠPaw 产品定义 | docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md |
+| 企业级数字人生态 · SelfPaw/ΠPaw 产品定义 | docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md（ΠPaw 器层已改指向 Studio） |
+| World Model Studio（Business AGI 产品原型） | [WORLD_MODEL_PRODUCT.md](./docs/WORLD_MODEL_PRODUCT.md) · `examples/world-model-studio/` |
 | 数字人生态 reqharness 基线 | harness/README.md · `python harness/invariants/run-all.py` |
+| AI 产品宪章（道/德层决策法） | [AI_PRODUCT_CHARTER.md](./docs/AI_PRODUCT_CHARTER.md) |
 
 ---
 

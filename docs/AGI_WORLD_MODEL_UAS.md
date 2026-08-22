@@ -32,7 +32,8 @@ AGI = World Model ⊕ AI Agent
 因此：
 
 - **User AGI = selfpaw (UAS-U)**：以世界模型 + 个人侧 Agent（含蜂群）服务「这一个用户」。
-- **Business AGI = Πpaw(UAS-S)**：以世界模型 + 多专业 Agent 的编排服务「组织/业务」，形成可审计、可演化、可落地的企业智能。
+- **Business AGI = Πpaw(UAS-S)**：以世界模型 + 多专业 Agent 的编排服务「组织/业务」，形成可审计、可演化、可落地的企业智能。  
+  **器层产品形态（2026-08）**：World Model Studio，见 `docs/WORLD_MODEL_PRODUCT.md`。Πpaw 是编排身份，不是数字人聊天壳。
 
 ---
 

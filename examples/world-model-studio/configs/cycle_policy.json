@@ -1,0 +1,32 @@
+{
+  "version": "v0.1.0",
+  "value_loop": [
+    "input",
+    "simulate",
+    "generate",
+    "interact",
+    "evolve",
+    "output",
+    "yield"
+  ],
+  "asui_map": {
+    "input": "intent_activation / understanding",
+    "simulate": "knowledge_binding",
+    "generate": "planning",
+    "interact": "governance_check / human_review",
+    "evolve": "evaluation / ChangeSet",
+    "output": "execution / render_report",
+    "yield": "收益回流"
+  },
+  "gates": {
+    "input": { "gate": "G1", "loop": "on", "human": false },
+    "simulate": { "gate": "G1", "loop": "on", "human": false },
+    "generate": { "gate": "G2", "loop": "on", "human": false },
+    "interact": { "gate": "G3", "loop": "in", "human": true },
+    "evolve": { "gate": "G2", "loop": "on", "human": false },
+    "output": { "gate": "G3", "loop": "in", "human": true },
+    "yield": { "gate": "G0", "loop": "above", "human": false }
+  },
+  "north_star": "quality-adjusted hiring success",
+  "default_human_action": "confirm_with_uncertainty"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "changeset_id": "cs.wm.20260818T160424",
+    "signal": "reject_ungrounded_culture_fit",
+    "from_step": "interact",
+    "patches": [
+      {
+        "path": "laws",
+        "op": "upsert",
+        "law_id": "LAW-EVD-001",
+        "text": "culture_fit 无面试证据一律 UNGROUNDED，不得写入 overall。"
+      },
+      {
+        "path": "ideal.culture_known",
+        "op": "set",
+        "value": false,
+        "reason": "现实尚未发生面试，理念层不得假装已知"
+      }
+    ],
+    "rollback": "restore previous laws snapshot"
+  }
+]

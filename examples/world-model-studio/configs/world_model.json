@@ -1,0 +1,253 @@
+{
+  "world_model_id": "wm.hiring.shortlist.staff-eng-2026q3",
+  "version": "v0.1.0",
+  "product_form": "world_model_studio",
+  "orchestration_identity": "pipaw",
+  "product_track": "pipaw",
+  "scenario": "招聘短名单 · Staff Engineer",
+  "north_star": "quality-adjusted hiring success",
+  "identities": {
+    "mirror": "当前 Rec 管道：3 名候选人已初筛，短名单未冻结，文化分全部为默认 60。",
+    "lens": "真正张力不是「缺人」，而是「学历硬门槛 vs 工程证据」与「未接地的文化分冒充确定性」。",
+    "furnace": "人确认后才能把短名单写成组织承诺；驳回未接地字段必须回写法则。"
+  },
+  "dimensions": {
+    "space": {
+      "tenant_id": "t-acme-demo",
+      "org": "Acme Demo · Platform Engineering",
+      "team": "Core Runtime",
+      "location": "上海 / 可远程",
+      "channels": ["内部招聘工作台", "候选人邮件（经 Outward Gateway，未执行）"]
+    },
+    "time": {
+      "cycle_id": "HIRING-SE-2026Q3",
+      "freeze_by": "2026-08-25",
+      "onsite_window": "2026-08-27..2026-09-05",
+      "rollback_window_hours": 48,
+      "sla": "短名单决策 ≤ 3 个工作日"
+    },
+    "subject": [
+      {
+        "id": "sub.hiring-manager",
+        "name": "陈可",
+        "role": "hiring_manager",
+        "stake": "承责：录用质量与团队负载",
+        "loop": "in",
+        "track": "pipaw"
+      },
+      {
+        "id": "sub.recruiter",
+        "name": "周岚",
+        "role": "recruiter",
+        "stake": "推进管道、解释证据",
+        "loop": "on",
+        "track": "pipaw"
+      },
+      {
+        "id": "cand.zhang-san",
+        "name": "张三",
+        "role": "candidate",
+        "stake": "被评价与被承诺的客体—主体：有权获得可解释结果",
+        "loop": "affected",
+        "track": "external"
+      },
+      {
+        "id": "cand.li-si",
+        "name": "李四",
+        "role": "candidate",
+        "stake": "被评价与被承诺的客体—主体",
+        "loop": "affected",
+        "track": "external"
+      },
+      {
+        "id": "cand.wang-min",
+        "name": "王敏",
+        "role": "candidate",
+        "stake": "被评价与被承诺的客体—主体",
+        "loop": "affected",
+        "track": "external"
+      }
+    ],
+    "object": [
+      {
+        "id": "obj.req.staff-eng",
+        "type": "requisition",
+        "title": "Staff Engineer · Runtime",
+        "mutable": true,
+        "ideal": {
+          "degree": "本科及以上",
+          "years": 8,
+          "skills": ["Python", "分布式系统", "可观测性"],
+          "headcount": 1
+        }
+      },
+      {
+        "id": "obj.shortlist",
+        "type": "shortlist",
+        "mutable": true,
+        "status": "uncompiled",
+        "slots": 2
+      },
+      {
+        "id": "obj.evidence-pack",
+        "type": "evidence_pack",
+        "mutable": true,
+        "description": "简历事实 + 风险旗标；不含虚构面试"
+      }
+    ],
+    "feedback": [
+      {
+        "source": "screening_evidence",
+        "delay": "已发生",
+        "reliability": "high",
+        "grounded": true
+      },
+      {
+        "source": "culture_fit_default",
+        "delay": "未发生面试",
+        "reliability": "none",
+        "grounded": false
+      },
+      {
+        "source": "hiring_manager_decision",
+        "delay": "本闭环第 4 步",
+        "reliability": "pending",
+        "grounded": false
+      },
+      {
+        "source": "offer_accept_rate",
+        "delay": "输出之后",
+        "reliability": "not_yet",
+        "grounded": false
+      }
+    ]
+  },
+  "reality": {
+    "candidates": [
+      {
+        "id": "cand.zhang-san",
+        "name": "张三",
+        "degree": "专科",
+        "years": 7,
+        "skills": ["Python", "TensorFlow", "NLP", "项目管理"],
+        "management": true,
+        "evidence": [
+          "学历不足：要求本科及以上",
+          "经验接近：要求 8 年，实际约 7 年（简历 2019 起）",
+          "技能：分布式不足，算法/NLP 偏强"
+        ],
+        "risk_flags": ["education_below_requirement"],
+        "scores": {
+          "ability": 65.6,
+          "context": 95.0,
+          "culture_fit": 60.0,
+          "overall": 72.49
+        },
+        "ungrounded": ["culture_fit"]
+      },
+      {
+        "id": "cand.li-si",
+        "name": "李四",
+        "degree": "专科",
+        "years": 7,
+        "skills": ["Python", "Django", "后端开发"],
+        "management": false,
+        "evidence": [
+          "学历不足：要求本科及以上",
+          "工程证据强：后端闭环、可运行系统",
+          "Staff 技能覆盖不足：必备项大量缺失"
+        ],
+        "risk_flags": ["education_below_requirement", "insufficient_skills"],
+        "scores": {
+          "ability": 36.0,
+          "context": 95.0,
+          "culture_fit": 60.0,
+          "overall": 57.65
+        },
+        "ungrounded": ["culture_fit"]
+      },
+      {
+        "id": "cand.wang-min",
+        "name": "王敏",
+        "degree": "本科",
+        "years": 9,
+        "skills": ["Python", "分布式系统", "可观测性", "Kubernetes"],
+        "management": true,
+        "evidence": [
+          "学历满足本科要求",
+          "年限满足 Staff 门槛",
+          "技能与 Runtime 需求对齐；无现场面试记录"
+        ],
+        "risk_flags": [],
+        "scores": {
+          "ability": 88.0,
+          "context": 80.0,
+          "culture_fit": null,
+          "overall": null
+        },
+        "ungrounded": []
+      }
+    ]
+  },
+  "ideal": {
+    "shortlist_rule": "2 人进入 onsite：必须同时满足技能对齐与可解释风险",
+    "degree_gate": "本科硬门槛",
+    "culture_known": true,
+    "auto_reject_without_human": false
+  },
+  "gaps": [
+    {
+      "id": "gap.degree-vs-evidence",
+      "ideal": "本科硬门槛自动生效",
+      "reality": "张三/李四学历不足但工程证据不等价；不得静默淘汰",
+      "tension": "德-社会-1 vs 德-组织-2"
+    },
+    {
+      "id": "gap.ungrounded-culture",
+      "ideal": "文化契合已知",
+      "reality": "张三/李四 culture_fit=60 为默认值，无面试",
+      "tension": "道-6 理念必须对冲现实"
+    }
+  ],
+  "laws": [
+    {
+      "id": "LAW-EDU-001",
+      "text": "学历硬门槛不得自动淘汰；不足则标风险，升 G3 由用人经理确认。",
+      "source": "宪章·德-社会-1 / 红线-4"
+    },
+    {
+      "id": "LAW-EVD-001",
+      "text": "无面试或校准记录的 culture_fit 视为未接地假设，禁止流入建议。",
+      "source": "宪章·INV-05 / 德-用户-4"
+    },
+    {
+      "id": "LAW-SUB-001",
+      "text": "候选人是主体维度，不是通知附件；拒绝/承诺须可解释。",
+      "source": "宪章·道-2 / 德-社会-1"
+    },
+    {
+      "id": "LAW-GATE-001",
+      "text": "短名单冻结 = 组织承诺，默认 In the loop · G3；回滚窗口 48h。",
+      "source": "宪章·势-1 / INV-04 / INV-10"
+    },
+    {
+      "id": "LAW-EXEC-001",
+      "text": "模型只提议；写入短名单/发候选人通知必须走平台动作 + 门禁。",
+      "source": "宪章·德-组织-3 / ADR-EDH-002"
+    }
+  ],
+  "cycle": {
+    "current_step": "input",
+    "completed": [],
+    "loop": "on",
+    "gate": "G1"
+  },
+  "decision": {
+    "schemes": [],
+    "selected_scheme_id": null,
+    "human_confirmed": false,
+    "rollback_until": null
+  },
+  "changeset": [],
+  "audit": []
+}

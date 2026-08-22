@@ -76,7 +76,7 @@ def check_knowledge_index() -> Result:
         "technical/enterprise-audit-chain-spec.md",
         "technical/system-connector-spec.md",
         "technical/intent-escalation-api.md",
-        "technical/pipaw-cs-agent-benchmark.md",
+        "technical/world-model-studio.md",
     ]
     missing = [
         rel for rel in expected if not (HARNESS_ROOT / "knowledge" / rel).is_file()
@@ -217,35 +217,44 @@ def check_intent_escalation() -> Result:
     return Result("intent_escalation", True, "escalate+e2e+pytest")
 
 
-def check_pipaw_cs_agent() -> Result:
+def check_world_model_studio() -> Result:
+    studio = REPO_ROOT / "examples" / "world-model-studio"
     for path in (
-        REPO_ROOT / "configs" / "pipaw_business_agent_roster.json",
-        REPO_ROOT / "schemas" / "business_agent_roster.schema.json",
-        REPO_ROOT / "asui-cli" / "src" / "asui" / "pipaw_task_panel.py",
+        studio / "configs" / "world_model.json",
+        studio / "scripts" / "run_cognitive_cycle.py",
+        studio / "ui" / "index.html",
+        REPO_ROOT / "docs" / "WORLD_MODEL_PRODUCT.md",
     ):
         if not path.is_file():
-            return Result("pipaw_cs_agent", False, f"missing {path.name}")
+            return Result("world_model_studio", False, f"missing {path.name}")
     import subprocess
 
     r = subprocess.run(
-        [sys.executable, str(REPO_ROOT / "scripts" / "validate_pipaw_cs_agent.py"), "validate"],
-        cwd=str(REPO_ROOT),
+        [sys.executable, str(studio / "scripts" / "run_cognitive_cycle.py")],
+        cwd=str(studio),
         capture_output=True,
         text=True,
         timeout=90,
     )
     if r.returncode != 0:
-        return Result("pipaw_cs_agent", False, (r.stderr or r.stdout).strip()[:500])
-    r2 = subprocess.run(
-        [sys.executable, "-m", "pytest", "tests/test_pipaw_cs_agent.py", "-q"],
-        cwd=str(REPO_ROOT / "asui-cli"),
-        capture_output=True,
-        text=True,
-        timeout=120,
-    )
-    if r2.returncode != 0:
-        return Result("pipaw_cs_agent", False, (r2.stderr or r2.stdout).strip()[:500])
-    return Result("pipaw_cs_agent", True, "roster+panel+e2e+pytest")
+        return Result("world_model_studio", False, (r.stderr or r.stdout).strip()[:500])
+    wm_path = studio / "database" / "world_model.json"
+    if not wm_path.is_file():
+        return Result("world_model_studio", False, "cycle did not persist world model")
+    wm = json.loads(wm_path.read_text(encoding="utf-8"))
+    if wm.get("cycle", {}).get("completed") != [
+        "input",
+        "simulate",
+        "generate",
+        "interact",
+        "evolve",
+        "output",
+        "yield",
+    ]:
+        return Result("world_model_studio", False, "7-step incomplete")
+    if not wm.get("changeset"):
+        return Result("world_model_studio", False, "missing changeset")
+    return Result("world_model_studio", True, "5D+7step+changeset")
 
 
 def check_cs_process_semantic() -> Result:
@@ -408,18 +417,18 @@ def check_dual_track_loop() -> Result:
     )
     if r2.returncode != 0:
         return Result("dual_track_loop", False, (r2.stderr or r2.stdout).strip()[:500])
-    return Result("dual_track_loop", True, "selfpaw→pipaw→cs")
+    return Result("dual_track_loop", True, "selfpaw→pipaw→world-model-studio")
 
 
 def check_ecosystem_prototype() -> Result:
     import subprocess
 
     catalog = REPO_ROOT / "configs" / "ecosystem_scenario_catalog.json"
-    demo = REPO_ROOT / "docs" / "strategic" / "demo" / "EDH_Ecosystem_Prototype.html"
+    demo = REPO_ROOT / "examples" / "world-model-studio" / "ui" / "index.html"
     if not catalog.is_file():
         return Result("ecosystem_prototype", False, "missing scenario catalog")
     if not demo.is_file():
-        return Result("ecosystem_prototype", False, "missing EDH_Ecosystem_Prototype.html")
+        return Result("ecosystem_prototype", False, "missing world-model-studio UI")
     if not (REPO_ROOT / "projects" / "selfpaw-enterprise" / "configs" / "platform_manifest.json").is_file():
         return Result("ecosystem_prototype", False, "missing selfpaw-enterprise")
     r = subprocess.run(
@@ -502,7 +511,7 @@ def main() -> int:
         check_enterprise_policy,
         check_system_connectors,
         check_intent_escalation,
-        check_pipaw_cs_agent,
+        check_world_model_studio,
         check_cs_process_semantic,
         check_cs_form_semantic,
         check_enterprise_world_model,

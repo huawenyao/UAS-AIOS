@@ -1,0 +1,55 @@
+[
+  {
+    "ts": "2026-08-18T16:04:24+00:00",
+    "step": "input",
+    "event": "intent_bound",
+    "intent": "冻结 Staff Engineer 短名单（2 人 onsite）"
+  },
+  {
+    "ts": "2026-08-18T16:04:24+00:00",
+    "step": "simulate",
+    "event": "laws_compiled",
+    "n": 5
+  },
+  {
+    "ts": "2026-08-18T16:04:24+00:00",
+    "step": "generate",
+    "event": "schemes_ready",
+    "ids": [
+      "scheme.grounded",
+      "scheme.degree-hard"
+    ]
+  },
+  {
+    "ts": "2026-08-18T16:04:24+00:00",
+    "step": "interact",
+    "event": "human_review",
+    "action": "confirm_with_uncertainty",
+    "selected": "scheme.grounded",
+    "confirmed": true
+  },
+  {
+    "ts": "2026-08-18T16:04:24+00:00",
+    "step": "evolve",
+    "event": "changeset_applied",
+    "changeset_id": "cs.wm.20260818T160424"
+  },
+  {
+    "ts": "2026-08-18T16:04:24+00:00",
+    "step": "output",
+    "event": "shortlist_proposed",
+    "shortlist": [
+      "王敏",
+      "张三"
+    ]
+  },
+  {
+    "ts": "2026-08-18T16:04:24+00:00",
+    "step": "yield",
+    "event": "benefit_attributed",
+    "explainable_shortlist": true,
+    "ungrounded_scores_in_recommendation": 0,
+    "auto_rejects": 0,
+    "human_confirmed": true
+  }
+]
