@@ -27,7 +27,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .main{padding:14px 24px 32px;max-width:1800px;margin:0 auto}
 .section-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--border)}
 .section-title{font-size:14px;font-weight:600} .section-badge{background:var(--primary);color:#fff;font-size:10px;padding:2px 8px;border-radius:20px} .section-note{font-size:11px;color:var(--text-muted);margin-left:auto}
-.kpi-strip{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.kpi-strip{display:grid;grid-template-columns:2fr 3fr;gap:14px;margin-bottom:14px;align-items:stretch}
 .ktile{background:var(--card);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden}
 .ktile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .kt1::before{background:linear-gradient(90deg,var(--accent4),var(--accent2))} .kt2::before{background:var(--accent2)} .kt3::before{background:var(--accent)} .kt4::before{background:var(--accent3)}
@@ -42,6 +42,29 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .km-tip{font-size:9px;color:var(--text-light)}
 .km-v{font-size:20px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1.1}
 .km-sub{font-size:10px;margin-top:1px}
+.ktile.tasks{padding:0;display:flex;flex-direction:column;overflow:hidden;max-height:240px}
+.kt-tasks-head{font-size:11px;color:var(--text-muted);font-weight:600;padding:9px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border);background:#fafbfd}
+.kt-tasks-head b{color:var(--text)}
+.pq-cols{display:grid;grid-template-columns:1fr 1fr 1fr;flex:1;min-height:0}
+.pq-col{display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--border)}
+.pq-col:last-child{border-right:none}
+.pq-colhead{padding:6px 10px;display:flex;align-items:center;gap:5px;border-bottom:1px solid var(--border);background:#fafbfd}
+.pq-badge{font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff;flex-shrink:0}
+.pq-badge.p0{background:var(--q3)} .pq-badge.p1{background:var(--q2)} .pq-badge.p2{background:var(--accent4)}
+.pq-clabel{font-size:10px;color:var(--text-muted)}
+.pq-ccnt{margin-left:auto;font-size:10px;color:var(--text-light);font-family:'JetBrains Mono',monospace}
+.pq-list{overflow-y:auto;flex:1;min-height:0;padding:4px 6px}
+.pq-item{padding:5px 7px;border-radius:5px;cursor:pointer;border-left:3px solid transparent;margin-bottom:3px;transition:filter .12s}
+.pq-item.p0{border-left-color:var(--q3);background:rgba(239,68,68,0.04)}
+.pq-item.p1{border-left-color:var(--q2);background:rgba(245,158,11,0.04)}
+.pq-item.p2{border-left-color:var(--accent4);background:rgba(59,130,246,0.04)}
+.pq-item:hover{filter:brightness(0.97)}
+.pq-itxt{font-size:11px;line-height:1.4;color:var(--text)}
+.pq-imeta{font-size:10px;color:var(--text-muted);margin-top:2px;display:flex;justify-content:space-between;gap:6px}
+.pq-icust{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pq-icust.g{color:#dc2626}
+.pq-iowner{font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.pq-empty{padding:14px 6px;font-size:11px;color:var(--text-light);text-align:center}
 .filter-panel{background:var(--card);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:14px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
 .fg{display:flex;flex-direction:column;gap:4px} .fl{font-size:11px;font-weight:500;color:var(--text-muted)}
 .fc{height:32px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;color:var(--text);outline:none;min-width:140px}
@@ -617,9 +640,27 @@ function renderKPI(){
         <div class="km"><div class="km-l">Adoption <span class="km-tip">服务项采纳</span></div><div class="km-v">${g.adoption.value}</div><div class="km-sub ${adopLow?'down':'up'}">${adopLow?'低于P50':'高于P50'}</div></div>
       </div>
     </div>
-    <div class="ktile kt2"><div class="kt-label">阶段转化率(30d)</div><div class="kt-val">${fmtPct(g.conv_rate_30d.value)}</div><div class="kt-sub up">↑${g.conv_rate_30d.delta_pp.toFixed(1)}pp</div></div>
-    <div class="ktile kt3"><div class="kt-label">平均流转周期</div><div class="kt-val">${g.avg_cycle_days.value}天</div><div class="kt-sub up">↓${Math.abs(g.avg_cycle_days.delta)}天</div></div>
-    <div class="ktile kt4"><div class="kt-label">卡口客户</div><div class="kt-val" style="color:#dc2626">${g.gate_count}</div><div class="kt-sub down">需立即处理</div></div>`;
+    ${taskQueueHTML()}`;
+}
+function buildTaskQueue(){
+  const q={P0:[],P1:[],P2:[]};
+  filteredCustomers().forEach(c=>{
+    const sb=c.stages[c.current_stage];
+    if(!sb||!sb.actions)return;
+    sb.actions.forEach(a=>{if(q[a.p])q[a.p].push({p:a.p,text:a.text,owner:a.owner,collab:a.collab,cust:c.customer_name,uec:c.customer_uec,health:c.health})});
+  });
+  return q;
+}
+function taskQueueHTML(){
+  const q=buildTaskQueue();
+  const cols=[['P0','重要紧急'],['P1','重要不紧急'],['P2','紧急不重要']];
+  const total=q.P0.length+q.P1.length+q.P2.length;
+  const colHTML=([p,label])=>{
+    const items=q[p];
+    const list=items.map(it=>`<div class="pq-item ${p}" onclick="selectCustomer('${it.uec}')" title="跳转到 ${it.cust}"><div class="pq-itxt">${it.text}</div><div class="pq-imeta"><span class="pq-icust ${it.health==='gate'?'g':''}">${it.cust}</span><span class="pq-iowner">${it.owner}${it.collab?'·'+it.collab:''}</span></div></div>`).join('');
+    return `<div class="pq-col"><div class="pq-colhead"><span class="pq-badge ${p}">${p}</span><span class="pq-clabel">${label}</span><span class="pq-ccnt">${items.length}</span></div><div class="pq-list">${list||'<div class="pq-empty">无任务</div>'}</div></div>`;
+  };
+  return `<div class="ktile tasks"><div class="kt-tasks-head">📋 行动队列 <b>P0·P1·P2</b><span class="section-note" style="margin-left:auto">${total} 项 · 按筛选客户当前阶段聚合 · 点击跳转客户</span></div><div class="pq-cols">${cols.map(colHTML).join('')}</div></div>`;
 }
 function exportCSV(){
   const fc=filteredCustomers();
