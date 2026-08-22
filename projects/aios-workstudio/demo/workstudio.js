@@ -1,3 +1,431 @@
+window.LTC_WB = (function () {
+  const DATA = {
+    meta: {
+      data_period: "近30天",
+      view_cm: "cowen.hua",
+      generated_at: "2026-08-21T09:30:00",
+      caliber: {
+        spend: "Σspend(bus_mtc,近30天)",
+        margin: "Σmargin(bus_mtc,近30天)",
+        som: "钛动行业消耗/行业市场总消耗(teyan-dashboard)",
+        adoption: "已覆盖服务项数/行业peer_P50(service_coverage_opportunity)",
+      },
+    },
+    global_kpi: {
+      spend: { value: 4290000, unit: "USD", mom: 0.124 },
+      margin: { value: 612000, unit: "USD", mom: 0.071 },
+      som: { value: 0.186, mom_pp: 1.2 },
+      adoption: { value: 2.03, peer_p50: 2.5, status: "low" },
+      conv_rate_30d: { value: 0.38, delta_pp: 4.2 },
+      avg_cycle_days: { value: 23, delta: -2 },
+      gate_count: 8,
+    },
+    funnel: [
+      { stage: "01_线索", count: 0, gate: false },
+      { stage: "02_建联", count: 0, gate: false },
+      { stage: "03_拜访", count: 2, gate: true },
+      { stage: "04_纪要", count: 0, gate: false },
+      { stage: "05_合同", count: 1, gate: true },
+      { stage: "06_授信", count: 0, gate: false },
+      { stage: "07_下户", count: 1, gate: false },
+      { stage: "08_开跑", count: 0, gate: false },
+      { stage: "09_涨量", count: 0, gate: false },
+      { stage: "10_服务", count: 1, gate: true },
+    ],
+    customers: [
+      {
+        customer_uec: "UEC-10293",
+        customer_name: "客户A · Shopline",
+        current_stage: "03_拜访",
+        days_in_stage: 28,
+        owner_cm: "cowen.hua",
+        owner_bd: "张三",
+        health: "gate",
+        signal_summary: "阶段停留28天超阈值14天，流失风险↑；仅BD到场·决策链未覆盖；37天未拜访",
+        stages: {
+          "03_拜访": {
+            data: {
+              visit_count: 3,
+              last_visit_days: 37,
+              attendee_level: "BD_only",
+              avg_duration_min: 45,
+              trend: [
+                { month: "2026-03", value: 1 },
+                { month: "2026-04", value: 1 },
+                { month: "2026-05", value: 0 },
+                { month: "2026-06", value: 0 },
+                { month: "2026-07", value: 1 },
+              ],
+            },
+            verdict: {
+              level: "gate",
+              health: "gate",
+              title: "决策信号 · 卡口",
+              desc: "阶段停留28天超阈值14天，流失风险↑；仅BD到场·决策链未覆盖；37天未拜访",
+              signals: [
+                { id: "days_in_stage", level: "gate", msg: "阶段停留28天超阈值14天，流失风险↑" },
+                { id: "bd_only", level: "gate", msg: "仅BD到场·决策链未覆盖" },
+                { id: "no_visit_30d", level: "gate", msg: "37天未拜访" },
+              ],
+            },
+            actions: [
+              { p: "P0", text: "本周安排 CM + 客户 C-level 拜访，补齐决策链覆盖", owner: "cowen.hua", collab: "BD·张三", exec: "explore" },
+              { p: "P1", text: "补全 KDM 关系图，识别关键决策人与阻力点", owner: "BD·张三", exec: "explore" },
+              { p: "P2", text: "同步上次拜访纪要，确认未闭环需求项", owner: "cowen.hua", exec: "runtime" },
+            ],
+            plan: [
+              { task: "约 C-level 拜访会议", owner: "cowen.hua", due: "08-23", p: "P0", status: "overdue" },
+              { task: "KDM 关系图梳理", owner: "BD·张三", due: "08-25", p: "P1", status: "doing" },
+              { task: "纪要需求闭环确认", owner: "cowen.hua", due: "08-20", p: "P2", status: "done" },
+            ],
+          },
+        },
+        stage_history: [
+          { stage: "01_线索", entered: "06-10", left: "06-12", days: 2 },
+          { stage: "02_建联", entered: "06-12", left: "06-15", days: 3 },
+          { stage: "03_拜访", entered: "07-15", left: null, days: 28 },
+        ],
+      },
+      {
+        customer_uec: "UEC-20114",
+        customer_name: "Kwai · PH",
+        current_stage: "03_拜访",
+        days_in_stage: 10,
+        owner_cm: "cowen.hua",
+        owner_bd: "王五",
+        health: "ok",
+        signal_summary: "正常推进",
+        stages: {
+          "03_拜访": {
+            data: {
+              visit_count: 1,
+              last_visit_days: 10,
+              attendee_level: "CM",
+              avg_duration_min: 30,
+              trend: [{ month: "2026-07", value: 1 }],
+            },
+            verdict: {
+              level: "ok",
+              health: "ok",
+              title: "决策信号 · 正常",
+              desc: "无异常信号，阶段推进正常。",
+              signals: [],
+            },
+            actions: [{ p: "P1", text: "安排二访并定级", owner: "BD·王五", exec: "explore" }],
+            plan: [{ task: "二访日程", owner: "BD·王五", due: "08-24", p: "P1", status: "todo" }],
+          },
+        },
+        stage_history: [{ stage: "03_拜访", entered: "08-11", left: null, days: 10 }],
+      },
+      {
+        customer_uec: "UEC-30021",
+        customer_name: "Lazada · TH",
+        current_stage: "05_合同",
+        days_in_stage: 9,
+        owner_cm: "cowen.hua",
+        owner_bd: "张三",
+        health: "gate",
+        signal_summary: "合同周转9天超阈值7天；合同卡审批中",
+        stages: {
+          "05_合同": {
+            data: { approval_status: "pending", contract_amount: 420000 },
+            verdict: {
+              level: "gate",
+              health: "gate",
+              title: "决策信号 · 卡口",
+              desc: "合同周转9天超阈值7天；合同卡审批中",
+              signals: [
+                { id: "days_in_stage", level: "gate", msg: "合同周转9天超阈值7天" },
+                { id: "approval_stuck", level: "gate", msg: "合同卡审批中" },
+              ],
+            },
+            actions: [{ p: "P0", text: "催法务加急审批", owner: "cowen.hua", collab: "法务", exec: "runtime" }],
+            plan: [{ task: "法务审批跟进", owner: "cowen.hua", due: "08-22", p: "P0", status: "overdue" }],
+          },
+        },
+        stage_history: [{ stage: "05_合同", entered: "08-12", left: null, days: 9 }],
+      },
+      {
+        customer_uec: "UEC-40088",
+        customer_name: "Shopee · SG",
+        current_stage: "07_下户",
+        days_in_stage: 2,
+        owner_cm: "cowen.hua",
+        owner_bd: "张三",
+        health: "ok",
+        signal_summary: "正常推进",
+        stages: {
+          "07_下户": {
+            data: { qual_ready: true, setup_progress: 0.8 },
+            verdict: {
+              level: "ok",
+              health: "ok",
+              title: "决策信号 · 正常",
+              desc: "无异常信号，阶段推进正常。",
+              signals: [],
+            },
+            actions: [{ p: "P2", text: "确认账户搭建收尾", owner: "AO·赵六", exec: "runtime" }],
+            plan: [{ task: "搭建验收", owner: "AO·赵六", due: "08-25", p: "P2", status: "doing" }],
+          },
+        },
+        stage_history: [{ stage: "07_下户", entered: "08-19", left: null, days: 2 }],
+      },
+      {
+        customer_uec: "UEC-50102",
+        customer_name: "Sea Limited",
+        current_stage: "10_服务",
+        days_in_stage: 0,
+        owner_cm: "cowen.hua",
+        owner_bd: "张三",
+        health: "gate",
+        signal_summary: "流失风险；健康度下降；5个工单积压",
+        stages: {
+          "10_服务": {
+            data: { churn_risk: true, health_trend: -1, open_tickets: 5 },
+            verdict: {
+              level: "gate",
+              health: "gate",
+              title: "决策信号 · 卡口",
+              desc: "流失风险；健康度下降；5个工单积压",
+              signals: [
+                { id: "churn_risk", level: "gate", msg: "流失风险" },
+                { id: "health_down", level: "warn", msg: "健康度下降" },
+                { id: "ticket_backlog", level: "warn", msg: "5个工单积压" },
+              ],
+            },
+            actions: [{ p: "P0", text: "启动续费挽回，CM 本周上门", owner: "cowen.hua", exec: "explore" }],
+            plan: [{ task: "挽回方案", owner: "cowen.hua", due: "08-23", p: "P0", status: "todo" }],
+          },
+        },
+        stage_history: [{ stage: "10_服务", entered: "2025-09-01", left: null, days: 0 }],
+      },
+    ],
+  };
+
+  const STAGES = ["01_线索", "02_建联", "03_拜访", "04_纪要", "05_合同", "06_授信", "07_下户", "08_开跑", "09_涨量", "10_服务"];
+
+  function fmtMoney(v, unit) {
+    return (unit === "USD" ? "$" : "") + Math.round(v).toLocaleString();
+  }
+  function fmtPct(v) {
+    return (v * 100).toFixed(1) + "%";
+  }
+  function fmtDelta(v, pp) {
+    return pp ? "↑" + v.toFixed(1) + "pp" : v >= 0 ? "↑" + (v * 100).toFixed(1) + "%" : "↓" + Math.abs(v * 100).toFixed(1) + "%";
+  }
+  function tagLabel(h) {
+    return h === "gate" ? "卡口" : h === "warn" ? "预警" : "正常";
+  }
+  function statusLabel(s) {
+    return { todo: "待执行", doing: "进行中", done: "已完成", overdue: "逾期" }[s] || s;
+  }
+  function fieldLabel(k) {
+    return (
+      {
+        visit_count: "拜访次数",
+        last_visit: "最近拜访",
+        last_visit_days: "最近拜访(天前)",
+        attendee_level: "到场级别",
+        avg_duration_min: "平均时长",
+        connect_rate: "建联率",
+        minutes_done: "纪要完成",
+        unconfirmed_req_count: "未确认需求",
+        approval_status: "审批状态",
+        contract_amount: "合同金额",
+        credit_usage_rate: "授信使用率",
+        qual_ready: "资质齐备",
+        setup_progress: "搭建进度",
+        launch_spend: "首跑Spend",
+        roi: "ROI",
+        churn_risk: "流失风险",
+        health_trend: "健康趋势",
+        open_tickets: "工单",
+        lead_pool_count: "线索池",
+        high_score_stale_days: "高分滞留(天)",
+      }[k] || k
+    );
+  }
+  function fmtFieldVal(k, v) {
+    if (typeof v === "boolean") return v ? "是" : "否";
+    if (k === "avg_duration_min") return v + "min";
+    if (k === "contract_amount" || k === "launch_spend") return "$" + Number(v).toLocaleString();
+    if (k === "connect_rate" || k === "credit_usage_rate" || k === "roi") return (v * 100).toFixed(1) + "%";
+    if (k === "setup_progress") return v * 100 + "%";
+    return String(v);
+  }
+  function sparkSVG(vals, h) {
+    const w = 300;
+    const mn = Math.min(...vals);
+    const mx = Math.max(...vals);
+    const r = mx - mn || 1;
+    const pts = vals.map((v, i) => `${(i / (vals.length - 1)) * w},${h - ((v - mn) / r) * (h - 4) - 2}`);
+    return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><defs><linearGradient id="ltc-sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs><path d="M${pts.join(" L")}" fill="none" stroke="#3b82f6" stroke-width="2"/><path d="M${pts.join(" L")} L${w},${h} L0,${h}Z" fill="url(#ltc-sg)"/></svg>`;
+  }
+
+  function filteredCustomers(f) {
+    return DATA.customers.filter((c) => {
+      if (f.cm && f.cm !== "all" && c.owner_cm !== f.cm) return false;
+      if (f.stage && c.current_stage !== f.stage) return false;
+      if (f.status && c.health !== f.status) return false;
+      if (f.q) {
+        const n = (c.customer_name + c.customer_uec).toLowerCase();
+        if (!n.includes(f.q.toLowerCase())) return false;
+      }
+      return true;
+    });
+  }
+
+  function buildTaskQueue(fc) {
+    const q = { P0: [], P1: [], P2: [] };
+    fc.forEach((c) => {
+      const sb = c.stages[c.current_stage];
+      if (!sb || !sb.actions) return;
+      sb.actions.forEach((a) => {
+        if (q[a.p]) q[a.p].push({ ...a, cust: c.customer_name, uec: c.customer_uec, health: c.health });
+      });
+    });
+    return q;
+  }
+
+  function taskQueueHTML(fc) {
+    const q = buildTaskQueue(fc);
+    const cols = [
+      ["P0", "重要紧急"],
+      ["P1", "重要不紧急"],
+      ["P2", "紧急不重要"],
+    ];
+    const total = q.P0.length + q.P1.length + q.P2.length;
+    const colHTML = ([p, label]) => {
+      const items = q[p];
+      const list = items
+        .map(
+          (it) =>
+            `<button type="button" class="pq-item ${p}" data-ltc-cust="${it.uec}" title="跳转到 ${it.cust}"><div class="pq-itxt">${it.text}</div><div class="pq-imeta"><span class="pq-icust ${it.health === "gate" ? "g" : ""}">${it.cust}</span><span class="pq-iowner">${it.owner}${it.collab ? "·" + it.collab : ""}</span></div></button>`
+        )
+        .join("");
+      return `<div class="pq-col"><div class="pq-colhead"><span class="pq-badge ${p}">${p}</span><span class="pq-clabel">${label}</span><span class="pq-ccnt">${items.length}</span></div><div class="pq-list">${list || '<div class="pq-empty">无任务</div>'}</div></div>`;
+    };
+    return `<div class="ktile tasks"><div class="kt-tasks-head">行动队列 <b>P0·P1·P2</b><span class="section-note" style="margin-left:auto">${total} 项 · 按筛选客户当前阶段聚合 · 点击跳转客户</span></div><div class="pq-cols">${cols.map(colHTML).join("")}</div></div>`;
+  }
+
+  function render(ctx) {
+    const f = { cm: ctx.cm, q: ctx.q, status: ctx.status, stage: ctx.stage };
+    const fc = filteredCustomers(f);
+    const g = DATA.global_kpi;
+    const adopLow = g.adoption.value < g.adoption.peer_p50;
+    const counts = {};
+    DATA.funnel.forEach((x) => {
+      counts[x.stage] = 0;
+    });
+    fc.forEach((c) => {
+      counts[c.current_stage] = (counts[c.current_stage] || 0) + 1;
+    });
+    let sel = ctx.selected;
+    if (!sel || !fc.find((c) => c.customer_uec === sel)) sel = fc[0] ? fc[0].customer_uec : null;
+    const c = DATA.customers.find((x) => x.customer_uec === sel);
+    const viewStage = ctx.viewStage || (c && c.current_stage);
+    const sb = c && c.stages[viewStage];
+
+    const funnel = DATA.funnel
+      .map((x) => {
+        const selCls = ctx.stage === x.stage ? "sel" : "";
+        return `<button type="button" class="fp ${x.gate ? "gate" : ""} ${selCls}" data-ltc-stage="${x.stage}"><div class="fp-num">${x.stage.slice(0, 2)}</div><div class="fp-name">${x.stage.slice(3)}</div><div class="fp-cnt">${counts[x.stage] || 0}</div></button>`;
+      })
+      .join("");
+
+    const list = fc
+      .map((row) => {
+        const days = row.days_in_stage ? `停留 ${row.days_in_stage}天` : "稳态";
+        return `<button type="button" class="crow ${row.health} ${row.customer_uec === sel ? "sel" : ""}" data-ltc-cust="${row.customer_uec}"><div class="cr-top"><span class="cr-name">${row.customer_name}</span><span class="cr-tag ${row.health}">${tagLabel(row.health)}</span></div><div class="cr-mid"><span class="cr-stage">${row.current_stage}</span><span>${row.owner_cm ? "CM·" + row.owner_cm : ""}</span></div><div class="cr-bot"><span class="cr-days ${row.health === "gate" ? "gate" : ""}">${days}</span><span class="cr-sig">${row.signal_summary}</span></div></button>`;
+      })
+      .join("");
+
+    let detail = `<div class="ltc-empty">选择左侧客户查看详情</div>`;
+    if (c && !sb) {
+      detail = `<div class="ltc-empty">该客户在 ${viewStage} 无快照数据</div>`;
+    } else if (c && sb) {
+      const v = sb.verdict;
+      const d = sb.data;
+      const tabs = STAGES.map(
+        (s) => `<button type="button" class="stab ${s === viewStage ? "active" : ""}" data-ltc-tab="${s}">${s.slice(3)}</button>`
+      ).join("");
+      const dtiles = Object.entries(d)
+        .filter(([k]) => k !== "trend")
+        .map(([k, val]) => `<div class="dtile"><div class="dtile-l">${fieldLabel(k)}</div><div class="dtile-v">${fmtFieldVal(k, val)}</div></div>`)
+        .join("");
+      const trend = d.trend || [];
+      const spark = trend.length >= 2 ? sparkSVG(trend.map((t) => t.value), 30) : "";
+      const acts = sb.actions
+        .map(
+          (a, i) =>
+            `<div class="act ${a.p}"><span class="act-tag ${a.p}">${a.p}</span><div><div class="act-txt">${a.text}</div><div class="act-owner">负责人：${a.owner}${a.collab ? " · 协作：" + a.collab : ""}</div><div class="act-go"><button type="button" class="${i === 0 ? "btn-enter" : "btn-enter ghost"}" data-enter="${a.exec || "explore"}" data-enter-item="${c.customer_uec}">进入执行态</button></div></div></div>`
+        )
+        .join("");
+      const rows = sb.plan
+        .map(
+          (p) =>
+            `<tr><td>${p.task}</td><td>${p.owner}</td><td class="mono">${p.due}</td><td><span class="pbadge p">${p.p}</span></td><td><span class="pbadge ${p.status}">${statusLabel(p.status)}</span></td></tr>`
+        )
+        .join("");
+      detail = `<div class="detail"><div class="detail-head"><div class="detail-title">${c.customer_name}</div><div class="detail-sub">CM: ${c.owner_cm} · BD: ${c.owner_bd} · ${viewStage} ${viewStage === c.current_stage ? "· 进入 " + c.days_in_stage + " 天" : ""} · 编码 ${c.customer_uec}</div><div class="stage-tabs">${tabs}</div></div><div class="detail-body">
+        <div class="verdict ${v.level === "ok" ? "" : v.level}"><div class="verdict-title">${v.title}</div><div class="verdict-desc">${v.desc}</div></div>
+        <div class="dblock"><div class="db-h">数据看板</div><div class="dgrid">${dtiles}</div>${spark ? `<div style="margin-top:8px"><div class="trend-l">趋势</div>${spark}</div>` : ""}</div>
+        <div class="dblock"><div class="db-h">行动策略</div>${acts || '<div class="ltc-empty">无行动项</div>'}</div>
+        <div class="dblock"><div class="db-h">计划跟踪</div><table class="ptable"><thead><tr><th>任务</th><th>负责人</th><th>截止</th><th>优先级</th><th>状态</th></tr></thead><tbody>${rows || '<tr><td colspan="5">无任务</td></tr>'}</tbody></table></div>
+      </div></div>`;
+    }
+
+    return `<div class="ltc">
+      <div class="section-header"><span class="section-title">全局经营</span><span class="section-badge">客户经理视角</span><span class="section-note">数据周期：${DATA.meta.data_period} · 视角：${DATA.meta.view_cm} · 2026-08-21 09:30</span></div>
+      <div class="kpi-strip">
+        <div class="ktile kt1 composite">
+          <div class="kt-comp-head">经营概览 <b>Spend / Margin / SOM / Adoption</b><span class="section-note" style="margin-left:auto">近30天</span></div>
+          <div class="km-grid">
+            <div class="km"><div class="km-l">Spend <span class="km-tip">消耗</span></div><div class="km-v">${fmtMoney(g.spend.value, g.spend.unit)}</div><div class="km-sub ${g.spend.mom >= 0 ? "up" : "down"}">${fmtDelta(g.spend.mom)}</div></div>
+            <div class="km"><div class="km-l">Margin <span class="km-tip">利润</span></div><div class="km-v">${fmtMoney(g.margin.value, g.margin.unit)}</div><div class="km-sub ${g.margin.mom >= 0 ? "up" : "down"}">${fmtDelta(g.margin.mom)}</div></div>
+            <div class="km"><div class="km-l">SOM <span class="km-tip">市场份额</span></div><div class="km-v">${fmtPct(g.som.value)}</div><div class="km-sub ${g.som.mom_pp >= 0 ? "up" : "down"}">${g.som.mom_pp >= 0 ? "↑" : "↓"}${Math.abs(g.som.mom_pp).toFixed(1)}pp</div></div>
+            <div class="km"><div class="km-l">Adoption <span class="km-tip">服务项采纳</span></div><div class="km-v">${g.adoption.value}</div><div class="km-sub ${adopLow ? "down" : "up"}">${adopLow ? "低于P50" : "高于P50"}</div></div>
+          </div>
+        </div>
+        ${taskQueueHTML(fc)}
+      </div>
+      <div class="filter-panel">
+        <div class="fg"><div class="fl">客户经理</div><select class="fc" id="f-cm"><option value="cowen.hua" ${ctx.cm === "cowen.hua" ? "selected" : ""}>cowen.hua (我)</option><option value="all" ${ctx.cm === "all" ? "selected" : ""}>全部</option></select></div>
+        <div class="fg"><div class="fl">客户</div><input class="fc" id="f-q" value="${ctx.q || ""}" placeholder="搜索客户名/编码"></div>
+        <div class="fg"><div class="fl">状态</div><select class="fc" id="f-health"><option value="">全部</option><option value="gate" ${ctx.status === "gate" ? "selected" : ""}>仅卡口</option><option value="warn" ${ctx.status === "warn" ? "selected" : ""}>仅预警</option></select></div>
+        <button type="button" class="btn btn-primary" data-ltc-query>查询</button>
+        <button type="button" class="btn btn-outline" data-ltc-reset>重置</button>
+        <button type="button" class="btn btn-outline" data-ltc-export>导出报告</button>
+        <div class="legend"><span><span class="ldot" style="background:#10b981"></span>正常</span><span><span class="ldot" style="background:#f59e0b"></span>预警</span><span><span class="ldot" style="background:#ef4444"></span>卡口</span></div>
+      </div>
+      <div class="section-header"><span class="section-title">LTC 管线</span><span class="section-badge">10 阶段漏斗</span><span class="section-note">点击阶段 pill → 按阶段筛选客户列表</span></div>
+      <div class="funnel">${funnel}</div>
+      <div class="workbench">
+        <div class="clist">
+          <div class="clist-head"><span class="clist-title">客户列表</span><span class="clist-cnt">${fc.length} 条 · ${ctx.stage ? ctx.stage + " 阶段" : "全部"}</span></div>
+          <div class="clist-body">${list || '<div class="ltc-empty">无匹配客户</div>'}</div>
+        </div>
+        <div id="detailSlot">${detail}</div>
+      </div>
+    </div>`;
+  }
+
+  function exportCSV(f) {
+    const fc = filteredCustomers(f);
+    const headers = ["customer_uec", "customer_name", "current_stage", "days_in_stage", "owner_cm", "owner_bd", "health", "signal_summary"];
+    const rows = fc.map((c) => headers.map((h) => `"${c[h] ?? ""}"`).join(","));
+    const csv = "\uFEFF" + [headers.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "CM_LTC_工作台.csv";
+    a.click();
+  }
+
+  return { DATA, STAGES, render, filteredCustomers, exportCSV };
+})();
+
+
 const $ = (id) => document.getElementById(id);
 const esc = (s) =>
   String(s)
@@ -256,7 +684,7 @@ const PACKS = {
   pmo: {
     id: "pmo",
     space: "衡川 · 项目管理工作台",
-    deep: false,
+    deep: true,
     owner: "周衡",
     role: "PMO",
     tension: "里程碑 M2 窗口内，7 条跨团队依赖没有 Owner。不能在驾驶舱改计划。",
@@ -376,6 +804,28 @@ const PACKS = {
           feedback: "已验收",
         },
       },
+      {
+        id: "wi-init",
+        code: "PJ-010",
+        title: "M3 立项预审",
+        type: "立项",
+        col: "todo",
+        owner: "周衡",
+        stage: "立项",
+        due: "下窗口",
+        exec: "explore",
+        gate: "G0",
+        ought: "立项先写清五维与验收法则。",
+        is: "只有口头范围，尚未建模。",
+        gap: "未建模不得排进本窗口执行。",
+        wm: {
+          space: "衡川组合委员会",
+          time: "下窗口预审",
+          subjects: "周衡；业务发起人",
+          objects: "立项书、验收法则",
+          feedback: "预审通过才进计划",
+        },
+      },
     ],
     risks: [
       { id: "wi-deps", level: "red", title: "跨团队依赖无 Owner", detail: "7 条边空 Assignee。口头下周再分，未写入。" },
@@ -426,7 +876,7 @@ const PACKS = {
   invest: {
     id: "invest",
     space: "衡川 · 金融投资工作台",
-    deep: false,
+    deep: true,
     owner: "沈澈",
     role: "投研负责人",
     tension: "组合回撤 6.1%，信源等级仅为中。中等级信源不得单独触发下单。",
@@ -464,7 +914,7 @@ const PACKS = {
         type: "持仓",
         col: "blocked",
         owner: "风控",
-        stage: "持仓",
+        stage: "复核",
         due: "今日",
         exec: "runtime",
         gate: "G4",
@@ -525,6 +975,50 @@ const PACKS = {
           feedback: "策略回收",
         },
       },
+      {
+        id: "wi-pool",
+        code: "INV-024",
+        title: "动量标的入池",
+        type: "标的",
+        col: "doing",
+        owner: "沈澈",
+        stage: "池",
+        due: "本周",
+        exec: "explore",
+        gate: "G1",
+        ought: "入池须有可回收的有效性口径。",
+        is: "已进观察池，交叉核验未完成。",
+        gap: "未核验不得升到下单。",
+        wm: {
+          space: "衡川投研台 · 观察池",
+          time: "本周研究窗",
+          subjects: "沈澈",
+          objects: "观察池标的",
+          feedback: "核验通过才出池",
+        },
+      },
+      {
+        id: "wi-hold",
+        code: "INV-025",
+        title: "现有仓位盯盘",
+        type: "持仓",
+        col: "doing",
+        owner: "风控",
+        stage: "持仓",
+        due: "本窗口",
+        exec: "runtime",
+        gate: "G4",
+        ought: "回撤窗口内不得加仓。",
+        is: "敞口 1.2x，已触上限。",
+        gap: "复核未过前只许盯盘，不许新开。",
+        wm: {
+          space: "衡川投研台 · 组合",
+          time: "回撤窗口",
+          subjects: "风控；沈澈",
+          objects: "现有仓位",
+          feedback: "敞口与回撤",
+        },
+      },
     ],
     risks: [
       { id: "wi-order", level: "red", title: "中等级信源触发下单", detail: "驾驶舱直接下单会被合规门拦住。" },
@@ -572,6 +1066,7 @@ const PACKS = {
       action: "回撤超限复核（G4）",
     },
   },
+  cm: null,
 };
 
 const BUILDER_STEPS = [
@@ -588,6 +1083,22 @@ const SCENE = {
   ops: {
     period: "本周窗口",
     caliber: "接地率 = 有面试记录的建议 / 全部建议 · ATS + 面试纪要",
+    spec: {
+      badge: "用人经理视角",
+      stream: "人才流 5 阶段漏斗",
+      ownerLabel: "负责人",
+      owners: [
+        { value: "all", label: "全部" },
+        { value: "林启明", label: "林启明 (我)" },
+        { value: "招聘委员会", label: "招聘委员会" },
+      ],
+      overview: [
+        { n: "编制填满", tip: "Fill", v: "72%", sub: "价值流停在短名单", dir: "down" },
+        { n: "证据接地", tip: "Ground", v: "61%", sub: "↓4.0pp", dir: "down" },
+        { n: "周期", tip: "Cycle", v: "38d", sub: "短名单滞留", dir: "down" },
+        { n: "卡口", tip: "Gate", v: "2", sub: "未接地 + 冻结", dir: "down" },
+      ],
+    },
     composite: [
       { id: "fill", n: "编制填满", v: "72%", s: "价值流停在短名单" },
       { id: "ground", n: "证据接地", v: "61%", s: "环比 -4pp", hot: true, item: "wi-rao" },
@@ -736,6 +1247,22 @@ const SCENE = {
   pmo: {
     period: "M2 窗口",
     caliber: "按期 = 里程碑按基线验收 / 全部里程碑 · 依赖图 + 周会",
+    spec: {
+      badge: "PMO 视角",
+      stream: "立项到验收 5 阶段漏斗",
+      ownerLabel: "负责人",
+      owners: [
+        { value: "all", label: "全部" },
+        { value: "周衡", label: "周衡 (我)" },
+        { value: "组合委员会", label: "组合委员会" },
+      ],
+      overview: [
+        { n: "按期", tip: "On-time", v: "64%", sub: "M2 被挡住", dir: "down" },
+        { n: "开着的依赖", tip: "Deps", v: "7", sub: "Assignee 为空", dir: "down" },
+        { n: "风险开", tip: "Risk", v: "3", sub: "范围未冻", dir: "down" },
+        { n: "卡口", tip: "Gate", v: "2", sub: "无 Owner + 未冻", dir: "down" },
+      ],
+    },
     composite: [
       { id: "on", n: "按期", v: "64%", s: "M2 被挡住", hot: true, item: "wi-m2" },
       { id: "dep", n: "开着的依赖", v: "7", s: "Assignee 为空", hot: true, item: "wi-deps" },
@@ -748,11 +1275,11 @@ const SCENE = {
       { id: "learn", n: "复盘", v: "1", s: "待回写" },
     ],
     funnel: [
-      { id: "立项", count: 2, gate: false },
-      { id: "计划", count: 3, gate: false },
-      { id: "执行", count: 4, gate: true },
+      { id: "立项", count: 1, gate: false },
+      { id: "计划", count: 1, gate: false },
+      { id: "执行", count: 2, gate: true },
       { id: "验收", count: 1, gate: false },
-      { id: "收尾", count: 1, gate: false },
+      { id: "收尾", count: 0, gate: false },
     ],
     objects: {
       "wi-m2": {
@@ -841,6 +1368,26 @@ const SCENE = {
         actions: [{ p: "P2", text: "把 M1 过关条件沉淀进验收法则", owner: "周衡", exec: "builder", item: "wi-m1" }],
         plan: [{ task: "复盘回写", owner: "周衡", due: "已过", p: "P2", status: "done", item: "wi-m1" }],
       },
+      "wi-init": {
+        health: "ok",
+        days: 1,
+        signal: "下窗口预审，尚未建模，不进本窗口执行",
+        metrics: [
+          { n: "五维", v: "草稿" },
+          { n: "验收法则", v: "未" },
+          { n: "排期", v: "下窗" },
+          { n: "停留", v: "1d" },
+        ],
+        trend: [0, 0, 0, 0, 1],
+        verdict: {
+          level: "ok",
+          title: "决策信号 · 正常",
+          desc: "立项预审可做研究。未建模不得挤进 M2 执行。",
+          signals: [],
+        },
+        actions: [{ p: "P2", text: "签发研究：补齐 M3 五维与验收法则", owner: "周衡", exec: "explore", item: "wi-init" }],
+        plan: [{ task: "立项五维草稿", owner: "周衡", due: "下窗口", p: "P2", status: "todo", item: "wi-init" }],
+      },
     },
     assets: [
       { name: "无 Owner 不得验收", effect: "拦住 1 次提前验收", pct: 90, status: "生效" },
@@ -851,6 +1398,22 @@ const SCENE = {
   invest: {
     period: "本窗口",
     caliber: "信源等级：高 = 双源交叉；中不得单独下单 · 行情 + 研报 + 审计",
+    spec: {
+      badge: "投研视角",
+      stream: "研究到复核 5 阶段漏斗",
+      ownerLabel: "负责人",
+      owners: [
+        { value: "all", label: "全部" },
+        { value: "沈澈", label: "沈澈 (我)" },
+        { value: "风控", label: "风控" },
+      ],
+      overview: [
+        { n: "回撤", tip: "Drawdown", v: "-6.1%", sub: "已触发 G4", dir: "down" },
+        { n: "信源等级", tip: "Source", v: "中", sub: "不得单独下单", dir: "down" },
+        { n: "因子有效", tip: "Alpha", v: "0.18", sub: "未交叉核验", dir: "down" },
+        { n: "卡口", tip: "Gate", v: "2", sub: "回撤 + 下单", dir: "down" },
+      ],
+    },
     composite: [
       { id: "dd", n: "回撤", v: "-6.1%", s: "已触发 G4", hot: true, item: "wi-dd" },
       { id: "src", n: "信源等级", v: "中", s: "不得单独下单", hot: true, item: "wi-order" },
@@ -863,11 +1426,11 @@ const SCENE = {
       { id: "learn", n: "策略回收", v: "4", s: "待确认" },
     ],
     funnel: [
-      { id: "研究", count: 5, gate: false },
-      { id: "池", count: 3, gate: false },
+      { id: "研究", count: 1, gate: false },
+      { id: "池", count: 1, gate: false },
       { id: "下单", count: 1, gate: true },
-      { id: "持仓", count: 4, gate: true },
-      { id: "复核", count: 2, gate: false },
+      { id: "持仓", count: 1, gate: true },
+      { id: "复核", count: 1, gate: true },
     ],
     objects: {
       "wi-dd": {
@@ -933,6 +1496,46 @@ const SCENE = {
         actions: [{ p: "P1", text: "签发研究：交叉核验动量因子", owner: "沈澈", exec: "explore", item: "wi-factor" }],
         plan: [{ task: "因子核验", owner: "沈澈", due: "本周", p: "P1", status: "doing", item: "wi-factor" }],
       },
+      "wi-pool": {
+        health: "warn",
+        days: 4,
+        signal: "已进观察池，交叉核验未完成",
+        metrics: [
+          { n: "池内", v: "1" },
+          { n: "交叉", v: "否" },
+          { n: "出池", v: "禁" },
+          { n: "停留", v: "4d" },
+        ],
+        trend: [0, 0, 1, 1, 1],
+        verdict: {
+          level: "warn",
+          title: "决策信号 · 预警",
+          desc: "观察池不是下单理由。核验完成前不得升阶段。",
+          signals: ["缺第二信源"],
+        },
+        actions: [{ p: "P1", text: "交叉核验后再决定是否出池", owner: "沈澈", exec: "explore", item: "wi-pool" }],
+        plan: [{ task: "出池核验", owner: "沈澈", due: "本周", p: "P1", status: "doing", item: "wi-pool" }],
+      },
+      "wi-hold": {
+        health: "warn",
+        days: 2,
+        signal: "敞口 1.2x 已触上限，回撤窗口只许盯盘",
+        metrics: [
+          { n: "敞口", v: "1.2x" },
+          { n: "加仓", v: "禁" },
+          { n: "门禁", v: "G4" },
+          { n: "停留", v: "2d" },
+        ],
+        trend: [1.0, 1.05, 1.1, 1.18, 1.2],
+        verdict: {
+          level: "warn",
+          title: "决策信号 · 预警",
+          desc: "复核未过前不得新开仓。现有仓位只盯盘。",
+          signals: ["敞口触上限", "回撤窗口重叠"],
+        },
+        actions: [{ p: "P1", text: "盯盘并等待回撤复核结论", owner: "风控", exec: "runtime", item: "wi-hold" }],
+        plan: [{ task: "敞口盯盘", owner: "风控", due: "本窗口", p: "P1", status: "doing", item: "wi-hold" }],
+      },
     },
     assets: [
       { name: "中等级信源不得单独下单", effect: "拦住 1 次下单", pct: 100, status: "生效" },
@@ -940,7 +1543,190 @@ const SCENE = {
     ],
     learn: ["拦住中等级信源下单", "回撤事件记入审计", "法则再次确认", "同类窗口默认先研究", "策略回收待确认"],
   },
+  cm: {
+    period: "近30天",
+    caliber: "Spend=Σspend(bus_mtc) · SOM=钛动行业消耗/市场总消耗 · Adoption=覆盖服务项/peer_P50",
+    composite: [],
+    kpis: [],
+    funnel: [],
+    objects: {},
+    assets: [
+      { name: "阶段停留超阈值不得推进", effect: "拦住 Shopline 拜访 28 天", pct: 100, status: "生效" },
+      { name: "决策链必须覆盖 C-level", effect: "BD_only 视为卡口", pct: 100, status: "生效" },
+      { name: "合同周转超 7 天升级法务", effect: "Lazada 审批中", pct: 80, status: "生效" },
+      { name: "服务健康下降启动挽回", effect: "Sea Limited 工单积压", pct: 60, status: "待用" },
+    ],
+    learn: ["拜访超 14 天默认卡口", "决策链未覆盖不得进纪要", "合同超 7 天催法务", "服务流失先挽回再涨量", "ChangeSet 待人确认后回写口径"],
+  },
 };
+
+(function hydrateCm() {
+  if (!window.LTC_WB) return;
+  const wb = window.LTC_WB;
+  const customers = wb.DATA.customers;
+  const execOf = {
+    "UEC-10293": "explore",
+    "UEC-20114": "explore",
+    "UEC-30021": "runtime",
+    "UEC-40088": "runtime",
+    "UEC-50102": "explore",
+  };
+  const gateOf = {
+    "UEC-10293": "G1",
+    "UEC-20114": "G0",
+    "UEC-30021": "G3",
+    "UEC-40088": "G0",
+    "UEC-50102": "G2",
+  };
+  PACKS.cm = {
+    id: "cm",
+    space: "衡川 · 客户经营工作台",
+    deep: true,
+    owner: "cowen.hua",
+    role: "客户经理",
+    tension: "拜访与合同、服务三处卡口同时开着。决策链未覆盖不得推进，合同超阈值须升级法务。",
+    dikw: ["bus_mtc / 拜访 / 合同 / 工单", "卡口 3 · 停留超阈", "停留超阈值不得推进", "先过关再涨量"],
+    project: {
+      id: "prj-ltc",
+      code: "PRJ-LTC",
+      title: "线索到现金",
+      window: "近30天 · 客户经理 cowen.hua",
+      cycle: "interact",
+      object: "客户 × 阶段 × 决策信号",
+    },
+    kpis: [
+      { id: "spend", n: "Spend", v: "$4,290,000" },
+      { id: "gate", n: "卡口", v: "3", hot: true, item: "UEC-10293" },
+      { id: "cycle", n: "周期", v: "23d" },
+    ],
+    goals: [],
+    items: customers.map((c) => {
+      const sb = c.stages[c.current_stage];
+      return {
+        id: c.customer_uec,
+        code: c.customer_uec,
+        title: c.customer_name,
+        type: "客户",
+        col: c.health === "gate" ? "blocked" : c.health === "warn" ? "doing" : "doing",
+        owner: c.owner_cm,
+        stage: c.current_stage,
+        due: c.days_in_stage ? "停留 " + c.days_in_stage + "d" : "稳态",
+        exec: execOf[c.customer_uec] || "explore",
+        gate: gateOf[c.customer_uec] || "G1",
+        hot: c.health === "gate",
+        ought: "按 LTC 阶段阈值与决策链法则推进，卡口不得跳阶段。",
+        is: c.signal_summary,
+        gap: sb && sb.verdict ? sb.verdict.desc : c.signal_summary,
+        wm: {
+          space: "衡川客户经营台 · " + c.current_stage,
+          time: c.days_in_stage ? "本阶段 " + c.days_in_stage + " 天" : "稳态服务",
+          subjects: "CM " + c.owner_cm + "；BD " + c.owner_bd + "；客户 " + c.customer_name,
+          objects: c.current_stage + "、决策信号、行动队列",
+          feedback: c.health === "gate" ? "卡口未解不得进入下一阶段" : "阶段推进与计划跟踪",
+        },
+      };
+    }),
+    risks: customers
+      .filter((c) => c.health === "gate")
+      .map((c) => ({ id: c.customer_uec, level: "red", title: c.customer_name, detail: c.signal_summary })),
+    todos: customers.flatMap((c) =>
+      ((c.stages[c.current_stage] || {}).plan || []).map((p) => ({
+        id: c.customer_uec,
+        pdca: p.p === "P0" ? "P" : p.p === "P1" ? "D" : "C",
+        item: p.task,
+        owner: p.owner,
+        gate: gateOf[c.customer_uec] || "G1",
+        exec: execOf[c.customer_uec] || "explore",
+      }))
+    ),
+    evidence: [
+      { source: "bus_mtc 近30天", reliability: "高", excerpt: "Spend $4.29M · Margin $612k · SOM 18.6%" },
+      { source: "拜访记录 客户A", reliability: "高", excerpt: "37天未拜访，到场仅 BD。" },
+      { source: "合同审批 Lazada", reliability: "高", excerpt: "周转 9 天，状态 pending。" },
+    ],
+    uncertainties: [
+      { claim: "Shopline 决策链可补齐", why: "C-level 尚未到场", ask: "本周 CM + C-level 拜访" },
+      { claim: "Sea Limited 可挽回", why: "健康度下降且工单积压", ask: "上门挽回方案" },
+    ],
+    options: [
+      { id: "A", summary: "先解拜访与合同卡口，服务走挽回", risk: "涨量延后" },
+      { id: "B", summary: "同时铺开跑涨量", risk: "卡口客户流失" },
+    ],
+    knowledge: [
+      { id: "ltc_stage_thresholds.md", type: "法则", installed: true },
+      { id: "kdm-coverage", type: "Skill", installed: false },
+    ],
+    builder: {
+      app: "LTC 卡口编译器 0.1.0",
+      released: false,
+      invariants: [
+        { id: "wm_five_dims", ok: true, detail: "五维齐全" },
+        { id: "stage_threshold", ok: true, detail: "超阈不得跳阶段" },
+        { id: "kdm_required", ok: true, detail: "BD_only 不得进纪要" },
+      ],
+      cs: [
+        { op: "cs.customer.query", level: "L1", side: "读" },
+        { op: "cs.contract.approve", level: "L2", side: "写，仅运行" },
+      ],
+    },
+    runtime: {
+      instance: "ins-hengchuan-ltc",
+      scope: "dept",
+      items: customers.map((c) => ({
+        name: c.customer_name,
+        advice: c.health !== "gate",
+        why: c.signal_summary,
+      })),
+      silent: "静默改合同或对客承诺",
+      action: "推进当前阶段动作（须审批）",
+    },
+  };
+  SCENE.cm.funnel = wb.DATA.funnel.map((x) => ({ id: x.stage, count: x.count, gate: x.gate }));
+  customers.forEach((c) => {
+    const sb = c.stages[c.current_stage] || {};
+    SCENE.cm.objects[c.customer_uec] = {
+      health: c.health,
+      days: c.days_in_stage,
+      signal: c.signal_summary,
+      metrics: Object.entries(sb.data || {})
+        .filter(([k]) => k !== "trend")
+        .slice(0, 4)
+        .map(([k, v]) => ({ n: k, v: String(v) })),
+      trend: ((sb.data && sb.data.trend) || []).map((t) => t.value),
+      verdict: sb.verdict || { level: c.health, title: "决策信号", desc: c.signal_summary, signals: [] },
+      actions: (sb.actions || []).map((a) => ({ ...a, item: c.customer_uec })),
+      plan: (sb.plan || []).map((p) => ({ ...p, item: c.customer_uec })),
+      stages: c.stages,
+    };
+  });
+})();
+
+(function hydrateSceneSnapshots() {
+  ["ops", "pmo", "invest"].forEach((pid) => {
+    const p = PACKS[pid];
+    const sc = SCENE[pid];
+    if (!p || !sc) return;
+    p.items.forEach((it) => {
+      const o = sc.objects[it.id];
+      if (!o || o.stages) return;
+      const data = {};
+      (o.metrics || []).forEach((m) => {
+        data[m.n] = m.v;
+      });
+      if (o.trend && o.trend.length) {
+        data.trend = o.trend.map((v, i) => ({ month: String(i + 1), value: v }));
+      }
+      o.stages = {
+        [it.stage]: {
+          data,
+          verdict: o.verdict,
+          actions: o.actions,
+          plan: o.plan,
+        },
+      };
+    });
+  });
+})();
 
 const state = {
   layer: "scene",
@@ -951,6 +1737,8 @@ const state = {
   stageFilter: "",
   healthFilter: "",
   q: "",
+  cmOwner: "all",
+  ltcViewStage: null,
   runs: {},
   hashLock: false,
 };
@@ -1131,11 +1919,13 @@ function renderRail() {
 
 function filteredObjects() {
   const q = state.q.trim().toLowerCase();
+  const own = state.cmOwner;
   return pack()
     .items.map((it) => objOf(it.id))
+    .filter((o) => !own || own === "all" || o.owner === own)
     .filter((o) => !state.stageFilter || o.stage === state.stageFilter)
     .filter((o) => !state.healthFilter || o.health === state.healthFilter)
-    .filter((o) => !q || `${o.title}${o.code}${o.signal}`.toLowerCase().includes(q));
+    .filter((o) => !q || `${o.title}${o.code}${o.signal}${o.id}`.toLowerCase().includes(q));
 }
 
 function spark(points) {
@@ -1166,160 +1956,153 @@ function planStatus(s) {
   return `<span class="tag ${cls}">${map[s] || s}</span>`;
 }
 
+function tagLabel(h) {
+  return h === "gate" ? "卡口" : h === "warn" ? "预警" : "正常";
+}
+
+function planPlain(s) {
+  return { todo: "待执行", doing: "进行中", done: "已完成", overdue: "逾期" }[s] || s;
+}
+
+function exportSceneCSV() {
+  const rows = filteredObjects();
+  const headers = ["id", "code", "title", "stage", "owner", "health", "days", "signal"];
+  const body = rows.map((o) => headers.map((h) => `"${String(o[h] ?? "").replace(/"/g, '""')}"`).join(","));
+  const csv = "\uFEFF" + [headers.join(","), ...body].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+  a.download = pack().id.toUpperCase() + "_工作台.csv";
+  a.click();
+}
+
+function queueOf(list) {
+  const q = { P0: [], P1: [], P2: [] };
+  list.forEach((o) => {
+    (o.actions || []).forEach((a) => {
+      if (q[a.p]) q[a.p].push({ ...a, title: o.title, id: a.item || o.id, health: o.health });
+    });
+  });
+  return q;
+}
+
 function renderLoopMain() {
   const p = pack();
   const sc = scene();
+  const spec = sc.spec || { badge: p.role, stream: "价值流漏斗", ownerLabel: "负责人", owners: [{ value: "all", label: "全部" }], overview: sc.composite };
   const list = filteredObjects();
-  const current = objOf(state.selectedId);
-  const cols = sc.funnel.length;
-  const shallow = p.deep
-    ? ""
-    : `<p class="lead">T0 浅壳：同一套数据 → 决策 → 优化 → 沉淀，客体换成${p.id === "pmo" ? "项目与里程碑" : "组合与仓位"}。</p>`;
+  const current = list.find((o) => o.id === state.selectedId) || list[0] || objOf(state.selectedId);
+  const viewStage = state.ltcViewStage || (current && current.stage);
+  const snap = current && current.stages ? current.stages[viewStage] : null;
+  const counts = {};
+  sc.funnel.forEach((f) => {
+    counts[f.id] = 0;
+  });
+  list.forEach((o) => {
+    counts[o.stage] = (counts[o.stage] || 0) + 1;
+  });
+  const q = queueOf(list);
+  const total = q.P0.length + q.P1.length + q.P2.length;
+  const ov = spec.overview;
+  const km = ov
+    .map(
+      (k) =>
+        `<div class="km"><div class="km-l">${esc(k.n)} <span class="km-tip">${esc(k.tip || "")}</span></div><div class="km-v">${esc(k.v)}</div><div class="km-sub ${k.dir === "up" ? "up" : "down"}">${esc(k.sub || "")}</div></div>`
+    )
+    .join("");
+  const cols = [
+    ["P0", "重要紧急"],
+    ["P1", "重要不紧急"],
+    ["P2", "紧急不重要"],
+  ]
+    .map(([pri, label]) => {
+      const items = q[pri]
+        .map(
+          (it) =>
+            `<button type="button" class="pq-item ${pri}" data-ltc-cust="${it.id}" title="跳转到 ${esc(it.title)}"><div class="pq-itxt">${esc(it.text)}</div><div class="pq-imeta"><span class="pq-icust ${it.health === "gate" ? "g" : ""}">${esc(it.title)}</span><span class="pq-iowner">${esc(it.owner)}</span></div></button>`
+        )
+        .join("");
+      return `<div class="pq-col"><div class="pq-colhead"><span class="pq-badge ${pri}">${pri}</span><span class="pq-clabel">${label}</span><span class="pq-ccnt">${q[pri].length}</span></div><div class="pq-list">${items || '<div class="pq-empty">无任务</div>'}</div></div>`;
+    })
+    .join("");
+  const owners = spec.owners
+    .map((o) => `<option value="${esc(o.value)}" ${state.cmOwner === o.value ? "selected" : ""}>${esc(o.label)}</option>`)
+    .join("");
+  const funnel = sc.funnel
+    .map((f, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      return `<button type="button" class="fp ${f.gate ? "gate" : ""} ${state.stageFilter === f.id ? "sel" : ""}" data-ltc-stage="${f.id}"><div class="fp-num">${num}</div><div class="fp-name">${esc(f.id)}</div><div class="fp-cnt">${counts[f.id] || 0}</div></button>`;
+    })
+    .join("");
+  const rows = list
+    .map((o) => {
+      const days = o.days ? `停留 ${o.days}天` : "稳态";
+      return `<button type="button" class="crow ${o.health} ${o.id === (current && current.id) ? "sel" : ""}" data-ltc-cust="${o.id}"><div class="cr-top"><span class="cr-name">${esc(o.title)}</span><span class="cr-tag ${o.health}">${tagLabel(o.health)}</span></div><div class="cr-mid"><span class="cr-stage">${esc(o.stage)}</span><span>${esc(o.owner)}</span></div><div class="cr-bot"><span class="cr-days ${o.health === "gate" ? "gate" : ""}">${days}</span><span class="cr-sig">${esc(o.signal)}</span></div></button>`;
+    })
+    .join("");
+  let detail = `<div class="ltc-empty">选择左侧对象查看详情</div>`;
+  if (current && !snap) {
+    detail = `<div class="ltc-empty">该对象在 ${esc(viewStage)} 无快照数据</div>`;
+  } else if (current && snap) {
+    const v = snap.verdict || current.verdict;
+    const data = snap.data || {};
+    const tabs = sc.funnel
+      .map((f) => `<button type="button" class="stab ${f.id === viewStage ? "active" : ""}" data-ltc-tab="${f.id}">${esc(f.id)}</button>`)
+      .join("");
+    const tiles = Object.entries(data)
+      .filter(([k]) => k !== "trend")
+      .map(([k, val]) => `<div class="dtile"><div class="dtile-l">${esc(k)}</div><div class="dtile-v">${esc(val)}</div></div>`)
+      .join("");
+    const trend = (data.trend || []).map((t) => (typeof t === "number" ? t : t.value));
+    const sparkHtml = trend.length >= 2 ? spark(trend) : "";
+    const acts = (snap.actions || [])
+      .map(
+        (a, i) =>
+          `<div class="act ${a.p}"><span class="act-tag ${a.p}">${a.p}</span><div><div class="act-txt">${esc(a.text)}</div><div class="act-owner">负责人：${esc(a.owner)}${a.collab ? " · 协作：" + esc(a.collab) : ""} · 建议${MODE_ZH[a.exec] || ""}</div><div class="act-go"><button type="button" class="${i === 0 ? "btn-enter" : "btn-enter ghost"}" data-enter="${a.exec || "explore"}" data-enter-item="${a.item || current.id}">进入执行态</button></div></div></div>`
+      )
+      .join("");
+    const planRows = (snap.plan || [])
+      .map(
+        (r) =>
+          `<tr><td>${esc(r.task)}</td><td>${esc(r.owner)}</td><td class="mono">${esc(r.due)}</td><td><span class="pbadge p">${esc(r.p)}</span></td><td><span class="pbadge ${r.status}">${planPlain(r.status)}</span></td></tr>`
+      )
+      .join("");
+    detail = `<div class="detail"><div class="detail-head"><div class="detail-title">${esc(current.title)}</div><div class="detail-sub">${esc(p.role)}: ${esc(current.owner)} · ${esc(viewStage)} ${viewStage === current.stage ? "· 进入 " + current.days + " 天" : ""} · 编码 ${esc(current.code)}</div><div class="stage-tabs">${tabs}</div></div><div class="detail-body">
+      <div class="verdict ${v.level === "ok" ? "" : v.level}"><div class="verdict-title">${esc(v.title)}</div><div class="verdict-desc">${esc(v.desc)}</div></div>
+      <div class="split3" style="margin-bottom:14px"><div class="panel"><h3>应当</h3><p>${esc(current.ought)}</p></div><div class="panel"><h3>事实</h3><p>${esc(current.is)}</p></div><div class="panel"><h3>缺口</h3><p>${esc(current.gap)}</p></div></div>
+      <div class="dblock"><div class="db-h">数据看板</div><div class="dgrid">${tiles}</div>${sparkHtml ? `<div style="margin-top:8px"><div class="trend-l">趋势</div>${sparkHtml}</div>` : ""}</div>
+      <div class="dblock"><div class="db-h">行动策略</div>${acts || '<div class="ltc-empty">无行动项</div>'}</div>
+      <div class="dblock"><div class="db-h">计划跟踪</div><table class="ptable"><thead><tr><th>任务</th><th>负责人</th><th>截止</th><th>优先级</th><th>状态</th></tr></thead><tbody>${planRows || '<tr><td colspan="5">无任务</td></tr>'}</tbody></table></div>
+    </div></div>`;
+  }
 
-  return `
-    <div class="loop" aria-hidden="true">
-      <i class="on">数据</i><i class="on">决策</i><i>优化</i><i>沉淀</i>
-    </div>
-    <div class="sec"><h2>数据</h2><span class="note">${esc(sc.period)} · ${esc(sc.caliber)}</span></div>
-    ${shallow}
-    <div class="loop-kpis">
-      <button type="button" class="ktile" data-kpi="${sc.composite[1].id}">
-        <div class="l">当前主张力</div>
-        <div class="v">${esc(sc.composite.filter((x) => x.hot)[0]?.v || sc.composite[0].v)}</div>
-        <div class="s">${esc(p.tension)}</div>
-        <div class="km-grid">${sc.composite
-          .map(
-            (k) =>
-              `<div class="km"><div class="l">${esc(k.n)}</div><div class="v ${k.hot ? "hot" : ""}">${esc(k.v)}</div></div>`
-          )
-          .join("")}</div>
-      </button>
-      ${sc.kpis
-        .map(
-          (k) =>
-            `<button type="button" class="ktile ${k.hot ? "hot" : ""}" data-kpi="${k.id}">
-              <div class="l">${esc(k.n)}</div>
-              <div class="v">${esc(k.v)}</div>
-              <div class="s">${esc(k.s)}</div>
-            </button>`
-        )
-        .join("")}
-    </div>
-    <div class="filter-bar">
-      <label>搜索<input id="f-q" value="${esc(state.q)}" placeholder="编号 / 对象 / 信号" /></label>
-      <label>健康
-        <select id="f-health">
-          <option value="">全部</option>
-          <option value="gate" ${state.healthFilter === "gate" ? "selected" : ""}>仅卡口</option>
-          <option value="warn" ${state.healthFilter === "warn" ? "selected" : ""}>仅预警</option>
-          <option value="ok" ${state.healthFilter === "ok" ? "selected" : ""}>仅正常</option>
-        </select>
-      </label>
-      <div class="legend">
-        <span><span class="dot green"></span>正常</span>
-        <span><span class="dot amber"></span>预警</span>
-        <span><span class="dot red"></span>卡口</span>
+  return `<div class="ltc">
+    <div class="section-header"><span class="section-title">全局经营</span><span class="section-badge">${esc(spec.badge)}</span><span class="section-note">数据周期：${esc(sc.period)} · ${esc(sc.caliber)}</span></div>
+    <div class="kpi-strip">
+      <div class="ktile kt1 composite">
+        <div class="kt-comp-head">经营概览 <b>${ov.map((k) => k.n).join(" / ")}</b><span class="section-note" style="margin-left:auto">${esc(sc.period)}</span></div>
+        <div class="km-grid">${km}</div>
       </div>
+      <div class="ktile tasks"><div class="kt-tasks-head">行动队列 <b>P0·P1·P2</b><span class="section-note" style="margin-left:auto">${total} 项 · 按筛选对象当前阶段聚合 · 点击跳转</span></div><div class="pq-cols">${cols}</div></div>
     </div>
-    <div class="sec"><h2>价值流</h2><span class="note">点阶段筛选对象，再看 360 决策信号</span></div>
-    <div class="funnel" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">
-      ${sc.funnel
-        .map(
-          (f) =>
-            `<button type="button" class="fp ${f.gate ? "gate" : ""} ${state.stageFilter === f.id ? "is-on" : ""}" data-stage="${f.id}">
-              <div class="n">${f.gate ? "卡口" : "阶段"}</div>
-              <div class="name">${esc(f.id)}</div>
-              <div class="c">${f.count}</div>
-            </button>`
-        )
-        .join("")}
+    <div class="filter-panel">
+      <div class="fg"><div class="fl">${esc(spec.ownerLabel)}</div><select class="fc" id="f-cm">${owners}</select></div>
+      <div class="fg"><div class="fl">对象</div><input class="fc" id="f-q" value="${esc(state.q)}" placeholder="搜索名称 / 编码"></div>
+      <div class="fg"><div class="fl">状态</div><select class="fc" id="f-health"><option value="">全部</option><option value="gate" ${state.healthFilter === "gate" ? "selected" : ""}>仅卡口</option><option value="warn" ${state.healthFilter === "warn" ? "selected" : ""}>仅预警</option></select></div>
+      <button type="button" class="btn btn-primary" data-ltc-query>查询</button>
+      <button type="button" class="btn btn-outline" data-ltc-reset>重置</button>
+      <button type="button" class="btn btn-outline" data-ltc-export>导出报告</button>
+      <div class="legend"><span><span class="ldot" style="background:#10b981"></span>正常</span><span><span class="ldot" style="background:#f59e0b"></span>预警</span><span><span class="ldot" style="background:#ef4444"></span>卡口</span></div>
     </div>
-    <div class="sec"><h2>决策</h2><span class="note">过关判断留下五维，动作进入执行态</span></div>
+    <div class="section-header"><span class="section-title">价值流</span><span class="section-badge">${esc(spec.stream)}</span><span class="section-note">点击阶段 pill → 按阶段筛选对象列表</span></div>
+    <div class="funnel" style="--fp-cols:${sc.funnel.length}">${funnel}</div>
     <div class="workbench">
       <div class="clist">
-        <div class="clist-head"><span>对象</span><span>${list.length}</span></div>
-        <div class="clist-body">
-          ${
-            list.length
-              ? list
-                  .map(
-                    (o) => `
-            <button type="button" class="crow ${o.health} ${state.selectedId === o.id ? "is-on" : ""}" data-item="${o.id}">
-              <div class="mid"><strong>${esc(o.title)}</strong>${healthTag(o.health)}</div>
-              <div class="mid"><span>${esc(o.stage)}</span><span>${o.days}d</span></div>
-              <div class="sig">${esc(o.signal)}</div>
-            </button>`
-                  )
-                  .join("")
-              : `<p class="empty">没有匹配对象。重置筛选。</p>`
-          }
-        </div>
+        <div class="clist-head"><span class="clist-title">对象列表</span><span class="clist-cnt">${list.length} 条 · ${state.stageFilter ? esc(state.stageFilter) + " 阶段" : "全部"}</span></div>
+        <div class="clist-body">${rows || '<div class="ltc-empty">无匹配对象</div>'}</div>
       </div>
-      <article class="detail">
-        <div class="detail-head">
-          <h1>${esc(current.title)}</h1>
-          <p class="meta">${esc(current.code)} · ${esc(current.owner)} · ${esc(current.gate)} · 停留 ${current.days}d</p>
-          <div class="stabs">
-            ${sc.funnel
-              .map(
-                (f) =>
-                  `<button type="button" class="stab ${current.stage === f.id ? "on" : ""}" data-stage="${f.id}">${esc(f.id)}</button>`
-              )
-              .join("")}
-          </div>
-        </div>
-        <div class="detail-body">
-          <div class="verdict ${current.verdict.level}">
-            <b>${esc(current.verdict.title)}</b>
-            <p>${esc(current.verdict.desc)}</p>
-          </div>
-          <div class="dgrid">
-            ${(current.metrics || [])
-              .map((m) => `<div class="dtile"><div class="l">${esc(m.n)}</div><div class="v">${esc(m.v)}</div></div>`)
-              .join("")}
-          </div>
-          ${current.trend ? `<div class="block"><h3>趋势</h3>${spark(current.trend)}</div>` : ""}
-          <div class="split3" style="margin-bottom:14px">
-            <div class="panel"><h3>应当</h3><p>${esc(current.ought)}</p></div>
-            <div class="panel"><h3>事实</h3><p>${esc(current.is)}</p></div>
-            <div class="panel"><h3>缺口</h3><p>${esc(current.gap)}</p></div>
-          </div>
-          <div class="block">
-            <h3>过关动作</h3>
-            ${(current.actions || [])
-              .map(
-                (a, i) => `
-              <div class="act ${a.p.toLowerCase()}">
-                <span class="act-tag">${a.p}</span>
-                <div>
-                  <div>${esc(a.text)}</div>
-                  <div class="meta" style="margin:4px 0 0">${esc(a.owner)} · 建议${MODE_ZH[a.exec]}</div>
-                  <div class="row" style="margin-top:8px">
-                    <button type="button" class="${i === 0 ? "primary" : "ghost"}" data-enter="${a.exec}" data-enter-item="${a.item || current.id}">进入${MODE_ZH[a.exec]}</button>
-                  </div>
-                </div>
-              </div>`
-              )
-              .join("")}
-          </div>
-          <div class="block">
-            <h3>计划</h3>
-            ${table(
-              (current.plan || []).map((r, i) => ({ ...r, id: r.item || current.id + "-p" + i })),
-              [
-                ["p", "级", (r) => esc(r.p)],
-                ["task", "事项", (r) => esc(r.task)],
-                ["owner", "负责人", (r) => esc(r.owner)],
-                ["due", "窗口", (r) => esc(r.due)],
-                ["status", "状态", (r) => planStatus(r.status)],
-              ]
-            )}
-          </div>
-          <p class="meta">场景态只做数据到决策。写生产必须进执行态运行环位。</p>
-        </div>
-      </article>
+      <div id="detailSlot">${detail}</div>
     </div>
-  `;
+  </div>`;
 }
 
 function renderOptimizeMain() {
@@ -1329,13 +2112,22 @@ function renderOptimizeMain() {
   const returns = p.items
     .map((it) => ({ it, run: runOf(it.id) }))
     .filter((x) => x.run);
+  const overdue = plans.filter((r) => r.status === "overdue");
   return `
-    <div class="loop" aria-hidden="true">
-      <i>数据</i><i>决策</i><i class="on">优化</i><i>沉淀</i>
-    </div>
-    <div class="sec"><h2>优化</h2><span class="note">执行回流后的 Check / Act。状态不在聊天里。</span></div>
+    <div class="ltc">
+    <div class="section-header"><span class="section-title">优化</span><span class="section-badge">Check / Act</span><span class="section-note">执行回流后的状态挂在对象上，不在聊天里</span></div>
     <p class="lead">${esc(p.tension)}</p>
     ${cycleHtml(p.project.cycle)}
+    <div class="panel" style="margin-bottom:12px">
+      <h3>卡口回流 ${overdue.length ? "· " + overdue.length + " 项逾期" : ""}</h3>
+      ${
+        overdue.length
+          ? `<ul>${overdue
+              .map((r) => `<li><button type="button" class="text-btn" data-item="${r.id}">${esc(r.title || itemById(r.id).title)}</button> · ${esc(r.task)} · ${esc(r.owner)}</li>`)
+              .join("")}</ul>`
+          : `<p class="empty">本窗口没有逾期计划。先看执行回流。</p>`
+      }
+    </div>
     <div class="panel" style="margin-bottom:12px">
       <h3>执行回流</h3>
       ${
@@ -1351,7 +2143,7 @@ function renderOptimizeMain() {
           : `<p class="empty">还没有任务从执行态回来。先在闭环里点过关动作。</p>`
       }
     </div>
-    <div class="sec"><h2>本窗口计划</h2></div>
+    <div class="section-header"><span class="section-title">本窗口计划</span><span class="section-note">从闭环行动队列回收</span></div>
     ${table(plans, [
       ["title", "对象", (r) => esc(r.title || itemById(r.id).title)],
       ["p", "级", (r) => esc(r.p)],
@@ -1363,6 +2155,7 @@ function renderOptimizeMain() {
       <h3>下一轮该改什么</h3>
       <ol>${sc.learn.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
     </div>
+    </div>
   `;
 }
 
@@ -1370,10 +2163,8 @@ function renderDepositMain() {
   const sc = scene();
   const p = pack();
   return `
-    <div class="loop" aria-hidden="true">
-      <i>数据</i><i>决策</i><i>优化</i><i class="on">沉淀</i>
-    </div>
-    <div class="sec"><h2>沉淀</h2><span class="note">策略资产与法则回写。禁止静默改知识。</span></div>
+    <div class="ltc">
+    <div class="section-header"><span class="section-title">沉淀</span><span class="section-badge">策略资产</span><span class="section-note">效果回收后等人确认 ChangeSet，禁止静默改知识</span></div>
     <p class="lead">效果回收后，人确认 ChangeSet，才变成下一轮数据的口径。</p>
     ${sc.assets
       .map(
@@ -1394,12 +2185,23 @@ function renderDepositMain() {
       </div>
     </div>
     <p class="meta">${esc(p.dikw[3])} ← 上一轮 ${esc(p.dikw[0])}</p>
+    </div>
   `;
 }
 
 function renderSceneMain() {
   if (state.view === "optimize") return renderOptimizeMain();
   if (state.view === "deposit") return renderDepositMain();
+  if (state.pack === "cm") {
+    return window.LTC_WB.render({
+      cm: state.cmOwner,
+      q: state.q,
+      status: state.healthFilter,
+      stage: state.stageFilter,
+      selected: state.selectedId,
+      viewStage: state.ltcViewStage,
+    });
+  }
   return renderLoopMain();
 }
 
@@ -1686,13 +2488,16 @@ function renderDock() {
 function bindSceneFilters() {
   const q = $("f-q");
   const h = $("f-health");
+  const cm = $("f-cm");
   if (q) {
     q.oninput = () => {
       state.q = q.value;
       render(false);
-      $("f-q")?.focus();
       const el = $("f-q");
-      if (el) el.selectionStart = el.selectionEnd = el.value.length;
+      if (el) {
+        el.focus();
+        el.selectionStart = el.selectionEnd = el.value.length;
+      }
     };
   }
   if (h) {
@@ -1701,9 +2506,18 @@ function bindSceneFilters() {
       render(false);
     };
   }
+  if (cm) {
+    cm.onchange = () => {
+      state.cmOwner = cm.value;
+      render(false);
+    };
+  }
 }
 
 function render(animate) {
+  if (!pack().items.some((i) => i.id === state.selectedId)) {
+    state.selectedId = pack().items.find((i) => i.hot)?.id || pack().items[0].id;
+  }
   document.querySelectorAll("[data-layer]").forEach((b) => {
     b.classList.toggle("is-on", b.dataset.layer === state.layer);
   });
@@ -1850,6 +2664,55 @@ document.addEventListener("click", (e) => {
     syncHash(true);
     return;
   }
+  const ltcStage = e.target.closest("[data-ltc-stage]");
+  if (ltcStage) {
+    state.stageFilter = state.stageFilter === ltcStage.dataset.ltcStage ? "" : ltcStage.dataset.ltcStage;
+    render(false);
+    return;
+  }
+  const ltcCust = e.target.closest("[data-ltc-cust]");
+  if (ltcCust) {
+    state.selectedId = ltcCust.dataset.ltcCust;
+    state.ltcViewStage = null;
+    render(false);
+    return;
+  }
+  const ltcTab = e.target.closest("[data-ltc-tab]");
+  if (ltcTab) {
+    const it = itemById(state.selectedId);
+    const cur = it.stage || (window.LTC_WB && (window.LTC_WB.DATA.customers.find((x) => x.customer_uec === state.selectedId) || {}).current_stage);
+    state.ltcViewStage = cur && ltcTab.dataset.ltcTab === cur ? null : ltcTab.dataset.ltcTab;
+    render(false);
+    return;
+  }
+  if (e.target.closest("[data-ltc-reset]")) {
+    state.stageFilter = "";
+    state.healthFilter = "";
+    state.q = "";
+    state.cmOwner = state.pack === "cm" ? "cowen.hua" : "all";
+    state.ltcViewStage = null;
+    render(false);
+    return;
+  }
+  if (e.target.closest("[data-ltc-query]")) {
+    render(false);
+    return;
+  }
+  if (e.target.closest("[data-ltc-export]")) {
+    if (state.pack === "cm" && window.LTC_WB) {
+      window.LTC_WB.exportCSV({
+        cm: state.cmOwner,
+        q: state.q,
+        status: state.healthFilter,
+        stage: state.stageFilter,
+      });
+      toast("已导出 CM_LTC_工作台.csv");
+    } else {
+      exportSceneCSV();
+      toast("已导出 " + pack().id.toUpperCase() + "_工作台.csv");
+    }
+    return;
+  }
   const stage = e.target.closest("[data-stage]");
   if (stage && state.layer === "scene") {
     state.stageFilter = state.stageFilter === stage.dataset.stage ? "" : stage.dataset.stage;
@@ -1945,6 +2808,8 @@ $("pack").addEventListener("change", (e) => {
   state.stageFilter = "";
   state.healthFilter = "";
   state.q = "";
+  state.cmOwner = e.target.value === "cm" ? "cowen.hua" : "all";
+  state.ltcViewStage = null;
   state.execFocus = "project";
   render(true);
   syncHash(true);
