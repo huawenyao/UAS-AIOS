@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AWM Demo · 可操作世界 · 补货闭环</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="demo.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <strong>AWM</strong>
+        <span class="muted">可操作世界</span>
+      </div>
+    </div>
+    <div class="sku-pill" id="sku-pill">SKU · —</div>
+    <div class="role-switch" role="tablist" aria-label="角色">
+      <button type="button" data-role="operator" class="is-active">操作员</button>
+      <button type="button" data-role="approver">审批人</button>
+    </div>
+  </header>
+
+  <section class="situation" id="situation-strip" aria-label="情境条">
+    <div><span class="k">世界</span> <code id="sit-id">—</code></div>
+    <div><span class="k">新鲜度</span> <span id="sit-fresh">1h</span></div>
+    <div class="gap" id="sit-gap">缺口待对齐</div>
+    <div><span class="k">主体</span> planner · procurement</div>
+    <div class="chips" id="intent-chips"></div>
+  </section>
+
+  <nav class="beats" id="beats" aria-label="闭环节拍"></nav>
+
+  <main class="shell" id="shell">
+    <aside class="canvas" id="world-canvas" aria-label="世界画布">
+      <h2>世界画布</h2>
+      <p class="hint">对象必具名。没有输入框。</p>
+      <svg class="edges" viewBox="0 0 280 240" aria-hidden="true">
+        <line x1="70" y1="48" x2="210" y2="48" />
+        <line x1="70" y1="48" x2="70" y2="120" />
+        <line x1="210" y1="48" x2="210" y2="120" />
+        <line x1="70" y1="120" x2="140" y2="188" />
+        <line x1="210" y1="120" x2="140" y2="188" />
+      </svg>
+      <article class="node n-sku" data-id="sku:A"><code>sku:A</code><b>SKU</b></article>
+      <article class="node n-wh" data-id="wh:W1"><code>wh:W1</code><b>Warehouse</b></article>
+      <article class="node n-sup" data-id="sup:S1"><code>sup:S1</code><b>Supplier</b></article>
+      <article class="node n-pos" data-id="pos:A-W1"><code>pos:A-W1</code><b>Inventory</b></article>
+      <article class="node n-po" data-id="po:pending"><code>po:pending</code><b>PurchaseOrder</b></article>
+    </aside>
+
+    <section class="stage" id="workbench" aria-live="polite">
+      <p class="highlight" id="highlight">世界是舞台，对话是灯光。</p>
+      <div id="beat-body"></div>
+    </section>
+
+    <aside class="evidence" id="evidence" aria-label="证据抽屉">
+      <h2>证据 / Explain</h2>
+      <ol id="explain-list"></ol>
+    </aside>
+  </main>
+
+  <footer class="tray" id="gate-tray" aria-label="门控托盘">
+    <div>
+      <span class="k">门控</span>
+      <strong id="tray-status">尚未提交</strong>
+      <span id="tray-meta" class="muted"></span>
+    </div>
+    <div class="tray-actions">
+      <button type="button" id="btn-illegal">尝试未注册动作</button>
+      <button type="button" class="primary" id="btn-main">进入世界</button>
+    </div>
+  </footer>
+
+  <button type="button" class="fab" id="fab-chat" aria-expanded="false">问这个世界</button>
+  <div class="chat" id="chat" hidden>
+    <p>上下文已锁定当前切片，禁止无对象闲聊。</p>
+    <p class="muted" id="chat-reply">只能问 sku:A / wh:W1 的状态、约束与动作。</p>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="demo-data.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>

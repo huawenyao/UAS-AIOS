@@ -1,0 +1,22 @@
+{
+  "id": "brief:replenishment-p0",
+  "domain_hint": "inventory replenishment",
+  "customer_type": "enterprise_ops",
+  "subjects": ["planner", "procurement", "warehouse", "finance"],
+  "named_objects": [
+    { "name": "SKU", "has_system_id": true },
+    { "name": "Warehouse", "has_system_id": true },
+    { "name": "Supplier", "has_system_id": true },
+    { "name": "PurchaseOrder", "has_system_id": true }
+  ],
+  "hard_constraints": ["max_budget", "stockout_risk < 0.05"],
+  "success_metric": "stockout_risk_p90 < 0.05",
+  "executable_actions": ["query.stockout_risk", "replenishment.create_purchase_order", "notify.procurement"],
+  "writeback_systems": ["erp"],
+  "irreversible_actions": false,
+  "has_approver": true,
+  "has_compensation": true,
+  "feedback_hours": 24,
+  "data_sources": 3,
+  "asked_autonomy": "gated"
+}

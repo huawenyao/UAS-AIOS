@@ -1,0 +1,19 @@
+{
+  "id": "brief:chat-digital-employee",
+  "domain_hint": "general assistant",
+  "customer_type": "mid_market",
+  "subjects": ["employee"],
+  "named_objects": [
+    { "name": "Document", "has_system_id": false }
+  ],
+  "hard_constraints": [],
+  "success_metric": "",
+  "executable_actions": ["draft_email"],
+  "writeback_systems": [],
+  "irreversible_actions": false,
+  "has_approver": false,
+  "has_compensation": false,
+  "feedback_hours": 168,
+  "data_sources": 1,
+  "asked_autonomy": "full"
+}

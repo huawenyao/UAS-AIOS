@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asui.dev/schemas/semantic_operation.schema.json",
+  "title": "SIO Semantic Operation Layer",
+  "description": "SIO-MMOS/DIKW 语义操作层契约：世界快照、意图、封闭动作类型与计划。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "domain", "ontology", "situation", "intent", "action_types"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+    },
+    "domain": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ontology": {
+      "$ref": "#/$defs/Ontology"
+    },
+    "situation": {
+      "$ref": "#/$defs/Situation"
+    },
+    "intent": {
+      "$ref": "#/$defs/Intent"
+    },
+    "action_types": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ActionType"
+      }
+    },
+    "policies": {
+      "$ref": "#/$defs/Policies"
+    }
+  },
+  "$defs": {
+    "Ontology": {
+      "type": "object",
+      "required": ["classes", "relations"],
+      "additionalProperties": false,
+      "properties": {
+        "classes": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "relations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "Situation": {
+      "type": "object",
+      "required": ["id", "subjects", "objects", "facts"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "subjects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Subject" }
+        },
+        "objects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/WorldObject" }
+        },
+        "facts": {
+          "type": "object"
+        },
+        "feedback_channels": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Subject": {
+      "type": "object",
+      "required": ["id", "role"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "role": { "type": "string" },
+        "stake": { "type": "string" }
+      }
+    },
+    "WorldObject": {
+      "type": "object",
+      "required": ["id", "type"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" }
+      }
+    },
+    "Intent": {
+      "type": "object",
+      "required": ["goal", "constraints", "success_metric"],
+      "additionalProperties": false,
+      "properties": {
+        "goal": { "type": "string", "minLength": 1 },
+        "constraints": { "type": "object" },
+        "success_metric": { "type": "string" },
+        "deadline": { "type": "string" },
+        "acceptable_risk": { "type": "string" }
+      }
+    },
+    "ActionType": {
+      "type": "object",
+      "required": ["id", "kind", "input_schema", "risk"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["query", "simulate", "assert", "act", "notify", "observe"]
+        },
+        "input_schema": {
+          "type": "object"
+        },
+        "preconditions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "effects": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "risk": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "approval": { "type": "boolean" },
+        "idempotency_key": { "type": "string" },
+        "rollback": { "type": "string" },
+        "tool_binding": { "type": "string" }
+      }
+    },
+    "Policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "auto_execute_max_risk": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "deny_unregistered_actions": { "type": "boolean" },
+        "predict_writes_facts": { "type": "boolean" }
+      }
+    }
+  }
+}
