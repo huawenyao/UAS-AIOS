@@ -4,6 +4,11 @@
   const F = window.ConsoleFixtures;
   const STORAGE_KEY = "platform-console-state-v1";
 
+  if (new URLSearchParams(location.search).has("reset")) {
+    try { sessionStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
+    history.replaceState(null, "", location.pathname + location.hash);
+  }
+
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
