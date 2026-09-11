@@ -11,6 +11,8 @@ python -m http.server 8765
 
 浏览器打开 `http://localhost:8765/#/overview`。
 
+首次或 stuck 状态时可加 `?reset=1` 清空 sessionStorage：`http://localhost:8765/?reset=1#/overview`。
+
 ## 页面
 
 | 路由 | 说明 |
