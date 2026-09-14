@@ -1,0 +1,25 @@
+{
+  "trace_id": "hengchuan-ltc",
+  "source": "docs/strategic/design/UAS_AIOS_ARCHITECTURE_SPEC.md §6 §10",
+  "steps": [
+    "pack.open",
+    "insight.drill",
+    "task.issue",
+    "exec.open",
+    "pack.open"
+  ],
+  "acceptance": {
+    "A1": { "expect": "an-stage-visit gate", "tests": ["test_pack_open_renders_gate_node"], "status": "contract" },
+    "A2": { "expect": "scene write 403", "tests": ["test_scene_cannot_invoke_cs_write"], "status": "contract" },
+    "A3": { "expect": "TASK_SOURCE_REQUIRED", "tests": ["test_task_requires_source_node"], "status": "contract" },
+    "A4": { "expect": "UNGROUNDED_INSIGHT", "tests": ["test_ungrounded_cannot_issue"], "status": "contract" },
+    "A5": { "expect": "CRM write + kpi refresh", "tests": ["test_exec_write_goes_through_connector_and_changes_kpi"], "status": "lab" },
+    "A6": { "expect": "L2 wait", "tests": ["test_l2_waits_signal"], "status": "lab" },
+    "A7": { "expect": "TRACK_ESCALATION_REQUIRED", "tests": ["test_selfpaw_write_requires_escalation"], "status": "contract" },
+    "A8": { "expect": "MEMORY_TRACK_FORBIDDEN", "tests": ["test_pipaw_memory_forbidden"], "status": "contract" },
+    "A9": { "expect": "cite ≠ execute", "tests": ["test_explore_cannot_execute_skill"], "status": "contract" },
+    "A10": { "expect": "unapproved law not compiled", "tests": ["test_unapproved_law_not_compiled"], "status": "contract" },
+    "A11": { "expect": "cross tenant 403", "tests": ["test_cross_tenant_forbidden"], "status": "contract" },
+    "A12": { "expect": "THREAD_PROFILE_IMMUTABLE", "tests": ["test_thread_profile_immutable"], "status": "contract" }
+  }
+}
