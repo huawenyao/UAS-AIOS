@@ -169,7 +169,7 @@
       "mvp_passed": true
     },
     "revenue_feedback": {
-      "recorded_at": "2026-06-04T14:32:01.503725+00:00",
+      "recorded_at": "2026-09-11T08:00:37.730334+00:00",
       "topic": "invariant-sales-e2e",
       "metrics": {
         "cycle_time_minutes": 0,
@@ -193,7 +193,7 @@
     "mvp_passed": true
   },
   "revenue_feedback": {
-    "recorded_at": "2026-06-04T14:32:01.503725+00:00",
+    "recorded_at": "2026-09-11T08:00:37.730334+00:00",
     "topic": "invariant-sales-e2e",
     "metrics": {
       "cycle_time_minutes": 0,

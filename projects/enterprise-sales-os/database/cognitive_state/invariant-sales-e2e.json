@@ -244,7 +244,7 @@
         "mvp_passed": true
       },
       "revenue_feedback": {
-        "recorded_at": "2026-06-04T14:32:01.503725+00:00",
+        "recorded_at": "2026-09-11T08:00:37.730334+00:00",
         "topic": "invariant-sales-e2e",
         "metrics": {
           "cycle_time_minutes": 0,
@@ -279,7 +279,7 @@
   },
   "timeline": [
     {
-      "timestamp": "2026-06-04T14:32:01.343357+00:00",
+      "timestamp": "2026-09-11T08:00:37.598520+00:00",
       "event": "intent_updated",
       "payload": {
         "topic": "invariant-sales-e2e",
@@ -293,7 +293,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.343373+00:00",
+      "timestamp": "2026-09-11T08:00:37.598537+00:00",
       "event": "knowledge_updated",
       "payload": {
         "configs": [
@@ -384,7 +384,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.344037+00:00",
+      "timestamp": "2026-09-11T08:00:37.598748+00:00",
       "event": "route_recorded",
       "payload": {
         "step_id": "intent_activation",
@@ -396,7 +396,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.344697+00:00",
+      "timestamp": "2026-09-11T08:00:37.598929+00:00",
       "event": "step_output_recorded",
       "payload": {
         "step_id": "intent_activation",
@@ -407,7 +407,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.345364+00:00",
+      "timestamp": "2026-09-11T08:00:37.599094+00:00",
       "event": "route_recorded",
       "payload": {
         "step_id": "governance_check",
@@ -419,7 +419,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.345993+00:00",
+      "timestamp": "2026-09-11T08:00:37.599268+00:00",
       "event": "step_output_recorded",
       "payload": {
         "step_id": "governance_check",
@@ -429,7 +429,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.346641+00:00",
+      "timestamp": "2026-09-11T08:00:37.599439+00:00",
       "event": "route_recorded",
       "payload": {
         "step_id": "sales_execute",
@@ -441,7 +441,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.404638+00:00",
+      "timestamp": "2026-09-11T08:00:37.647910+00:00",
       "event": "step_output_recorded",
       "payload": {
         "step_id": "sales_execute",
@@ -458,7 +458,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.405541+00:00",
+      "timestamp": "2026-09-11T08:00:37.648307+00:00",
       "event": "route_recorded",
       "payload": {
         "step_id": "simulation_snapshot",
@@ -470,7 +470,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.516612+00:00",
+      "timestamp": "2026-09-11T08:00:37.741087+00:00",
       "event": "step_output_recorded",
       "payload": {
         "step_id": "simulation_snapshot",
@@ -483,7 +483,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.517974+00:00",
+      "timestamp": "2026-09-11T08:00:37.741524+00:00",
       "event": "route_recorded",
       "payload": {
         "step_id": "render_report",
@@ -495,7 +495,7 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.576623+00:00",
+      "timestamp": "2026-09-11T08:00:37.786446+00:00",
       "event": "step_output_recorded",
       "payload": {
         "step_id": "render_report",
@@ -507,14 +507,14 @@
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.629819+00:00",
+      "timestamp": "2026-09-11T08:00:37.828867+00:00",
       "event": "evaluation_updated",
       "payload": {
         "status": "pass"
       }
     },
     {
-      "timestamp": "2026-06-04T14:32:01.630774+00:00",
+      "timestamp": "2026-09-11T08:00:37.829221+00:00",
       "event": "evolution_updated",
       "payload": {
         "suggestions": [

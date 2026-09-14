@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Platform Console · UAS-AIOS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./console.css" />
+</head>
+<body>
+  <a class="skip" href="#main">跳到主区</a>
+
+  <header class="appbar">
+    <div class="brand" translate="no">
+      <span class="logo">PC</span>
+      <strong>Platform Console</strong>
+      <small>hub.ops.*</small>
+    </div>
+    <div></div>
+    <div class="appbar-right">
+      <span class="tenant-chip" id="tenant-chip">t-hengchuan</span>
+      <label>角色
+        <select id="role-select" aria-label="切换角色"></select>
+      </label>
+    </div>
+  </header>
+
+  <div id="ban-strip" class="ban-strip" hidden></div>
+
+  <div class="shell" id="shell">
+    <aside class="rail" aria-label="导航">
+      <p class="rail-title">管理页 · 离线 Demo</p>
+      <nav id="rail-nav"></nav>
+    </aside>
+    <main id="main" class="main" tabindex="-1"></main>
+  </div>
+
+  <div id="lock-overlay" class="lock-overlay" hidden>
+    <div class="box">
+      <h2>一线视图已锁定</h2>
+      <p>Platform Console 仅面向平台管理员 / 运营指挥 / SRE。请切换角色以继续。</p>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

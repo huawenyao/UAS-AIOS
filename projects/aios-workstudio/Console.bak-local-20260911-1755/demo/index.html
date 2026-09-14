@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Platform Console · 恒川 LTC</title>
+  <link rel="stylesheet" href="./console.css" />
+</head>
+<body>
+  <div id="app">
+    <aside class="rail">
+      <div class="brand">
+        <div class="stamp">UAS-AIOS · 套件 B</div>
+        <h1>Platform Console</h1>
+        <p>管理壳，不是第二套 Hub。只调 hub.ops.*</p>
+      </div>
+      <div class="role-box">
+        <label for="role">当前角色</label>
+        <select id="role">
+          <option value="knowledge_admin">知识管理员</option>
+          <option value="platform_admin">平台管理员</option>
+          <option value="compliance">合规</option>
+          <option value="sre">SRE</option>
+          <option value="frontline">一线客户经理</option>
+        </select>
+      </div>
+      <nav aria-label="Console 信息架构"></nav>
+      <div class="rail-foot">
+        租户 <code>t-hengchuan</code><br />
+        入口强制 <code>profile=builder</code><br />
+        一线默认看不到 <code>/console</code>
+      </div>
+    </aside>
+    <header class="top">
+      <div class="crumb">
+        <div class="stamp" id="page-stamp">CONSOLE · HEALTH</div>
+        <h2 class="title" id="page-title">总览</h2>
+      </div>
+      <div class="meta" id="pills"></div>
+    </header>
+    <main id="view">加载运营台…</main>
+  </div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
