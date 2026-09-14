@@ -1,0 +1,483 @@
+# LifeWake 能力服务合约
+
+> Agent 不直连设备厂商或多模态厂商 SDK，只调用 `lw.*` 语义能力。本文定义 P0 能力的输入、输出、错误、权限、幂等与回滚。
+
+---
+
+## 1. 通用调用信封
+
+```yaml
+capability: lw.surprise.compose
+version: v1
+tenant_id: personal_space
+trace_id: trace_001
+intent_ref: int_001
+actor:
+  type: agent
+  id: surprise_alchemist
+on_behalf_of: person_ada
+idempotency_key: int_001:person_ada:surprise
+inputs: {}
+policy:
+  required_scopes: ["signals.low_sensitivity"]
+  max_risk_level: G2
+  purpose: create_for_user
+audit:
+  audit_ref: audit_001
+```
+
+### 1.1 通用响应
+
+```yaml
+status: success | failed | needs_human_review
+result: {}
+error:
+  code: null
+  message: null
+  retryable: false
+rollback:
+  rollback_supported: true
+  rollback_ref: null
+audit:
+  audit_ref: audit_001
+```
+
+### 1.2 通用错误码
+
+| 错误码 | 含义 | 可重试 | 下一步 |
+|--------|------|--------|--------|
+| `CONSENT_REQUIRED` | 缺少有效同意 | 否 | 引导授权 |
+| `CONSENT_REVOKED` | 同意已撤回 | 否 | 停止创作并清理待推送 |
+| `POLICY_DENIED` | 用途或风险策略拒绝 | 否 | 说明原因 |
+| `BOND_ASYMMETRIC` | 双人模式仅满足单方需求 | 否 | Bond Guardian 补齐双方 |
+| `DEVICE_NOT_LINKED` | 心跳设备未连接 | 否 | 连接设备 |
+| `VALIDATION_ERROR` | 输入不合法 | 否 | 修正输入 |
+| `CONNECTOR_UNAVAILABLE` | mock/生成器不可用 | 是 | 重试或人工接管 |
+| `DEVICE_DISCONNECTED` | 会话中设备断连 | 是 | 重连、双方确认降级或结束 |
+| `EMOTION_IMPACT_FAILED` | 用户反馈 + 策展 rubric 门禁未过 | 否 | 重炼、人工策展或删除 |
+| `SLOW_INSPIRATION_DEFERRED` | 时机、频率或质量尚不适合交付 | 否 | 到期重评或用户取消 |
+| `SHARE_REVOKED` | 任一权利人已撤回共同共享 | 否 | 禁止访问并展示权利说明 |
+| `GIFT_INVALID` | 礼物令牌过期、用尽、撤回或未知 | 否 | 落地页权利占位 |
+| `GIFT_SOURCE_NOT_REVEALED` | 源仪式未达可赠送状态 | 否 | 先完成揭晓 |
+| `GIFT_COOWNER_UNCONFIRMED` | 共同作品外发缺一方确认 | 否 | 等待确认 |
+| `SAFETY_HUMAN_REVIEW` | 高危情境停止娱乐化生成 | 否 | 安全资源/人工路径/退出 |
+| `FEATURE_RESERVED` | 扩展能力未启用 | 否 | 提示后续版本 |
+| `IDEMPOTENCY_CONFLICT` | 幂等冲突 | 否 | 人工审计 |
+
+---
+
+## 2. `lw.consent.check`
+
+### 目的
+
+校验指定 scopes 是否处于 `granted`，且 purpose 仅为 `create_for_user`。
+
+### 输入
+
+```yaml
+inputs:
+  person_id: person_ada
+  required_scopes: ["signals.low_sensitivity"]
+  purpose: create_for_user
+```
+
+### 输出
+
+```yaml
+result:
+  allowed: true
+  consent_id: consent_001
+  missing_scopes: []
+```
+
+---
+
+## 3. `lw.surprise.compose`
+
+### 目的
+
+基于 SignalBundle 生成惊喜作品与灵感解析。
+
+### 权限
+
+| 项 | 要求 |
+|----|------|
+| scope | `signals.low_sensitivity` |
+| 最大风险 | G2 |
+| 审批 | 默认无；外部分享升 G3 |
+
+### 输入
+
+```yaml
+inputs:
+  person_id: person_ada
+  signal_bundle_ref: bundle_001
+  preferred_kinds: ["song", "artwork", "inspiration_task"]
+  timing_window: boredom
+```
+
+### 输出
+
+```yaml
+result:
+  surprise_id: sur_001
+  kind: song
+  payload:
+    asset_ref: mock://audio/sur_001.wav
+    title: "雨夜哼唱 · 爵士回响"
+    summary: "以你的旋律动机融合爵士人声质感"
+  inspiration_trace:
+    - signal: hum_melody
+      explanation: "你无意识哼唱的动机被保留为主题"
+    - signal: favorite_artist_style
+      explanation: "你反复回味的爵士风格成为编配底色"
+  uniqueness_refs: ["hum_melody", "favorite_artist_style"]
+```
+
+### 回滚
+
+支持撤销未送达惊喜；已送达仅可标记 `dismissed`，不删除审计。
+
+---
+
+## 4. `lw.pulse.compose`
+
+### 目的
+
+单人模式：将 PulseStream 映射为生物韵律音乐。
+
+### 权限
+
+| 项 | 要求 |
+|----|------|
+| scope | `device.pulse` |
+| 最大风险 | G2 |
+
+### 输入
+
+```yaml
+inputs:
+  person_id: person_ada
+  device_ref: mock_band_ada
+  style: nature
+  mix_ratio:
+    heartbeat: 0.7
+    ambience: 0.3
+```
+
+### 输出
+
+```yaml
+result:
+  session_id: pulse_001
+  mode: solo
+  composition_ref: mock://audio/pulse_001.wav
+  waveform_ref: mock://visual/pulse_001.json
+  tempo_map:
+    - t: 0
+      bpm_from_hr: 72
+    - t: 30
+      bpm_from_hr: 88
+```
+
+---
+
+## 5. `lw.pulse.duet`
+
+### 目的
+
+双人模式：混合双方心跳生成共鸣交响曲。
+
+### 权限
+
+| 项 | 要求 |
+|----|------|
+| scopes | 双方 `device.pulse` + `share.partner` |
+| Bond | 必须存在 active Bond，且双向 needs 通过 |
+| 最大风险 | G3（共享纪念物） |
+
+### 输入
+
+```yaml
+inputs:
+  bond_id: bond_ada_lee
+  participants: [person_ada, person_lee]
+  style: classical
+  share_keepsake: true
+```
+
+### 输出
+
+```yaml
+result:
+  session_id: pulse_duet_001
+  mode: duet
+  composition_ref: mock://audio/pulse_duet_001.wav
+  sync_visual:
+    correlation: 0.82
+    motif: "interwoven_waves"
+  keepsake_ref: mock://keepsake/pulse_duet_001
+  bond_check:
+    bidirectional: true
+    needs_met: [person_ada, person_lee]
+```
+
+### 错误特化
+
+若仅一方 needs 满足 → `BOND_ASYMMETRIC`。
+
+---
+
+## 6. `lw.timing.decide`
+
+### 目的
+
+在内容质量、安静期、频率和用户节奏约束下决定交付或延期。
+
+```yaml
+inputs:
+  person_id: person_ada
+  candidate_ref: sur_001
+  requested_window: commute
+  quiet_hours: false
+  deliveries_last_24h: 0
+  quality_ready: true
+result:
+  timing_id: timing_001
+  decision: DELIVER_NOW
+  reason_codes: [user_allowed_window, quality_ready]
+  reconsider_after: null
+```
+
+若延期，响应 status 仍为成功决策，业务结果码为 `SLOW_INSPIRATION_DEFERRED`；不得调用通知能力。
+
+---
+
+## 7. `lw.impact.evaluate`
+
+### 目的
+
+生成 `EmotionImpact`。情感冲击测试不是模型真理，而是**用户反馈 + 策展 rubric** 的可解释门禁；模型只提供辅助信号。
+
+```yaml
+inputs:
+  artifact_ref: sur_001
+  user_feedback:
+    - signal: not_meaningful
+      reason_category: too_generic
+  curation_rubric:
+    version: ritual_v1
+    dimensions:
+      source_fit: fail
+      specificity: fail
+      emotional_safety: pass
+  model_auxiliary:
+    predicted_wow: 0.88
+    uncertainty: 0.21
+result:
+  impact_id: impact_001
+  decision: rework
+  rationale: [user_feedback_not_meaningful, source_fit_failed]
+  superseded_by_feedback: true
+```
+
+硬约束：缺用户/同类反馈时可由 rubric 决定进入内测，但模型信号单独存在不能 `deliver`。
+
+---
+
+## 8. `lw.ritual.render`
+
+### 目的
+
+将已通过治理、时机和影响门禁的作品封装为 `RitualEnvelope`；不在渲染阶段伪造情感分。
+
+### 输入
+
+```yaml
+inputs:
+  artifact_type: surprise
+  artifact_ref: sur_001
+  narrative_tone: gentle
+  timing_decision_ref: timing_001
+  emotion_impact_ref: impact_001
+```
+
+### 输出
+
+```yaml
+result:
+  envelope_id: renv_001
+  ritual_id: ritual_001
+  content_blocks:
+    - {type: audio, asset_ref: "mock://audio/sur_001.wav", autoplay: false}
+  inspiration_trace:
+    - {source_category: hum_melody, explanation: "保留了四音动机"}
+  consent_refs: [consent_001]
+  timing_decision_ref: timing_001
+  emotion_impact_ref: impact_001
+  owners: [person_ada]
+  actions: [reveal, save, feedback, delete]
+```
+
+---
+
+## 9. `lw.share.revoke`
+
+### 目的
+
+任一共同权利人撤回后，使所有共享 surface 立即失效。
+
+```yaml
+inputs:
+  keepsake_id: keep_duet_001
+  requested_by: person_lee
+  share_grant_refs: [share_ada, share_lee]
+result:
+  status: SHARE_REVOKED
+  revoked_surfaces: [bond_space, expiring_link]
+  enforced_at: 2026-07-22T03:00:01Z
+  receipts: [receipt_ada, receipt_lee]
+```
+
+幂等键按 `keepsake_id:requested_by:revoke`；重复调用仍返回同一生效结果，不披露撤回理由。
+
+---
+
+## 9A. `lw.gift.token.mint`
+
+### 目的
+
+将已揭晓仪式铸造为**可过期、无原料、可撤销**的礼物令牌，供用户手动外发（禁止静默代发）。规格见 [BETA_SHELL_AND_GIFT_SPEC](./BETA_SHELL_AND_GIFT_SPEC.md)。
+
+### 输入
+
+```yaml
+inputs:
+  ritual_ref: ritual_001
+  keepsake_ref: keep_001          # 可选
+  grantor_ids: [person_ada]       # 共同作品须含全体 owners
+  surface: expiring_link
+  expires_at: 2026-09-21T00:00:00Z
+  max_resolves: 2
+  public_card:
+    title: "一段只想给你的回响"
+    modality: audio
+    cover_asset_ref: mock://public/cover_001.webp   # 必须是公开派生资产
+    invite_line: "要不要一起留下这一刻"
+  confirmations:                  # 共同作品：每位 grantor 的外发确认
+    - {person_id: person_ada, confirmed: true}
+```
+
+### 输出
+
+```yaml
+result:
+  gift_id: gift_001
+  token: "gw_live_xxx"            # 仅此响应返回明文；落库只存 token_hash
+  expires_at: 2026-09-21T00:00:00Z
+  resolve_url: "https://lw.example/g/gw_live_xxx"
+  share_grant_refs: [share_gift_001]
+  status: active
+```
+
+### 错误
+
+| 错误码 | 含义 | 下一步 |
+|--------|------|--------|
+| `CONSENT_REQUIRED` | 缺少外发/分享同意 | 引导授权 |
+| `BOND_ASYMMETRIC` / `GIFT_COOWNER_UNCONFIRMED` | 共同作品未获全体确认 | 等待各方确认 |
+| `POLICY_DENIED` | 原料泄漏检测、未成年外发、过期过长等 | 说明原因 |
+| `GIFT_SOURCE_NOT_REVEALED` | 仪式未揭晓或低冲击未交付 | 不可造礼物 |
+| `VALIDATION_ERROR` | public_card 含禁字段 | 修正 |
+
+硬约束：
+
+1. `payload_public` 不得含 signals、pulse、inspiration_trace 细节、consent 原文。
+2. 默认 `expires_at` 受策略上限约束（建议 ≤ 7 天）；实验不可关闭过期。
+3. 幂等键：`ritual_ref:grantor_set:surface:expires_at_bucket`。
+4. 能力**不**调用通讯录或 IM 代发；只返回 URL/token。
+
+---
+
+## 9B. `lw.gift.token.resolve`
+
+### 目的
+
+在 Gift Landing 解析令牌，返回可展示的公开载荷；不创建对方账户所需之外的数据采集。
+
+```yaml
+inputs:
+  token: "gw_live_xxx"
+  surface: expiring_link
+  client_ctx: {locale: zh-CN, reduced_motion: false}
+result:
+  gift_id: gift_001
+  status: active
+  public_card: {title, modality, cover_asset_ref, invite_line}
+  remaining_resolves: 1
+  cta: [create_for_moment, invite_duet_with_grantor, leave]
+```
+
+| 错误码 | 何时 |
+|--------|------|
+| `GIFT_INVALID` | expired / revoked / exhausted / 未知 token |
+| `SHARE_REVOKED` | 关联 ShareGrant 已撤回（与站内语义对齐） |
+
+解析成功递增 `resolve_count`；达 `max_resolves` 后状态 `exhausted`。审计可记 gift_id 与结果码，不得记收件人身份推断。
+
+---
+
+## 9C. `lw.gift.token.revoke`
+
+### 目的
+
+任一 `grantor` 撤回礼物后，令牌与落地页立即失效，并级联相关 `ShareGrant` / 外链 surface。
+
+```yaml
+inputs:
+  gift_id: gift_001
+  requested_by: person_ada
+result:
+  status: revoked
+  enforced_at: 2026-09-14T08:00:00Z
+  revoked_surfaces: [expiring_link]
+  share_status: SHARE_REVOKED
+```
+
+幂等键：`gift_id:requested_by:revoke`。与 `lw.share.revoke` 可互相级联：撤回共享纪念物时，关联 `GiftToken` 必须一并 `revoked`。
+
+---
+
+## 10. `lw.feedback.capture` 与 `lw.changeset.draft`
+
+`lw.feedback.capture` 只接收结构化枚举与可选加密正文引用；正文不得进入遥测。
+
+`lw.changeset.draft` 必须输入 feedback、EmotionImpact、rubric 版本、目标 pack、假设、护栏、回归 CASE 和 rollback；输出 `auto_apply: false`。扩大 purpose/scope 返回 `POLICY_DENIED`。
+
+---
+
+## 11. `lw.audit.append`
+
+追加审计事件；始终允许（G0），但 payload 不得包含原始连续生物流、自由文本反馈、伴侣拒绝理由或诊断推断。
+
+---
+
+## 12. 预留能力
+
+| 能力 | 状态 | 调用结果 |
+|------|------|----------|
+| `lw.memory.weave` | reserved | `FEATURE_RESERVED` |
+| `lw.bond.async_create` | reserved | `FEATURE_RESERVED` |
+| `lw.twin.draft` | reserved | `FEATURE_RESERVED` |
+| `lw.template.publish` | reserved | `FEATURE_RESERVED` |
+
+## 13. 合约不变量
+
+1. compose 能力不得直接通知；必须依次生成 `EmotionImpact`、`TimingDecision`、`RitualEnvelope`。
+2. duet 输入必须含双方 consent refs 与 active Bond。
+3. `EmotionImpact` 的三类证据分别存储，模型不得冒充 user feedback。
+4. `SLOW_INSPIRATION_DEFERRED` 是有效业务结果，不进入重试队列。
+5. `SHARE_REVOKED` 后任何 read/share 能力都必须拒绝。
+6. 所有补偿动作保持审计，但清除未交付内容和超范围数据。
+7. `lw.gift.token.*` 不得外发原料；不得代发 IM/邮件；mint 明文 token 只出现一次。
+8. 撤回 Keepsake 共享时必须级联 `GiftToken` → `revoked`。

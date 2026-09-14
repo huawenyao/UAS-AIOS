@@ -51,7 +51,7 @@ def check_entity_map_consistency() -> Result:
         "CapabilityService",
         "SelfPawEnterprise",
         "PiPawBusinessAGI",
-        "EnterpriseDataPlane",
+        "CapabilityHub",
     ]
     missing = [k for k in required_keys if k not in entities]
     if missing:
@@ -98,6 +98,44 @@ def check_phase0_requirements_registered() -> Result:
     if any(v == 0 for v in by_prefix.values()):
         return Result("phase0_requirements", False, str(by_prefix))
     return Result("phase0_requirements", True, str(by_prefix))
+
+
+def check_uas_aios_reqharness() -> Result:
+    req_dir = HARNESS_ROOT / "requirements"
+    missing = []
+    if not (req_dir / "REQ-UAS-AIOS-001.req.md").is_file():
+        missing.append("REQ-UAS-AIOS-001.req.md")
+    for i in range(1, 25):
+        name = f"REQ-UAS-M{i:02d}.req.md"
+        if not (req_dir / name).is_file():
+            missing.append(name)
+    extras = [
+        REPO_ROOT / "docs" / "strategic" / "design" / "UAS_AIOS_PLATFORM_PRODUCT.md",
+        HARNESS_ROOT / "requirements" / "user-stories-uas-aios.md",
+        HARNESS_ROOT / "knowledge" / "product" / "uas-aios-cluster-prd.md",
+        HARNESS_ROOT / "knowledge" / "technical" / "uas-aios-module-delivery.md",
+        HARNESS_ROOT / "knowledge" / "constraints" / "adr-sel-001-semantic-layers.md",
+        HARNESS_ROOT / "knowledge" / "constraints" / "adr-sel-002-dual-loop.md",
+        HARNESS_ROOT / "knowledge" / "constraints" / "adr-sel-003-no-substitutes.md",
+        req_dir / "sprint-uas-aios-001.md",
+    ]
+    for path in extras:
+        if not path.is_file():
+            missing.append(str(path.relative_to(REPO_ROOT)))
+    emap = json.loads((HARNESS_ROOT / "entity-map.json").read_text(encoding="utf-8"))
+    for ent in (
+        "CapabilityHub",
+        "AccountabilityGraph",
+        "WorkStudio",
+        "InnerLoop",
+        "PlatformConsole",
+        "SystemServices",
+    ):
+        if ent not in emap.get("entities", {}):
+            missing.append(f"entity:{ent}")
+    if missing:
+        return Result("uas_aios_reqharness", False, f"missing: {missing[:8]}")
+    return Result("uas_aios_reqharness", True, "24 modules + platform product + ADR-SEL")
 
 
 def check_system_connectors() -> Result:
@@ -500,6 +538,59 @@ def check_uas_runtime_list() -> Result:
     return Result("uas_runtime_list", True, f"{len(apps)} app(s)")
 
 
+def check_uas_aios_protocol() -> Result:
+    path = REPO_ROOT / "configs" / "protocol" / "registry.json"
+    kernel = REPO_ROOT / "configs" / "protocol" / "KERNEL.yaml"
+    ports = REPO_ROOT / "services" / "hub-api" / "uas_hub" / "ports.py"
+    traces = REPO_ROOT / "harness" / "traces" / "hengchuan-ltc" / "index.json"
+    compose = REPO_ROOT / "deploy" / "compose" / "docker-compose.yml"
+    missing = [p.name for p in (path, kernel, ports, traces, compose) if not p.is_file()]
+    if missing:
+        return Result("uas_aios_protocol", False, f"missing: {missing}")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    ids = [m.get("id") for m in data.get("modules") or []]
+    expected = [f"M{i}" for i in range(1, 25)]
+    if ids != expected:
+        return Result("uas_aios_protocol", False, f"ids={ids[:8]}")
+    order = data.get("policy_order") or []
+    if order != [
+        "inject",
+        "tenant",
+        "registry",
+        "rbac",
+        "approval",
+        "gates",
+        "scope",
+        "execute",
+        "audit",
+    ]:
+        return Result("uas_aios_protocol", False, "policy_order")
+    return Result("uas_aios_protocol", True, "24 module protocols")
+
+
+def check_uas_aios_phase_a() -> Result:
+    for path in (
+        REPO_ROOT / "schemas" / "insight.schema.json",
+        REPO_ROOT / "schemas" / "operating_task.schema.json",
+        REPO_ROOT / "configs" / "gate_map.json",
+        REPO_ROOT / "services" / "hub-api" / "uas_hub" / "hub.py",
+    ):
+        if not path.is_file():
+            return Result("uas_aios_phase_a", False, f"missing {path.name}")
+    import subprocess
+
+    r = subprocess.run(
+        [sys.executable, str(REPO_ROOT / "scripts" / "validate_uas_aios_phase_a.py")],
+        cwd=str(REPO_ROOT),
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    if r.returncode != 0:
+        return Result("uas_aios_phase_a", False, (r.stderr or r.stdout).strip()[:500])
+    return Result("uas_aios_phase_a", True, "schema+policy+issue")
+
+
 def main() -> int:
     checks = [
         check_harness_structure,
@@ -507,6 +598,9 @@ def main() -> int:
         check_entity_map_consistency,
         check_knowledge_index,
         check_phase0_requirements_registered,
+        check_uas_aios_reqharness,
+        check_uas_aios_protocol,
+        check_uas_aios_phase_a,
         check_capability_registry,
         check_enterprise_policy,
         check_system_connectors,

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UAS-AIOS 平台产品 · 套件 · 数据链路 · 运营/系统面</title>
+<style>
+  :root { --bg:#0a1016; --ink:#e6eef4; --mute:#7d93a3; --line:rgba(140,180,200,.2);
+    --a:#3d8bd4; --b:#c4a35a; --c:#5aaa7a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font: 14px/1.45 "IBM Plex Sans","Noto Sans SC",sans-serif; }
+  header { padding:22px 28px 10px; border-bottom:1px solid var(--line); }
+  .stamp { font:11px/1 ui-monospace,Consolas,monospace; letter-spacing:.12em; color:var(--a); }
+  h1 { margin:6px 0 8px; font-size:22px; font-weight:620; }
+  .lede { color:var(--mute); max-width:72ch; margin:0; }
+  nav { display:flex; gap:8px; padding:10px 28px; }
+  nav button { background:transparent; color:var(--ink); border:1px solid var(--line); padding:6px 12px; cursor:pointer; font:inherit; }
+  nav button.on { border-color:var(--a); color:var(--a); }
+  main { padding:8px 28px 32px; }
+  .panel { display:none; }
+  .panel.on { display:block; }
+  svg { width:100%; max-width:1180px; height:auto; }
+  table { width:100%; max-width:1180px; border-collapse:collapse; font-size:13px; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+  th { color:var(--mute); font-weight:550; }
+  code { font:12px ui-monospace,Consolas,monospace; color:#9ad; }
+  footer { padding:12px 28px 24px; color:var(--mute); font-size:12px; border-top:1px solid var(--line); }
+  footer a { color:var(--a); }
+</style>
+</head>
+<body>
+<header>
+  <div class="stamp">UAS-AIOS PLATFORM PRODUCT · v1.0</div>
+  <h1>一个平台，三个套件：使用 · 运营 · 系统服务</h1>
+  <p class="lede">工作台给人办事；控制台给人管平台；系统服务给机器进出。运营管理有独立界面和 <code>hub.ops.*</code>，不靠零件原生 UI。</p>
+</header>
+<nav>
+  <button class="on" data-p="suite">产品套件</button>
+  <button data-p="data">数据链路</button>
+  <button data-p="ops">运营界面 / 接口</button>
+  <button data-p="sys">系统服务接口</button>
+</nav>
+<main>
+<section id="suite" class="panel on">
+<svg viewBox="0 0 1100 520" role="img" aria-label="三套件产品结构">
+  <rect x="20" y="20" width="340" height="480" fill="#102030" stroke="#3d8bd4" rx="4"/>
+  <text x="190" y="50" text-anchor="middle" fill="#3d8bd4" font-size="14">套件 A · WorkStudio</text>
+  <text x="190" y="72" text-anchor="middle" fill="#7d93a3" font-size="11">/app · 业务用户</text>
+  <rect x="48" y="96" width="284" height="88" fill="#163044" stroke="#3d8bd488" rx="3"/>
+  <text x="190" y="132" text-anchor="middle" fill="#e6eef4">A1 经营工作台</text>
+  <text x="190" y="154" text-anchor="middle" fill="#7d93a3" font-size="11">今日必办 · 作战室 · 指挥舱</text>
+  <rect x="48" y="200" width="284" height="72" fill="#163044" stroke="#3d8bd488" rx="3"/>
+  <text x="190" y="232" text-anchor="middle" fill="#e6eef4">A2 签发与确认</text>
+  <text x="190" y="252" text-anchor="middle" fill="#7d93a3" font-size="11">接地 · 派活 · 待你确认</text>
+  <text x="190" y="320" text-anchor="middle" fill="#7d93a3" font-size="12">只调 hub.scene / exec / SSE</text>
+  <text x="190" y="344" text-anchor="middle" fill="#7d93a3" font-size="12">不见连接器 · Cube · 工作流 ID</text>
+
+  <rect x="380" y="20" width="340" height="480" fill="#1c1810" stroke="#c4a35a" rx="4"/>
+  <text x="550" y="50" text-anchor="middle" fill="#c4a35a" font-size="14">套件 B · Platform Console</text>
+  <text x="550" y="72" text-anchor="middle" fill="#7d93a3" font-size="11">/console · 运营角色</text>
+  <rect x="408" y="96" width="284" height="52" fill="#2a2418" stroke="#c4a35a66" rx="3"/>
+  <text x="550" y="128" text-anchor="middle" fill="#e6eef4" font-size="13">B1 控制中心</text>
+  <rect x="408" y="160" width="284" height="52" fill="#2a2418" stroke="#c4a35a66" rx="3"/>
+  <text x="550" y="192" text-anchor="middle" fill="#e6eef4" font-size="13">B2 本体工作室</text>
+  <rect x="408" y="224" width="284" height="52" fill="#2a2418" stroke="#c4a35a66" rx="3"/>
+  <text x="550" y="256" text-anchor="middle" fill="#e6eef4" font-size="13">B3 能力网格</text>
+  <rect x="408" y="288" width="284" height="52" fill="#2a2418" stroke="#c4a35a66" rx="3"/>
+  <text x="550" y="320" text-anchor="middle" fill="#e6eef4" font-size="13">B4 治理中心</text>
+  <rect x="408" y="352" width="284" height="52" fill="#2a2418" stroke="#c4a35a66" rx="3"/>
+  <text x="550" y="384" text-anchor="middle" fill="#e6eef4" font-size="13">B5 运行与知识运营</text>
+  <text x="550" y="440" text-anchor="middle" fill="#7d93a3" font-size="12">统一发布：ChangeSet</text>
+  <text x="550" y="462" text-anchor="middle" fill="#7d93a3" font-size="12">接口 hub.ops.*</text>
+
+  <rect x="740" y="20" width="340" height="480" fill="#102018" stroke="#5aaa7a" rx="4"/>
+  <text x="910" y="50" text-anchor="middle" fill="#5aaa7a" font-size="14">套件 C · System Services</text>
+  <text x="910" y="72" text-anchor="middle" fill="#7d93a3" font-size="11">契约 · 机器与集成</text>
+  <text x="910" y="120" text-anchor="middle" fill="#e6eef4" font-size="13">C1 应用北向 hub.scene/exec</text>
+  <text x="910" y="160" text-anchor="middle" fill="#e6eef4" font-size="13">C2 运营北向 hub.ops</text>
+  <text x="910" y="200" text-anchor="middle" fill="#e6eef4" font-size="13">C3 南向 MCP / cs.*</text>
+  <text x="910" y="240" text-anchor="middle" fill="#e6eef4" font-size="13">C4 进入向 Webhook / ETL</text>
+  <text x="910" y="280" text-anchor="middle" fill="#e6eef4" font-size="13">C5 身份 OIDC</text>
+  <text x="910" y="360" text-anchor="middle" fill="#7d93a3" font-size="12">不开放：库 · Vault · 零件 UI</text>
+  <text x="910" y="384" text-anchor="middle" fill="#7d93a3" font-size="12">界面 = 契约浏览器 + 试运行</text>
+</svg>
+</section>
+
+<section id="data" class="panel">
+<svg viewBox="0 0 1100 420" role="img" aria-label="三条数据链路">
+  <text x="20" y="28" fill="#3d8bd4" font-size="14">经营数据流</text>
+  <text x="20" y="58" fill="#e6eef4" font-size="13">SoR / 仓 → Cube → kpi.is → 责任图切片 → 工作台</text>
+  <text x="20" y="80" fill="#e6eef4" font-size="13">事件 → Graphiti → 证据 → Insight → Task → exec → 写 SoR → 回流 is</text>
+  <text x="20" y="130" fill="#c4a35a" font-size="14">运营管理流</text>
+  <text x="20" y="160" fill="#e6eef4" font-size="13">Console 编辑 → ChangeSet → 人确认 → 配置权威 → 下次 compiled / 目录生效</text>
+  <text x="20" y="182" fill="#e6eef4" font-size="13">禁止运营流直接改 ought / 关审计 / auto_apply</text>
+  <text x="20" y="232" fill="#5aaa7a" font-size="14">系统集成流</text>
+  <text x="20" y="262" fill="#e6eef4" font-size="13">IdP 人 → IAM 岗位 · Agent → MCP → 门禁 → Connector</text>
+  <text x="20" y="284" fill="#e6eef4" font-size="13">ETL → ingest_episode（≠ cs 写） · 仓 → Cube 只读</text>
+  <text x="20" y="340" fill="#7d93a3" font-size="12">对象不互冒：节点 ≠ 图实体 ≠ Lethe 行 ≠ 工作流 ID ≠ 报告 PDF</text>
+</svg>
+</section>
+
+<section id="ops" class="panel">
+<table>
+  <thead><tr><th>Console 页面</th><th>运营角色</th><th>接口 hub.ops.*</th><th>禁</th></tr></thead>
+  <tbody>
+    <tr><td>总览 / 控制 / 试运行</td><td>平台管理员</td><td>tenant · health · explain · profile.matrix</td><td>关审计</td></tr>
+    <tr><td>本体：图 / WM / Law</td><td>知识管理员</td><td>graph · wm · law · changeset.submit</td><td>live 改 compiled</td></tr>
+    <tr><td>能力：目录 / MCP / 连接器 / 契约</td><td>平台 / 实施 / 值班</td><td>registry · mcp.preview · connector · schema.drift</td><td>密钥明文</td></tr>
+    <tr><td>治理：岗位 / 审计 / 演化 / 遗忘</td><td>平台 / 合规</td><td>iam · audit · changeset.decide · memory.receipt</td><td>auto_apply</td></tr>
+    <tr><td>运行：任务 / 口径 / 时态 / 模型</td><td>值班 / SRE-lite</td><td>runtime.task/retry · caliber · kg.ingest · model.route</td><td>零件 UI 给业务</td></tr>
+    <tr><td>发布中心</td><td>有写配置权限者</td><td>changeset.list/decide</td><td>会话内生效</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section id="sys" class="panel">
+<table>
+  <thead><tr><th>服务面</th><th>接口</th><th>调用方</th><th>配套界面</th></tr></thead>
+  <tbody>
+    <tr><td>C1 应用北向</td><td><code>hub.scene.*</code> <code>hub.exec.*</code> SSE</td><td>WorkStudio</td><td>/app</td></tr>
+    <tr><td>C2 运营北向</td><td><code>hub.ops.*</code></td><td>Platform Console</td><td>/console</td></tr>
+    <tr><td>C3 南向</td><td>MCP <code>cs.*</code></td><td>内环 / 岗位 Agent</td><td>MCP 预览</td></tr>
+    <tr><td>C4 进入向</td><td><code>hub.kg.ingest_episode</code> · 仓→Cube</td><td>ETL / 仓</td><td>摄入 / stale 监视</td></tr>
+    <tr><td>C5 身份</td><td>OIDC / SAML</td><td>IdP</td><td>岗位绑定页</td></tr>
+    <tr><td>不开放</td><td>Temporal / CubeQL / Bolt / SQL / Vault</td><td>SRE 逃生（另权）</td><td>默认不链出</td></tr>
+  </tbody>
+</table>
+</section>
+</main>
+<footer>
+  <a href="./UAS_AIOS_PLATFORM_PRODUCT.md">平台产品定义</a> ·
+  <a href="../../../harness/requirements/user-stories-uas-aios.md">用户故事</a> ·
+  本页是产品结构图，不是工作台皮肤。
+</footer>
+<script>
+document.querySelectorAll("nav button").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll("nav button").forEach(x => x.classList.remove("on"));
+    document.querySelectorAll(".panel").forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    document.getElementById(b.dataset.p).classList.add("on");
+  });
+});
+</script>
+</body>
+</html>

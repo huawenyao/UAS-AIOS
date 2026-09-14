@@ -1,0 +1,6 @@
+id: kpi-visit-dwell
+name: 阶段停留天数
+unit: day
+formula: now - stage_entered_at
+source: crm.opportunity.stage_entered_at
+grain: day

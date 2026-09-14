@@ -1,5 +1,7 @@
 # 用户故事（数字人生态 Phase-0）
 
+UAS-AIOS 平台级故事见 [`user-stories-uas-aios.md`](./user-stories-uas-aios.md)（WorkStudio / Console / System Services）。
+
 ## 平台
 
 - **US-PL-01** 作为企业管理员，我希望开通独立租户，以便数据与审计与其他企业隔离。  

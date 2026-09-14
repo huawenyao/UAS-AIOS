@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asui.dev/schemas/operating_task.schema.json",
+  "title": "Operating Task",
+  "description": "经营任务。必须带 source_node_id。签发不启动 Temporal。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "tenant_id",
+    "source_node_id",
+    "insight_id",
+    "assignee",
+    "cs_write",
+    "status",
+    "track"
+  ],
+  "properties": {
+    "task_id": { "type": "string", "pattern": "^tsk-" },
+    "tenant_id": { "type": "string" },
+    "source_node_id": { "type": "string", "pattern": "^an-[a-z0-9-]+$" },
+    "insight_id": { "type": "string" },
+    "assignee": {
+      "type": "object",
+      "required": ["owner_id", "position_id"],
+      "properties": {
+        "owner_id": { "type": "string" },
+        "position_id": { "type": "string" }
+      }
+    },
+    "due": { "type": "string" },
+    "cs_write": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^cs\\." }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "issued",
+        "opened",
+        "running",
+        "awaiting_approval",
+        "succeeded",
+        "failed",
+        "cancelled",
+        "returned"
+      ]
+    },
+    "track": { "type": "string", "enum": ["selfpaw", "pipaw", "scene"] },
+    "workflow_id": { "type": ["string", "null"] }
+  }
+}

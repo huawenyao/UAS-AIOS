@@ -357,6 +357,64 @@
           "agent_visible": true
         }
       ]
+    },
+    {
+      "id": "cs.visit",
+      "domain": "visit",
+      "description": "客户拜访列表与排期",
+      "source_system": "crm",
+      "connector_id": "connector.crm.sandbox",
+      "uas_layer": "S",
+      "enabled": true,
+      "operations": [
+        {
+          "name": "list",
+          "description": "列出待拜访与超期客户",
+          "input": { "type": "object", "properties": { "owner_id": { "type": "string" }, "overdue_only": { "type": "boolean" } } },
+          "output": { "type": "object", "properties": { "items": { "type": "array" } } },
+          "approval_level": "L1",
+          "audit_required": true,
+          "gates": ["G1"],
+          "side_effects": [],
+          "idempotent": true,
+          "agent_visible": true
+        },
+        {
+          "name": "schedule",
+          "description": "为客户排期一次拜访（写 CRM）",
+          "input": { "type": "object", "required": ["customer_id"], "properties": { "customer_id": { "type": "string" }, "when": { "type": "string" } } },
+          "output": { "type": "object", "properties": { "visit_id": { "type": "string" } } },
+          "approval_level": "L2",
+          "audit_required": true,
+          "gates": ["G1", "G4", "G6"],
+          "side_effects": ["event.visit.scheduled"],
+          "idempotent": true,
+          "agent_visible": true
+        }
+      ]
+    },
+    {
+      "id": "cs.metric",
+      "domain": "metric",
+      "description": "经营指标口径查询",
+      "source_system": "warehouse",
+      "connector_id": "connector.crm.sandbox",
+      "uas_layer": "K",
+      "enabled": true,
+      "operations": [
+        {
+          "name": "query",
+          "description": "按口径查询 KPI 当前值",
+          "input": { "type": "object", "required": ["kpi_id"], "properties": { "kpi_id": { "type": "string" } } },
+          "output": { "type": "object", "properties": { "value": { "type": ["number", "null"] }, "caliber_id": { "type": "string" }, "stale": { "type": "boolean" } } },
+          "approval_level": "L1",
+          "audit_required": true,
+          "gates": ["G1"],
+          "side_effects": [],
+          "idempotent": true,
+          "agent_visible": true
+        }
+      ]
     }
   ]
 }

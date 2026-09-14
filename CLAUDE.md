@@ -207,6 +207,16 @@ execution → monitoring → render_report → evaluation
 | 企业级Agent生态L1-L3 | docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md |
 | 企业级产品方案与模块设计 | docs/UAS_AIOS_ENTERPRISE_PRODUCT_BLUEPRINT.md |
 | 企业级架构与产品图谱 | docs/UAS_AIOS_ENTERPRISE_VISUAL_BLUEPRINT.md |
+| 企业级 AGI 经营中枢（目标≡数据、端云底、双轨合流） | [ENTERPRISE_AGI_OPERATING_HUB.md](./docs/strategic/design/ENTERPRISE_AGI_OPERATING_HUB.md) · `schemas/accountability_graph.schema.json` |
+| 语义层 × Agent 平台技术选型（2026） | [SEMANTIC_AND_AGENT_PLATFORM_SELECTION.md](./docs/strategic/design/SEMANTIC_AND_AGENT_PLATFORM_SELECTION.md) |
+| UAS-AIOS 最终架构（自研 × 集成、模块接口） | [UAS AIOS架构规划（自研OR集成）.md](./docs/strategic/design/UAS%20AIOS架构规划（自研OR集成）.md) |
+| UAS-AIOS 最终架构详细方案（契约/接口/部署/验收） | [UAS_AIOS_ARCHITECTURE_SPEC.md](./docs/strategic/design/UAS_AIOS_ARCHITECTURE_SPEC.md) |
+| UAS-AIOS 集群产品化（集成 · 管理壳 · 协议） | [UAS_AIOS_CLUSTER_PRODUCTIZATION.md](./docs/strategic/design/UAS_AIOS_CLUSTER_PRODUCTIZATION.md) · [uas-aios-cluster.html](./docs/strategic/design/uas-aios-cluster.html) |
+| UAS-AIOS 模块设计与技术选型（M1–M24） | [UAS_AIOS_MODULE_DESIGN.md](./docs/strategic/design/UAS_AIOS_MODULE_DESIGN.md) |
+| UAS-AIOS 全局协议 Π（24 模块信封/Port，Agent 强制加载） | [KERNEL.yaml](./configs/protocol/KERNEL.yaml) · [registry.json](./configs/protocol/registry.json) · [ports.py](./services/hub-api/uas_hub/ports.py) · [uas-aios-global-protocol.md](./harness/knowledge/technical/uas-aios-global-protocol.md) |
+| UAS-AIOS reqharness（需求→技术方案→迭代规划） | [REQ-UAS-AIOS-001.req.md](./harness/requirements/REQ-UAS-AIOS-001.req.md) · [uas-aios-module-delivery.md](./harness/knowledge/technical/uas-aios-module-delivery.md) · [sprint-uas-aios-001.md](./harness/requirements/sprint-uas-aios-001.md) |
+| UAS-AIOS 平台产品（套件 · 故事 · 数据链路 · 运营/系统面） | [UAS_AIOS_PLATFORM_PRODUCT.md](./docs/strategic/design/UAS_AIOS_PLATFORM_PRODUCT.md) · [uas-aios-platform.html](./docs/strategic/design/uas-aios-platform.html) · [user-stories-uas-aios.md](./harness/requirements/user-stories-uas-aios.md) |
+| UAS-AIOS 架构规划（降维 HTML） | [uas-aios-architecture.html](./docs/strategic/design/uas-aios-architecture.html) |
 | Enterprise Sales OS MVP开发规约 | docs/enterprise-sales-os/README.md |
 | 分类治理与未闭环追踪 | docs/GOVERNANCE_REGISTRY.md |
 | 生态全场景原型与完成度 | docs/ECOSYSTEM_IMPLEMENTATION_STATUS.md · `scripts/run_ecosystem_prototype.py` |
@@ -219,6 +229,7 @@ execution → monitoring → render_report → evaluation
 | 企业级数字人生态 · SelfPaw/ΠPaw 产品定义 | docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md（ΠPaw 器层已改指向 Studio） |
 | World Model Studio（Business AGI 产品原型） | [WORLD_MODEL_PRODUCT.md](./docs/WORLD_MODEL_PRODUCT.md) · `examples/world-model-studio/` |
 | LifeWake · SelfPaw 生命体验域与 G/E/Π 协议扩展 | docs/strategic/LIFEWAKE_USER_AGI_EXPERIENCE_DOMAIN.md |
+| LifeWake · 本质价值 / 载体 / 技术标准与架构 | [PRODUCT_ESSENCE_CARRIER_AND_TECH.md](./docs/lifewake/PRODUCT_ESSENCE_CARRIER_AND_TECH.md) · [docs/lifewake/](./docs/lifewake/) |
 | 数字人生态 reqharness 基线 | harness/README.md · `python harness/invariants/run-all.py` |
 | AI 产品宪章（道/德层决策法） | [AI_PRODUCT_CHARTER.md](./docs/AI_PRODUCT_CHARTER.md) |
 

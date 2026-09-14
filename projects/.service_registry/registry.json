@@ -1,39 +1,5 @@
 [
   {
-    "app_id": "ai-recruitment-os",
-    "app_root": "C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\projects\\ai-recruitment-os",
-    "version": "v1.0",
-    "technical_base": "ASUI",
-    "runtime": "autonomous_agent",
-    "capability_tags": [
-      "agent:agent",
-      "agent:evolution",
-      "agent:governance",
-      "agent:intent",
-      "agent:knowledge",
-      "agent:macro",
-      "agent:meso",
-      "agent:micro",
-      "agent:runtime",
-      "agent:swarm",
-      "agent:system",
-      "system:asui_knowledge",
-      "system:candidate_source",
-      "system:interview_scheduling",
-      "system:onboarding_feedback",
-      "system:recruitment_tracking"
-    ],
-    "health": {
-      "status": "healthy",
-      "missing_assets": [],
-      "queue": {
-        "queued_jobs": 0,
-        "completed_jobs": 0
-      }
-    },
-    "updated_at": "2026-06-04T14:32:04.911672+00:00"
-  },
-  {
     "app_id": "enterprise-sales-os",
     "app_root": "C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\projects\\enterprise-sales-os",
     "version": "v1.0",
@@ -52,17 +18,25 @@
         "completed_jobs": 0
       }
     },
-    "updated_at": "2026-06-04T14:32:04.912635+00:00"
+    "updated_at": "2026-09-11T08:00:39.298359+00:00"
   },
   {
-    "app_id": "selfpaw-enterprise",
-    "app_root": "C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\projects\\selfpaw-enterprise",
+    "app_id": "lifewake",
+    "app_root": "C:\\Users\\ranwu\\XiaomiCloud\\UAS-AIOS\\projects\\lifewake",
     "version": "v1.0",
     "technical_base": "ASUI",
     "runtime": "autonomous_agent",
     "capability_tags": [
-      "system:identity",
-      "system:knowledge"
+      "agent:agent",
+      "agent:evolution",
+      "agent:governance",
+      "agent:intent",
+      "agent:knowledge",
+      "agent:system",
+      "system:asui_knowledge",
+      "system:audit",
+      "system:biosignal",
+      "system:generative"
     ],
     "health": {
       "status": "healthy",
@@ -72,6 +46,6 @@
         "completed_jobs": 0
       }
     },
-    "updated_at": "2026-06-04T14:32:04.913483+00:00"
+    "updated_at": "2026-09-11T08:00:39.300135+00:00"
   }
 ]
