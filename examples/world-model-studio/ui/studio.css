@@ -1,13 +1,13 @@
 :root {
-  --paper: #f3ebdc;
-  --paper-2: #e7dcc8;
-  --ink: #1c1916;
-  --ink-soft: #4a433c;
-  --rule: #c9b89a;
-  --oxide: #9b2c1a;
-  --verdigris: #2f5d50;
-  --gilt: #8a6a32;
-  --blocked: #6b2a22;
+  --paper: #eef1f7;
+  --paper-2: #f7f9fc;
+  --ink: #1a1f36;
+  --ink-soft: #64748b;
+  --rule: #e2e8f0;
+  --oxide: #8b5cf6;
+  --verdigris: #3b82f6;
+  --gilt: #f59e0b;
+  --blocked: #ef4444;
 }
 
 * { box-sizing: border-box; }
@@ -15,14 +15,12 @@ html, body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: "IBM Plex Sans", "PingFang SC", sans-serif;
+  font-family: "Noto Sans SC", -apple-system, sans-serif;
   font-size: 16px;
   line-height: 1.5;
 }
 body {
-  background-image:
-    linear-gradient(90deg, rgba(28,25,22,0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-image: none;
 }
 
 .folio {
@@ -35,18 +33,27 @@ body {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 24px;
-  border-bottom: 2px solid var(--ink);
-  padding-bottom: 20px;
+  background: #1a1f36;
+  color: #fff;
+  margin: -36px -28px 28px;
+  padding: 22px 28px 24px;
+  border-bottom: 0;
+  border-radius: 0;
 }
+.kicker { color: rgba(255,255,255,.5); }
+h1 { color: #fff; font-size: 32px; }
+.lede { color: rgba(255,255,255,.7); font-style: normal; }
+.mast-meta { border-left-color: rgba(255,255,255,.15); color: rgba(255,255,255,.85); }
+.lbl { color: rgba(255,255,255,.45); }
 .kicker {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gilt);
 }
 h1 {
-  font-family: "Cormorant Garamond", "Songti SC", serif;
+  font-family: "Noto Sans SC", "Songti SC", serif;
   font-weight: 600;
   font-size: 48px;
   margin: 4px 0 0;
@@ -55,7 +62,7 @@ h1 {
 .lede {
   margin: 4px 0 0;
   font-style: italic;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Noto Sans SC", serif;
   font-size: 20px;
   color: var(--ink-soft);
 }
@@ -70,7 +77,7 @@ h1 {
 }
 .lbl {
   display: block;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -97,7 +104,7 @@ h1 {
 }
 .step:last-child { border-right: 0; }
 .step .n {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 10px;
   display: block;
 }
@@ -123,7 +130,7 @@ h1 {
   padding: 28px 0 28px 28px;
 }
 .eyebrow {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -131,7 +138,7 @@ h1 {
   margin: 0 0 6px;
 }
 h2 {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Noto Sans SC", serif;
   font-size: 32px;
   font-weight: 600;
   margin: 0 0 8px;
@@ -145,7 +152,7 @@ h2 {
   margin-bottom: 18px;
 }
 .chip {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   letter-spacing: 0.06em;
   border: 1px solid var(--ink);
@@ -167,7 +174,7 @@ h2 {
   border-top: 1px solid var(--rule);
 }
 .shortlist .tag {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   align-self: start;
   padding-top: 4px;
@@ -187,7 +194,7 @@ h2 {
 
 .actions { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
 button.act {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Noto Sans SC", sans-serif;
   font-size: 13px;
   padding: 8px 14px;
   border: 1px solid var(--ink);
@@ -212,7 +219,7 @@ button.act.ghost {
 }
 .hedge-grid h3 {
   margin: 0 0 8px;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -237,7 +244,7 @@ details {
 }
 summary {
   cursor: pointer;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 12px;
   letter-spacing: 0.08em;
 }
@@ -254,7 +261,7 @@ summary {
 }
 .dim h4 {
   margin: 0 0 6px;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -271,9 +278,9 @@ summary {
   padding: 6px 8px 6px 0;
   vertical-align: top;
 }
-.laws th { font-family: "IBM Plex Mono", monospace; font-size: 11px; }
+.laws th { font-family: "JetBrains Mono", monospace; font-size: 11px; }
 .mono {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   white-space: pre-wrap;
   background: var(--paper-2);

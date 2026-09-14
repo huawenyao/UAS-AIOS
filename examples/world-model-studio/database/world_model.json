@@ -279,7 +279,7 @@
     ],
     "loop": "above",
     "gate": "G0",
-    "finished_at": "2026-08-18T16:04:24+00:00"
+    "finished_at": "2026-09-12T11:53:02+00:00"
   },
   "decision": {
     "schemes": [
@@ -331,7 +331,7 @@
   },
   "changeset": [
     {
-      "changeset_id": "cs.wm.20260818T160424",
+      "changeset_id": "cs.wm.20260912T115302",
       "signal": "reject_ungrounded_culture_fit",
       "from_step": "interact",
       "patches": [
@@ -353,19 +353,19 @@
   ],
   "audit": [
     {
-      "ts": "2026-08-18T16:04:24+00:00",
+      "ts": "2026-09-12T11:53:02+00:00",
       "step": "input",
       "event": "intent_bound",
       "intent": "冻结 Staff Engineer 短名单（2 人 onsite）"
     },
     {
-      "ts": "2026-08-18T16:04:24+00:00",
+      "ts": "2026-09-12T11:53:02+00:00",
       "step": "simulate",
       "event": "laws_compiled",
       "n": 5
     },
     {
-      "ts": "2026-08-18T16:04:24+00:00",
+      "ts": "2026-09-12T11:53:02+00:00",
       "step": "generate",
       "event": "schemes_ready",
       "ids": [
@@ -374,7 +374,7 @@
       ]
     },
     {
-      "ts": "2026-08-18T16:04:24+00:00",
+      "ts": "2026-09-12T11:53:02+00:00",
       "step": "interact",
       "event": "human_review",
       "action": "confirm_with_uncertainty",
@@ -382,13 +382,13 @@
       "confirmed": true
     },
     {
-      "ts": "2026-08-18T16:04:24+00:00",
+      "ts": "2026-09-12T11:53:02+00:00",
       "step": "evolve",
       "event": "changeset_applied",
-      "changeset_id": "cs.wm.20260818T160424"
+      "changeset_id": "cs.wm.20260912T115302"
     },
     {
-      "ts": "2026-08-18T16:04:24+00:00",
+      "ts": "2026-09-12T11:53:02+00:00",
       "step": "output",
       "event": "shortlist_proposed",
       "shortlist": [
@@ -397,7 +397,7 @@
       ]
     },
     {
-      "ts": "2026-08-18T16:04:24+00:00",
+      "ts": "2026-09-12T11:53:02+00:00",
       "step": "yield",
       "event": "benefit_attributed",
       "explainable_shortlist": true,
@@ -413,7 +413,7 @@
     "north_star": "quality-adjusted hiring success"
   },
   "simulation": {
-    "compiled_at": "2026-08-18T16:04:24+00:00",
+    "compiled_at": "2026-09-12T11:53:02+00:00",
     "findings": [
       {
         "law": "LAW-EVD-001",
