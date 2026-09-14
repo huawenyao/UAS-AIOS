@@ -1,0 +1,11 @@
+{
+  "run_id": "memory_chest_demo",
+  "ok": true,
+  "invariants": {
+    "origin_hairpin_intact": true,
+    "origin_rain_intact": true,
+    "palace_rooms": 9,
+    "branch_count": 6,
+    "item_count": 6
+  }
+}

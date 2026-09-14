@@ -32,6 +32,9 @@ def main():
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     js = (ROOT / "app.js").read_text(encoding="utf-8")
     css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    chest_html = (ROOT / "memory-chest.html").read_text(encoding="utf-8")
+    chest_js = (ROOT / "memory-chest.js").read_text(encoding="utf-8")
+    chest_css = (ROOT / "memory-chest.css").read_text(encoding="utf-8")
     parser = PrototypeParser()
     parser.feed(html)
 
@@ -91,6 +94,31 @@ def main():
     assert "@media (max-width: 760px)" in css, "mobile layout missing"
     assert "@media (prefers-reduced-motion: reduce)" in css, "reduced motion support missing"
     assert "http://" not in html + css + js and "https://" not in html + css + js, "external dependency found"
+    assert "memory-chest.html" in html
+    assert "时空记忆匣" in chest_html
+    assert 'data-place="hall"' in chest_html
+    assert 'data-item="item_moon_hairpin"' in chest_html
+    assert 'data-item="item_rain_scroll"' in chest_html
+    assert 'data-item="item_city_compass"' in chest_html
+    assert 'data-walk="reality"' in chest_html
+    assert 'data-drop="rift-relive"' in chest_html
+    assert "未写下的门" in chest_html
+    assert "type=\"radio\"" not in chest_html
+    assert "view-palace" not in chest_html
+    assert "place-plaque" not in chest_html
+    assert "walk-back" not in chest_html
+    assert 'id="hall-chamber"' in chest_html
+    assert "path-reality" in chest_html
+    assert 'class="threshold"' in chest_html
+    assert "fp-floor" in chest_css
+    assert "originPreserved" in chest_js
+    assert "function walk" in chest_js
+    assert "#whisper-text" in chest_js
+    assert "data-drop" in chest_js
+    assert "@media (max-width: 960px)" in chest_css
+    assert "@media (prefers-reduced-motion: reduce)" in chest_css
+    assert "http://" not in chest_html + chest_css + chest_js
+    assert "https://" not in chest_html + chest_css + chest_js
 
     print(
         "LifeWake smoke test passed: "

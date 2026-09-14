@@ -22,7 +22,7 @@
 | 慢灵感对抗快消费 | F4/F5 时机与稀缺 | 允许不发生 | 第一次 defer | Core | timing gate | Timing Curator | `lw.timing.decide` | `TimingDecision` | T-01～T-03 | 009 | defer 接受率、打扰反馈率 |
 | 隐私是灵魂领土 | F1/F6 | 先主权后惊喜 | 授权与撤回 | Privacy | scope/purpose/期限/撤回 | Privacy Steward | `lw.consent.check`、`lw.consent.revoke` | `ConsentGrant` | C-01～C-05 | 002、003、011 | 撤回后新处理次数 |
 | 每个功能承载情感重量 | F3 | 用户反馈 + 策展 rubric 门禁 | 低冲击未交付 | Studio/Core | impact review、重炼/策展 | Ritual Host + Curator | `lw.impact.evaluate` | `EmotionImpact` | E-01～E-05 | 008 | 低冲击拦截率、策展一致性 |
-| 每次交互是自我确认仪式 | F6 | 内容、来源、动作统一 | RitualView 揭晓 | Core/Memory | `RitualEnvelope` 渲染与保存 | Ritual Host | `lw.ritual.render`、`lw.keepsake.save` | `RitualEnvelope`、`Keepsake` | A-01、R-01 | 001、004 | Ritual 完成率、保存后主动重访率 |
+| 记忆价值依赖来源、语境与控制权 | F6 | 内容、来源、动作统一；道具携带溯源码 | RitualView 揭晓 / 记忆匣穿梭 | Core/Memory | `RitualEnvelope` 渲染与保存；`lw.memory.*` | Ritual Host / Memory Chest | `lw.ritual.render`、`lw.keepsake.save`、`lw.memory.shuttle` | `RitualEnvelope`、`Keepsake`、`ChestItem` | A-01、R-01 | 001、004、memory_chest | Ritual 完成率、保存后主动重访率、原点完整率 |
 | 关系作品可共同拥有也可退出 | F2/F6 | 共同权利不等于永久绑定 | 共享撤回 | Bond/Memory | revoke share | Bond Guardian | `lw.share.revoke` | `ShareGrant`、`Keepsake` | B-04、R-02 | 010 | 共享撤回成功率/时延 |
 | 平凡者成为自己的艺术家 | F1/F3 | 用户可反馈、改编、删除 | “还不对”后重炼 | Core/Studio | feedback + rework | Surprise Alchemist + Evolution Listener | `lw.feedback.capture` | `EmotionImpact` | E-03、EV-01 | 008、014 | 负反馈闭环率 |
 | 保护脆弱主体优先于创作完成 | F1/F7 | 安全失败 | 未成年人/高危信号 | Privacy | age/safety gate | Privacy Steward | `lw.policy.check` | `PolicyDecision` | M-01～M-03、S-01 | 011、013 | 安全违规数（0） |
@@ -48,6 +48,7 @@
 | 慢灵感 | timing→defer→重评 | 查看原因/取消 | Ritual Stream | `TimingDecision` | 009 | defer 被当失败或无限等待 |
 | 双向关系 | 邀请→逐方同意→共创→退出 | 接受/暂停/revoke | Bond Space | Bond gate/share revoke | 005、006、010 | 单方可强制共享 |
 | 可撤回记忆 | 保存→重访→导出/删除 | Vault 权利动作 | Keepsake Vault | save/export/delete | 010 | 共同资产无逐方权利 |
+| 记忆可穿梭且原点不覆盖 | 物品化→穿梭→抓取/改写 | 宫殿/百宝箱/穿梭三视图 | Memory Chest | weave/shuttle/capture | memory_chest tests | 改写覆盖原始记忆 |
 | 安全优先 | age/safety gate→受限路径 | 本地体验/退出 | Consent Center/safety hold | policy service | 011、013 | 未成年人可外发或高危娱乐化 |
 | 可演化不失控 | feedback→归因→ChangeSet→审批 | 策展评审/回滚 | Studio | ChangeSet service | 014 | 自动应用或扩大 purpose |
 

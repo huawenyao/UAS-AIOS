@@ -13,7 +13,7 @@
 | Core | F-PULSE-SOLO | 会话级 pulse 作曲 | 真实设备适配 | 环境设备联动 |
 | Bond | F-DUET | 双方 consent/needs、共同作品 | 异步共创 | 多方关系协议 |
 | Core | F-RITUAL | `RitualEnvelope` 渲染、trace、反馈 | 改编、章节化 | 空间仪式 |
-| Memory | F-KEEP | 保存、删除、导出 | 记忆时光机 | 开放迁移协议 |
+| Memory | F-KEEP | 保存、删除、导出 | 时空记忆匣（宫殿/百宝箱/穿梭） | 开放迁移协议 |
 | Bond/Memory | F-SHARE | 双方共享与任一方撤回 | 可过期外链 | 多方权利管理 |
 | Studio | F-IMPACT | 用户反馈 + rubric 门禁 | 分层 rubric | 创作者质量治理 |
 | Studio | F-EVOLVE | ChangeSet 草案/审批/回滚 | 实验回放 | 模板生态演化 |
@@ -207,11 +207,23 @@
 | 验收 | minor 无 duet 外发；高危无诊断、无娱乐化内容 |
 | 追溯 | 宪章“敬畏人”；F1/F7；CASE-011/013；安全违规数=0 |
 
-## 15. P1/P2 预留边界
+## 15. P1 时空记忆匣与 P2 预留边界
+
+**用户故事**：作为记忆保存者，我希望把一段人生或故事点成可携带的道具，穿梭进对应时空，并在改写时保住原始存档。
+
+| 项 | 规格 |
+|---|---|
+| 前置 | 有效 `memory.itemize` / `memory.revisit` / `memory.rewrite` consent；F-KEEP 来源与删除回归通过 |
+| 输入 | 文本记忆/故事、道具 ID、穿梭模式、场景片段 |
+| 处理 | 物品化写入图谱；宫殿增量锚定；relive 只读；rewrite COW；capture/fuse 产物进幻想层 |
+| 后置 | `ChestItem` 带完整 provenance；原点 `readonly` 不变 |
+| 异常 | `CONSENT_*`、`LAYER_ISOLATION`、`ITEM_SEALED`、`NARRATIVE_INCONSISTENT` |
+| 验收 | 三件种子道具可穿梭；改写后原始发卡/卷轴完整；真实×幻想融合不冒充记忆 |
+| 追溯 | 宪章“铭记/主权”；F1/F6；[LIFEWAKE_MEMORY_CHEST](./LIFEWAKE_MEMORY_CHEST.md) |
 
 | 能力 | 优先级 | 当前行为 | 开放前置 |
 |---|---|---|---|
-| `lw.memory.weave` | P1 | `FEATURE_RESERVED` | F-KEEP、来源与删除回归通过 |
+| `lw.memory.weave` / `shuttle` / `capture` / `fuse` / `lw.palace.snapshot` | P1 | 已启用 | 原点 COW 与双库隔离测试通过 |
 | `lw.bond.async_create` | P1 | `FEATURE_RESERVED` | 异步逐方同意协议通过 |
 | `lw.template.publish` | P2 | `FEATURE_RESERVED` | Studio 审核、供应商与创作者治理完成 |
 | `lw.twin.draft` | P2 | `FEATURE_RESERVED` | 反冒充、逐次审核、永不自动发送 |

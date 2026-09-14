@@ -38,7 +38,7 @@ RitualEnvelope → rubric 情感冲击 → 交付反馈 → ChangeSet 草案 →
 
 - 真实设备 SDK / 真实多模态 API
 - 正式移动端 UI
-- 记忆时光机 / 关系纽带可视化 / 数字孪生代回（仅 reserved 接口）
+- 关系纽带可视化 / 数字孪生代回（仅 reserved 接口）
 - 广告画像、用户评分、原始生物流导出
 
 ## 验收
@@ -48,6 +48,7 @@ pytest -q
 python scripts/evaluate_lifewake_mvp.py
 python scripts/run_value_loop_prototype.py --run-id walkthrough_value_loop
 python scripts/run_emotion_kpi_snapshot.py
+python scripts/run_memory_chest_demo.py --pretty --write-report
 ```
 
 CASE-001～014 覆盖正常与治理红线。原型命令必须产生运行、反馈、认知状态、

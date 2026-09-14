@@ -55,7 +55,8 @@ Impact(E) → Timing(R) → Ritual(Π) → Deliver → Feedback(E) → ChangeSet
 | `lw.audit.append` | Privacy Steward | G0 | all | 新增 |
 | `lw.keepsake.save` | Ritual Host | D-04 | 001,004,010 | 新增 |
 
-P1/P2 保留：`lw.memory.weave` / `lw.bond.async_create` / `lw.twin.draft` / `lw.template.publish` → `FEATURE_RESERVED`
+P1 时空记忆匣：`lw.memory.weave` / `shuttle` / `capture` / `fuse` / `lw.palace.snapshot` 已启用。
+P2 保留：`lw.bond.async_create` / `lw.twin.draft` / `lw.template.publish` → `FEATURE_RESERVED`
 
 ## 四、状态机（编排器实现）
 

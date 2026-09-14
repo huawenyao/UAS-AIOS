@@ -4,7 +4,8 @@
     "space": {
       "personal_space": "soul_territory",
       "bond_space": "shared_creation",
-      "systems": ["mock_wearable", "mock_multimodal_gen", "local_audit_store"]
+      "memory_palace_layers": ["real_memory", "fantasy", "history", "future"],
+      "systems": ["mock_wearable", "mock_multimodal_gen", "local_audit_store", "memory_chest_graph"]
     },
     "time": {
       "slow_inspiration": true,
@@ -17,13 +18,15 @@
       {"id": "privacy_steward", "type": "agent", "permissions": ["lw.consent.check", "lw.audit.append"]},
       {"id": "surprise_alchemist", "type": "agent", "permissions": ["lw.surprise.compose"]},
       {"id": "pulse_composer", "type": "agent", "permissions": ["lw.pulse.compose", "lw.pulse.duet"]},
-      {"id": "bond_guardian", "type": "agent", "permissions": ["lw.pulse.duet"]}
+      {"id": "bond_guardian", "type": "agent", "permissions": ["lw.pulse.duet"]},
+      {"id": "memory_chest_weaver", "type": "agent", "permissions": ["lw.memory.weave", "lw.memory.shuttle", "lw.memory.capture", "lw.memory.fuse", "lw.palace.snapshot"]}
     ],
     "object": [
       {"id": "consent", "lifecycle": ["granted", "revoked", "expired"]},
       {"id": "surprise", "lifecycle": ["queued", "composed", "delivered", "saved", "dismissed"]},
       {"id": "pulse_session", "lifecycle": ["linking", "live", "completed", "aborted"]},
-      {"id": "ritual", "lifecycle": ["rendered", "impact_checked", "closed"]}
+      {"id": "ritual", "lifecycle": ["rendered", "impact_checked", "closed"]},
+      {"id": "chest_item", "lifecycle": ["itemized", "anchored", "shuttled", "captured", "fused", "archived", "sealed"]}
     ],
     "feedback": [
       {"id": "wow_rating", "type": "human_emotion"},
@@ -40,6 +43,6 @@
   "drive_blocker_connectors": {
     "example_drive": "无聊或思念触发慢灵感",
     "example_blocker": "无同意或非双向关系",
-    "example_connector": "lw.surprise.compose / lw.pulse.duet"
+    "example_connector": "lw.surprise.compose / lw.pulse.duet / lw.memory.shuttle"
   }
 }

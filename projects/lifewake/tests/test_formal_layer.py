@@ -146,19 +146,16 @@ class TestCapabilities:
     def test_registry_has_14_p0_capabilities(self):
         reg = capabilities.build_registry()
         names = reg.names()
-        assert len(names) == 14
-        for required in [
-            "lw.consent.check",
-            "lw.surprise.compose",
-            "lw.ritual.render",
-            "lw.changeset.draft",
-        ]:
+        for required in capabilities.P0_CAPABILITIES:
             assert required in names
+        assert len(capabilities.P0_CAPABILITIES) == 14
+        assert "lw.memory.weave" in names
+        assert "lw.memory.shuttle" in names
 
     def test_reserved_capability_returns_feature_reserved(self):
         reg = capabilities.build_registry()
         resp = reg.invoke(
-            capabilities.CapabilityCall(capability="lw.memory.weave", trace_id="t")
+            capabilities.CapabilityCall(capability="lw.twin.draft", trace_id="t")
         )
         assert resp.status == "failed"
         assert resp.error["code"] == "FEATURE_RESERVED"

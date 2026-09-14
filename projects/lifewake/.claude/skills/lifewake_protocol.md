@@ -13,3 +13,4 @@ description: 生命回响情感共创执行协议：同意门禁、惊喜炼金�
 6. **可撤回**：同意撤回立即中止队列；审计保留，原始生物流不落盘。
 7. **慢灵感**：遵守 `max_surprises_per_day`。
 8. **演化**：反馈只生成 `auto_apply: false` 的 ChangeSet。
+9. **记忆匣（P1）**：`lw.memory.shuttle` 对真实原点只读；改写必须 COW；融合产物不得冒充原始记忆。

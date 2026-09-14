@@ -14,7 +14,7 @@ LifeWake 不是健康监测、效率助手、社交内容流或“数字永生�
 |---|---|---|---|
 | **LifeWake Core** | 把信号变成恰逢其时的私人仪式 | Ritual Stream | `RitualEnvelope` |
 | **LifeWake Bond** | 让关系双方共同创作，而非单向监控 | Bond Space | `Bond`、`DuetSession` |
-| **LifeWake Memory** | 保存可重访、可迁移、可撤回共享的生命纪念物 | Keepsake Vault | `Keepsake` |
+| **LifeWake Memory** | 保存可重访、可迁移、可撤回共享的生命纪念物；P1 将纪念物升级为可穿梭的时空记忆匣 | Keepsake Vault / 记忆宫殿 | `Keepsake`、`ChestItem` |
 | **LifeWake Privacy** | 让用户持续看见并控制数据用途 | Consent Center | `ConsentGrant`、`ShareGrant` |
 | **LifeWake Studio** | 让策展人安全地设计模板、rubric 与内测实验 | Curation Studio | `RitualTemplate`、`CurationRubric`、`ChangeSet` |
 
@@ -172,7 +172,7 @@ LifeWake 母体不是五个独立 App，而是一条统一产品语法：
 |---|---|---|---|
 | **Core** | 单人惊喜、solo pulse、Ritual Stream、慢灵感 defer | 多模态仪式组合、手动策展请求 | 情境化仪式空间 |
 | **Bond** | duet 邀请、双方同意、共享撤回 | 异步双人共创、关系仪式模板 | 小型家庭/挚友圈 |
-| **Memory** | 保存/删除/导出纪念物、来源 trace | 记忆时光机、主题回访 | 用户自有存储与跨服务迁移 |
+| **Memory** | 保存/删除/导出纪念物、来源 trace | 时空记忆匣（宫殿/百宝箱/穿梭）、主题回访 | 用户自有存储与跨服务迁移 |
 | **Privacy** | Consent Center、用途/期限、撤回与审计摘要 | 本地优先、供应商透明度 | 可验证隐私计算与个人数据仓 |
 | **Studio** | rubric、失败策展、ChangeSet 审批 | 模板发布、实验分层、回放 | 创作者生态与审核市场 |
 
@@ -201,9 +201,9 @@ Privacy 是所有产品的横向前置条件；Studio 只能操作模板、rubri
 | 信号 | 手动选择低敏感信号、会话 pulse | 多源材料组合 | 本地情境感知 |
 | 时机 | `deliver/defer/cancel` 可解释决策 | 用户节奏偏好、安静期 | 本地时机推断 |
 | 创作 | song/artwork/task mock、solo/duet pulse | 记忆叙事、多模态编排 | 第三方策展模板 |
-| 仪式 | `RitualEnvelope`、揭晓、trace、反馈 | 可重访章节、手动改编 | 空间化/环境化体验 |
+| 仪式 | `RitualEnvelope`、揭晓、trace、反馈 | 可重访章节、记忆匣穿梭（relive/rewrite） | 空间化/环境化体验 |
 | 关系 | 双方独立同意、needs、共享撤回 | 异步共同贡献 | 家庭/挚友多方协议 |
-| 记忆 | 保存、删除、导出、共享状态 | 主题回访与迁移 | 开放纪念物格式 |
+| 记忆 | 保存、删除、导出、共享状态 | 时空记忆匣、主题回访与迁移 | 开放纪念物格式 |
 | 治理 | 未成年人限制、危机降级、审计 | 供应商治理、区域策略 | 独立透明度验证 |
 | 演化 | 用户反馈 + rubric → ChangeSet 草案 | 分层实验、回滚 | 模板生态质量治理 |
 
@@ -216,7 +216,7 @@ Privacy 是所有产品的横向前置条件；Studio 只能操作模板、rubri
 1. **Ritual Stream**：有限、非滚动成瘾的仪式入口；每次只呈现一个值得注意的时刻。
 2. **Consent Center**：按“数据—用途—受益者—期限”管理同意。
 3. **Bond Space**：展示双方贡献、同意与共享状态，不展示关系分数。
-4. **Keepsake Vault**：保存、解释、导出、删除及撤回共同资产。
+4. **Keepsake Vault / 记忆宫殿**：保存、解释、导出、删除；P1 以宫殿、百宝箱、穿梭三视图重访记忆，真实层只读、改写必派生平行分支。详见 [LIFEWAKE_MEMORY_CHEST](./LIFEWAKE_MEMORY_CHEST.md)。
 
 ### 9.2 关键体验承诺
 
@@ -409,6 +409,7 @@ flowchart LR
 | **v0.2 runnable MVP** | 三条 P0 闭环可运行 | mock subapp、审计、报告 | 14 CASE 通过 |
 | **v0.3 curated alpha** | 证明有意义且不打扰 | Ritual preview、人工策展 | MRCR 与护栏达到内测阈值 |
 | **v0.5 private beta** | 验证真实设备与双方信任 | 移动体验、设备接入、Vault | 撤回零泄漏、duet 双方满意 |
+| **v0.6 memory chest** | 证明物品可穿梭且原点不被覆盖 | 三视图原型、COW 分支、现实/幻想隔离 | 误改原始记忆次数=0 |
 | **v1.0** | 形成可持续个人产品 | Core/Bond/Memory/Privacy | 付费不损害反增长护栏 |
 | **v2.0 Studio** | 建立受治理策展生态 | 模板协议、创作者工具 | rubric 稳定、供应商可替换 |
 

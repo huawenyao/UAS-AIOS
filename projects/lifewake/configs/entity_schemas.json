@@ -46,6 +46,20 @@
     },
     "Ritual": {
       "required": ["ritual_id", "intent_ref", "artifact_ref", "narrative", "emotion_impact"]
+    },
+    "ChestItem": {
+      "required": [
+        "item_id",
+        "item_type",
+        "is_real_memory",
+        "layer",
+        "source_timeline_id",
+        "parallel_branch_id"
+      ],
+      "properties": {
+        "item_type": "enum:character,story,scene,emotion",
+        "layer": "enum:real_memory,fantasy,history,future"
+      }
     }
   }
 }

@@ -9,6 +9,7 @@
 | 文档 | 用途 |
 |---|---|
 | [LIFEWAKE_PRODUCT_BLUEPRINT](./LIFEWAKE_PRODUCT_BLUEPRINT.md) | 主 BP：第一性原理、宏中微实例化、Core/Bond/Memory/Privacy/Studio、MVP、商业与路线图 |
+| [LIFEWAKE_MEMORY_CHEST](./LIFEWAKE_MEMORY_CHEST.md) | Memory P1：记忆宫殿 × 百宝箱 × 穿梭机（AI 原生叙事空间） |
 | [PRODUCT_CHARTER](./PRODUCT_CHARTER.md) | 不可被增长或技术覆盖的哲学宪章与守恒约束 |
 | [METRICS_GROWTH_AND_BUSINESS](./METRICS_GROWTH_AND_BUSINESS.md) | 北极星、指标树、事件采集、实验、GTM、商业与反增长原则 |
 

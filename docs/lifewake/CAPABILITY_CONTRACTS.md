@@ -354,14 +354,20 @@ result:
 
 ---
 
-## 12. 预留能力
+## 12. 预留与 P1 记忆匣能力
 
 | 能力 | 状态 | 调用结果 |
 |------|------|----------|
-| `lw.memory.weave` | reserved | `FEATURE_RESERVED` |
+| `lw.memory.weave` | P1 启用 | 物品化：非结构化记忆/故事 → `ChestItem` |
+| `lw.memory.shuttle` | P1 启用 | `relive` 只读；`rewrite`/`continue` 对真实原点 COW |
+| `lw.memory.capture` | P1 启用 | 场景片段 → 新幻想层道具 |
+| `lw.memory.fuse` | P1 启用 | 跨界合成；产物强制 `is_real_memory=false` |
+| `lw.palace.snapshot` | P1 启用 | 宫殿/图谱/道具快照 |
 | `lw.bond.async_create` | reserved | `FEATURE_RESERVED` |
 | `lw.twin.draft` | reserved | `FEATURE_RESERVED` |
 | `lw.template.publish` | reserved | `FEATURE_RESERVED` |
+
+`lw.memory.*` 需要 `memory.itemize` / `memory.revisit` / `memory.rewrite` 等 scope，purpose 仅 `create_for_user`。错误码复用 `CONSENT_REQUIRED`、`CONSENT_REVOKED`、`POLICY_DENIED`，并新增 `LAYER_ISOLATION`、`ITEM_SEALED`、`NARRATIVE_INCONSISTENT`。
 
 ## 13. 合约不变量
 

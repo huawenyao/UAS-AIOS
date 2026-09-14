@@ -115,8 +115,8 @@ Safety
 | `discover` | 重新感知自己 | Ritual Stream | Surprise Ritual |
 | `embody` | 听见身体的此刻 | Pulse Setup / RitualView | Solo Pulse |
 | `cocreate` | 与重要的人共同表达 | Bond Space | Duet / Shared Keepsake |
-| `remember` | 把碎片编织成有语境的记忆 | Keepsake Vault | Memory Chapter |
-| `revisit` | 主动重访过去作品 | Keepsake Vault | Revisit Ritual |
+| `remember` | 把碎片编织成有语境的记忆 | Keepsake Vault / 百宝箱 | Memory Chapter / ChestItem |
+| `revisit` | 主动重访过去作品 | Keepsake Vault / 时空穿梭 | Revisit Ritual / relive |
 | `reflect` | 告诉系统“有意义/还不对/不舒服” | Feedback Sheet | EmotionImpact |
 | `control` | 授权、暂停、导出、删除、撤回 | Consent Center | Receipt / Revocation |
 | `curate` | 在不访问原始材料下改进体验 | Curation Studio | ChangeSet Draft |

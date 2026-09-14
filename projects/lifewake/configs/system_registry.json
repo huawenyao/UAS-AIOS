@@ -6,10 +6,14 @@
     "lw.pulse.compose",
     "lw.pulse.duet",
     "lw.ritual.render",
-    "lw.audit.append"
+    "lw.audit.append",
+    "lw.memory.weave",
+    "lw.memory.shuttle",
+    "lw.memory.capture",
+    "lw.memory.fuse",
+    "lw.palace.snapshot"
   ],
   "reserved_capabilities": [
-    {"id": "lw.memory.weave", "status": "reserved"},
     {"id": "lw.bond.visualize", "status": "reserved"},
     {"id": "lw.twin.draft", "status": "reserved"}
   ],
