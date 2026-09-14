@@ -21,29 +21,29 @@ window.LTC_WB = (function () {
       gate_count: 8,
     },
     funnel: [
-      { stage: "01_线索", count: 0, gate: false },
-      { stage: "02_建联", count: 0, gate: false },
-      { stage: "03_拜访", count: 2, gate: true },
-      { stage: "04_纪要", count: 0, gate: false },
-      { stage: "05_合同", count: 1, gate: true },
-      { stage: "06_授信", count: 0, gate: false },
-      { stage: "07_下户", count: 1, gate: false },
-      { stage: "08_开跑", count: 0, gate: false },
-      { stage: "09_涨量", count: 0, gate: false },
-      { stage: "10_服务", count: 1, gate: true },
+      { stage: "线索获取", count: 0, gate: false },
+      { stage: "建立联系", count: 0, gate: false },
+      { stage: "客户拜访", count: 2, gate: true },
+      { stage: "拜访纪要", count: 0, gate: false },
+      { stage: "合同签署", count: 1, gate: true },
+      { stage: "授信审批", count: 0, gate: false },
+      { stage: "账户下户", count: 1, gate: false },
+      { stage: "投放开跑", count: 0, gate: false },
+      { stage: "投放涨量", count: 0, gate: false },
+      { stage: "客户服务", count: 1, gate: true },
     ],
     customers: [
       {
         customer_uec: "UEC-10293",
         customer_name: "客户A · Shopline",
-        current_stage: "03_拜访",
+        current_stage: "客户拜访",
         days_in_stage: 28,
         owner_cm: "cowen.hua",
         owner_bd: "张三",
         health: "gate",
         signal_summary: "阶段停留28天超阈值14天，流失风险↑；仅BD到场·决策链未覆盖；37天未拜访",
         stages: {
-          "03_拜访": {
+          "客户拜访": {
             data: {
               visit_count: 3,
               last_visit_days: 37,
@@ -81,22 +81,22 @@ window.LTC_WB = (function () {
           },
         },
         stage_history: [
-          { stage: "01_线索", entered: "06-10", left: "06-12", days: 2 },
-          { stage: "02_建联", entered: "06-12", left: "06-15", days: 3 },
-          { stage: "03_拜访", entered: "07-15", left: null, days: 28 },
+          { stage: "线索获取", entered: "06-10", left: "06-12", days: 2 },
+          { stage: "建立联系", entered: "06-12", left: "06-15", days: 3 },
+          { stage: "客户拜访", entered: "07-15", left: null, days: 28 },
         ],
       },
       {
         customer_uec: "UEC-20114",
         customer_name: "Kwai · PH",
-        current_stage: "03_拜访",
+        current_stage: "客户拜访",
         days_in_stage: 10,
         owner_cm: "cowen.hua",
         owner_bd: "王五",
         health: "ok",
         signal_summary: "正常推进",
         stages: {
-          "03_拜访": {
+          "客户拜访": {
             data: {
               visit_count: 1,
               last_visit_days: 10,
@@ -115,19 +115,19 @@ window.LTC_WB = (function () {
             plan: [{ task: "二访日程", owner: "BD·王五", due: "08-24", p: "P1", status: "todo" }],
           },
         },
-        stage_history: [{ stage: "03_拜访", entered: "08-11", left: null, days: 10 }],
+        stage_history: [{ stage: "客户拜访", entered: "08-11", left: null, days: 10 }],
       },
       {
         customer_uec: "UEC-30021",
         customer_name: "Lazada · TH",
-        current_stage: "05_合同",
+        current_stage: "合同签署",
         days_in_stage: 9,
         owner_cm: "cowen.hua",
         owner_bd: "张三",
         health: "gate",
         signal_summary: "合同周转9天超阈值7天；合同卡审批中",
         stages: {
-          "05_合同": {
+          "合同签署": {
             data: { approval_status: "pending", contract_amount: 420000 },
             verdict: {
               level: "gate",
@@ -143,19 +143,19 @@ window.LTC_WB = (function () {
             plan: [{ task: "法务审批跟进", owner: "cowen.hua", due: "08-22", p: "P0", status: "overdue" }],
           },
         },
-        stage_history: [{ stage: "05_合同", entered: "08-12", left: null, days: 9 }],
+        stage_history: [{ stage: "合同签署", entered: "08-12", left: null, days: 9 }],
       },
       {
         customer_uec: "UEC-40088",
         customer_name: "Shopee · SG",
-        current_stage: "07_下户",
+        current_stage: "账户下户",
         days_in_stage: 2,
         owner_cm: "cowen.hua",
         owner_bd: "张三",
         health: "ok",
         signal_summary: "正常推进",
         stages: {
-          "07_下户": {
+          "账户下户": {
             data: { qual_ready: true, setup_progress: 0.8 },
             verdict: {
               level: "ok",
@@ -165,22 +165,22 @@ window.LTC_WB = (function () {
               signals: [],
             },
             actions: [{ p: "P2", text: "确认账户搭建收尾", owner: "AO·赵六", exec: "runtime" }],
-            plan: [{ task: "搭建验收", owner: "AO·赵六", due: "08-25", p: "P2", status: "doing" }],
+            plan: [{ task: "确认账户搭建完成", owner: "AO·赵六", due: "08-25", p: "P2", status: "doing" }],
           },
         },
-        stage_history: [{ stage: "07_下户", entered: "08-19", left: null, days: 2 }],
+        stage_history: [{ stage: "账户下户", entered: "08-19", left: null, days: 2 }],
       },
       {
         customer_uec: "UEC-50102",
         customer_name: "Sea Limited",
-        current_stage: "10_服务",
+        current_stage: "客户服务",
         days_in_stage: 0,
         owner_cm: "cowen.hua",
         owner_bd: "张三",
         health: "gate",
         signal_summary: "流失风险；健康度下降；5个工单积压",
         stages: {
-          "10_服务": {
+          "客户服务": {
             data: { churn_risk: true, health_trend: -1, open_tickets: 5 },
             verdict: {
               level: "gate",
@@ -197,12 +197,12 @@ window.LTC_WB = (function () {
             plan: [{ task: "挽回方案", owner: "cowen.hua", due: "08-23", p: "P0", status: "todo" }],
           },
         },
-        stage_history: [{ stage: "10_服务", entered: "2025-09-01", left: null, days: 0 }],
+        stage_history: [{ stage: "客户服务", entered: "2025-09-01", left: null, days: 0 }],
       },
     ],
   };
 
-  const STAGES = ["01_线索", "02_建联", "03_拜访", "04_纪要", "05_合同", "06_授信", "07_下户", "08_开跑", "09_涨量", "10_服务"];
+  const STAGES = ["线索获取", "建立联系", "客户拜访", "拜访纪要", "合同签署", "授信审批", "账户下户", "投放开跑", "投放涨量", "客户服务"];
 
   function fmtMoney(v, unit) {
     return (unit === "USD" ? "$" : "") + Math.round(v).toLocaleString();
@@ -327,9 +327,9 @@ window.LTC_WB = (function () {
     const sb = c && c.stages[viewStage];
 
     const funnel = DATA.funnel
-      .map((x) => {
+      .map((x, i) => {
         const selCls = ctx.stage === x.stage ? "sel" : "";
-        return `<button type="button" class="fp ${x.gate ? "gate" : ""} ${selCls}" data-ltc-stage="${x.stage}"><div class="fp-num">${x.stage.slice(0, 2)}</div><div class="fp-name">${x.stage.slice(3)}</div><div class="fp-cnt">${counts[x.stage] || 0}</div></button>`;
+        return `<button type="button" class="fp ${x.gate ? "gate" : ""} ${selCls}" data-ltc-stage="${x.stage}"><div class="fp-num">${String(i + 1).padStart(2, "0")}</div><div class="fp-name">${x.stage}</div><div class="fp-cnt">${counts[x.stage] || 0}</div></button>`;
       })
       .join("");
 
@@ -347,7 +347,7 @@ window.LTC_WB = (function () {
       const v = sb.verdict;
       const d = sb.data;
       const tabs = STAGES.map(
-        (s) => `<button type="button" class="stab ${s === viewStage ? "active" : ""}" data-ltc-tab="${s}">${s.slice(3)}</button>`
+        (s) => `<button type="button" class="stab ${s === viewStage ? "active" : ""}" data-ltc-tab="${s}">${s}</button>`
       ).join("");
       const dtiles = Object.entries(d)
         .filter(([k]) => k !== "trend")
@@ -376,7 +376,8 @@ window.LTC_WB = (function () {
     }
 
     return `<div class="ltc">
-      <div class="section-header"><span class="section-title">全局经营</span><span class="section-badge">客户经理视角</span><span class="section-note">数据周期：${DATA.meta.data_period} · 视角：${DATA.meta.view_cm} · 2026-08-21 09:30</span></div>
+      <div class="value-loop" role="list" aria-label="经营闭环">${["数据","洞察","归因","预测","策略行动","效果回收","学习沉淀"].map((n,i)=>`<span class="${i<4?"is-on":""}">${n}</span>`).join("")}</div>
+      <div class="section-header"><span class="section-title">销售运营 · LTC流程</span><span class="section-badge">客户经理视角</span><span class="section-note">数据 → 洞察 → 归因 · ${DATA.meta.data_period} · ${DATA.meta.view_cm}</span></div>
       <div class="kpi-strip">
         <div class="ktile kt1 composite">
           <div class="kt-comp-head">经营概览 <b>Spend / Margin / SOM / Adoption</b><span class="section-note" style="margin-left:auto">近30天</span></div>
@@ -398,7 +399,7 @@ window.LTC_WB = (function () {
         <button type="button" class="btn btn-outline" data-ltc-export>导出报告</button>
         <div class="legend"><span><span class="ldot" style="background:#10b981"></span>正常</span><span><span class="ldot" style="background:#f59e0b"></span>预警</span><span><span class="ldot" style="background:#ef4444"></span>卡口</span></div>
       </div>
-      <div class="section-header"><span class="section-title">LTC 管线</span><span class="section-badge">10 阶段漏斗</span><span class="section-note">点击阶段 pill → 按阶段筛选客户列表</span></div>
+      <div class="section-header"><span class="section-title">LTC 阶段</span><span class="section-badge">线索到现金</span><span class="section-note">点阶段看卡在哪 · 过关动作进执行态</span></div>
       <div class="funnel">${funnel}</div>
       <div class="workbench">
         <div class="clist">
@@ -435,10 +436,36 @@ const esc = (s) =>
     .replace(/"/g, "&quot;");
 
 const VIEWS = [
-  ["loop", "闭环"],
-  ["optimize", "优化"],
-  ["deposit", "沉淀"],
+  ["loop", "看板"],
+  ["optimize", "作战"],
+  ["deposit", "复盘"],
 ];
+const SPACE_IA = {
+  cm: {
+    views: [
+      ["loop", "经营看板"],
+      ["optimize", "卡口作战"],
+      ["deposit", "效果复盘"],
+    ],
+    modeZh: { explore: "研判", builder: "方案", runtime: "推进" },
+  },
+  pmo: {
+    views: [
+      ["loop", "增长看板"],
+      ["optimize", "举措推进"],
+      ["deposit", "效果关账"],
+    ],
+    modeZh: { explore: "诊断", builder: "拆解", runtime: "关账" },
+  },
+  invest: {
+    views: [
+      ["loop", "组合看板"],
+      ["optimize", "风控处置"],
+      ["deposit", "策略复盘"],
+    ],
+    modeZh: { explore: "研究", builder: "核验", runtime: "复核" },
+  },
+};
 const LEGACY_VIEW = {
   overview: "loop",
   data: "loop",
@@ -463,254 +490,63 @@ const DIMS = [
   ["feedback", "反馈"],
 ];
 
-const CYCLE = [
-  ["input", "输入"],
-  ["simulate", "模拟"],
-  ["generate", "生成"],
-  ["interact", "交互"],
-  ["evolve", "进化"],
-  ["output", "输出"],
-  ["revenue", "收益"],
+const VALUE_LOOP = [
+  ["data", "数据"],
+  ["insight", "洞察"],
+  ["cause", "归因"],
+  ["forecast", "预测"],
+  ["act", "策略行动"],
+  ["recover", "效果回收"],
+  ["learn", "学习沉淀"],
 ];
+const CYCLE = VALUE_LOOP;
+const LOOP_ON = {
+  loop: ["data", "insight", "cause"],
+  optimize: ["forecast", "act"],
+  deposit: ["recover", "learn"],
+  explore: ["insight", "cause"],
+  builder: ["forecast", "act"],
+  runtime: ["act", "recover"],
+};
 
-const MODE_ZH = { explore: "研究", builder: "构建", runtime: "运行" };
+const MODE_ZH = { explore: "研判", builder: "方案", runtime: "推进" };
 const PERM = {
-  explore: "sandbox · 禁写生产 · Skill 可 cite",
-  builder: "sandbox · 禁写生产 · 可 mock",
-  runtime: "gated · cs.* 须审批",
+  explore: "只读研判 · 禁止改生产",
+  builder: "可拟方案 · 禁止改生产",
+  runtime: "待你确认后才写入",
 };
 
 const PACKS = {
-  ops: {
-    id: "ops",
-    space: "衡川 · 经营管理工作台",
-    deep: true,
-    owner: "林启明",
-    role: "用人经理",
-    tension: "Staff 短名单窗口内，未接地分数仍可能混进建议。法则要求停手核实，不能发 offer。",
-    dikw: ["ATS / 面试纪要", "未接地率 61%", "LAW-EVD-001 无面试不得当真", "先研究，不发 offer"],
-    project: {
-      id: "prj-hire-q3",
-      code: "PRJ-HIR",
-      title: "Q3 Staff 短名单",
-      window: "本周窗口 · 冻结后 48h 回滚",
-      cycle: "interact",
-      object: "ThemePack → AppRelease → Instance",
-    },
-    kpis: [
-      { id: "fill", n: "编制填满", v: "72%", hint: "价值流仍停在短名单。" },
-      { id: "ground", n: "证据接地", v: "61%", hot: true, item: "wi-rao", hint: "下钻到 Rao：culture_fit 无面试。" },
-      { id: "cycle", n: "周期", v: "38d", hint: "短名单滞留拉长周期。" },
-    ],
-    goals: [
-      {
-        id: "o1",
-        title: "O1 本周五给出可解释短名单",
-        pct: 45,
-        krs: [
-          { id: "wi-shortlist", title: "KR1 三人窗口只保留接地建议", pct: 60 },
-          { id: "wi-rao", title: "KR2 未接地不得进入建议 = 100%", pct: 40 },
-          { id: "wi-freeze", title: "KR3 冻结走 G3 + 48h 回滚", pct: 20 },
-        ],
-      },
-    ],
-    items: [
-      {
-        id: "wi-shortlist",
-        code: "HIR-041",
-        title: "Q3 Staff 短名单窗口",
-        type: "工作项",
-        col: "doing",
-        owner: "林启明",
-        stage: "短名单",
-        due: "本周五",
-        exec: "explore",
-        gate: "G1",
-        ought: "短名单只含证据接地的候选人。",
-        is: "三人在窗：陈予安接地，Patel 部分不确定，Rao 未接地。",
-        gap: "未建模完五维不得签发 offer。",
-        wm: {
-          space: "衡川招聘委员会，线上材料加 onsite",
-          time: "本周窗口，冻结后 48h 回滚",
-          subjects: "林启明决策；候选人陈予安 / Patel / Rao",
-          objects: "短名单、证据包、法则 Pack",
-          feedback: "经理确认或驳回，未接地率",
-        },
-      },
-      {
-        id: "wi-rao",
-        code: "HIR-042",
-        title: "核验 Rao culture_fit",
-        type: "阻塞",
-        col: "blocked",
-        owner: "林启明",
-        stage: "短名单",
-        due: "今日",
-        exec: "explore",
-        gate: "G1",
-        hot: true,
-        ought: "culture_fit 必须有面试记录。",
-        is: "分数 0.86 来自简历关键词，无面试。",
-        gap: "未接地不得进入建议。",
-        wm: {
-          space: "衡川招聘委员会",
-          time: "本周校准窗口",
-          subjects: "林启明；候选人 Rao",
-          objects: "culture_fit 分数、面试记录",
-          feedback: "停手核实或移出建议",
-        },
-      },
-      {
-        id: "wi-chen",
-        code: "HIR-043",
-        title: "陈予安 面试已接地",
-        type: "候选人",
-        col: "doing",
-        owner: "林启明",
-        stage: "短名单",
-        due: "本周五",
-        exec: "runtime",
-        gate: "G3",
-        ought: "面试证据进入建议。",
-        is: "系统设计当场拆过限流，有可复核题面。",
-        gap: "可进建议；冻结仍要 G3。",
-        wm: {
-          space: "衡川招聘委员会",
-          time: "本周窗口",
-          subjects: "林启明；陈予安",
-          objects: "面试纪要、短名单建议",
-          feedback: "冻结短名单",
-        },
-      },
-      {
-        id: "wi-patel",
-        code: "HIR-044",
-        title: "Patel oncall 不确定",
-        type: "候选人",
-        col: "doing",
-        owner: "招聘委员会",
-        stage: "短名单",
-        due: "本周四",
-        exec: "explore",
-        gate: "G1",
-        ought: "oncall 能力有对内对照。",
-        is: "仅公开仓库密度高，无对内绩效。",
-        gap: "可进建议但必须标不确定。",
-        wm: {
-          space: "衡川招聘委员会",
-          time: "本周窗口",
-          subjects: "林启明；Patel；前任经理待取证",
-          objects: "GitHub 公开贡献、oncall 假设",
-          feedback: "向前任经理取证",
-        },
-      },
-      {
-        id: "wi-freeze",
-        code: "HIR-045",
-        title: "冻结短名单（组织承诺）",
-        type: "门禁",
-        col: "todo",
-        owner: "招聘委员会",
-        stage: "onsite",
-        due: "本周五",
-        exec: "runtime",
-        gate: "G3",
-        ought: "冻结是 G3 组织承诺，48h 可回滚。",
-        is: "应用已校验，尚未 Release 到实例。",
-        gap: "未 Release 不能静默跑生产；冻结须审批。",
-        wm: {
-          space: "衡川招聘委员会",
-          time: "冻结后 48h 回滚",
-          subjects: "招聘委员会；林启明",
-          objects: "短名单实例 ins-hengchuan-hire-q3",
-          feedback: "审计 + 回滚窗口",
-        },
-      },
-    ],
-    risks: [
-      { id: "wi-rao", level: "red", title: "未接地分数混进建议", detail: "Rao culture_fit=0.86 无面试。LAW-EVD-001。" },
-      { id: "wi-freeze", level: "amber", title: "静默发 offer", detail: "个人轨不得持经营轨凭证。TRACK_ESCALATION_REQUIRED。" },
-    ],
-    todos: [
-      { id: "wi-rao", pdca: "P", item: "核验 Rao culture_fit", owner: "林启明", gate: "G1", exec: "explore" },
-      { id: "wi-patel", pdca: "D", item: "向前任经理取证 Patel oncall", owner: "招聘委员会", gate: "G1", exec: "explore" },
-      { id: "wi-chen", pdca: "C", item: "复核陈予安面试证据包", owner: "林启明", gate: "G0", exec: "runtime" },
-      { id: "wi-freeze", pdca: "A", item: "冻结短名单", owner: "招聘委员会", gate: "G3", exec: "runtime" },
-    ],
-    evidence: [
-      { source: "ATS 面试纪要 陈予安", reliability: "高", excerpt: "系统设计当场拆过限流，有可复核题面。" },
-      { source: "GitHub public Patel", reliability: "中", excerpt: "分布式提交密度高，无对内绩效对照。" },
-      { source: "简历解析 Rao", reliability: "低", excerpt: "无面试。未接地假设。" },
-    ],
-    uncertainties: [
-      { claim: "Rao culture_fit 高", why: "无面试，分数来自关键词", ask: "安排校准面试，或移出建议" },
-      { claim: "Patel 能扛 oncall", why: "仅公开仓库", ask: "向前任经理取证" },
-    ],
-    options: [
-      { id: "A", summary: "短名单 = 陈予安 + Patel；Rao 不进建议", risk: "漏掉潜在文化匹配" },
-      { id: "B", summary: "三人全进并附警告", risk: "警告会被忽略" },
-    ],
-    knowledge: [
-      { id: "hiring_shortlist_laws.md", type: "法则", installed: true },
-      { id: "hiring-signal-triangulation", type: "Skill", installed: false },
-      { id: "loop-thinking-enhanced", type: "方法", installed: true },
-    ],
-    builder: {
-      app: "短名单编译器 0.1.0",
-      released: false,
-      invariants: [
-        { id: "wm_five_dims", ok: true, detail: "五维齐全" },
-        { id: "ungrounded_not_in_advice", ok: true, detail: "Rao 分数未进入建议" },
-        { id: "governance_g3", ok: true, detail: "冻结短名单 G3 + 48h 回滚" },
-      ],
-      cs: [
-        { op: "cs.candidate.query", level: "L1", side: "读" },
-        { op: "cs.approval.submit", level: "L2", side: "写，仅运行" },
-        { op: "cs.notify.send_email", level: "L2", side: "写，本剖面禁止" },
-      ],
-    },
-    runtime: {
-      instance: "ins-hengchuan-hire-q3",
-      scope: "tenant",
-      items: [
-        { name: "陈予安", advice: true, why: "面试证据接地" },
-        { name: "Patel", advice: true, why: "公开贡献密度高；oncall 仍标不确定" },
-        { name: "Rao", advice: false, why: "culture_fit 未接地，不得进入建议" },
-      ],
-      silent: "静默给候选人发 offer",
-      action: "冻结短名单（G3）",
-    },
-  },
   pmo: {
     id: "pmo",
-    space: "衡川 · 项目管理工作台",
+    space: "衡川 · 企业经营分析 · 增长管理",
     deep: true,
     owner: "周衡",
-    role: "PMO",
-    tension: "里程碑 M2 窗口内，7 条跨团队依赖没有 Owner。不能在驾驶舱改计划。",
-    dikw: ["依赖图 / 周会纪要", "按期 64%，依赖 7 条开着", "无 Owner 不得验收", "先指定 Owner，不改计划"],
+    role: "增长负责人",
+    tension: "本窗口增长关账前，7 条跨团队举措没有责任人。不能在看板上改目标。",
+    dikw: ["增长台账 / 周复盘纪要", "目标达成 64%，举措 7 条未认领", "无责任人不得关账", "先指定责任人，不改增长目标"],
     project: {
       id: "prj-m2",
-      code: "PRJ-M2",
-      title: "M2 验收窗口",
-      window: "本周五冻结",
-      cycle: "generate",
-      object: "里程碑 × 依赖 × 计划基线",
+      code: "GRW-Q3",
+      title: "Q3 增长关账",
+      window: "本周五增长关账冻结",
+      cycle: "forecast",
+      object: "增长目标 × 举措 × 关账基线",
     },
     kpis: [
-      { id: "on", n: "按期", v: "64%", hot: true, item: "wi-m2", hint: "下钻到 M2：验收被挡住。" },
-      { id: "dep", n: "开着的依赖", v: "7", item: "wi-deps", hint: "7 条边 Assignee 为空。" },
-      { id: "risk", n: "风险开", v: "3", hint: "范围未冻仍算风险。" },
+      { id: "on", n: "目标达成", v: "64%", hot: true, item: "wi-m2", hint: "下钻到本窗口：关账被挡住。" },
+      { id: "dep", n: "未认领举措", v: "7", item: "wi-deps", hint: "7 条举措责任人为空。" },
+      { id: "risk", n: "增长风险", v: "3", hint: "增长范围未冻仍算风险。" },
     ],
     goals: [
       {
         id: "o1",
-        title: "O1 M2 按窗口验收",
+        title: "O1 本窗口增长关账",
         pct: 36,
         krs: [
-          { id: "wi-deps", title: "KR1 7 条依赖均有 Owner", pct: 14 },
-          { id: "wi-m2", title: "KR2 无 Owner 不得进验收", pct: 70 },
-          { id: "wi-scope", title: "KR3 范围冻结 G3", pct: 20 },
+          { id: "wi-deps", title: "KR1 增长举措均有责任人", pct: 14 },
+          { id: "wi-m2", title: "KR2 无责任人不得关账", pct: 70 },
+          { id: "wi-scope", title: "KR3 增长范围冻结", pct: 20 },
         ],
       },
     ],
@@ -718,66 +554,66 @@ const PACKS = {
       {
         id: "wi-m2",
         code: "PJ-012",
-        title: "里程碑 M2 验收",
-        type: "里程碑",
+        title: "增长目标关账",
+        type: "增长目标",
         col: "blocked",
         owner: "周衡",
-        stage: "执行",
+        stage: "落地执行",
         due: "本周五",
         exec: "explore",
         gate: "G1",
         hot: true,
-        ought: "进入验收前每条依赖必须有 Owner。",
-        is: "7 条跨团队边停在执行，Owner 为空。",
-        gap: "无 Owner 不得进验收。",
+        ought: "关账前每条增长举措必须有责任人。",
+        is: "7 条跨团队增长举措停在落地，责任人为空。",
+        gap: "无责任人不得关账。",
         wm: {
-          space: "衡川组合委员会，跨团队依赖墙",
-          time: "M2 窗口，本周五冻结",
-          subjects: "周衡协调；各团队 Owner 待指定",
-          objects: "依赖边、里程碑、计划基线",
-          feedback: "Owner 确认、验收放行",
+          space: "衡川增长委员会，跨团队依赖墙",
+          time: "本窗口，周五增长关账冻结",
+          subjects: "周衡协调；各团队责任人待指定",
+          objects: "增长举措、关账基线",
+          feedback: "责任人确认、关账放行",
         },
       },
       {
         id: "wi-deps",
         code: "PJ-013",
-        title: "指定 M2 七条依赖 Owner",
-        type: "依赖",
+        title: "指定增长举措责任人",
+        type: "增长举措",
         col: "todo",
         owner: "周衡",
-        stage: "执行",
+        stage: "落地执行",
         due: "本周三",
         exec: "explore",
         gate: "G1",
-        ought: "每条依赖可指认主体与环位。",
-        is: "Jira 依赖图 7 条边指向空 Assignee；周会只有口头承诺。",
-        gap: "口头不算 Owner。",
+        ought: "每条增长举措可指认主体与环位。",
+        is: "增长台账 7 条举措指向空责任人；周会只有口头承诺。",
+        gap: "口头不算责任人。",
         wm: {
-          space: "平台组 / 业务组 / 数据组",
+          space: "增长组 / 业务组 / 数据组",
           time: "本周三书面指定",
-          subjects: "周衡；待定 Owner",
-          objects: "依赖边",
-          feedback: "书面确认写入计划",
+          subjects: "周衡；待定责任人",
+          objects: "增长举措台账",
+          feedback: "书面确认写入增长计划",
         },
       },
       {
         id: "wi-scope",
         code: "PJ-014",
-        title: "冻结 M2 范围",
+        title: "冻结本窗口增长范围",
         type: "门禁",
         col: "todo",
-        owner: "组合委员会",
-        stage: "计划",
+        owner: "增长委员会",
+        stage: "举措立项",
         due: "本周五",
         exec: "runtime",
         gate: "G3",
         ought: "范围冻结是 G3，48h 可回滚。",
-        is: "验收门禁尚未校验范围冻结。",
-        gap: "未校验不得改计划基线。",
+        is: "关账门禁尚未校验范围冻结。",
+        gap: "未校验不得改增长基线。",
         wm: {
-          space: "衡川组合委员会",
+          space: "衡川增长委员会",
           time: "冻结后 48h",
-          subjects: "组合委员会；周衡",
+          subjects: "增长委员会；周衡",
           objects: "计划基线",
           feedback: "审计",
         },
@@ -785,77 +621,77 @@ const PACKS = {
       {
         id: "wi-m1",
         code: "PJ-011",
-        title: "里程碑 M1",
-        type: "里程碑",
+        title: "上窗口增长关账",
+        type: "增长目标",
         col: "done",
         owner: "周衡",
-        stage: "验收",
+        stage: "效果关账",
         due: "已过",
         exec: "runtime",
         gate: "G0",
-        ought: "依赖已闭环才验收。",
-        is: "M1 依赖已闭环。",
+        ought: "举措已闭环才关账。",
+        is: "上窗口举措已闭环。",
         gap: "无。",
         wm: {
-          space: "衡川组合委员会",
+          space: "衡川增长委员会",
           time: "上窗口",
           subjects: "周衡",
-          objects: "M1",
-          feedback: "已验收",
+          objects: "上窗口增长关账",
+          feedback: "已关账",
         },
       },
       {
         id: "wi-init",
         code: "PJ-010",
-        title: "M3 立项预审",
+        title: "下窗口增长预审",
         type: "立项",
         col: "todo",
         owner: "周衡",
-        stage: "立项",
+        stage: "目标拆解",
         due: "下窗口",
         exec: "explore",
         gate: "G0",
-        ought: "立项先写清五维与验收法则。",
+        ought: "立项先写清五维与关账法则。",
         is: "只有口头范围，尚未建模。",
-        gap: "未建模不得排进本窗口执行。",
+        gap: "未建模不得排进本窗口落地。",
         wm: {
-          space: "衡川组合委员会",
+          space: "衡川增长委员会",
           time: "下窗口预审",
           subjects: "周衡；业务发起人",
-          objects: "立项书、验收法则",
-          feedback: "预审通过才进计划",
+          objects: "立项书、关账法则",
+          feedback: "预审通过才进增长计划",
         },
       },
     ],
     risks: [
-      { id: "wi-deps", level: "red", title: "跨团队依赖无 Owner", detail: "7 条边空 Assignee。口头下周再分，未写入。" },
-      { id: "wi-scope", level: "amber", title: "范围未冻", detail: "带着空 Owner 强行验收会被门禁拦住。" },
+      { id: "wi-deps", level: "red", title: "跨团队举措无责任人", detail: "7 条增长举措责任人为空。口头下周再分，未写入。" },
+      { id: "wi-scope", level: "amber", title: "范围未冻", detail: "带着空责任人强行关账会被门禁拦住。" },
     ],
     todos: [
-      { id: "wi-deps", pdca: "P", item: "给 M2 七条依赖指定 Owner", owner: "周衡", gate: "G1", exec: "explore" },
-      { id: "wi-m2", pdca: "C", item: "验收门禁复核", owner: "周衡", gate: "G1", exec: "explore" },
-      { id: "wi-scope", pdca: "A", item: "冻结 M2 范围", owner: "组合委员会", gate: "G3", exec: "runtime" },
+      { id: "wi-deps", pdca: "P", item: "给七条增长举措指定责任人", owner: "周衡", gate: "G1", exec: "explore" },
+      { id: "wi-m2", pdca: "C", item: "关账门禁复核", owner: "周衡", gate: "G1", exec: "explore" },
+      { id: "wi-scope", pdca: "A", item: "冻结本窗口增长范围", owner: "增长委员会", gate: "G3", exec: "runtime" },
     ],
     evidence: [
-      { source: "Jira 依赖图", reliability: "高", excerpt: "7 条边指向空 Assignee。" },
+      { source: "增长台账", reliability: "高", excerpt: "7 条举措指向空责任人。" },
       { source: "周会纪要", reliability: "中", excerpt: "口头说下周再分，无写入。" },
     ],
-    uncertainties: [{ claim: "平台组能接 3 条", why: "只有口头承诺", ask: "书面指定 Owner" }],
+    uncertainties: [{ claim: "数据组能接 3 条", why: "只有口头承诺", ask: "书面指定责任人" }],
     options: [
-      { id: "A", summary: "先指定 Owner 再谈验收", risk: "窗口可能滑" },
-      { id: "B", summary: "带着空 Owner 强行验收", risk: "门禁失败" },
+      { id: "A", summary: "先指定责任人再谈关账", risk: "窗口可能滑" },
+      { id: "B", summary: "带着空责任人强行关账", risk: "门禁失败" },
     ],
     knowledge: [
       { id: "pmo_acceptance_laws.md", type: "法则", installed: true },
       { id: "dependency-owner-triangulation", type: "Skill", installed: false },
     ],
     builder: {
-      app: "里程碑验收门禁 0.1.0",
+      app: "增长关账门禁 0.1.0",
       released: false,
       invariants: [
         { id: "wm_five_dims", ok: true, detail: "五维齐全" },
-        { id: "owner_required", ok: true, detail: "无 Owner 不得验收" },
-        { id: "governance_g3", ok: false, detail: "范围冻结尚未校验" },
+        { id: "owner_required", ok: true, detail: "无责任人不得关账" },
+        { id: "governance_g3", ok: false, detail: "增长范围冻结尚未校验" },
       ],
       cs: [
         { op: "cs.project.query", level: "L1", side: "读" },
@@ -863,30 +699,30 @@ const PACKS = {
       ],
     },
     runtime: {
-      instance: "ins-hengchuan-m2",
+      instance: "ins-hengchuan-growth-q3",
       scope: "tenant",
       items: [
-        { name: "M1", advice: true, why: "依赖已闭环" },
-        { name: "M2", advice: false, why: "7 条依赖无 Owner" },
+        { name: "上窗口", advice: true, why: "举措已闭环" },
+        { name: "本窗口", advice: false, why: "7 条举措无责任人" },
       ],
-      silent: "静默改计划基线",
-      action: "冻结 M2 范围（G3）",
+      silent: "静默改增长基线",
+      action: "冻结本窗口增长范围",
     },
   },
   invest: {
     id: "invest",
-    space: "衡川 · 金融投资工作台",
+    space: "衡川 · 投资研究 · 组合管理",
     deep: true,
     owner: "沈澈",
-    role: "投研负责人",
+    role: "组合负责人",
     tension: "组合回撤 6.1%，信源等级仅为中。中等级信源不得单独触发下单。",
-    dikw: ["行情 / 研报 / 审计", "回撤 -6.1%", "中等级信源不得单独下单", "先核验因子，禁止驾驶舱下单"],
+    dikw: ["行情 / 研报 / 审计", "回撤 -6.1%", "中等级信源不得单独下单", "先核验因子，禁止在组合看板上直接下单"],
     project: {
       id: "prj-book",
       code: "PRJ-INV",
       title: "回撤窗口组合",
       window: "本窗口 · 合规门 G4",
-      cycle: "simulate",
+      cycle: "cause",
       object: "组合 × 因子 × 仓位",
     },
     kpis: [
@@ -919,7 +755,7 @@ const PACKS = {
         exec: "runtime",
         gate: "G4",
         hot: true,
-        ought: "回撤 6% 必须复核，不得在驾驶舱下单。",
+        ought: "回撤 6% 必须复核，不得在组合看板上直接下单。",
         is: "回撤 -6.1%，敞口 1.2x。",
         gap: "复核未完成前禁止新开仓。",
         wm: {
@@ -1021,7 +857,7 @@ const PACKS = {
       },
     ],
     risks: [
-      { id: "wi-order", level: "red", title: "中等级信源触发下单", detail: "驾驶舱直接下单会被合规门拦住。" },
+      { id: "wi-order", level: "red", title: "中等级信源触发下单", detail: "在组合看板上直接下单会被合规门拦住。" },
       { id: "wi-dd", level: "amber", title: "回撤超限", detail: "本窗口已触发 G4 复核。" },
     ],
     todos: [
@@ -1062,7 +898,7 @@ const PACKS = {
         { name: "持仓复核", advice: true, why: "回撤事件已入审计" },
         { name: "待下单单", advice: false, why: "信源等级中" },
       ],
-      silent: "驾驶舱直接下单",
+      silent: "组合看板直接下单",
       action: "回撤超限复核（G4）",
     },
   },
@@ -1080,215 +916,51 @@ const BUILDER_STEPS = [
 ];
 
 const SCENE = {
-  ops: {
-    period: "本周窗口",
-    caliber: "接地率 = 有面试记录的建议 / 全部建议 · ATS + 面试纪要",
-    spec: {
-      badge: "用人经理视角",
-      stream: "人才流 5 阶段漏斗",
-      ownerLabel: "负责人",
-      owners: [
-        { value: "all", label: "全部" },
-        { value: "林启明", label: "林启明 (我)" },
-        { value: "招聘委员会", label: "招聘委员会" },
-      ],
-      overview: [
-        { n: "编制填满", tip: "Fill", v: "72%", sub: "价值流停在短名单", dir: "down" },
-        { n: "证据接地", tip: "Ground", v: "61%", sub: "↓4.0pp", dir: "down" },
-        { n: "周期", tip: "Cycle", v: "38d", sub: "短名单滞留", dir: "down" },
-        { n: "卡口", tip: "Gate", v: "2", sub: "未接地 + 冻结", dir: "down" },
-      ],
-    },
-    composite: [
-      { id: "fill", n: "编制填满", v: "72%", s: "价值流停在短名单" },
-      { id: "ground", n: "证据接地", v: "61%", s: "环比 -4pp", hot: true, item: "wi-rao" },
-      { id: "cycle", n: "周期", v: "38d", s: "短名单滞留" },
-      { id: "gate", n: "卡口", v: "2", s: "未接地 + 冻结未批", hot: true, item: "wi-rao" },
-    ],
-    kpis: [
-      { id: "ground", n: "接地率", v: "61%", s: "法则要求停手", hot: true, item: "wi-rao" },
-      { id: "offer", n: "offer 接受", v: "44%", s: "不得用未接地分数" },
-      { id: "learn", n: "待回写", v: "1", s: "ChangeSet 待确认" },
-    ],
-    funnel: [
-      { id: "需求", count: 3, gate: false },
-      { id: "sourcing", count: 8, gate: false },
-      { id: "短名单", count: 3, gate: true },
-      { id: "onsite", count: 1, gate: false },
-      { id: "到岗", count: 0, gate: false },
-    ],
-    objects: {
-      "wi-shortlist": {
-        health: "warn",
-        days: 6,
-        signal: "三人窗口未关账，未接地仍可能混进建议",
-        metrics: [
-          { n: "在窗", v: "3" },
-          { n: "接地", v: "1" },
-          { n: "不确定", v: "1" },
-          { n: "未接地", v: "1" },
-        ],
-        trend: [3, 3, 3, 3, 3],
-        verdict: {
-          level: "warn",
-          title: "决策信号 · 预警",
-          desc: "窗口未关。Rao 未接地，不能把三人名单当成可冻结产出。",
-          signals: ["未接地分数仍在池里", "冻结尚未走 G3"],
-        },
-        actions: [
-          { p: "P0", text: "核验 Rao culture_fit，未接地移出建议", owner: "林启明", exec: "explore", item: "wi-rao" },
-          { p: "P1", text: "Patel oncall 向前任经理取证", owner: "招聘委员会", exec: "explore", item: "wi-patel" },
-          { p: "P2", text: "陈予安证据包复核后进入建议", owner: "林启明", exec: "runtime", item: "wi-chen" },
-        ],
-        plan: [
-          { task: "核验 Rao", owner: "林启明", due: "今日", p: "P0", status: "overdue", item: "wi-rao" },
-          { task: "Patel 取证", owner: "招聘委员会", due: "本周四", p: "P1", status: "doing", item: "wi-patel" },
-          { task: "冻结短名单", owner: "招聘委员会", due: "本周五", p: "P0", status: "todo", item: "wi-freeze" },
-        ],
-      },
-      "wi-rao": {
-        health: "gate",
-        days: 9,
-        signal: "culture_fit=0.86 无面试，阶段停留超阈值",
-        metrics: [
-          { n: "分数", v: "0.86" },
-          { n: "面试", v: "0" },
-          { n: "信源", v: "低" },
-          { n: "停留", v: "9d" },
-        ],
-        trend: [0.81, 0.84, 0.86, 0.86, 0.86],
-        verdict: {
-          level: "gate",
-          title: "决策信号 · 卡口",
-          desc: "LAW-EVD-001：无面试不得当真。停手核实，不能发 offer。",
-          signals: ["简历关键词分数未接地", "ATS 无面试纪要", "若进入建议即违规"],
-        },
-        actions: [
-          { p: "P0", text: "签发研究：对照法则与证据，决定移出或补面试", owner: "林启明", exec: "explore", item: "wi-rao" },
-          { p: "P1", text: "安排校准面试或移出建议", owner: "林启明", exec: "explore", item: "wi-rao" },
-        ],
-        plan: [
-          { task: "核验 culture_fit", owner: "林启明", due: "今日", p: "P0", status: "overdue", item: "wi-rao" },
-        ],
-      },
-      "wi-chen": {
-        health: "ok",
-        days: 4,
-        signal: "面试证据接地，可进建议",
-        metrics: [
-          { n: "面试", v: "1" },
-          { n: "信源", v: "高" },
-          { n: "建议", v: "是" },
-          { n: "停留", v: "4d" },
-        ],
-        trend: [0, 1, 1, 1, 1],
-        verdict: {
-          level: "ok",
-          title: "决策信号 · 正常",
-          desc: "系统设计题面可复核。进入建议；冻结仍要 G3。",
-          signals: [],
-        },
-        actions: [
-          { p: "P2", text: "复核证据包后纳入建议名单", owner: "林启明", exec: "runtime", item: "wi-chen" },
-        ],
-        plan: [{ task: "证据包复核", owner: "林启明", due: "本周五", p: "P2", status: "doing", item: "wi-chen" }],
-      },
-      "wi-patel": {
-        health: "warn",
-        days: 7,
-        signal: "公开贡献密度高，oncall 无对内对照",
-        metrics: [
-          { n: "公开仓", v: "高" },
-          { n: "对内", v: "无" },
-          { n: "建议", v: "可" },
-          { n: "停留", v: "7d" },
-        ],
-        trend: [0.6, 0.7, 0.7, 0.72, 0.72],
-        verdict: {
-          level: "warn",
-          title: "决策信号 · 预警",
-          desc: "可进建议但必须标不确定。取证前不当成已过关。",
-          signals: ["仅 GitHub 公开仓库", "oncall 假设未核实"],
-        },
-        actions: [
-          { p: "P1", text: "向前任经理取证 Patel oncall", owner: "招聘委员会", exec: "explore", item: "wi-patel" },
-        ],
-        plan: [{ task: "前任经理取证", owner: "招聘委员会", due: "本周四", p: "P1", status: "doing", item: "wi-patel" }],
-      },
-      "wi-freeze": {
-        health: "warn",
-        days: 0,
-        signal: "应用已校验，冻结是组织承诺，须 G3",
-        metrics: [
-          { n: "Release", v: "否" },
-          { n: "门禁", v: "G3" },
-          { n: "回滚", v: "48h" },
-          { n: "审批", v: "待" },
-        ],
-        trend: [0, 0, 0, 1, 1],
-        verdict: {
-          level: "warn",
-          title: "决策信号 · 预警",
-          desc: "未 Release 不能静默跑生产。冻结须审批，禁止场景直接写。",
-          signals: ["实例未写入 live", "个人轨不得发 offer"],
-        },
-        actions: [
-          { p: "P0", text: "进入运行：冻结短名单，走 G3 审批", owner: "招聘委员会", exec: "runtime", item: "wi-freeze" },
-        ],
-        plan: [{ task: "冻结短名单", owner: "招聘委员会", due: "本周五", p: "P0", status: "todo", item: "wi-freeze" }],
-      },
-    },
-    assets: [
-      { name: "LAW-EVD-001 无面试不得当真", effect: "拦截 1 次未接地建议", pct: 100, status: "生效" },
-      { name: "短名单冻结 = 组织承诺", effect: "回滚窗口 48h，尚未使用", pct: 20, status: "待用" },
-    ],
-    learn: ["驳回把 Rao 纳入建议", "门禁拦住未接地写入", "法则再次确认", "同类窗口默认走研究", "ChangeSet 待人确认后回写"],
-  },
   pmo: {
-    period: "M2 窗口",
-    caliber: "按期 = 里程碑按基线验收 / 全部里程碑 · 依赖图 + 周会",
+    period: "本窗口",
+    caliber: "关账 = 增长举措均有责任人且范围已冻 / 本窗口全部举措 · 增长台账 + 周会",
     spec: {
-      badge: "PMO 视角",
-      stream: "立项到验收 5 阶段漏斗",
+      badge: "增长管理视角",
+      stream: "目标到关账 5 阶段漏斗",
       ownerLabel: "负责人",
       owners: [
         { value: "all", label: "全部" },
         { value: "周衡", label: "周衡 (我)" },
-        { value: "组合委员会", label: "组合委员会" },
+        { value: "增长委员会", label: "增长委员会" },
       ],
       overview: [
-        { n: "按期", tip: "On-time", v: "64%", sub: "M2 被挡住", dir: "down" },
-        { n: "开着的依赖", tip: "Deps", v: "7", sub: "Assignee 为空", dir: "down" },
-        { n: "风险开", tip: "Risk", v: "3", sub: "范围未冻", dir: "down" },
-        { n: "卡口", tip: "Gate", v: "2", sub: "无 Owner + 未冻", dir: "down" },
+        { n: "目标达成", tip: "关账进度", v: "64%", sub: "本窗口被挡住", dir: "down" },
+        { n: "未认领举措", tip: "举措", v: "7", sub: "责任人为空", dir: "down" },
+        { n: "增长风险", tip: "风险", v: "3", sub: "范围未冻", dir: "down" },
+        { n: "卡口", tip: "门禁", v: "2", sub: "无责任人 + 未冻", dir: "down" },
       ],
     },
     composite: [
-      { id: "on", n: "按期", v: "64%", s: "M2 被挡住", hot: true, item: "wi-m2" },
-      { id: "dep", n: "开着的依赖", v: "7", s: "Assignee 为空", hot: true, item: "wi-deps" },
-      { id: "risk", n: "风险开", v: "3", s: "范围未冻" },
-      { id: "gate", n: "卡口", v: "2", s: "无 Owner + 未冻" },
+      { id: "on", n: "目标达成", v: "64%", s: "本窗口被挡住", hot: true, item: "wi-m2" },
+      { id: "dep", n: "未认领举措", v: "7", s: "责任人为空", hot: true, item: "wi-deps" },
+      { id: "risk", n: "增长风险", v: "3", s: "范围未冻" },
+      { id: "gate", n: "卡口", v: "2", s: "无责任人 + 未冻" },
     ],
     kpis: [
-      { id: "on", n: "按期", v: "64%", s: "验收门禁触发", hot: true, item: "wi-m2" },
+      { id: "on", n: "目标达成", v: "64%", s: "关账门禁触发", hot: true, item: "wi-m2" },
       { id: "scope", n: "范围漂移", v: "12%", s: "基线未冻" },
       { id: "learn", n: "复盘", v: "1", s: "待回写" },
     ],
     funnel: [
-      { id: "立项", count: 1, gate: false },
-      { id: "计划", count: 1, gate: false },
-      { id: "执行", count: 2, gate: true },
-      { id: "验收", count: 1, gate: false },
-      { id: "收尾", count: 0, gate: false },
+      { id: "目标拆解", count: 1, gate: false },
+      { id: "举措立项", count: 1, gate: false },
+      { id: "落地执行", count: 2, gate: true },
+      { id: "效果关账", count: 1, gate: false },
+      { id: "复盘沉淀", count: 0, gate: false },
     ],
     objects: {
       "wi-m2": {
         health: "gate",
         days: 11,
-        signal: "7 条跨团队依赖无 Owner，停留超阈值",
+        signal: "7 条跨团队举措无责任人，停留超阈值",
         metrics: [
-          { n: "依赖开", v: "7" },
-          { n: "Owner", v: "0" },
+          { n: "举措开", v: "7" },
+          { n: "责任人", v: "0" },
           { n: "停留", v: "11d" },
           { n: "阈值", v: "7d" },
         ],
@@ -1296,16 +968,16 @@ const SCENE = {
         verdict: {
           level: "gate",
           title: "决策信号 · 卡口",
-          desc: "无 Owner 不得验收。不能在驾驶舱改计划。",
-          signals: ["7 条边空 Assignee", "周会只有口头承诺"],
+          desc: "无责任人不得关账。不能在看板上改增长目标。",
+          signals: ["7 条举措责任人为空", "周会只有口头承诺"],
         },
         actions: [
-          { p: "P0", text: "给七条依赖书面指定 Owner", owner: "周衡", exec: "explore", item: "wi-deps" },
-          { p: "P1", text: "验收门禁复核，确认法则", owner: "周衡", exec: "explore", item: "wi-m2" },
+          { p: "P0", text: "给七条增长举措书面指定责任人", owner: "周衡", exec: "explore", item: "wi-deps" },
+          { p: "P1", text: "关账门禁复核，确认法则", owner: "周衡", exec: "explore", item: "wi-m2" },
         ],
         plan: [
-          { task: "指定 Owner", owner: "周衡", due: "本周三", p: "P0", status: "todo", item: "wi-deps" },
-          { task: "验收复核", owner: "周衡", due: "本周五", p: "P1", status: "doing", item: "wi-m2" },
+          { task: "指定责任人", owner: "周衡", due: "本周三", p: "P0", status: "todo", item: "wi-deps" },
+          { task: "关账复核", owner: "周衡", due: "本周五", p: "P1", status: "doing", item: "wi-m2" },
         ],
       },
       "wi-deps": {
@@ -1322,16 +994,16 @@ const SCENE = {
         verdict: {
           level: "gate",
           title: "决策信号 · 卡口",
-          desc: "口头不算 Owner。先指定再谈验收。",
-          signals: ["Jira Assignee 为空"],
+          desc: "口头不算责任人。先指定再谈关账。",
+          signals: ["台账责任人为空"],
         },
-        actions: [{ p: "P0", text: "书面指定 7 条依赖 Owner", owner: "周衡", exec: "explore", item: "wi-deps" }],
-        plan: [{ task: "书面指定 Owner", owner: "周衡", due: "本周三", p: "P0", status: "todo", item: "wi-deps" }],
+        actions: [{ p: "P0", text: "书面指定 7 条增长举措责任人", owner: "周衡", exec: "explore", item: "wi-deps" }],
+        plan: [{ task: "书面指定责任人", owner: "周衡", due: "本周三", p: "P0", status: "todo", item: "wi-deps" }],
       },
       "wi-scope": {
         health: "warn",
         days: 5,
-        signal: "范围冻结尚未校验",
+        signal: "增长范围冻结尚未校验",
         metrics: [
           { n: "冻结", v: "否" },
           { n: "门禁", v: "G3" },
@@ -1342,19 +1014,19 @@ const SCENE = {
         verdict: {
           level: "warn",
           title: "决策信号 · 预警",
-          desc: "未校验不得改计划基线。带着空 Owner 强行验收会被拦住。",
+          desc: "未校验不得改增长基线。带着空责任人强行关账会被拦住。",
           signals: ["governance_g3 未过"],
         },
-        actions: [{ p: "P0", text: "进入运行：冻结 M2 范围", owner: "组合委员会", exec: "runtime", item: "wi-scope" }],
-        plan: [{ task: "冻结范围", owner: "组合委员会", due: "本周五", p: "P0", status: "todo", item: "wi-scope" }],
+        actions: [{ p: "P0", text: "进入运行：冻结本窗口增长范围", owner: "增长委员会", exec: "runtime", item: "wi-scope" }],
+        plan: [{ task: "冻结范围", owner: "增长委员会", due: "本周五", p: "P0", status: "todo", item: "wi-scope" }],
       },
       "wi-m1": {
         health: "ok",
         days: 0,
-        signal: "依赖已闭环，已验收",
+        signal: "上窗口举措已闭环，已关账",
         metrics: [
           { n: "依赖", v: "0" },
-          { n: "验收", v: "是" },
+          { n: "关账", v: "是" },
           { n: "回写", v: "1" },
           { n: "停留", v: "0" },
         ],
@@ -1362,19 +1034,19 @@ const SCENE = {
         verdict: {
           level: "ok",
           title: "决策信号 · 正常",
-          desc: "M1 已过关，可作本窗口对照。",
+          desc: "上窗口已关账，可作本窗口对照。",
           signals: [],
         },
-        actions: [{ p: "P2", text: "把 M1 过关条件沉淀进验收法则", owner: "周衡", exec: "builder", item: "wi-m1" }],
+        actions: [{ p: "P2", text: "把上窗口过关条件沉淀进关账法则", owner: "周衡", exec: "builder", item: "wi-m1" }],
         plan: [{ task: "复盘回写", owner: "周衡", due: "已过", p: "P2", status: "done", item: "wi-m1" }],
       },
       "wi-init": {
         health: "ok",
         days: 1,
-        signal: "下窗口预审，尚未建模，不进本窗口执行",
+        signal: "下窗口预审，尚未建模，不进本窗口落地",
         metrics: [
           { n: "五维", v: "草稿" },
-          { n: "验收法则", v: "未" },
+          { n: "关账法则", v: "未" },
           { n: "排期", v: "下窗" },
           { n: "停留", v: "1d" },
         ],
@@ -1382,25 +1054,25 @@ const SCENE = {
         verdict: {
           level: "ok",
           title: "决策信号 · 正常",
-          desc: "立项预审可做研究。未建模不得挤进 M2 执行。",
+          desc: "下窗口预审可做研判。未建模不得挤进本窗口落地。",
           signals: [],
         },
-        actions: [{ p: "P2", text: "签发研究：补齐 M3 五维与验收法则", owner: "周衡", exec: "explore", item: "wi-init" }],
+        actions: [{ p: "P2", text: "签发研判：补齐下窗口五维与关账法则", owner: "周衡", exec: "explore", item: "wi-init" }],
         plan: [{ task: "立项五维草稿", owner: "周衡", due: "下窗口", p: "P2", status: "todo", item: "wi-init" }],
       },
     },
     assets: [
-      { name: "无 Owner 不得验收", effect: "拦住 1 次提前验收", pct: 90, status: "生效" },
+      { name: "无责任人不得关账", effect: "拦住 1 次提前关账", pct: 90, status: "生效" },
       { name: "范围冻结 48h 回滚", effect: "尚未使用", pct: 20, status: "待用" },
     ],
-    learn: ["发现依赖无 Owner", "验收被门禁拦住", "法则再次确认", "同类里程碑默认先研究", "ChangeSet 待确认"],
+    learn: ["发现举措无责任人", "关账被门禁拦住", "法则再次确认", "同类增长窗口默认先研判", "ChangeSet 待确认"],
   },
   invest: {
     period: "本窗口",
     caliber: "信源等级：高 = 双源交叉；中不得单独下单 · 行情 + 研报 + 审计",
     spec: {
-      badge: "投研视角",
-      stream: "研究到复核 5 阶段漏斗",
+      badge: "组合管理视角",
+      stream: "研究到复核 · 组合管理漏斗",
       ownerLabel: "负责人",
       owners: [
         { value: "all", label: "全部" },
@@ -1447,7 +1119,7 @@ const SCENE = {
         verdict: {
           level: "gate",
           title: "决策信号 · 卡口",
-          desc: "回撤 6% 必须复核。禁止驾驶舱下单。",
+          desc: "回撤 6% 必须复核。禁止在组合看板上直接下单。",
           signals: ["回撤已入审计", "复核未闭环"],
         },
         actions: [{ p: "P0", text: "进入运行：回撤超限复核", owner: "风控", exec: "runtime", item: "wi-dd" }],
@@ -1580,7 +1252,7 @@ const SCENE = {
   };
   PACKS.cm = {
     id: "cm",
-    space: "衡川 · 客户经营工作台",
+    space: "衡川 · 销售运营 · LTC流程",
     deep: true,
     owner: "cowen.hua",
     role: "客户经理",
@@ -1591,7 +1263,7 @@ const SCENE = {
       code: "PRJ-LTC",
       title: "线索到现金",
       window: "近30天 · 客户经理 cowen.hua",
-      cycle: "interact",
+      cycle: "act",
       object: "客户 × 阶段 × 决策信号",
     },
     kpis: [
@@ -1618,7 +1290,7 @@ const SCENE = {
         is: c.signal_summary,
         gap: sb && sb.verdict ? sb.verdict.desc : c.signal_summary,
         wm: {
-          space: "衡川客户经营台 · " + c.current_stage,
+          space: "衡川销售运营台 · " + c.current_stage,
           time: c.days_in_stage ? "本阶段 " + c.days_in_stage + " 天" : "稳态服务",
           subjects: "CM " + c.owner_cm + "；BD " + c.owner_bd + "；客户 " + c.customer_name,
           objects: c.current_stage + "、决策信号、行动队列",
@@ -1702,7 +1374,7 @@ const SCENE = {
 })();
 
 (function hydrateSceneSnapshots() {
-  ["ops", "pmo", "invest"].forEach((pid) => {
+  ["pmo", "invest"].forEach((pid) => {
     const p = PACKS[pid];
     const sc = SCENE[pid];
     if (!p || !sc) return;
@@ -1730,14 +1402,14 @@ const SCENE = {
 
 const state = {
   layer: "scene",
-  pack: "ops",
+  pack: "cm",
   view: "loop",
-  selectedId: "wi-rao",
+  selectedId: "UEC-10293",
   execFocus: "project",
   stageFilter: "",
   healthFilter: "",
   q: "",
-  cmOwner: "all",
+  cmOwner: "cowen.hua",
   ltcViewStage: null,
   runs: {},
   hashLock: false,
@@ -1745,6 +1417,23 @@ const state = {
 
 function pack() {
   return PACKS[state.pack];
+}
+
+function packViews() {
+  return (SPACE_IA[state.pack] && SPACE_IA[state.pack].views) || VIEWS;
+}
+
+function modeLabel(m) {
+  if (!m) return "";
+  const local = SPACE_IA[state.pack] && SPACE_IA[state.pack].modeZh;
+  return (local && local[m]) || MODE_ZH[m] || m;
+}
+
+function loopStrip(keys) {
+  const on = new Set(keys || LOOP_ON[state.layer === "execute" ? (runOf(state.selectedId) || {}).mode : state.view] || LOOP_ON.loop);
+  return `<div class="value-loop" role="list" aria-label="经营闭环">${VALUE_LOOP.map(
+    ([id, n]) => `<span class="${on.has(id) ? "is-on" : ""}">${esc(n)}</span>`
+  ).join("")}</div>`;
 }
 
 function scene() {
@@ -1775,6 +1464,7 @@ function ensureRun(id, mode) {
       mode: mode || itemById(id).exec,
       plan: "",
       notes: [],
+      thread: [],
       approved: false,
       denial: "",
       cycle: pack().project.cycle,
@@ -1837,7 +1527,7 @@ function readHash() {
   if (parts[1] === "scene") {
     state.layer = "scene";
     const view = LEGACY_VIEW[parts[2]] || parts[2];
-    if (view && VIEWS.some((v) => v[0] === view)) state.view = view;
+    if (view && packViews().some((v) => v[0] === view)) state.view = view;
     return true;
   }
   return false;
@@ -1845,7 +1535,10 @@ function readHash() {
 
 function setLayer(layer, push) {
   state.layer = layer;
-  if (layer === "execute" && state.execFocus !== "task") state.execFocus = "project";
+  if (layer === "execute") {
+    state.execFocus = "task";
+    bootExecuteTask();
+  }
   render(true);
   syncHash(push);
 }
@@ -1889,7 +1582,7 @@ function itemCols() {
 function renderRail() {
   $("nav-space").textContent = pack().space;
   if (state.layer === "scene") {
-    $("rail-nav").innerHTML = VIEWS.map(
+    $("rail-nav").innerHTML = packViews().map(
       ([id, name]) =>
         `<button type="button" data-view="${id}" class="${state.view === id ? "is-on" : ""}">${name}</button>`
     ).join("");
@@ -1907,7 +1600,7 @@ function renderRail() {
     ${pack()
       .items.map((it) => {
         const run = runOf(it.id);
-        const mode = run ? MODE_ZH[run.mode] : "未进入";
+        const mode = run ? modeLabel(run.mode) : "未进入";
         return `<button type="button" class="child ${state.execFocus === "task" && state.selectedId === it.id ? "is-on" : ""}" data-exec-task="${it.id}">
           ${esc(it.title)}
           <small>${esc(it.code)} · ${mode} · ${esc(it.owner)}</small>
@@ -2057,7 +1750,7 @@ function renderLoopMain() {
     const acts = (snap.actions || [])
       .map(
         (a, i) =>
-          `<div class="act ${a.p}"><span class="act-tag ${a.p}">${a.p}</span><div><div class="act-txt">${esc(a.text)}</div><div class="act-owner">负责人：${esc(a.owner)}${a.collab ? " · 协作：" + esc(a.collab) : ""} · 建议${MODE_ZH[a.exec] || ""}</div><div class="act-go"><button type="button" class="${i === 0 ? "btn-enter" : "btn-enter ghost"}" data-enter="${a.exec || "explore"}" data-enter-item="${a.item || current.id}">进入执行态</button></div></div></div>`
+          `<div class="act ${a.p}"><span class="act-tag ${a.p}">${a.p}</span><div><div class="act-txt">${esc(a.text)}</div><div class="act-owner">负责人：${esc(a.owner)}${a.collab ? " · 协作：" + esc(a.collab) : ""} · 建议${modeLabel(a.exec) || ""}</div><div class="act-go"><button type="button" class="${i === 0 ? "btn-enter" : "btn-enter ghost"}" data-enter="${a.exec || "explore"}" data-enter-item="${a.item || current.id}">进入执行态</button></div></div></div>`
       )
       .join("");
     const planRows = (snap.plan || [])
@@ -2076,7 +1769,8 @@ function renderLoopMain() {
   }
 
   return `<div class="ltc">
-    <div class="section-header"><span class="section-title">全局经营</span><span class="section-badge">${esc(spec.badge)}</span><span class="section-note">数据周期：${esc(sc.period)} · ${esc(sc.caliber)}</span></div>
+    ${loopStrip(LOOP_ON.loop)}
+    <div class="section-header"><span class="section-title">${esc(pack().space.replace("衡川 · ", ""))}</span><span class="section-badge">${esc(spec.badge)}</span><span class="section-note">数据 · 洞察 · 归因 · ${esc(sc.period)}</span></div>
     <div class="kpi-strip">
       <div class="ktile kt1 composite">
         <div class="kt-comp-head">经营概览 <b>${ov.map((k) => k.n).join(" / ")}</b><span class="section-note" style="margin-left:auto">${esc(sc.period)}</span></div>
@@ -2093,7 +1787,7 @@ function renderLoopMain() {
       <button type="button" class="btn btn-outline" data-ltc-export>导出报告</button>
       <div class="legend"><span><span class="ldot" style="background:#10b981"></span>正常</span><span><span class="ldot" style="background:#f59e0b"></span>预警</span><span><span class="ldot" style="background:#ef4444"></span>卡口</span></div>
     </div>
-    <div class="section-header"><span class="section-title">价值流</span><span class="section-badge">${esc(spec.stream)}</span><span class="section-note">点击阶段 pill → 按阶段筛选对象列表</span></div>
+    <div class="section-header"><span class="section-title">业务阶段</span><span class="section-badge">${esc(spec.stream)}</span><span class="section-note">点阶段看卡在哪 · 过关动作进执行态</span></div>
     <div class="funnel" style="--fp-cols:${sc.funnel.length}">${funnel}</div>
     <div class="workbench">
       <div class="clist">
@@ -2115,7 +1809,8 @@ function renderOptimizeMain() {
   const overdue = plans.filter((r) => r.status === "overdue");
   return `
     <div class="ltc">
-    <div class="section-header"><span class="section-title">优化</span><span class="section-badge">Check / Act</span><span class="section-note">执行回流后的状态挂在对象上，不在聊天里</span></div>
+    ${loopStrip(LOOP_ON.optimize)}
+    <div class="section-header"><span class="section-title">${esc((packViews()[1] || ["", "作战"])[1])}</span><span class="section-badge">预测 · 策略行动</span><span class="section-note">执行回流后的状态挂在对象上，不在聊天里</span></div>
     <p class="lead">${esc(p.tension)}</p>
     ${cycleHtml(p.project.cycle)}
     <div class="panel" style="margin-bottom:12px">
@@ -2135,7 +1830,7 @@ function renderOptimizeMain() {
           ? `<ul>${returns
               .map(
                 (x) =>
-                  `<li><button type="button" class="text-btn" data-open-exec="task" data-item="${x.it.id}">${esc(x.it.title)}</button> · ${MODE_ZH[x.run.mode]} · ${
+                  `<li><button type="button" class="text-btn" data-open-exec="task" data-item="${x.it.id}">${esc(x.it.title)}</button> · ${modeLabel(x.run.mode)} · ${
                     x.run.approved ? "已写入 live" : x.run.notes.length ? x.run.notes.length + " 条注释" : "进行中"
                   }</li>`
               )
@@ -2143,7 +1838,7 @@ function renderOptimizeMain() {
           : `<p class="empty">还没有任务从执行态回来。先在闭环里点过关动作。</p>`
       }
     </div>
-    <div class="section-header"><span class="section-title">本窗口计划</span><span class="section-note">从闭环行动队列回收</span></div>
+    <div class="section-header"><span class="section-title">本窗口计划</span><span class="section-note">从看板行动队列回收</span></div>
     ${table(plans, [
       ["title", "对象", (r) => esc(r.title || itemById(r.id).title)],
       ["p", "级", (r) => esc(r.p)],
@@ -2164,7 +1859,8 @@ function renderDepositMain() {
   const p = pack();
   return `
     <div class="ltc">
-    <div class="section-header"><span class="section-title">沉淀</span><span class="section-badge">策略资产</span><span class="section-note">效果回收后等人确认 ChangeSet，禁止静默改知识</span></div>
+    ${loopStrip(LOOP_ON.deposit)}
+    <div class="section-header"><span class="section-title">${esc((packViews()[2] || ["", "复盘"])[1])}</span><span class="section-badge">效果回收 · 学习沉淀</span><span class="section-note">人确认后才回写口径，禁止静默改知识</span></div>
     <p class="lead">效果回收后，人确认 ChangeSet，才变成下一轮数据的口径。</p>
     ${sc.assets
       .map(
@@ -2241,7 +1937,7 @@ function renderProjectMain() {
     <div class="panel" style="margin-bottom:16px">
       <h3>对象链</h3>
       <p>${esc(prj.object)}</p>
-      <p class="meta" style="margin:8px 0 0">执行态看的是项目与任务，不是对话 session。</p>
+      <p class="meta" style="margin:8px 0 0">点左侧任务，执行态以助手 + 卡片为主交互。对象链仍是真相，不是对话 session。</p>
     </div>
     ${table(
       p.items,
@@ -2252,7 +1948,7 @@ function renderProjectMain() {
           "执行环位",
           (r) => {
             const run = runOf(r.id);
-            return run ? `<span class="tag mode">${MODE_ZH[run.mode]}</span>` : `<span class="tag">未进入</span>`;
+            return run ? `<span class="tag mode">${modeLabel(run.mode)}</span>` : `<span class="tag">未进入</span>`;
           },
         ],
       ]
@@ -2360,51 +2056,218 @@ function runtimeCanvas(p, run) {
   `;
 }
 
-function renderTaskMain() {
+function pushThread(run, msg) {
+  if (!run.thread) run.thread = [];
+  run.thread.push({
+    id: "t" + run.thread.length + "-" + Date.now().toString(36),
+    ...msg,
+  });
+}
+
+function appendModeCards(run, it) {
   const p = pack();
+  if (run.mode === "explore") {
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: {
+        type: "hitl",
+        title: `待你确认 · ${modeLabel("explore")}下一步`,
+        body: `五维与证据摊开后，可生成计划或晋升到${modeLabel("builder")}。未装 Skill 只 cite。`,
+        actions: [
+          { act: "plan", label: "生成计划", primary: true },
+          { act: "promote", label: "晋升到" + modeLabel("builder") },
+        ],
+      },
+    });
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: { type: "gap", ought: it.ought, is: it.is, gap: it.gap },
+    });
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: { type: "evidence", rows: (p.evidence || []).slice(0, 4) },
+    });
+  } else if (run.mode === "builder") {
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: {
+        type: "hitl",
+        title: `待你确认 · 能否上${modeLabel("runtime")}`,
+        body: p.builder.invariants.every((i) => i.ok)
+          ? "Invariants 已过。晋升后才允许带权写入。"
+          : "有 invariant 未过，不能创建实例。",
+        actions: p.builder.invariants.every((i) => i.ok)
+          ? [{ act: "promote", label: "晋升到" + modeLabel("runtime"), primary: true }]
+          : [{ act: "plan", label: "先补计划", primary: true }],
+      },
+    });
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: { type: "invariants", app: p.builder.app, items: p.builder.invariants },
+    });
+  } else {
+    if (run.approved) {
+      pushThread(run, {
+        role: "assistant",
+        kind: "card",
+        card: { type: "result", ok: true, text: `已写入 live · ${p.runtime.action} · 回滚窗口 48h` },
+      });
+    } else {
+      pushThread(run, {
+        role: "assistant",
+        kind: "card",
+        card: {
+          type: "hitl",
+          title: "待你确认",
+          body: `${p.runtime.action}。通过后才写入 live，状态不在聊天里。`,
+          actions: [
+            { act: "approve", label: "批准写入", primary: true },
+            { act: "reject-write", label: "驳回", danger: true },
+          ],
+        },
+      });
+    }
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: { type: "advice", items: p.runtime.items || [] },
+    });
+  }
+  if (run.denial) {
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: { type: "gate", text: run.denial },
+    });
+  }
+}
+
+function seedLuiThread(run, it) {
+  if (!run) return;
+  if (run.thread && run.thread.length) return;
+  run.thread = [];
+  pushThread(run, {
+    role: "assistant",
+    kind: "text",
+    text: `我在任务 ${it.code}「${it.title}」上协助，不另开对话。当前环位：${modeLabel(run.mode)}。你可以直接说，或点卡片推进。`,
+  });
+  appendModeCards(run, it);
+}
+
+function renderAgCard(card) {
+  if (!card) return "";
+  if (card.type === "gap") {
+    return `<article class="ag-card">
+      <header>对象对冲</header>
+      <div class="ag-tri">
+        <div><b>应当</b><p>${esc(card.ought)}</p></div>
+        <div><b>事实</b><p>${esc(card.is)}</p></div>
+        <div><b>缺口</b><p>${esc(card.gap)}</p></div>
+      </div>
+    </article>`;
+  }
+  if (card.type === "evidence") {
+    const rows = card.rows || [];
+    return `<article class="ag-card">
+      <header>证据卡</header>
+      ${
+        rows.length
+          ? `<ul>${rows.map((e) => `<li><b>${esc(e.source)}</b> · ${esc(e.reliability)} — ${esc(e.excerpt)}</li>`).join("")}</ul>`
+          : "<p>暂无证据条目。</p>"
+      }
+    </article>`;
+  }
+  if (card.type === "plan") {
+    return `<article class="ag-card">
+      <header>计划卡</header>
+      <p>${esc(card.text)}</p>
+    </article>`;
+  }
+  if (card.type === "invariants") {
+    return `<article class="ag-card">
+      <header>构建门禁 · ${esc(card.app)}</header>
+      <ul>${(card.items || [])
+        .map((i) => `<li>${esc(i.id)} · ${i.ok ? '<span class="tag ok">过</span>' : '<span class="tag hot">挡</span>'} ${esc(i.detail)}</li>`)
+        .join("")}</ul>
+    </article>`;
+  }
+  if (card.type === "advice") {
+    return `<article class="ag-card">
+      <header>建议动作</header>
+      <ul>${(card.items || [])
+        .map((x) => `<li><b>${esc(x.name)}</b> · ${x.advice ? '<span class="tag ok">可进建议</span>' : '<span class="tag hot">不可</span>'} — ${esc(x.why)}</li>`)
+        .join("")}</ul>
+    </article>`;
+  }
+  if (card.type === "hitl") {
+    return `<article class="ag-card hitl">
+      <header>${esc(card.title)}</header>
+      <p>${esc(card.body)}</p>
+      <div class="ag-actions">${(card.actions || [])
+        .map((a) => {
+          const cls = a.danger ? "danger" : a.primary ? "primary" : "ghost";
+          return `<button type="button" class="${cls}" data-act="${esc(a.act)}">${esc(a.label)}</button>`;
+        })
+        .join("")}</div>
+    </article>`;
+  }
+  if (card.type === "gate") {
+    return `<article class="ag-card gate"><header>门禁拦截</header><p>${esc(card.text)}</p></article>`;
+  }
+  if (card.type === "result") {
+    return `<article class="ag-card ${card.ok ? "ok" : "gate"}"><header>${card.ok ? "已落地" : "未写入"}</header><p>${esc(card.text)}</p></article>`;
+  }
+  return `<article class="ag-card"><p>${esc(card.text || "")}</p></article>`;
+}
+
+function renderLuiMsg(m) {
+  if (m.kind === "card") {
+    return `<div class="lui-msg assistant">${renderAgCard(m.card)}</div>`;
+  }
+  return `<div class="lui-msg ${m.role}"><div class="lui-bubble">${esc(m.text)}</div></div>`;
+}
+
+function bootExecuteTask() {
   const it = itemById(state.selectedId);
+  if (!it) return;
+  if (!runOf(it.id)) {
+    const miss = missingDim(it.wm);
+    let mode = it.exec || "explore";
+    if ((mode === "runtime" || mode === "builder") && miss.length) mode = "explore";
+    ensureRun(it.id, mode);
+  }
+  seedLuiThread(runOf(it.id), it);
+}
+
+function renderTaskMain() {
+  const it = itemById(state.selectedId);
+  bootExecuteTask();
   const run = runOf(it.id);
-  const mode = run ? run.mode : it.exec;
-  const entered = !!run;
+  const mode = run.mode;
   return `
-    <div class="object-bar">
-      <div>
-        <h1>${esc(it.title)}</h1>
-        <p class="meta">${esc(it.code)} · ${esc(it.type)} · ${esc(it.owner)} · ${esc(it.gate)} · ${esc(it.due)} · ${
-          entered ? MODE_ZH[mode] : "尚未进入执行环位"
-        }</p>
+    <div class="lui">
+      ${loopStrip()}
+      <div class="object-bar lui-bar">
+        <div>
+          <h1>${esc(it.title)}</h1>
+          <p class="meta">${esc(it.code)} · ${esc(it.owner)} · ${esc(it.gate)} · 助手挂在任务上 · ${modeLabel(mode)}</p>
+        </div>
+        <div class="modes">
+          ${["explore", "builder", "runtime"]
+            .map(
+              (m) =>
+                `<button type="button" class="ghost ${mode === m ? "is-on" : ""}" data-enter="${m}">${modeLabel(m)}</button>`
+            )
+            .join("")}
+        </div>
       </div>
-      <div class="modes">
-        ${["explore", "builder", "runtime"]
-          .map(
-            (m) =>
-              `<button type="button" class="ghost ${entered && mode === m ? "is-on" : ""}" data-enter="${m}">${MODE_ZH[m]}</button>`
-          )
-          .join("")}
-      </div>
+      <div class="lui-stream" id="lui-stream">${(run.thread || []).map(renderLuiMsg).join("")}</div>
     </div>
-    ${dimsHtml(it.wm)}
-    ${
-      entered
-        ? mode === "explore"
-          ? exploreCanvas(p, it, run)
-          : mode === "builder"
-            ? builderCanvas(p, run)
-            : runtimeCanvas(p, run)
-        : `<div class="split3">
-            <div class="panel"><h3>应当</h3><p>${esc(it.ought)}</p></div>
-            <div class="panel"><h3>事实</h3><p>${esc(it.is)}</p></div>
-            <div class="panel"><h3>缺口</h3><p>${esc(it.gap)}</p></div>
-          </div>
-          <p class="lead">这是任务对象，不是一段对话。选择研究 / 构建 / 运行后，核心信息留在本页。</p>`
-    }
-    ${
-      run?.notes?.length
-        ? `<div class="panel" style="margin-top:12px"><h3>任务注释</h3><ul class="note-list">${run.notes
-            .map((n) => `<li>${esc(n)}</li>`)
-            .join("")}</ul></div>`
-        : ""
-    }
   `;
 }
 
@@ -2419,10 +2282,10 @@ function renderInspector() {
       <h2>${esc(it.title)}</h2>
       <p class="meta">${esc(it.code)} · ${healthTag(o.health)} · ${esc(it.gate)}</p>
       <div class="block"><h3>决策信号</h3><p>${esc(o.verdict?.desc || it.gap)}</p></div>
-      <p class="meta">数据 → 决策在闭环页。这里把过关动作送进执行态。</p>
+      <p class="meta">数据 · 洞察 · 归因在看板。这里把过关动作送进执行态。</p>
       <div class="row">
-        <button type="button" class="primary" data-enter="${it.exec}">进入${MODE_ZH[it.exec]}</button>
-        <button type="button" class="ghost" data-view="loop">回闭环</button>
+        <button type="button" class="primary" data-enter="${it.exec}">进入${modeLabel(it.exec)}</button>
+        <button type="button" class="ghost" data-view="loop">回经营看板</button>
       </div>
       ${miss.length ? `<p class="meta">缺 ${esc(miss.join("、"))}，不能当生产动作。</p>` : ""}
       <div class="row"><button type="button" class="danger" data-act="scene-write">在场景直接改生产</button></div>
@@ -2436,9 +2299,9 @@ function renderInspector() {
       <h2>${esc(prj.title)}</h2>
       <p class="meta">${esc(prj.code)} · ${esc(pack().owner)}</p>
       <div class="block"><h3>当前张力</h3><p>${esc(pack().tension)}</p></div>
-      <div class="block"><h3>价值闭环</h3>${cycleHtml(prj.cycle)}</div>
-      <p class="meta">点左侧任务看对象详情。对话不是这一层的根。</p>
-      <div class="row"><button type="button" class="ghost" data-layer="scene">回场景闭环</button></div>
+      <div class="block"><h3>经营闭环</h3>${cycleHtml(prj.cycle)}</div>
+      <p class="meta">助手在主画布干活。对象与权限在这一栏，对话不是根。</p>
+      <div class="row"><button type="button" class="ghost" data-layer="scene">回经营看板</button></div>
     `;
     return;
   }
@@ -2446,27 +2309,28 @@ function renderInspector() {
   const mode = run ? run.mode : it.exec;
   $("inspector").innerHTML = `
     <h2>${esc(it.title)}</h2>
-    <p class="meta">${esc(it.code)} · ${run ? MODE_ZH[mode] : "未进入"} · ${esc(it.gate)}</p>
+    <p class="meta">${esc(it.code)} · ${run ? modeLabel(mode) : "未进入"} · ${esc(it.gate)}</p>
     <div class="block"><h3>权限</h3><p class="perm">${esc(PERM[mode])}</p></div>
+    <div class="block"><h3>五维</h3>${dimsHtml(it.wm)}</div>
     <div class="block"><h3>下一步</h3>
       <p>${
         !run
-          ? "进入研究，先把五维和证据摊开。"
+          ? `进入${modeLabel("explore")}，先把五维和证据摊开。`
           : mode === "explore"
-            ? "五维与证据齐后，晋升到构建。"
+            ? `五维与证据齐后，晋升到${modeLabel("builder")}。`
             : mode === "builder"
               ? pack().builder.invariants.every((i) => i.ok)
-                ? "Invariants 已过，可晋升到运行。"
-                : "有 invariant 未过，不能上运行。"
+                ? `门禁已过，可晋升到${modeLabel("runtime")}。`
+                : "有门禁未过，不能上落地。"
               : "写操作须批准。禁止静默对外承诺。"
       }</p>
     </div>
     <div class="row">
       ${
         run?.mode === "explore"
-          ? `<button type="button" class="primary" data-act="promote">晋升到构建</button>`
+          ? `<button type="button" class="primary" data-act="promote">晋升到${modeLabel("builder")}</button>`
           : run?.mode === "builder"
-            ? `<button type="button" class="primary" data-act="promote">晋升到运行</button>`
+            ? `<button type="button" class="primary" data-act="promote">晋升到${modeLabel("runtime")}</button>`
             : ""
       }
       <button type="button" class="ghost" data-layer="scene">回场景定位</button>
@@ -2476,13 +2340,16 @@ function renderInspector() {
 }
 
 function renderDock() {
-  const show = state.layer === "execute" && state.execFocus === "task" && !!runOf(state.selectedId);
+  const show = state.layer === "execute" && state.execFocus === "task";
   $("dock").hidden = !show;
   if (!show) return;
+  bootExecuteTask();
   const run = runOf(state.selectedId);
   $("perm-badge").textContent = PERM[run.mode];
   $("dock-hint").textContent =
-    run.mode === "runtime" ? "注释挂在实例上，不覆盖 live 状态。" : "补充写入当前任务对象。";
+    run.mode === "runtime"
+      ? "对助手说。卡片待你确认后才写 live。"
+      : "对助手说。动作挂在当前任务上，不是新开对话。";
 }
 
 function bindSceneFilters() {
@@ -2530,11 +2397,19 @@ function render(animate) {
         ? renderProjectMain()
         : renderTaskMain();
   const main = $("main");
+  main.classList.toggle("lui-on", state.layer === "execute" && state.execFocus === "task");
   main.innerHTML = html;
   if (animate) {
     main.classList.remove("is-swap");
     void main.offsetWidth;
     main.classList.add("is-swap");
+  }
+  const stream = $("lui-stream");
+  if (stream) {
+    const cards = stream.querySelectorAll(".ag-card.hitl, .ag-card.gate, .ag-card.ok");
+    const last = cards[cards.length - 1];
+    if (last) last.scrollIntoView({ block: "nearest", inline: "nearest" });
+    else stream.scrollTop = stream.scrollHeight;
   }
   renderInspector();
   renderDock();
@@ -2562,13 +2437,77 @@ function enterTask(id, mode, fromScene) {
       }
     }
   }
+  const prev = runOf(id);
+  const prevMode = prev && prev.mode;
   state.selectedId = id;
   state.execFocus = "task";
   state.layer = "execute";
   ensureRun(id, mode || it.exec);
+  const run = runOf(id);
+  seedLuiThread(run, it);
+  if (prevMode && prevMode !== run.mode && run.thread && run.thread.length) {
+    pushThread(run, {
+      role: "assistant",
+      kind: "text",
+      text: `环位切到${modeLabel(run.mode)}。我继续挂在 ${it.code} 上。`,
+    });
+    appendModeCards(run, it);
+  }
   render(true);
   syncHash(true);
-  if (fromScene) toast(`已进入${MODE_ZH[runOf(id).mode]}。对象仍是 ${esc(it.code)}。`);
+  if (fromScene) toast(`助手已接手 ${esc(it.code)} · ${modeLabel(run.mode)}。`);
+  if (run.mode === "runtime") ensureHubExec(run);
+}
+
+function ensureHubExec(run) {
+  const scene = window.HubScene;
+  const bar = document.getElementById("hub-banner");
+  if (!scene || !scene.execOpen || !bar || bar.dataset.hub !== "ok") return;
+  if (run.hubAwaiting || run.hubOpening) return;
+  run.hubOpening = true;
+  const start = run.hubTaskId
+    ? Promise.resolve({ task_id: run.hubTaskId })
+    : scene
+        .insightDrill("an-stage-visit", [{ kind: "kg", id: "ep-visit-20260715" }])
+        .then((insight) =>
+          scene.taskIssue({
+            source_node_id: "an-stage-visit",
+            insight_id: insight.insight_id,
+            cs_write: ["cs.visit.schedule"],
+            assignee: { owner_id: "zhangsan", position_id: "pos-bd" },
+          })
+        );
+  start
+    .then((task) => {
+      run.hubTaskId = task.task_id;
+      return scene.execOpen(task.task_id);
+    })
+    .then((opened) => {
+      run.hubOpening = false;
+      if (opened && opened.status === "awaiting_approval") {
+        run.hubAwaiting = true;
+        pushThread(run, {
+          role: "assistant",
+          kind: "card",
+          card: {
+            type: "hitl",
+            title: "待你确认",
+            body: "外环已暂停，批准后才写入经营系统。",
+            actions: [
+              { act: "approve", label: "批准写入", primary: true },
+              { act: "reject-write", label: "驳回" },
+            ],
+          },
+        });
+        toast("待你确认 · 外环已暂停");
+        render(false);
+      }
+    })
+    .catch((err) => {
+      run.hubOpening = false;
+      const msg = (err && err.error && err.error.message) || "执行服务暂不可用";
+      toast(msg);
+    });
 }
 
 function promote() {
@@ -2582,23 +2521,37 @@ function promote() {
       return;
     }
     run.mode = "builder";
-    toast("已晋升到构建。Theme 绑定到 Blueprint。");
+    pushThread(run, {
+      role: "assistant",
+      kind: "text",
+      text: `已晋升到${modeLabel("builder")}。方案已绑到可执行门禁。下一步用卡片确认。`,
+    });
+    appendModeCards(run, it);
+    toast(`已晋升到${modeLabel("builder")}。方案已绑到可执行门禁。`);
   } else if (run.mode === "builder") {
     if (pack().builder.invariants.some((i) => !i.ok)) {
       toast("invariant 未过，不能创建实例。");
       return;
     }
     run.mode = "runtime";
-    toast("已晋升到运行。等待门禁批准后写入 live。");
+    pushThread(run, {
+      role: "assistant",
+      kind: "text",
+      text: `已晋升到${modeLabel("runtime")}。写操作走卡片「待你确认」，不会静默落 live。`,
+    });
+    appendModeCards(run, it);
+    toast(`已晋升到${modeLabel("runtime")}。等待门禁批准后写入 live。`);
   }
   render(true);
   syncHash(false);
 }
 
 function writeNote(text, asPlan) {
+  bootExecuteTask();
   const run = runOf(state.selectedId);
+  const it = itemById(state.selectedId);
   if (!run) {
-    toast("先进入研究 / 构建 / 运行，再写进任务。");
+    toast(`先进入${modeLabel("explore")} / ${modeLabel("builder")} / ${modeLabel("runtime")}，再写进任务。`);
     return;
   }
   const raw = (text || "").trim();
@@ -2609,21 +2562,62 @@ function writeNote(text, asPlan) {
         : run.mode === "builder"
           ? "跑 invariants；不过门禁不得 Release。cs.* 只绑定不执行。"
           : "只提交带权动作。高影响升级。状态写实例，不写对话。";
-    toast("计划已写进任务对象。");
+    pushThread(run, { role: "user", kind: "text", text: "生成计划" });
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: { type: "plan", text: run.plan },
+    });
+    toast("计划已写成卡片，挂在当前任务上。");
     render(false);
     return;
   }
   if (!raw) return;
+  pushThread(run, { role: "user", kind: "text", text: raw });
   const wantsWrite = /offer|下单|改计划|发信|cs\.|冻结|写生产|直接执行/.test(raw);
   if (run.mode !== "runtime" && wantsWrite) {
     run.denial = "PROFILE_FORBIDS_SIDE_EFFECT · 研究/构建禁写生产。";
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: { type: "gate", text: run.denial },
+    });
     toast("已拒绝写入生产。注释未当作动作。");
   } else if (run.mode === "runtime" && /offer|下单|发信|静默/.test(raw)) {
     run.denial = "TRACK_ESCALATION_REQUIRED · 个人轨不得对外承诺。";
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: { type: "gate", text: run.denial },
+    });
     toast("已升级拦截。live 未改。");
   } else {
     run.notes.push(raw);
-    toast("已写入任务注释。");
+    pushThread(run, {
+      role: "assistant",
+      kind: "text",
+      text: "已记在任务上。我按当前环位继续，下一步用卡片给你确认。",
+    });
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: {
+        type: "hitl",
+        title: "待你确认",
+        body: run.mode === "runtime" ? "是否按这条补充推进写入？" : "这条补充不改 live。要不要生成计划或晋升？",
+        actions:
+          run.mode === "runtime"
+            ? [
+                { act: "approve", label: "批准写入", primary: true },
+                { act: "reject-write", label: "驳回", danger: true },
+              ]
+            : [
+                { act: "plan", label: "生成计划", primary: true },
+                { act: "promote", label: "晋升" },
+              ],
+      },
+    });
+    toast("助手已回。卡片挂在当前任务。");
   }
   $("composer-input").value = "";
   render(false);
@@ -2635,10 +2629,34 @@ function approveWrite(ok) {
     toast("只有运行环位才能批准写入。");
     return;
   }
-  run.approved = ok;
-  run.denial = ok ? "" : "已驳回。live 未改。";
-  toast(ok ? "已写入 live，并记入审计。" : "已驳回。");
-  render(false);
+  const finishLocal = () => {
+    run.approved = ok;
+    run.denial = ok ? "" : "已驳回。live 未改。";
+    run.hubAwaiting = false;
+    pushThread(run, {
+      role: "assistant",
+      kind: "card",
+      card: {
+        type: "result",
+        ok,
+        text: ok ? `${pack().runtime.action} 已写入 live，并记入审计。` : "已驳回。live 未改。",
+      },
+    });
+    toast(ok ? "已写入 live，并记入审计。" : "已驳回。");
+    render(false);
+  };
+  const scene = window.HubScene;
+  if (scene && scene.cycleStep && run.hubTaskId) {
+    scene
+      .cycleStep(run.hubTaskId, ok ? "approved" : "rejected")
+      .then(finishLocal)
+      .catch(() => {
+        toast("外环确认失败，已降级本地");
+        finishLocal();
+      });
+    return;
+  }
+  finishLocal();
 }
 
 document.addEventListener("click", (e) => {
@@ -2652,6 +2670,7 @@ document.addEventListener("click", (e) => {
     } else {
       state.layer = "execute";
       state.execFocus = "task";
+      bootExecuteTask();
       render(true);
       syncHash(true);
     }
@@ -2795,6 +2814,11 @@ document.addEventListener("click", (e) => {
       toast("PROFILE_FORBIDS_SIDE_EFFECT · 先进入运行环位，且须审批。");
     } else {
       run.denial = "TRACK_ESCALATION_REQUIRED · 禁止静默对外承诺。";
+      pushThread(run, {
+        role: "assistant",
+        kind: "card",
+        card: { type: "gate", text: run.denial },
+      });
       toast("已拦截。live 未改。");
       render(false);
     }
@@ -2831,3 +2855,28 @@ window.addEventListener("popstate", () => {
 
 if (!readHash()) syncHash(false);
 render(false);
+
+(function bootHub() {
+  const scene = window.HubScene;
+  if (!scene) return;
+  const bar = document.createElement("div");
+  bar.id = "hub-banner";
+  bar.setAttribute("role", "status");
+  document.body.insertBefore(bar, document.body.firstChild);
+  scene
+    .packOpen("pos-cm")
+    .then((pack) => {
+      const visit = (pack.nodes || []).find((n) => n.node_id === "an-stage-visit");
+      const st = visit && visit.kpi && visit.kpi.status;
+      bar.textContent =
+        st === "gate"
+          ? "今日卡口 · 阶段拜访停留超 SLA（an-stage-visit）"
+          : "作战台已连接 · " + ((pack.nodes || []).map((n) => n.node_id).join("、") || "无节点");
+      bar.dataset.hub = "ok";
+    })
+    .catch((err) => {
+      const msg = (err && err.error && err.error.message) || "经营服务暂不可用，只读降级";
+      bar.textContent = msg.indexOf("降级") >= 0 ? msg : "经营服务暂不可用，只读降级。" + msg;
+      bar.dataset.hub = "degraded";
+    });
+})();

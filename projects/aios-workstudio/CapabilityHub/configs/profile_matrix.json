@@ -1,0 +1,57 @@
+{
+  "engine": "single_hub",
+  "profiles": {
+    "scene": {
+      "skill_visibility": "installed_pack_readonly",
+      "skill_execute": false,
+      "skill_max_state": "previewed",
+      "network_search": false,
+      "cs_read": "aggregate_desensitized",
+      "cs_write": false,
+      "cs_write_dry_run": false,
+      "loop_goal": "dikw_insight_task",
+      "compact": "insight_and_five_dims",
+      "default_track": "scene",
+      "artifacts": ["insight", "task"]
+    },
+    "explore": {
+      "skill_visibility": "installed_plus_market",
+      "skill_execute": false,
+      "skill_max_state": "cited",
+      "network_search": true,
+      "cs_read": "mock_or_desensitized",
+      "cs_write": false,
+      "cs_write_dry_run": false,
+      "loop_goal": "long_context_redteam",
+      "compact": "uncertainties_and_sources",
+      "default_track": "selfpaw",
+      "artifacts": ["theme"]
+    },
+    "builder": {
+      "skill_visibility": "blueprint_declared",
+      "skill_execute": true,
+      "skill_max_state": "installed",
+      "network_search": false,
+      "cs_read": "mock_plus_contract",
+      "cs_write": false,
+      "cs_write_dry_run": true,
+      "loop_goal": "repeatable_verifiable",
+      "compact": "contract_and_failing_tests",
+      "default_track": "shared",
+      "artifacts": ["blueprint", "release"]
+    },
+    "runtime": {
+      "skill_visibility": "instance_enabled_and_authorized",
+      "skill_execute": true,
+      "skill_max_state": "executed",
+      "network_search": false,
+      "cs_read": "live_plus_scope",
+      "cs_write": true,
+      "cs_write_dry_run": false,
+      "loop_goal": "low_drift_interruptible",
+      "compact": "live_wm_and_audit",
+      "default_track": "instance",
+      "artifacts": ["instance", "artifact"]
+    }
+  }
+}

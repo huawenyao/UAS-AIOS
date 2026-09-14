@@ -21,29 +21,29 @@ window.LTC_WB = (function () {
       gate_count: 8,
     },
     funnel: [
-      { stage: "01_线索", count: 0, gate: false },
-      { stage: "02_建联", count: 0, gate: false },
-      { stage: "03_拜访", count: 2, gate: true },
-      { stage: "04_纪要", count: 0, gate: false },
-      { stage: "05_合同", count: 1, gate: true },
-      { stage: "06_授信", count: 0, gate: false },
-      { stage: "07_下户", count: 1, gate: false },
-      { stage: "08_开跑", count: 0, gate: false },
-      { stage: "09_涨量", count: 0, gate: false },
-      { stage: "10_服务", count: 1, gate: true },
+      { stage: "线索获取", count: 0, gate: false },
+      { stage: "建立联系", count: 0, gate: false },
+      { stage: "客户拜访", count: 2, gate: true },
+      { stage: "拜访纪要", count: 0, gate: false },
+      { stage: "合同签署", count: 1, gate: true },
+      { stage: "授信审批", count: 0, gate: false },
+      { stage: "账户下户", count: 1, gate: false },
+      { stage: "投放开跑", count: 0, gate: false },
+      { stage: "投放涨量", count: 0, gate: false },
+      { stage: "客户服务", count: 1, gate: true },
     ],
     customers: [
       {
         customer_uec: "UEC-10293",
         customer_name: "客户A · Shopline",
-        current_stage: "03_拜访",
+        current_stage: "客户拜访",
         days_in_stage: 28,
         owner_cm: "cowen.hua",
         owner_bd: "张三",
         health: "gate",
         signal_summary: "阶段停留28天超阈值14天，流失风险↑；仅BD到场·决策链未覆盖；37天未拜访",
         stages: {
-          "03_拜访": {
+          "客户拜访": {
             data: {
               visit_count: 3,
               last_visit_days: 37,
@@ -81,22 +81,22 @@ window.LTC_WB = (function () {
           },
         },
         stage_history: [
-          { stage: "01_线索", entered: "06-10", left: "06-12", days: 2 },
-          { stage: "02_建联", entered: "06-12", left: "06-15", days: 3 },
-          { stage: "03_拜访", entered: "07-15", left: null, days: 28 },
+          { stage: "线索获取", entered: "06-10", left: "06-12", days: 2 },
+          { stage: "建立联系", entered: "06-12", left: "06-15", days: 3 },
+          { stage: "客户拜访", entered: "07-15", left: null, days: 28 },
         ],
       },
       {
         customer_uec: "UEC-20114",
         customer_name: "Kwai · PH",
-        current_stage: "03_拜访",
+        current_stage: "客户拜访",
         days_in_stage: 10,
         owner_cm: "cowen.hua",
         owner_bd: "王五",
         health: "ok",
         signal_summary: "正常推进",
         stages: {
-          "03_拜访": {
+          "客户拜访": {
             data: {
               visit_count: 1,
               last_visit_days: 10,
@@ -115,19 +115,19 @@ window.LTC_WB = (function () {
             plan: [{ task: "二访日程", owner: "BD·王五", due: "08-24", p: "P1", status: "todo" }],
           },
         },
-        stage_history: [{ stage: "03_拜访", entered: "08-11", left: null, days: 10 }],
+        stage_history: [{ stage: "客户拜访", entered: "08-11", left: null, days: 10 }],
       },
       {
         customer_uec: "UEC-30021",
         customer_name: "Lazada · TH",
-        current_stage: "05_合同",
+        current_stage: "合同签署",
         days_in_stage: 9,
         owner_cm: "cowen.hua",
         owner_bd: "张三",
         health: "gate",
         signal_summary: "合同周转9天超阈值7天；合同卡审批中",
         stages: {
-          "05_合同": {
+          "合同签署": {
             data: { approval_status: "pending", contract_amount: 420000 },
             verdict: {
               level: "gate",
@@ -143,19 +143,19 @@ window.LTC_WB = (function () {
             plan: [{ task: "法务审批跟进", owner: "cowen.hua", due: "08-22", p: "P0", status: "overdue" }],
           },
         },
-        stage_history: [{ stage: "05_合同", entered: "08-12", left: null, days: 9 }],
+        stage_history: [{ stage: "合同签署", entered: "08-12", left: null, days: 9 }],
       },
       {
         customer_uec: "UEC-40088",
         customer_name: "Shopee · SG",
-        current_stage: "07_下户",
+        current_stage: "账户下户",
         days_in_stage: 2,
         owner_cm: "cowen.hua",
         owner_bd: "张三",
         health: "ok",
         signal_summary: "正常推进",
         stages: {
-          "07_下户": {
+          "账户下户": {
             data: { qual_ready: true, setup_progress: 0.8 },
             verdict: {
               level: "ok",
@@ -165,22 +165,22 @@ window.LTC_WB = (function () {
               signals: [],
             },
             actions: [{ p: "P2", text: "确认账户搭建收尾", owner: "AO·赵六", exec: "runtime" }],
-            plan: [{ task: "搭建验收", owner: "AO·赵六", due: "08-25", p: "P2", status: "doing" }],
+            plan: [{ task: "确认账户搭建完成", owner: "AO·赵六", due: "08-25", p: "P2", status: "doing" }],
           },
         },
-        stage_history: [{ stage: "07_下户", entered: "08-19", left: null, days: 2 }],
+        stage_history: [{ stage: "账户下户", entered: "08-19", left: null, days: 2 }],
       },
       {
         customer_uec: "UEC-50102",
         customer_name: "Sea Limited",
-        current_stage: "10_服务",
+        current_stage: "客户服务",
         days_in_stage: 0,
         owner_cm: "cowen.hua",
         owner_bd: "张三",
         health: "gate",
         signal_summary: "流失风险；健康度下降；5个工单积压",
         stages: {
-          "10_服务": {
+          "客户服务": {
             data: { churn_risk: true, health_trend: -1, open_tickets: 5 },
             verdict: {
               level: "gate",
@@ -197,12 +197,12 @@ window.LTC_WB = (function () {
             plan: [{ task: "挽回方案", owner: "cowen.hua", due: "08-23", p: "P0", status: "todo" }],
           },
         },
-        stage_history: [{ stage: "10_服务", entered: "2025-09-01", left: null, days: 0 }],
+        stage_history: [{ stage: "客户服务", entered: "2025-09-01", left: null, days: 0 }],
       },
     ],
   };
 
-  const STAGES = ["01_线索", "02_建联", "03_拜访", "04_纪要", "05_合同", "06_授信", "07_下户", "08_开跑", "09_涨量", "10_服务"];
+  const STAGES = ["线索获取", "建立联系", "客户拜访", "拜访纪要", "合同签署", "授信审批", "账户下户", "投放开跑", "投放涨量", "客户服务"];
 
   function fmtMoney(v, unit) {
     return (unit === "USD" ? "$" : "") + Math.round(v).toLocaleString();
@@ -327,9 +327,9 @@ window.LTC_WB = (function () {
     const sb = c && c.stages[viewStage];
 
     const funnel = DATA.funnel
-      .map((x) => {
+      .map((x, i) => {
         const selCls = ctx.stage === x.stage ? "sel" : "";
-        return `<button type="button" class="fp ${x.gate ? "gate" : ""} ${selCls}" data-ltc-stage="${x.stage}"><div class="fp-num">${x.stage.slice(0, 2)}</div><div class="fp-name">${x.stage.slice(3)}</div><div class="fp-cnt">${counts[x.stage] || 0}</div></button>`;
+        return `<button type="button" class="fp ${x.gate ? "gate" : ""} ${selCls}" data-ltc-stage="${x.stage}"><div class="fp-num">${String(i + 1).padStart(2, "0")}</div><div class="fp-name">${x.stage}</div><div class="fp-cnt">${counts[x.stage] || 0}</div></button>`;
       })
       .join("");
 
@@ -347,7 +347,7 @@ window.LTC_WB = (function () {
       const v = sb.verdict;
       const d = sb.data;
       const tabs = STAGES.map(
-        (s) => `<button type="button" class="stab ${s === viewStage ? "active" : ""}" data-ltc-tab="${s}">${s.slice(3)}</button>`
+        (s) => `<button type="button" class="stab ${s === viewStage ? "active" : ""}" data-ltc-tab="${s}">${s}</button>`
       ).join("");
       const dtiles = Object.entries(d)
         .filter(([k]) => k !== "trend")
@@ -376,7 +376,8 @@ window.LTC_WB = (function () {
     }
 
     return `<div class="ltc">
-      <div class="section-header"><span class="section-title">全局经营</span><span class="section-badge">客户经理视角</span><span class="section-note">数据周期：${DATA.meta.data_period} · 视角：${DATA.meta.view_cm} · 2026-08-21 09:30</span></div>
+      <div class="value-loop" role="list" aria-label="经营闭环">${["数据","洞察","归因","预测","策略行动","效果回收","学习沉淀"].map((n,i)=>`<span class="${i<4?"is-on":""}">${n}</span>`).join("")}</div>
+      <div class="section-header"><span class="section-title">销售运营 · LTC流程</span><span class="section-badge">客户经理视角</span><span class="section-note">数据 → 洞察 → 归因 · ${DATA.meta.data_period} · ${DATA.meta.view_cm}</span></div>
       <div class="kpi-strip">
         <div class="ktile kt1 composite">
           <div class="kt-comp-head">经营概览 <b>Spend / Margin / SOM / Adoption</b><span class="section-note" style="margin-left:auto">近30天</span></div>
@@ -398,7 +399,7 @@ window.LTC_WB = (function () {
         <button type="button" class="btn btn-outline" data-ltc-export>导出报告</button>
         <div class="legend"><span><span class="ldot" style="background:#10b981"></span>正常</span><span><span class="ldot" style="background:#f59e0b"></span>预警</span><span><span class="ldot" style="background:#ef4444"></span>卡口</span></div>
       </div>
-      <div class="section-header"><span class="section-title">LTC 管线</span><span class="section-badge">10 阶段漏斗</span><span class="section-note">点击阶段 pill → 按阶段筛选客户列表</span></div>
+      <div class="section-header"><span class="section-title">LTC 阶段</span><span class="section-badge">线索到现金</span><span class="section-note">点阶段看卡在哪 · 过关动作进执行态</span></div>
       <div class="funnel">${funnel}</div>
       <div class="workbench">
         <div class="clist">
