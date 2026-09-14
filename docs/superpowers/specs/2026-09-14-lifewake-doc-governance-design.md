@@ -6,7 +6,7 @@
 
 ## 1. 背景与问题（盘点事实）
 
-1. **未提交基线**：`projects/lifewake/docs/lifewake/` 全部 17 份规约文档处于 git untracked 状态，基准无法追溯。
+1. **基线已固化**：`projects/lifewake/docs/lifewake/` 全部 17 份规约文档已随 commit `4858fff`（2026-09-14 15:32）提交入库，治理前原始状态可由该 commit 追溯（盘点时曾为 untracked，已由平台收敛提交固化）。
 2. **根级断链**：根 `CLAUDE.md` 快速索引引用 `docs/lifewake/`、`docs/GOVERNANCE_REGISTRY.md`、`docs/ECOSYSTEM_IMPLEMENTATION_STATUS.md`、`docs/enterprise-sales-os/README.md`、`docs/UAS_AIOS_ENTERPRISE_*` 等路径，实际不存在或位于别处（`projects/lifewake/docs/lifewake/`、`projects/enterprise-sales-os/`、`docs/strategic/design/`）。
 3. **项目内断链**：`projects/lifewake/README.md` 引用 `../../docs/lifewake/LIFEWAKE_PRODUCT_BLUEPRINT.md`（不存在，实际在本项目 `docs/lifewake/`）。
 4. **层级语义冲突**：`docs/lifewake/README.md` 现有 L1（产品BP）/L2（体验规约）/L3（可运行）三层，缺少用户要求的 L0 宪章根基（业务/产品/方案三宪章）；业务宪章无独立文档，商业内容散落在 `METRICS_GROWTH_AND_BUSINESS.md` 与主 BP 商业章节。
@@ -24,7 +24,7 @@
 - G3：建立双注册表（人读 + 机器可读）作为唯一治理台账，含基准裁定记录。
 - G4：修复范围内全部断链；旧文档标记 superseded + 重定向，不物理移动、不删除。
 - G5：自动校验脚本落地并挂入 `harness/invariants/run-all.py` 与 lifewake pytest，治理结果可持续验证。
-- G6：untracked 规约文档先原样提交固化基线，治理改动独立成 commit，全程可追溯。
+- G6：以 `4858fff` 为治理前基线；治理改动独立成 commit，全程可追溯。
 
 **非目标**
 - 不重构物理目录结构（方案 B 已否决）。
@@ -68,7 +68,7 @@ L4 运行产物层（只读事实：reports/、database/；不设版本头，注
 |----------|------|
 | `./docs/lifewake/PRODUCT_ESSENCE_CARRIER_AND_TECH.md`、`docs/lifewake/` | → `projects/lifewake/docs/lifewake/…` |
 | `docs/GOVERNANCE_REGISTRY.md`（分类治理与未闭环追踪） | → `projects/lifewake/docs/DOC_REGISTRY.md`（本次新建台账；备注其余项目治理待后续期） |
-| `docs/ECOSYSTEM_IMPLEMENTATION_STATUS.md` + `scripts/run_ecosystem_prototype.py` | 删除该行（文件与脚本均不存在） |
+| `docs/ECOSYSTEM_IMPLEMENTATION_STATUS.md`（与 `scripts/run_ecosystem_prototype.py` 同行引用） | 仅删除失效的 .md 引用；脚本实际存在，保留 `scripts/run_ecosystem_prototype.py` 引用 |
 | `docs/enterprise-sales-os/README.md` | → `projects/enterprise-sales-os/README.md` |
 | `docs/UAS_AIOS_ENTERPRISE_AGENT_ECOSYSTEM_L1_L3.md` 等 ENTERPRISE/GAPS 系列 | → `docs/strategic/design/…`（逐条核对实际位置） |
 
@@ -76,7 +76,7 @@ L4 运行产物层（只读事实：reports/、database/；不设版本头，注
 
 ## 4. 文档头规范（基线识别机制）
 
-每份 L0-L3 注册文档，H1 标题下第一个 blockquote 为治理头（机器可解析）：
+每份 L0-L3 注册文档，在 H1 标题下**插入治理头作为新的第一个 blockquote**；原有 blockquote（版本声明、引言等）整体保留、依次下移，**不并入、不改写**。治理头是唯一机器解析入口：
 
 ```markdown
 > 层级: L2-规约 | 状态: baseline | 版本: v1.0 | 基准日期: 2026-09-14
@@ -87,7 +87,7 @@ L4 运行产物层（只读事实：reports/、database/；不设版本头，注
 - **字段**：`层级`（L0-宪章/L1-产品/L2-规约/L3-实现/横切）、`状态`、`版本`（vX.Y）、`基准日期`（YYYY-MM-DD）必填；`上游`/`下游` 至少其一（L0 可只有下游）。
 - **状态枚举**：`baseline`（现行基准）｜`draft`（草案，不作依据）｜`superseded`（必须附 `基准指向: <path>`）｜`historical`（保留历史价值）。
 - **最近基准识别规则**（同主题多文档时，校验脚本与人工共用）：① `baseline` 优先 → ② 版本号高者优先 → ③ 基准日期新者优先 → ④ 均缺失时以 git 最后修改时间兜底并报「无治理头」警告。
-- **既有「版本：」行处理**：保留原声明内容，治理头与之合并（治理头为唯一机器解析入口）；原有 `> 上游：/下游：` 自由文本行保留不动。
+- **既有「版本：」行处理**：保留原声明内容，与治理头**并存**（治理头为唯一机器解析入口）；原有 `> 上游：/下游：` 自由文本行保留不动。
 - **日期补齐规则**：文档内已有日期沿用；无日期的以本次治理日 2026-09-14 为基准日期，版本赋 v1.0（或沿用文内版本），注册表备注「治理赋予」。
 
 ## 5. 双注册表
@@ -139,26 +139,26 @@ L4 运行产物层（只读事实：reports/、database/；不设版本头，注
 
 | Commit | 内容 | 说明 |
 |--------|------|------|
-| 1 基线固化 | untracked `docs/lifewake/` 17 份文档**原样**提交 | 治理前原始状态永久可追溯 |
-| 2 治理实施 | BUSINESS_CHARTER 新建、全部治理头、双注册表、README 索引改写、superseded 标记、ROADMAP 并入 DEVELOPMENT_PLAN、项目 README/CLAUDE.md 断链修复、体验域文档头 | 知识架构落地 |
-| 3 校验体系 | check_doc_governance.py、test_doc_governance.py、harness 挂载、根 CLAUDE.md 断链修复 | 防再腐化；根级修改独立成 commit |
+| （基线） | `4858fff` 已含 17 份规约文档原状 | 治理前基线，无需新 commit；若实施时再现 untracked 规约文档，先原样提交固化 |
+| 1 治理实施 | BUSINESS_CHARTER 新建、全部治理头、双注册表、README 索引改写、superseded 标记、ROADMAP 并入 DEVELOPMENT_PLAN、项目 README/CLAUDE.md 断链修复、体验域文档头 | 知识架构落地 |
+| 2 校验体系 | check_doc_governance.py、test_doc_governance.py、harness 挂载、根 CLAUDE.md 断链修复 | 防再腐化；根级修改独立成 commit |
 
 只 stage 本次治理涉及文件；工作区中其他项目的未提交改动（enterprise-sales-os、aios-workstudio）不得混入。
 
 ## 8. 验收标准
 
 1. `python scripts/check_doc_governance.py` 退出码 0，五项不变量全过。
-2. `pytest -q` 全绿（48 个既有测试 + 新增 doc governance 测试）。
+2. `pytest -q` 全绿（既有测试全部保持通过，以实测数为基线 + 新增 doc governance 测试）。
 3. `python ../../harness/invariants/run-all.py` 通过（含新增检查）。
 4. 根 CLAUDE.md 快速索引所有路径可解析；lifewake README/CLAUDE.md 引用全部有效。
 5. 任一相似主题（如 LifeWake 产品蓝图 vs 体验域文档）按第 4 节规则能在 1 分钟内机械判定最近基准。
-6. git 历史呈现 3 个语义清晰的治理 commit，Commit 1 中文档与治理前逐字节一致。
+6. 治理改动独立成 commit；治理前原始状态可由基线 commit `4858fff` 追溯，治理 diff 逐行可核对。
 
 ## 9. 风险与缓解
 
 | 风险 | 缓解 |
 |------|------|
-| 治理头改写误伤正文 | 只在 H1 后插入/合并 blockquote；Commit 1 先固化原状，diff 可逐行核对 |
+| 治理头改写误伤正文 | 只在 H1 后插入独立 blockquote，原有内容整体下移；基线 `4858fff` 已固化原状，diff 可逐行核对 |
 | 版本号「治理赋予」被误读为历史版本 | 注册表与治理头备注显式声明；有真实版本声明的沿用原值 |
-| 根 CLAUDE.md 修改与其他分支冲突 | 独立 Commit 3，改动最小化（只动快速索引行） |
+| 根 CLAUDE.md 修改与其他分支冲突 | 归入 Commit 2 独立提交，改动最小化（只动快速索引行） |
 | 校验脚本对根级 external 文档误报 | external 条目只查存在性与治理头，豁免分层/上游链校验 |
