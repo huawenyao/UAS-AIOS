@@ -1,0 +1,49 @@
+{
+  "graph_id": "ag-hengchuan-ltc",
+  "tenant_id": "t-hengchuan",
+  "pack": "cm",
+  "world_model_id": "wm-hengchuan-ltc",
+  "period": { "grain": "month", "from": "2026-08-01", "to": "2026-08-31" },
+  "nodes": [
+    {
+      "node_id": "an-stage-visit",
+      "parent_id": null,
+      "goal": {
+        "statement": "把衡川客户经理的阶段拜访停留压回 SLA 以内",
+        "horizon": "2026-Q3",
+        "success_criteria": "an-stage-visit 的 kpi.is <= 14"
+      },
+      "org": {
+        "unit_id": "org.team-ltc",
+        "position_id": "pos-cm",
+        "owner_id": "cowen.hua",
+        "raci": "A"
+      },
+      "kpi": {
+        "kpi_id": "kpi-visit-dwell",
+        "name": "阶段停留天数",
+        "unit": "day",
+        "caliber": "now - stage_entered_at",
+        "ought": 14,
+        "is": 28,
+        "status": "gate"
+      },
+      "process": {
+        "value_stream": "LTC 线索到回款",
+        "stage": "qualify",
+        "cs_read": ["cs.visit.list", "cs.metric.query"],
+        "cs_write": ["cs.visit.schedule"],
+        "system_of_record": "crm"
+      },
+      "wm": {
+        "space": "cn.east.ltc",
+        "time": "2026-08",
+        "subject": "cowen.hua",
+        "object": "UEC-10293",
+        "feedback": "visit.scheduled -> kpi.is"
+      },
+      "object_refs": ["UEC-10293"]
+    }
+  ],
+  "edges": []
+}

@@ -202,6 +202,162 @@
       "files": [
         "projects/ai-recruitment-os/configs/governance_policy.json"
       ]
+    },
+    "AccountabilityGraph": {
+      "type": "data-model",
+      "description": "经营本体内核：Goal×Subject×Object-scope×Metric×Process-hook，投影五维",
+      "depends_on": ["UASKernel"],
+      "files": [
+        "schemas/accountability_graph.schema.json",
+        "configs/accountability_graph.sample.json"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-M02"
+    },
+    "EnterpriseWorldModelStore": {
+      "type": "data-model",
+      "description": "五维 WM 三寿命 draft/compiled/live",
+      "depends_on": ["AccountabilityGraph"],
+      "files": [
+        "schemas/enterprise_world_model.schema.json"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-M03"
+    },
+    "LawPack": {
+      "type": "contract",
+      "description": "可执行应当条文；知识即配置；经 ChangeSet 编译进 WM",
+      "depends_on": ["ChangeSet", "EnterpriseWorldModelStore"],
+      "files": [
+        "docs/strategic/design/UAS_AIOS_MODULE_DESIGN.md"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-M04"
+    },
+    "CapabilityHub": {
+      "type": "service",
+      "description": "唯一控制面：剖面注入、判定序、hub.*、explain",
+      "depends_on": [
+        "CapabilityServiceRegistry",
+        "AccountabilityGraph",
+        "EnterpriseDataPlane",
+        "Gate"
+      ],
+      "files": [
+        "projects/aios-workstudio/T1-CapabilityHub详细设计.md",
+        "docs/strategic/design/UAS_AIOS_ARCHITECTURE_SPEC.md",
+        "services/hub-api/uas_hub/hub.py",
+        "configs/protocol/registry.json",
+        "services/hub-api/uas_hub/ports.py"
+      ],
+      "status": "in_progress",
+      "requirement": "REQ-UAS-M06"
+    },
+    "WorkStudio": {
+      "type": "product",
+      "description": "端侧唯一经营界面，只调 hub.*",
+      "depends_on": ["CapabilityHub"],
+      "files": [
+        "projects/aios-workstudio/demo/"
+      ],
+      "status": "prototype",
+      "requirement": "REQ-UAS-M01"
+    },
+    "InsightTaskCompiler": {
+      "type": "component",
+      "description": "指标轨编成执行轨；任务必带 source_node_id",
+      "depends_on": ["CapabilityHub", "AccountabilityGraph"],
+      "files": [
+        "harness/requirements/REQ-UAS-M05.req.md"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-M05"
+    },
+    "McpGateway": {
+      "type": "service",
+      "description": "MCP 壳：按剖面暴露 cs.*，call 重走门禁",
+      "depends_on": ["CapabilityHub", "CapabilityServiceRegistry"],
+      "files": [
+        "harness/requirements/REQ-UAS-M13.req.md"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-M13"
+    },
+    "CaliberCube": {
+      "type": "service",
+      "description": "口径服务 Cube Core + OSI YAML；不签发任务",
+      "depends_on": ["CapabilityService"],
+      "files": [
+        "configs/protocol/registry.json",
+        "services/hub-api/uas_hub/ports.py",
+        "services/hub-api/uas_hub/adapters/",
+        "harness/knowledge/technical/uas-aios-global-protocol.md"
+      ],
+      "status": "lab_fixture",
+      "requirement": "REQ-UAS-M15"
+    },
+    "GraphitiRuntime": {
+      "type": "service",
+      "description": "时态知识运行时；ingest 不是 cs 写",
+      "depends_on": ["CapabilityHub"],
+      "files": [
+        "harness/knowledge/constraints/adr-sel-001-semantic-layers.md"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-M16"
+    },
+    "LetheMemory": {
+      "type": "service",
+      "description": "SelfPaw 可遗忘记忆；独立库；ΠPaw 403",
+      "depends_on": ["CapabilityHub"],
+      "files": [
+        "harness/knowledge/constraints/adr-edh-001-dual-track-boundary.md"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-M17"
+    },
+    "TemporalRuntime": {
+      "type": "engine",
+      "description": "外环耐久：RuntimeCycleWorkflow；回调 Hub",
+      "depends_on": ["CapabilityHub"],
+      "files": [
+        "harness/knowledge/constraints/adr-sel-002-dual-loop.md",
+        "services/hub-api/uas_hub/cycle.py",
+        "services/temporal-worker/uas_runtime/workflow.py",
+        "deploy/compose/docker-compose.yml"
+      ],
+      "status": "lab_compose",
+      "requirement": "REQ-UAS-M18"
+    },
+    "InnerLoop": {
+      "type": "engine",
+      "description": "内环 SPI，默认 LangGraph 1.0；禁止第三套",
+      "depends_on": ["CapabilityHub", "TemporalRuntime"],
+      "files": [
+        "harness/knowledge/constraints/adr-sel-002-dual-loop.md"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-M19"
+    },
+    "PlatformConsole": {
+      "type": "product",
+      "description": "UAS-AIOS 运营管理套件：/console + hub.ops.*",
+      "depends_on": ["CapabilityHub"],
+      "files": [
+        "docs/strategic/design/UAS_AIOS_PLATFORM_PRODUCT.md"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-AIOS-002"
+    },
+    "SystemServices": {
+      "type": "interface",
+      "description": "系统服务五面：应用北向、运营北向、MCP、进入向、OIDC",
+      "depends_on": ["CapabilityHub"],
+      "files": [
+        "docs/strategic/design/UAS_AIOS_PLATFORM_PRODUCT.md"
+      ],
+      "status": "planned",
+      "requirement": "REQ-UAS-AIOS-002"
     }
   },
   "dependencies": {
@@ -225,6 +381,21 @@
       "from": "SelfPawExperienceDomain",
       "to": "ExperienceProtocolContracts",
       "rule": "lw.* 保持领域隔离，通过 adapter 产出 G/E/Π 通用记录"
+    },
+    "WorkStudio_to_Hub": {
+      "from": "WorkStudio",
+      "to": "CapabilityHub",
+      "rule": "只调 hub.*；禁止零件 SDK"
+    },
+    "Hub_to_Capabilities": {
+      "from": "CapabilityHub",
+      "to": "CapabilityService",
+      "rule": "写生产仅 runtime + MCP/cs.*；场景禁写"
+    },
+    "Lethe_isolation": {
+      "from": "LetheMemory",
+      "to": "AccountabilityGraph",
+      "rule": "无 FK、无同 schema；ΠPaw 403"
     }
   },
   "product_capability_ids": {

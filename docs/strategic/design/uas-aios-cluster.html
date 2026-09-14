@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UAS-AIOS 集群产品化 · 集成 · 管理 · 协议</title>
+<style>
+  :root {
+    --paper: #071018;
+    --ink: #d7e6ee;
+    --mute: #7a93a3;
+    --line: rgba(120, 180, 210, .22);
+    --n: #4fc3f7;
+    --s: #66bb6a;
+    --e: #ffb74d;
+    --w: #ce93d8;
+    --k: #80cbc4;
+    --h: #ef9a9a;
+    --i: #90caf9;
+    --v: #ffe082;
+    --danger: #ef5350;
+    --ok: #81c784;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink);
+    font: 14px/1.45 "IBM Plex Sans", "Noto Sans SC", "Segoe UI", sans-serif; }
+  body {
+    background-image:
+      linear-gradient(rgba(79,195,247,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,195,247,.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  header {
+    display: grid; grid-template-columns: 1fr auto; gap: 16px;
+    padding: 20px 28px 8px; border-bottom: 1px solid var(--line);
+  }
+  .stamp { font: 11px/1.2 ui-monospace, "IBM Plex Mono", Consolas, monospace;
+    letter-spacing: .14em; color: var(--n); text-transform: uppercase; }
+  h1 { margin: 4px 0 6px; font-size: 22px; font-weight: 620; letter-spacing: .02em; }
+  .lede { margin: 0; color: var(--mute); max-width: 68ch; }
+  .planes { display: flex; gap: 8px; align-items: start; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); padding: 8px 12px; min-width: 148px; background: rgba(8,18,28,.7); }
+  .chip b { display: block; font-size: 12px; }
+  .chip span { color: var(--mute); font-size: 11px; }
+  .chip.use { border-color: #4fc3f766; }
+  .chip.ctrl { border-color: #90caf966; }
+  .chip.ops { border-color: #80cbc466; }
+  .chip.nb { border-color: #ffe08288; }
+  nav { display: flex; gap: 8px; padding: 10px 28px; align-items: center; flex-wrap: wrap; }
+  nav button, .play {
+    background: transparent; color: var(--ink); border: 1px solid var(--line);
+    padding: 6px 12px; cursor: pointer; font: inherit;
+  }
+  nav button.active, .play:hover { border-color: var(--n); color: var(--n); }
+  .play { margin-left: auto; color: var(--e); border-color: #ffb74d66; }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 420px); min-height: calc(100vh - 140px); }
+  svg { width: 100%; height: auto; display: block; }
+  .legend { padding: 16px 20px 28px; border-left: 1px solid var(--line); overflow: auto; max-height: calc(100vh - 140px); }
+  .legend h2 { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin: 0 0 10px; }
+  .proto { display: grid; grid-template-columns: 18px 1fr; gap: 8px 10px; margin: 0 0 16px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 4px; }
+  .proto div small { display: block; color: var(--mute); }
+  #detail { border: 1px solid var(--line); padding: 12px 14px; min-height: 280px; background: rgba(12,22,34,.75); }
+  #detail h3 { margin: 0 0 6px; font-size: 15px; }
+  #detail p { margin: 0 0 8px; color: var(--mute); font-size: 13px; }
+  #detail ul { margin: 0 0 8px; padding-left: 16px; color: var(--ink); }
+  #detail code { font: 12px/1.4 ui-monospace, Consolas, monospace; color: var(--n); }
+  #detail h4 { margin: 12px 0 4px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); font-weight: 600; }
+  #detail h4:first-of-type { margin-top: 4px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+  .pill { font: 10px/1.2 ui-monospace, Consolas, monospace; border: 1px solid var(--line); padding: 3px 7px; color: var(--n); }
+  .pill.veto { color: var(--h); border-color: #ef9a9a66; }
+  .pill.ok { color: var(--ok); border-color: #81c78466; }
+  .hint { color: var(--mute); font-size: 12px; margin: 0 0 10px; }
+  footer { padding: 10px 28px 20px; color: var(--mute); font-size: 12px; border-top: 1px solid var(--line); }
+  footer a { color: var(--n); }
+  .mod { cursor: pointer; }
+  .mod:hover rect, .mod:hover path { filter: brightness(1.18); }
+  .mod.is-on > rect { stroke-width: 2.4; }
+  .mod:focus { outline: none; }
+  .mod:focus-visible > rect { stroke-width: 2.4; filter: brightness(1.12); }
+  .mod.is-dim { opacity: .28; pointer-events: none; }
+  .fence { stroke-dasharray: 5 4; }
+  @keyframes dash { to { stroke-dashoffset: -24; } }
+  .flow { stroke-dasharray: 6 8; animation: dash 1.2s linear infinite; }
+  .pkt { visibility: hidden; }
+  body.playing .pkt { visibility: visible; }
+  .iso { font: 10px ui-monospace, Consolas, monospace; fill: var(--danger); letter-spacing: .08em; }
+  @media (max-width: 980px) {
+    header, main { grid-template-columns: 1fr; }
+    .legend { border-left: 0; border-top: 1px solid var(--line); max-height: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="stamp">UAS-AIOS Cluster · Productization v1.1 · 2026-09-11</div>
+    <h1>集群不是进程堆。三张产品平面，只通过协议说话。</h1>
+    <p class="lede">使用平面卖「看见并办成」。控制平面管「谁能调什么」。配置与运维平面管法则、口径、连接器与运行时健康。Platform Console 的可视化壳是 NocoBase：菜单与表单在壳里，真相仍走 hub.ops.*。一线菜单不得出现连接器、工作流 ID 或 Cube 查询。</p>
+  </div>
+  <div class="planes">
+    <div class="chip use"><b>使用平面</b><span>WorkStudio · 签发台</span></div>
+    <div class="chip ctrl"><b>控制平面</b><span>Hub · Pack · Governance</span></div>
+    <div class="chip ops"><b>配置与运维</b><span>本体 · Mesh · Runtime · 知识</span></div>
+    <div class="chip nb"><b>Console 壳</b><span>NocoBase · 只调 hub.ops.*</span></div>
+  </div>
+</header>
+<nav>
+  <button class="active" data-filter="all">全集成</button>
+  <button data-filter="n">北向 hub.*</button>
+  <button data-filter="s">南向 MCP/cs.*</button>
+  <button data-filter="e">东向 Temporal</button>
+  <button data-filter="w">西向 InnerLoop</button>
+  <button data-filter="k">知识向</button>
+  <button data-filter="nb">Console 壳</button>
+  <button data-filter="iso">硬隔离</button>
+  <button class="play" id="play" type="button">播放闭环 · 看见并办成</button>
+</nav>
+<main>
+  <svg viewBox="0 0 1280 900" role="img" aria-label="UAS-AIOS 集群三平面集成与协议。点击模块查看详细设计。">
+    <defs>
+      <marker id="arrN" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#4fc3f7"/></marker>
+      <marker id="arrS" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#66bb6a"/></marker>
+      <marker id="arrE" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#ffb74d"/></marker>
+      <marker id="arrW" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#ce93d8"/></marker>
+      <marker id="arrK" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#80cbc4"/></marker>
+      <marker id="arrI" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#90caf9"/></marker>
+      <marker id="arrV" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#ffe082"/></marker>
+    </defs>
+
+    <rect x="24" y="24" width="1232" height="168" fill="#0e2a33" stroke="#4fc3f744" rx="4"/>
+    <text x="40" y="48" fill="#4fc3f7" font-size="12" letter-spacing="2">使用平面 · 一线只走北向</text>
+    <rect x="24" y="208" width="1232" height="292" fill="#0c1d2c" stroke="#90caf944" rx="4"/>
+    <text x="40" y="232" fill="#90caf9" font-size="12" letter-spacing="2">控制平面 · 唯一门禁</text>
+    <rect x="24" y="516" width="1232" height="360" fill="#0c141e" stroke="#80cbc444" rx="4"/>
+    <text x="40" y="540" fill="#80cbc4" font-size="12" letter-spacing="2">配置与运维平面 · 零件可换，SLO 不改名</text>
+
+    <g class="mod nb-shell" data-id="nb" data-set="nb" tabindex="0" role="button" aria-label="NocoBase Platform Console 壳">
+      <rect x="64" y="246" width="196" height="246" fill="#1a1810" stroke="#ffe082" stroke-dasharray="7 5" rx="4"/>
+      <text x="162" y="266" text-anchor="middle" fill="#ffe082" font-size="11" letter-spacing="1">NOCOBASE · CONSOLE 壳</text>
+      <text x="162" y="282" text-anchor="middle" fill="#7a93a3" font-size="9">角色 · 侧栏 · 表单 · 禁 Workflow/AI</text>
+    </g>
+
+    <g class="mod" data-id="m1" data-set="use" tabindex="0" role="button">
+      <rect x="220" y="64" width="280" height="100" fill="#123844" stroke="#4fc3f7" rx="3"/>
+      <text x="360" y="104" text-anchor="middle" fill="#d7e6ee" font-size="16">WorkStudio</text>
+      <text x="360" y="126" text-anchor="middle" fill="#7a93a3" font-size="11">今日必办 · 作战室 · 指挥舱</text>
+      <text x="360" y="146" text-anchor="middle" fill="#4fc3f7" font-size="10">M1 · 无零件 SDK</text>
+    </g>
+    <g class="mod" data-id="m5" data-set="use" tabindex="0" role="button">
+      <rect x="540" y="72" width="200" height="84" fill="#123844" stroke="#4fc3f799" rx="3"/>
+      <text x="640" y="108" text-anchor="middle" fill="#d7e6ee" font-size="14">签发台</text>
+      <text x="640" y="128" text-anchor="middle" fill="#7a93a3" font-size="11">Insight→Task · 源节点必填</text>
+      <text x="640" y="144" text-anchor="middle" fill="#4fc3f7" font-size="10">M5 嵌在作战台</text>
+    </g>
+    <g class="mod" data-id="sse" data-set="use" tabindex="0" role="button">
+      <rect x="780" y="84" width="180" height="60" fill="#0e2430" stroke="#4fc3f755" rx="3"/>
+      <text x="870" y="110" text-anchor="middle" fill="#d7e6ee" font-size="13">进度 SSE</text>
+      <text x="870" y="128" text-anchor="middle" fill="#7a93a3" font-size="10">自有 · 不绑 AG-UI</text>
+    </g>
+
+    <g class="mod" data-id="m6" data-set="ctrl" tabindex="0" role="button">
+      <rect x="430" y="268" width="300" height="120" fill="#14324a" stroke="#90caf9" rx="3"/>
+      <text x="580" y="308" text-anchor="middle" fill="#d7e6ee" font-size="18">Capability Hub</text>
+      <text x="580" y="330" text-anchor="middle" fill="#7a93a3" font-size="11">剖面 · 双轨 · 判定序 · explain</text>
+      <text x="580" y="350" text-anchor="middle" fill="#90caf9" font-size="11">M6 控制台 · 信封强制</text>
+      <text x="580" y="368" text-anchor="middle" fill="#7a93a3" font-size="10">scene | explore | builder | runtime</text>
+    </g>
+    <g class="mod" data-id="hubc" data-set="nb" tabindex="0" role="button">
+      <rect x="80" y="292" width="164" height="52" fill="#12263a" stroke="#90caf988" rx="3"/>
+      <text x="162" y="314" text-anchor="middle" fill="#d7e6ee" font-size="13">Hub Console</text>
+      <text x="162" y="330" text-anchor="middle" fill="#7a93a3" font-size="10">B1 试运行门禁</text>
+    </g>
+    <g class="mod" data-id="pack" data-set="nb" tabindex="0" role="button">
+      <rect x="80" y="352" width="164" height="52" fill="#12263a" stroke="#ffe08288" rx="3"/>
+      <text x="162" y="374" text-anchor="middle" fill="#d7e6ee" font-size="13">Pack Studio</text>
+      <text x="162" y="390" text-anchor="middle" fill="#7a93a3" font-size="10">B2/B4 配置 · ChangeSet</text>
+    </g>
+    <g class="mod" data-id="gov" data-set="nb" tabindex="0" role="button">
+      <rect x="80" y="412" width="164" height="52" fill="#12263a" stroke="#ef9a9a88" rx="3"/>
+      <text x="162" y="434" text-anchor="middle" fill="#d7e6ee" font-size="13">Governance</text>
+      <text x="162" y="450" text-anchor="middle" fill="#7a93a3" font-size="10">B4 审计 · 双轨</text>
+    </g>
+    <g class="mod" data-id="m7" data-set="ctrl" tabindex="0" role="button">
+      <rect x="780" y="256" width="150" height="56" fill="#12263a" stroke="#66bb6a99" rx="3"/>
+      <text x="855" y="278" text-anchor="middle" fill="#d7e6ee" font-size="12">Registry cs.*</text>
+      <text x="855" y="296" text-anchor="middle" fill="#7a93a3" font-size="10">M7 能力目录</text>
+    </g>
+    <g class="mod" data-id="m13" data-set="ctrl" tabindex="0" role="button">
+      <rect x="950" y="256" width="150" height="56" fill="#12263a" stroke="#66bb6a" rx="3"/>
+      <text x="1025" y="278" text-anchor="middle" fill="#d7e6ee" font-size="12">MCP Gateway</text>
+      <text x="1025" y="296" text-anchor="middle" fill="#7a93a3" font-size="10">M13 list≠call</text>
+    </g>
+    <g class="mod" data-id="m8" data-set="ctrl" tabindex="0" role="button">
+      <rect x="780" y="328" width="150" height="52" fill="#12263a" stroke="#90caf999" rx="3"/>
+      <text x="855" y="350" text-anchor="middle" fill="#d7e6ee" font-size="12">IAM / Policy</text>
+      <text x="855" y="366" text-anchor="middle" fill="#7a93a3" font-size="10">M8 岗位≠IdP</text>
+    </g>
+    <g class="mod" data-id="m11" data-set="ctrl" tabindex="0" role="button">
+      <rect x="950" y="328" width="150" height="52" fill="#12263a" stroke="#ef9a9a99" rx="3"/>
+      <text x="1025" y="350" text-anchor="middle" fill="#d7e6ee" font-size="12">Audit</text>
+      <text x="1025" y="366" text-anchor="middle" fill="#7a93a3" font-size="10">M11 不是 KPI 墙</text>
+    </g>
+    <g class="mod" data-id="m12" data-set="ctrl" tabindex="0" role="button">
+      <rect x="780" y="396" width="150" height="52" fill="#12263a" stroke="#ffe08299" rx="3"/>
+      <text x="855" y="418" text-anchor="middle" fill="#d7e6ee" font-size="12">Evolution</text>
+      <text x="855" y="434" text-anchor="middle" fill="#7a93a3" font-size="10">M12 auto_apply=关</text>
+    </g>
+    <g class="mod" data-id="m10" data-set="ctrl" tabindex="0" role="button">
+      <rect x="950" y="396" width="150" height="52" fill="#12263a" stroke="#90caf988" rx="3"/>
+      <text x="1025" y="418" text-anchor="middle" fill="#d7e6ee" font-size="12">Artifact</text>
+      <text x="1025" y="434" text-anchor="middle" fill="#7a93a3" font-size="10">M10 报告≠状态</text>
+    </g>
+    <g class="mod" data-id="m9" data-set="ctrl" tabindex="0" role="button">
+      <rect x="780" y="460" width="200" height="28" fill="#12263a" stroke="#ce93d888" rx="3"/>
+      <text x="880" y="479" text-anchor="middle" fill="#d7e6ee" font-size="12">Skill 状态机 · M9</text>
+    </g>
+    <g class="mod" data-id="m20" data-set="ctrl" tabindex="0" role="button">
+      <rect x="990" y="460" width="110" height="28" fill="#12263a" stroke="#90caf966" rx="3"/>
+      <text x="1045" y="479" text-anchor="middle" fill="#d7e6ee" font-size="11">M20 Schema</text>
+    </g>
+    <g class="mod" data-id="m21" data-set="ctrl" tabindex="0" role="button">
+      <rect x="1128" y="256" width="112" height="56" fill="#12263a" stroke="#ef9a9a88" rx="3"/>
+      <text x="1184" y="280" text-anchor="middle" fill="#d7e6ee" font-size="12">A2A</text>
+      <text x="1184" y="296" text-anchor="middle" fill="#7a93a3" font-size="10">M21 P1+</text>
+    </g>
+
+    <g class="nb-shell" pointer-events="none">
+      <rect x="48" y="552" width="494" height="96" fill="none" stroke="#ffe08266" stroke-dasharray="6 4" rx="4"/>
+      <text x="60" y="568" fill="#ffe082" font-size="10">块 1 / 块 2 · 本体投影 · WM 三寿命 · 法则</text>
+    </g>
+    <g class="nb-shell" pointer-events="none">
+      <rect x="772" y="552" width="336" height="96" fill="none" stroke="#ffe08266" stroke-dasharray="6 4" rx="4"/>
+      <text x="784" y="568" fill="#ffe082" font-size="10">块 3 · 口径只读 · 时态浏览 · 无写 CRM</text>
+    </g>
+
+    <g class="mod" data-id="m2" data-set="nb" tabindex="0" role="button">
+      <rect x="56" y="576" width="150" height="62" fill="#13202c" stroke="#80cbc4" rx="3"/>
+      <text x="131" y="602" text-anchor="middle" fill="#d7e6ee" font-size="13">责任图</text>
+      <text x="131" y="620" text-anchor="middle" fill="#7a93a3" font-size="10">M2 L0 永不外包</text>
+    </g>
+    <g class="mod" data-id="m3" data-set="nb" tabindex="0" role="button">
+      <rect x="220" y="576" width="150" height="62" fill="#13202c" stroke="#80cbc4" rx="3"/>
+      <text x="295" y="602" text-anchor="middle" fill="#d7e6ee" font-size="13">WM Store</text>
+      <text x="295" y="620" text-anchor="middle" fill="#7a93a3" font-size="10">M3 三寿命</text>
+    </g>
+    <g class="mod" data-id="m4" data-set="nb" tabindex="0" role="button">
+      <rect x="384" y="576" width="150" height="62" fill="#13202c" stroke="#ffe08299" rx="3"/>
+      <text x="459" y="602" text-anchor="middle" fill="#d7e6ee" font-size="13">Law Pack</text>
+      <text x="459" y="620" text-anchor="middle" fill="#7a93a3" font-size="10">M4 知识即配置</text>
+    </g>
+    <g class="mod" data-id="m14" data-set="ops" tabindex="0" role="button">
+      <rect x="56" y="672" width="150" height="64" fill="#13202c" stroke="#66bb6a" rx="3"/>
+      <text x="131" y="698" text-anchor="middle" fill="#d7e6ee" font-size="13">Connector</text>
+      <text x="131" y="716" text-anchor="middle" fill="#7a93a3" font-size="10">M14 密钥不出模型</text>
+    </g>
+    <g class="mod" data-id="m23" data-set="ops" tabindex="0" role="button">
+      <rect x="56" y="752" width="150" height="64" fill="#13202c" stroke="#66bb6a88" rx="3"/>
+      <text x="131" y="778" text-anchor="middle" fill="#d7e6ee" font-size="13">SoR</text>
+      <text x="131" y="796" text-anchor="middle" fill="#7a93a3" font-size="10">M23 CRM/ERP/仓</text>
+    </g>
+    <g class="mod" data-id="m18" data-set="ops" tabindex="0" role="button">
+      <rect x="560" y="576" width="170" height="70" fill="#2a2214" stroke="#ffb74d" rx="3"/>
+      <text x="645" y="604" text-anchor="middle" fill="#d7e6ee" font-size="13">Temporal</text>
+      <text x="645" y="624" text-anchor="middle" fill="#7a93a3" font-size="10">M18 外环 · 回调 Hub</text>
+    </g>
+    <g class="mod" data-id="m19" data-set="ops" tabindex="0" role="button">
+      <rect x="560" y="672" width="170" height="64" fill="#24182a" stroke="#ce93d8" rx="3"/>
+      <text x="645" y="698" text-anchor="middle" fill="#d7e6ee" font-size="13">LangGraph</text>
+      <text x="645" y="716" text-anchor="middle" fill="#7a93a3" font-size="10">M19 SPI · 禁直打 CRM</text>
+    </g>
+    <g class="mod" data-id="m24" data-set="ops" tabindex="0" role="button">
+      <rect x="560" y="752" width="170" height="64" fill="#13202c" stroke="#ce93d866" rx="3"/>
+      <text x="645" y="778" text-anchor="middle" fill="#d7e6ee" font-size="13">LLM Broker</text>
+      <text x="645" y="796" text-anchor="middle" fill="#7a93a3" font-size="10">M24 会话≠实例状态</text>
+    </g>
+    <g class="mod" data-id="m15" data-set="nb" tabindex="0" role="button">
+      <rect x="780" y="576" width="150" height="62" fill="#13202c" stroke="#80cbc4" rx="3"/>
+      <text x="855" y="602" text-anchor="middle" fill="#d7e6ee" font-size="13">Cube + OSI</text>
+      <text x="855" y="620" text-anchor="middle" fill="#7a93a3" font-size="10">M15 口径 · 不签发</text>
+    </g>
+    <g class="mod" data-id="m16" data-set="nb" tabindex="0" role="button">
+      <rect x="950" y="576" width="150" height="62" fill="#13202c" stroke="#80cbc4" rx="3"/>
+      <text x="1025" y="602" text-anchor="middle" fill="#d7e6ee" font-size="13">Graphiti</text>
+      <text x="1025" y="620" text-anchor="middle" fill="#7a93a3" font-size="10">M16 时态 · 非 cs 写</text>
+    </g>
+    <g class="mod" data-id="m17" data-set="ops" tabindex="0" role="button">
+      <rect x="780" y="672" width="320" height="64" fill="#2a1414" stroke="#ef5350" rx="3"/>
+      <text x="940" y="698" text-anchor="middle" fill="#d7e6ee" font-size="13">Lethe 分库</text>
+      <text x="940" y="716" text-anchor="middle" fill="#ef9a9a" font-size="10">M17 仅 SelfPaw · 无 FK 到经营</text>
+    </g>
+    <g class="mod" data-id="m22" data-set="ops" tabindex="0" role="button">
+      <rect x="780" y="756" width="150" height="56" fill="#13202c" stroke="#7a93a3" rx="3"/>
+      <text x="855" y="780" text-anchor="middle" fill="#d7e6ee" font-size="12">Utopia 可选</text>
+      <text x="855" y="796" text-anchor="middle" fill="#7a93a3" font-size="10">M22 只读导出</text>
+    </g>
+    <g class="mod" data-id="idp" data-set="ops" tabindex="0" role="button">
+      <rect x="950" y="756" width="150" height="56" fill="#13202c" stroke="#90caf9" rx="3"/>
+      <text x="1025" y="780" text-anchor="middle" fill="#d7e6ee" font-size="12">企业 IdP</text>
+      <text x="1025" y="796" text-anchor="middle" fill="#7a93a3" font-size="10">只提供人</text>
+    </g>
+
+    <g class="edge n">
+      <path d="M360 164 L360 268" stroke="#4fc3f7" stroke-width="2" fill="none" marker-end="url(#arrN)"/>
+      <text x="372" y="220" fill="#4fc3f7" font-size="11">hub.*</text>
+    </g>
+    <g class="edge n">
+      <path d="M640 156 L600 268" stroke="#4fc3f7" stroke-width="1.4" fill="none" marker-end="url(#arrN)"/>
+    </g>
+    <g class="edge n">
+      <path d="M870 144 L720 268" stroke="#4fc3f7" stroke-width="1.2" fill="none" opacity=".7"/>
+      <text x="800" y="200" fill="#4fc3f7" font-size="10">SSE</text>
+    </g>
+    <g class="edge nb">
+      <path class="fence" d="M162 492 L162 552" stroke="#ffe082" stroke-width="1.4" fill="none"/>
+      <text x="174" y="528" fill="#ffe082" font-size="10">hub.ops.*</text>
+    </g>
+    <g class="edge s">
+      <path d="M730 328 L780 284" stroke="#66bb6a" stroke-width="1.6" fill="none" marker-end="url(#arrS)"/>
+      <path d="M930 284 L950 284" stroke="#66bb6a" stroke-width="1.6" fill="none" marker-end="url(#arrS)"/>
+      <path d="M1100 284 L1188 284 L1188 704 L206 704" stroke="#66bb6a" stroke-width="1.5" fill="none" marker-end="url(#arrS)" opacity=".9"/>
+      <path d="M131 736 L131 752" stroke="#66bb6a" stroke-width="1.6" fill="none" marker-end="url(#arrS)"/>
+      <text x="1198" y="430" fill="#66bb6a" font-size="11">MCP / cs.*</text>
+    </g>
+    <g class="edge e">
+      <path d="M580 388 L645 576" stroke="#ffb74d" stroke-width="2" fill="none" marker-end="url(#arrE)"/>
+      <text x="590" y="512" fill="#ffb74d" font-size="11">Temporal</text>
+      <path d="M560 611 L730 388" stroke="#ffb74d" stroke-width="1.2" fill="none" marker-end="url(#arrN)" opacity=".75"/>
+      <text x="500" y="560" fill="#ffb74d" font-size="10">回调门禁</text>
+    </g>
+    <g class="edge w">
+      <path d="M530 388 L560 704" stroke="#ce93d8" stroke-width="2" fill="none" marker-end="url(#arrW)"/>
+      <text x="470" y="652" fill="#ce93d8" font-size="11">InnerLoop SPI</text>
+      <path d="M645 736 L645 752" stroke="#ce93d8" stroke-width="1.2" fill="none" marker-end="url(#arrW)"/>
+    </g>
+    <g class="edge k">
+      <path d="M580 388 L295 576" stroke="#80cbc4" stroke-width="1.5" fill="none" marker-end="url(#arrK)"/>
+      <path d="M520 388 L131 576" stroke="#80cbc4" stroke-width="1.5" fill="none" marker-end="url(#arrK)"/>
+      <path d="M680 388 L855 576" stroke="#80cbc4" stroke-width="1.5" fill="none" marker-end="url(#arrK)"/>
+      <path d="M710 388 L1025 576" stroke="#80cbc4" stroke-width="1.5" fill="none" marker-end="url(#arrK)"/>
+      <text x="700" y="532" fill="#80cbc4" font-size="11">Cube / Graphiti / WM</text>
+    </g>
+    <g class="edge k iso-edge">
+      <path class="fence" d="M720 388 L940 672" stroke="#ef5350" stroke-width="1.4" fill="none"/>
+      <text x="860" y="652" class="iso">ΠPaw 403</text>
+    </g>
+    <g class="edge i">
+      <path d="M1025 756 L855 380" stroke="#90caf9" stroke-width="1.4" fill="none" marker-end="url(#arrI)"/>
+      <text x="1120" y="632" fill="#90caf9" font-size="11">OIDC · 人</text>
+    </g>
+    <g class="edge v">
+      <path d="M855 448 L459 576" stroke="#ffe082" stroke-width="1.4" fill="none" marker-end="url(#arrV)"/>
+      <text x="620" y="470" fill="#ffe082" font-size="10">ChangeSet</text>
+    </g>
+    <g class="edge v">
+      <path d="M930 784 L855 448" stroke="#7a93a3" stroke-width="1" fill="none" stroke-dasharray="3 4"/>
+    </g>
+    <g class="edge h">
+      <path d="M1128 284 L1100 284" stroke="#ef9a9a" stroke-width="1.2" fill="none" opacity=".7"/>
+    </g>
+
+    <circle id="pkt" class="pkt" r="6" fill="#ffb74d" stroke="#fff" stroke-width="1">
+      <animateMotion id="am" dur="7s" fill="freeze" rotate="auto"
+        path="M360,120 L360,320 L645,611 L1188,284 L1188,704 L131,716 L131,784 L855,611 L360,120"/>
+    </circle>
+  </svg>
+  <aside class="legend">
+    <h2>八条协议</h2>
+    <div class="proto">
+      <i class="dot" style="background:#4fc3f7"></i>
+      <div><b>北 · hub.*</b><small>使用平面唯一入口。剖面由服务端强制。</small></div>
+      <i class="dot" style="background:#66bb6a"></i>
+      <div><b>南 · MCP / cs.*</b><small>模型只见语义名。list 过滤不能跳过 call 判定。</small></div>
+      <i class="dot" style="background:#ffb74d"></i>
+      <div><b>东 · Temporal</b><small>长任务与 HITL。Worker 不持 SoR 密钥。</small></div>
+      <i class="dot" style="background:#ce93d8"></i>
+      <div><b>西 · InnerLoop SPI</b><small>默认 LangGraph。工具回调只能进 Hub。</small></div>
+      <i class="dot" style="background:#80cbc4"></i>
+      <div><b>知识 · Cube / 图 / WM</b><small>口径、时态、三寿命。Cube 不签发任务。</small></div>
+      <i class="dot" style="background:#ef9a9a"></i>
+      <div><b>水平 · A2A</b><small>P0 用 task.transfer。对端仍进对方 Hub。</small></div>
+      <i class="dot" style="background:#90caf9"></i>
+      <div><b>身份 · OIDC</b><small>IdP 只提供人。岗位与承诺权在 Hub。</small></div>
+      <i class="dot" style="background:#ffe082"></i>
+      <div><b>演化 · ChangeSet</b><small>auto_apply=false。NocoBase 发布只走 submit。</small></div>
+    </div>
+    <h2>点模块看详细设计</h2>
+    <p class="hint">键盘 Tab 到模块后按 Enter。地址栏 hash 可分享，例如 #m2 或 #nb。</p>
+    <div id="detail">
+      <h3>集群集成原则</h3>
+      <p>模块之间不进对方数据库。控制流、数据流、管理流分名。零件可换，一线名词不变。NocoBase 是 Platform Console 可视化壳，不是数据核。</p>
+      <ul>
+        <li>WorkStudio 不直连任何零件</li>
+        <li>Lethe 不连责任图 / Graphiti / Cube</li>
+        <li>Graphiti mutation 不等于 cs 写</li>
+        <li>Temporal 不解释 Law Pack</li>
+        <li>NocoBase 主库不存 ag_node / episode / kpi.is</li>
+      </ul>
+    </div>
+  </aside>
+</main>
+<footer>
+  权威文档：
+  <a href="./UAS_AIOS_CLUSTER_PRODUCTIZATION.md">集群产品化</a> ·
+  <a href="./UAS_AIOS_MODULE_DESIGN.md">模块设计</a> ·
+  <a href="./UAS_AIOS_ARCHITECTURE_SPEC.md">工程规格</a> ·
+  <a href="./UAS_AIOS_PLATFORM_PRODUCT.md">平台产品</a> ·
+  <a href="../../superpowers/plans/2026-09-11-nocobase-console-shell.md">NocoBase Console 计划</a>
+  · 本页是架构方案图，不是产品工作台。
+</footer>
+<script>
+const DETAIL = {
+  nb: {
+    t: "NocoBase · Platform Console 壳",
+    plane: "套件 B 可视化壳",
+    decision: "集成壳，不当内核",
+    d: "知识管理员的可视化控制台：角色、侧栏（本体 / 图谱 / 法则 / 口径）、页面编排、JSON Schema 表单。三个自定义块是 BlockModel，只调 hub.ops.*。拖改留在本地 state，点发布只走 changeset.submit。图谱页无写 CRM。纪律与 Utopia 相同：可视化审核台，无生产写按钮。",
+    non: "经营库、口径引擎、双时态图、Hub 门禁、签发任务、写 SoR",
+    design: "插件 @uas/plugin-console。壳提供 IA 与 ACL。块 1 责任图投影画布（Cytoscape + 四类边）。块 2 WM 三寿命对照。块 3 Graphiti 时态浏览。compose 用 profile console，默认阶段 A 不启动。",
+    stack: "NocoBase client-v2 Plugin · BlockModel（禁止 CollectionBlockModel）· 浏览器 fetch Hub :18088",
+    api: "GET/POST /hub/v1/ops/graph|wm|kg/search|caliber/status|changeset/submit|decide · profile 强制 builder · 需 X-Ops-Role: knowledge_admin",
+    veto: ["Graphiti/OSI 打进 Collection", "Workflow 写 CRM", "plugin-ai / mcp-server", "一线打开 /console", "Neo4j Browser 当本体编辑器"],
+    accept: ["无 ops/kg/ingest 路由", "submit 后 applied=false", "GraphPage 不引入发布动作", "compiled PATCH 422"],
+    doc: "docs/superpowers/plans/2026-09-11-nocobase-console-shell.md"
+  },
+  m1: {
+    t: "M1 WorkStudio · 使用平面",
+    plane: "套件 A 使用产品",
+    decision: "自研产品壳 · workstudio-web",
+    d: "岗位工作台。路由即场景：/today 今日必办、/room/:object_ref 作战室、/command 指挥舱、/exec/:task_id 执行态。打开首页 = pack.open 责任图切片，不是空白对话。",
+    non: "门禁、循环、口径计算、SoR 写、密钥",
+    design: "启动 POST /hub/v1/scene/pack/open。签发嵌在作战台调 M5。进度 EventSource /hub/v1/exec/{id}/events。403 渲染人话 + policy.explain。状态在 URL + pack 快照，刷新再 open。",
+    stack: "P0 可沿用 demo HTML · 产品路径 Vite 6 + TypeScript 5 · fetch + OIDC PKCE",
+    api: "只消费 hub.scene.* 与 SSE",
+    veto: ["前端 SDK 直连 Cube / Graphiti / CRM", "Next/Remix", "聊天全文当实例状态", "一线菜单出现连接器"],
+    accept: ["零零件 SDK", "断零件时人话降级"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M1"
+  },
+  m5: {
+    t: "M5 Insight→Task 编译器",
+    plane: "使用平面（嵌在作战台）",
+    decision: "自研 · 与 Hub 同进程",
+    d: "把责任节点上的缺口编译成经营任务。任务必须带 source_node_id。未接地不得签发。不在签发时启动 Temporal。",
+    non: "外环寿命、连接器、口径公式",
+    design: "insight.drill 收集 evidence_refs。task.issue 校验五件套、口径、接地、剖面。驳回原因进演化信号。",
+    stack: "Hub Python · insight/operating_task schema",
+    api: "hub.scene.insight.drill · hub.scene.task.issue / return / transfer",
+    veto: ["无源节点的任务", "未接地派活", "签发即启工作流"],
+    accept: ["I-02 缺维不能签发", "I-04 未接地不能 issue"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M5"
+  },
+  sse: {
+    t: "进度 SSE",
+    plane: "使用平面",
+    decision: "自有 /hub/v1/exec/{task_id}/events",
+    d: "Runtime 进度扇出。指挥舱只投影事件。审计才是真相源。",
+    non: "AG-UI 协议绑定、聊天流当状态",
+    design: "Hub 持有事件缓冲。一线只见「待你确认」，不展示 workflow_id。",
+    stack: "FastAPI SSE · P1 Redis 扇出",
+    api: "GET /hub/v1/exec/{task_id}/events",
+    veto: ["把 AG-UI 当进度标准", "把报告当回放源"],
+    accept: ["指挥舱与作战台同一 task_id"],
+    doc: "UAS_AIOS_ARCHITECTURE_SPEC.md"
+  },
+  m6: {
+    t: "M6 Capability Hub 控制面",
+    plane: "控制平面",
+    decision: "自研 · 进程 hub-api",
+    d: "所有下游的唯一门禁。剖面由路由强制。判定序不可颠倒：tenant → registry → RBAC → approval → gates → scope → execute → audit。",
+    non: "实现循环内核、持有 SoR 密钥、当 BI",
+    design: "EnvelopeMiddleware + ProfileInjector。Thread 的 profile 不可变。hub.policy.explain 把错误码映射成人话与下一步。组合根是 Port/Adapter，不把零件 SDK import 进 router。",
+    stack: "FastAPI + uvicorn · 自研 PolicyChain · Temporal Python SDK 客户端",
+    api: "/hub/v1/scene|exec|ops|wm|kg|metric · 信封 tenant/actor/profile/track/correlation/idempotency",
+    veto: ["Dify / Copilot Studio 当 Hub", "一上来 OPA 当 OS", "Celery 当 Runtime 寿命", "Node 写门禁"],
+    accept: ["scene 调写 cs → 403 + 人话", "同一 Thread 改 profile → 409"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M6"
+  },
+  hubc: {
+    t: "Hub Console · B1 控制中心",
+    plane: "Platform Console（NocoBase 壳内）",
+    decision: "管理壳，不是第二套 Hub",
+    d: "平台管理员：剖面矩阵、租户、门禁试运行、「若现在点写会怎样」。一线账号默认看不到 /console。",
+    non: "签发经营任务、关审计、auto_apply",
+    design: "页面走 NocoBase 菜单。数据只调 hub.ops.policy.explain / profile.matrix / tenant.get / health.gate。",
+    stack: "NocoBase 页 + hubOps.ts",
+    api: "hub.ops.policy.explain · hub.ops.profile.matrix · hub.ops.tenant.get",
+    veto: ["客户端改 profile", "静默关审计"],
+    accept: ["explain 可用率 100%"],
+    doc: "UAS_AIOS_PLATFORM_PRODUCT.md · B1"
+  },
+  pack: {
+    t: "Pack Studio",
+    plane: "Platform Console（NocoBase 壳内）",
+    decision: "法则 / 技能 / 制品的配置壳",
+    d: "知识管理员与实施顾问主战场。发布 = ChangeSet。与本体工作室共用提交按钮，不直写 compiled。",
+    non: "生产写路径、SoR 密钥",
+    design: "Law Pack 版本对比、Skill 货架漏斗、制品晋升条。NocoBase 只提供表单底座。",
+    stack: "NocoBase 表单 + hub.ops.changeset.*",
+    api: "hub.ops.law.diff · hub.ops.skill.* · hub.ops.artifact.* · hub.ops.changeset.submit",
+    veto: ["模型直接 PATCH 配置文件", "跳过 invariant 发布"],
+    accept: ["未审批 ChangeSet 不进 compiled"],
+    doc: "UAS_AIOS_CLUSTER_PRODUCTIZATION.md"
+  },
+  gov: {
+    t: "Governance Console · B4",
+    plane: "Platform Console（NocoBase 壳内）",
+    decision: "合规与身份运营壳",
+    d: "岗位绑定、双轨抽查、审计导出、遗忘回执、转派记录。合规角色不派业务活。",
+    non: "业务派活、auto_apply",
+    design: "NocoBase 治理页只读审计检索，写权限走 ChangeSet。",
+    stack: "NocoBase 页 + hub.ops.iam / audit / memory.receipt",
+    api: "hub.ops.iam.bindings · hub.ops.audit.export · hub.ops.memory.receipt.get",
+    veto: ["用报告回放经营", "pipaw 读 Lethe"],
+    accept: ["遗忘回执可检索"],
+    doc: "UAS_AIOS_PLATFORM_PRODUCT.md · B4"
+  },
+  m7: {
+    t: "M7 Capability Registry cs.*",
+    plane: "控制 / 系统面",
+    decision: "自研契约 · 名与 schema 不可换",
+    d: "语义动作目录。启用、审批级、副作用、契约绿灯。MCP 工具名与 cs.* 同源。",
+    non: "实现连接器、解释 Law",
+    design: "configs/capability_registry.json + JSON Schema。scene 隐藏写工具。patch 走 ChangeSet。",
+    stack: "JSON Schema 权威 · Hub 加载",
+    api: "hub.ops.registry.list/patch · MCP tools/list 同源",
+    veto: ["两份手写 schema", "模型可见 URL/SQL/密钥"],
+    accept: ["I-12 名/字段一致", "I-05 scene 写工具不可见"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M7"
+  },
+  m13: {
+    t: "M13 MCP Gateway",
+    plane: "协议面",
+    decision: "自研壳 + 开源 MCP 协议",
+    d: "按剖面过滤 tools/list。call 仍走同一 PolicyChain。list 已过滤不能跳过 call 判定。",
+    non: "循环内核、持 SoR 密钥",
+    design: "HTTP 企业网关。stdio 仅本地 Agent。description 无 URL/Token/SQL。",
+    stack: "MCP 2025+ · 可与 hub-api 同镜像",
+    api: "POST /hub/v1/mcp/tools/list · /tools/call",
+    veto: ["WebSocket 私有帧当标准", "密钥进 tool description"],
+    accept: ["I-05 call 仍 403"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M13"
+  },
+  m8: {
+    t: "M8 Identity & Policy",
+    plane: "治理面",
+    decision: "自研绑定 · 身份源接 IdP",
+    d: "岗位绑定责任图 org.*。双轨 SelfPaw / ΠPaw 与经营双轨分名。scope 模拟器、升级工单。",
+    non: "当 IdP；用 Entra 组替代 org.*",
+    design: "OIDC 只提供人。经营承诺权在 Hub。无岗位绑定的人打不开切片。",
+    stack: "Keycloak 实验室 / 企业 Entra·Okta",
+    api: "hub.ops.iam.bindings · hub.iam.*",
+    veto: ["自研登录", "把 IdP 角色当经营承诺权"],
+    accept: ["I-10 无岗位打不开切片"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M8"
+  },
+  m11: {
+    t: "M11 Audit",
+    plane: "治理面",
+    decision: "自研追加写审计链",
+    d: "按 correlation / node / cs 检索。导出合规包。不是 KPI 墙。",
+    non: "口径服务、指挥舱报表",
+    design: "调用链入审计。ops 事件类型与 cs.invoked 区分。",
+    stack: "Postgres 分区表 · hash chain",
+    api: "hub.ops.audit.search/export",
+    veto: ["把 Cube 当审计"],
+    accept: ["可按 task_id / node_id 找回"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M11"
+  },
+  m12: {
+    t: "M12 Evolution Engine",
+    plane: "演化面",
+    decision: "自研 · auto_apply 永关",
+    d: "信号 → 草案 → 人确认 → 回写 Law Pack / Release。目标可以是 law_pack | release | permission | caliber。",
+    non: "静默写 compiled、会话内改生产知识",
+    design: "FixtureEvolution.auto_apply 无法被置 true。NocoBase 发布按钮只 submit/decide。",
+    stack: "Postgres + JSON Patch · Hub",
+    api: "hub.ops.changeset.list/submit/decide",
+    veto: ["模型直接 PATCH 配置", "auto_apply 请求头生效"],
+    accept: ["I-09 未审批不进 compiled"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M12"
+  },
+  m10: {
+    t: "M10 Artifact Store",
+    plane: "运行面",
+    decision: "自研元数据 · 存储引擎可换",
+    d: "Insight/Task → ThemePack → Blueprint → Release → Instance。报告 / PDF 禁止被 pack.open 当状态源。",
+    non: "世界模型、主数据",
+    design: "元数据在 Postgres，字节在对象存储。晋升条件不可换。",
+    stack: "MinIO 实验室 / S3",
+    api: "hub.ops.artifact.*",
+    veto: ["制品只放本地磁盘当生产", "用报告回放经营"],
+    accept: ["file kind 不能驱动 pack.open"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M10"
+  },
+  m9: {
+    t: "M9 Skill 协议状态机",
+    plane: "编织面",
+    decision: "自研 · discover ≠ execute",
+    d: "discover → cite → install → enable。Explore 最高只能 cited。执行必须 runtime 剖面。",
+    non: "循环内核、工具实现",
+    design: "agentskills SKILL.md 头。Hub 状态枚举。Pack Studio 货架漏斗。",
+    stack: "Hub 状态机",
+    api: "hub.skill.transition · hub.ops.skill.*",
+    veto: ["Explore 直接 execute", "第三套 Agent 循环"],
+    accept: ["explore 不可 execute"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M9"
+  },
+  m20: {
+    t: "M20 工具类型 · JSON Schema",
+    plane: "协议面",
+    decision: "一份权威，三处生成",
+    d: "schemas/*.json + registry.input/output 生成 Pydantic、MCP tool schema、连接器校验。CI 漂移红灯。",
+    non: "给模型宽松、给连接器严格的双份",
+    design: "datamodel-code-generator。前台用 JSON Schema 校验即可，不手写第三份 TS 模型。",
+    stack: "JSON Schema 2020-12 · Pydantic v2",
+    api: "hub.ops.schema.drift",
+    veto: ["只写 Pydantic 再反推", "任意 dict 进连接器"],
+    accept: ["I-12 改字段未生成则 CI 失败"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M20"
+  },
+  m21: {
+    t: "M21 跨岗位委托 · A2A",
+    plane: "编织 / 协议",
+    decision: "P0 transfer · P1+ A2A Agent Card",
+    d: "跨岗位委托不用自研总线。对端仍进对方 Hub。跨租户默认拒绝。",
+    non: "替代 Hub 门禁",
+    design: "P0 hub.task.transfer。P1 岗位级 Agent Card（CM / 法务 / 指挥席）。",
+    stack: "A2A 协议 · 双方 Hub OIDC",
+    api: "hub.task.transfer · hub.ops 岗位委托运营",
+    veto: ["Card 签名替代门禁", "P0 上跨租户 A2A"],
+    accept: ["转派后源节点与审计仍在"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M21"
+  },
+  m2: {
+    t: "M2 责任图 Accountability Graph",
+    plane: "K-L0 经营本体 · Console 块 1",
+    decision: "自研 · schema 已冻结 · 永不外包",
+    d: "每个可管理位置是同一类节点：Goal × org × KPI × process × 五维 WM。四种边只是投影：org_cascade / kpi_split / stage_split / object_drill。禁止四套树。",
+    non: "时态事实、口径公式引擎",
+    design: "存储 ag_graph / ag_node / ag_edge。pack.open 按 position_id × period 切片，cs.metric.query 水合 kpi.is，失败标 stale。NocoBase 块用同一 schema 做投影画布；发布走 ChangeSet。",
+    stack: "PostgreSQL 16 + JSONB + GIN · schemas/accountability_graph.schema.json",
+    api: "hub.scene.pack.open · hub.ops.graph.get/validate/publish",
+    veto: ["Neo4j/Graphiti 当 L0", "四套树四套表", "在 Neo4j Browser 里改经营", "NocoBase Collection 当 ag_node"],
+    accept: ["缺维不可签发 · I-02"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M2"
+  },
+  m3: {
+    t: "M3 世界模型 Store",
+    plane: "K-L0 · Console 块 2",
+    decision: "自研 · 三寿命",
+    d: "法则编译器的持久化，不是预测器，不是 RAG。draft / compiled / live。Runtime 只 PATCH live。改法则必须 ChangeSet → 新 compiled。",
+    non: "预测器、RAG 索引、聊天 checkpoint",
+    design: "wm_doc UNIQUE(id, lifetime, version)。节点 wm.* 是投影指针。NocoBase 寿命板三列对照；compiled 列只读。",
+    stack: "与责任图同一 Postgres，不同表",
+    api: "hub.wm.get/patch · hub.ops.wm.get",
+    veto: ["把 WM 塞进 Graphiti", "用 Lethe 存 live", "前台直接 SQL", "live 改 compiled"],
+    accept: ["Runtime PATCH compiled → 拒绝"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M3"
+  },
+  m4: {
+    t: "M4 Law Pack",
+    plane: "K-L0 / 德 · Pack Studio",
+    decision: "自研 · 知识即配置",
+    d: "法则条文版本化。冲突显式，不静默覆盖。编译进 compiled WM。NocoBase 法则页做 diff，发布走 ChangeSet。",
+    non: "Temporal 解释 Law、连接器持条文",
+    design: "未审批 changeset 不能 law.compile。auto_apply 永关。",
+    stack: "配置文件 + Hub 编译",
+    api: "hub.law.compile · hub.ops.law.diff",
+    veto: ["会话内改生产知识", "Utopia Action 直接打 CRM"],
+    accept: ["I-09"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M4"
+  },
+  m14: {
+    t: "M14 System Connector",
+    plane: "系统面",
+    decision: "自研适配器 SPI · 每 SoR 一进程",
+    d: "密钥只在本进程读 KMS 引用。写必须幂等键。厂商错误映射为 result_code。补偿信号回 Temporal，不在此解释 Law。",
+    non: "自研 CRM/ERP；对模型暴露 REST",
+    design: "字段映射 YAML configs/connectors/{id}.map.yml。沙箱/生产槽。NocoBase 可做连接器运营页，但密钥不明文回显。",
+    stack: "httpx + 有限重试 · Salesforce 官方 REST 仅此进程",
+    api: "内部 Invoke · hub.ops.connector.list/rotate/slot",
+    veto: ["在 LangGraph 节点里 httpx CRM", "Agentforce 当 OS", "生产凭证写进 Demo"],
+    accept: ["Worker 环境无 SoR 明文", "幂等重放不双写"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M14"
+  },
+  m23: {
+    t: "M23 主数据 SoR",
+    plane: "系统面",
+    decision: "连接，不自研 MDM",
+    d: "UAS 只存 object_ref 与映射，不复制客户主档。账户与环境槽由客户 IT 管。",
+    non: "轻量 CRM 当 P0",
+    design: "默认沙箱 Mock Connector。Agentforce / Joule / UiPath 只当 cs.* 后端或 RPA 执行器。",
+    stack: "客户已有 CRM / ERP / 仓 / 审批 / 日历",
+    api: "厂商 API 仅连接器内",
+    veto: ["自研轻量 CRM", "主档搬进 NocoBase 主库"],
+    accept: ["object_ref 不复制主档"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M23"
+  },
+  m18: {
+    t: "M18 外环 · Temporal",
+    plane: "运行面",
+    decision: "集成 · 可替换但须保留 HITL/续跑",
+    d: "任务寿命、审批暂停、精确续跑。Worker 调 cs 仍走 Hub 门禁。业务用户只见「待你确认」。",
+    non: "解释 Law Pack、持 SoR 密钥",
+    design: "exec.open 启动 RuntimeCycleWorkflow。杀 Worker 后续跑不丢审批。Temporal UI 仅 SRE 逃生，禁止链到 WorkStudio。",
+    stack: "Temporal 1.25 · Python SDK · Worker 进程",
+    api: "hub.exec.open · hub.ops.runtime.task/retry",
+    veto: ["Celery 当寿命", "一线菜单出现 workflow_id"],
+    accept: ["I-06 Worker 仍走门禁"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M18"
+  },
+  m19: {
+    t: "M19 内环 · LangGraph 1.0",
+    plane: "编织 / 运行",
+    decision: "集成默认 LangGraph · 同一 SPI",
+    d: "工具回调只能进 Hub。无出站 HTTP 到 CRM。既有 Codex/Pi 仅备选实现，禁止第三套循环。",
+    non: "控制面、经营状态",
+    design: "Checkpoint 在 Postgres。业务状态是 live WM + Task + 审计指针，不是消息数组。",
+    stack: "LangGraph 1.0 · InnerLoop SPI",
+    api: "InnerLoop turn · INNERLOOP_BACKEND=langgraph|codex 二选一",
+    veto: ["CrewAI", "第三套循环", "LangGraph 节点直打 CRM"],
+    accept: ["I-07 无出站 CRM"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M19"
+  },
+  m24: {
+    t: "M24 模型推理 Broker",
+    plane: "编织面",
+    decision: "连接任意 LLM · 必须可换",
+    d: "按剖面限流、提供商切换。会话不当实例状态。",
+    non: "世界模型、经营承诺",
+    design: "只在 Broker 内用 Provider SDK。NocoBase 可展示路由，PATCH 走 ChangeSet。",
+    stack: "Provider SDK 仅 Broker",
+    api: "hub.ops.model.route",
+    veto: ["把聊天历史当状态", "模型进程持 SoR 密钥"],
+    accept: ["换提供商契约不变"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M24"
+  },
+  m15: {
+    t: "M15 口径服务 · Cube + OSI",
+    plane: "K-L1 · Console 口径页",
+    decision: "集成 Cube Core · YAML 可换服务",
+    d: "kpi.is 只从口径层回填。失败标 stale，Cube 宕机作战台仍能打开。NocoBase 口径页只读 status，不在界面改口头公式。",
+    non: "签发任务、当责任图",
+    design: "configs/metrics/osi/*.yml 编译进 Cube。Hub cs.metric.query → Cube /v1/load。OSI 是互换格式，不绑 dbt Cloud。",
+    stack: "Cube Core Apache-2.0 · OSI/MetricFlow YAML",
+    api: "cs.metric.query · hub.ops.caliber.status",
+    veto: ["LookML / Fabric / 仓 Semantic View 当唯一真相", "作战台写 CubeQL", "节点内口头公式长期当权威"],
+    accept: ["I-03 失败标 stale"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M15"
+  },
+  m16: {
+    t: "M16 时态知识 · Graphiti",
+    plane: "K-L2 · Console 块 3",
+    decision: "集成 · 可换图运行时",
+    d: "事实何时为真、证据在哪。实体白名单须挂 object_ref。ingest 是服务账号 ETL，不是 cs 写。NocoBase 图谱页只搜不写，无写回 CRM 按钮。",
+    non: "经营本体、签发、cs 写",
+    design: "hub.kg.search(object_ref|query, valid_at?, as_of?)。episode id 禁 an-*。Console 不暴露 ingest。",
+    stack: "Graphiti Apache-2.0 · Neo4j 5 或 FalkorDB",
+    api: "hub.kg.search · hub.ops.kg.search · hub.ops.kg.ingest_status（无 UI ingest）",
+    veto: ["Dify 知识库当 L2", "GraphRAG 当主干", "用责任图 Postgres 假装双时态", "图谱页写 CRM"],
+    accept: ["I-04 未接地不得签发", "图节点 ID ≠ an-*"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M16"
+  },
+  m17: {
+    t: "M17 个人记忆 · Lethe",
+    plane: "K-L3",
+    decision: "集成 · 独立数据库",
+    d: "仅 hub.memory.self.* 且 track=selfpaw。forget 产出签名回执写入经营库审计指针，不改责任图。",
+    non: "KPI、任务、客户主数据、岗位时间线",
+    design: "架构测试：无 FK、无同 schema。离职作业全量 forget + 回执归档。",
+    stack: "Lethe / pylethe · Postgres uas_lethe",
+    api: "hub.memory.self.* · hub.ops.memory.receipt.get",
+    veto: ["Mem0 当默认", "Letta 自管记忆", "与 ag_node 同库"],
+    accept: ["I-08 pipaw 403", "forget 回执可检索"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M17"
+  },
+  m22: {
+    t: "M22 Utopia（可选 Spike）",
+    plane: "知识工程",
+    decision: "默认不部署 · 只读导出",
+    d: "知识管理员审冲突 → 导出候选 → 人走 ChangeSet。无 CRM Action 按钮。与 NocoBase 图谱页纪律相同。",
+    non: "生产写、替代 Graphiti 运行时",
+    design: "Compose profile optional。否决当 L2 或 Dify 替代叙事。",
+    stack: "Utopia v0.1 观察",
+    api: "只读导出到 ChangeSet",
+    veto: ["当 L2", "生产写按钮"],
+    accept: ["默认不部署"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M22"
+  },
+  idp: {
+    t: "企业 IdP",
+    plane: "身份源",
+    decision: "连接 · 只提供人",
+    d: "OIDC / SAML。岗位与经营承诺权在 Hub，不在 IdP 组。",
+    non: "替代责任图 org.*",
+    design: "实验室 Keycloak。无岗位绑定的人打不开责任图切片。",
+    stack: "OIDC",
+    api: "OIDC 授权码 · Hub 换绑定",
+    veto: ["自研登录", "IdP 角色当承诺权"],
+    accept: ["I-10"],
+    doc: "UAS_AIOS_MODULE_DESIGN.md · M8"
+  }
+};
+
+const CONSOLE_IDS = new Set(["nb", "hubc", "pack", "gov", "m2", "m3", "m4", "m15", "m16"]);
+const detail = document.getElementById("detail");
+const intro = detail.innerHTML;
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+function show(id, pushHash) {
+  const x = DETAIL[id];
+  if (!x) return;
+  document.querySelectorAll(".mod").forEach(g => g.classList.toggle("is-on", g.dataset.id === id));
+  const veto = (x.veto || []).map(i => `<span class="pill veto">${esc(i)}</span>`).join("");
+  const accept = (x.accept || []).map(i => `<li>${esc(i)}</li>`).join("");
+  detail.innerHTML = `
+    <div class="pills">
+      <span class="pill">${esc(x.plane || "")}</span>
+      <span class="pill ok">${esc(x.decision || "")}</span>
+    </div>
+    <h3>${esc(x.t)}</h3>
+    <p>${esc(x.d)}</p>
+    <h4>非职责</h4>
+    <p>${esc(x.non || "—")}</p>
+    <h4>设计方案</h4>
+    <p>${esc(x.design || "—")}</p>
+    <h4>技术选型</h4>
+    <p>${esc(x.stack || "—")}</p>
+    <h4>接口</h4>
+    <p><code>${esc(x.api || "—")}</code></p>
+    <h4>否决</h4>
+    <div class="pills">${veto}</div>
+    <h4>验收</h4>
+    <ul>${accept}</ul>
+    <p><small>权威：${esc(x.doc || "")}</small></p>`;
+  if (pushHash !== false) history.replaceState(null, "", "#" + id);
+}
+
+function bindMod(g) {
+  const go = () => show(g.dataset.id);
+  g.addEventListener("click", go);
+  g.addEventListener("keydown", ev => {
+    if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); go(); }
+  });
+}
+document.querySelectorAll(".mod").forEach(bindMod);
+
+document.querySelectorAll("nav button[data-filter]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("nav button[data-filter]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const f = btn.dataset.filter;
+    document.querySelectorAll(".edge").forEach(e => {
+      if (f === "all") { e.style.display = ""; return; }
+      if (f === "iso") {
+        e.style.display = e.classList.contains("iso-edge") || e.classList.contains("k") ? "" : "none";
+        return;
+      }
+      if (f === "nb") {
+        e.style.display = e.classList.contains("nb") || e.classList.contains("v") || e.classList.contains("k") ? "" : "none";
+        return;
+      }
+      e.style.display = e.classList.contains(f) ? "" : "none";
+    });
+    const keep = {
+      n: new Set(["m1", "m5", "sse", "m6"]),
+      s: new Set(["m6", "m7", "m13", "m14", "m23"]),
+      e: new Set(["m6", "m18"]),
+      w: new Set(["m6", "m19", "m24"]),
+      k: new Set(["m6", "m2", "m3", "m4", "m15", "m16", "m17"]),
+      nb: CONSOLE_IDS
+    };
+    document.querySelectorAll(".mod").forEach(g => {
+      if (f === "all" || f === "iso") {
+        g.classList.remove("is-dim");
+        return;
+      }
+      const set = keep[f];
+      g.classList.toggle("is-dim", !(set && set.has(g.dataset.id)));
+    });
+    if (f === "nb") show("nb", false);
+  });
+});
+
+document.getElementById("play").addEventListener("click", () => {
+  document.body.classList.add("playing");
+  document.getElementById("am").beginElement();
+});
+
+const boot = (location.hash || "").replace("#", "");
+if (DETAIL[boot]) show(boot, false);
+</script>
+</body>
+</html>

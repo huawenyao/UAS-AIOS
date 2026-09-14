@@ -1,0 +1,16 @@
+version: "1.0.0"
+planes:
+  use: { entry: hub.scene.*, consumers: [M1, M5], demo: demo/index.html }
+  control: { entry: hub.* PolicyChain, consumers: [M6] }
+  ops: { entry: hub.ops.*, consumers: [Console], write: changeset }
+protocols:
+  north: hub.scene + SSE
+  south: ConnectorPort.invoke
+  east: OuterLoopPort
+  west: InnerLoopPort
+  knowledge: CubePort | KgPort | MemoryPort
+  horizontal: hub.task.transfer  # P0
+  identity: OIDC -> IamPort
+  evolution: EvolutionPort auto_apply=false
+policy_order: [inject, tenant, registry, rbac, approval, gates, scope, execute, audit]
+invariants: [I-01, I-02, I-03, I-04, I-05, I-06, I-07, I-08, I-09, I-10, I-11, I-12]

@@ -116,7 +116,7 @@
         "description": { "type": "string" },
         "source_system": {
           "type": "string",
-          "enum": ["crm", "bpm", "oa", "finance", "itsm", "erp", "mock"]
+          "enum": ["crm", "bpm", "oa", "finance", "itsm", "erp", "mock", "dwh", "warehouse"]
         },
         "connector_id": {
           "type": "string",
@@ -124,9 +124,9 @@
         },
         "uas_layer": {
           "type": "string",
-          "enum": ["S"],
+          "enum": ["S", "K"],
           "default": "S",
-          "description": "对齐 UAS 八元组 S 层"
+          "description": "对齐 UAS 八元组层：S 系统网格 / K 知识底座"
         },
         "enabled": { "type": "boolean", "default": true },
         "operations": {

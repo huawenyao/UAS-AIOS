@@ -8,7 +8,10 @@
     "strategic_docs": [
       "docs/strategic/Enterprise_Digital_Human_Ecosystem_Product_Definition.md",
       "docs/strategic/UAS_AIPOS_SelfPaw_Integrated_Product_Tech_Architecture.md",
-      "docs/strategic/UAS-AIOS_Delivery_Form_And_Product_Design.md"
+      "docs/strategic/UAS-AIOS_Delivery_Form_And_Product_Design.md",
+      "docs/strategic/design/UAS_AIOS_ARCHITECTURE_SPEC.md",
+      "docs/strategic/design/UAS_AIOS_MODULE_DESIGN.md",
+      "docs/strategic/design/UAS_AIOS_CLUSTER_PRODUCTIZATION.md"
     ],
     "implementation_repos": {
       "uas_aios": ".",
@@ -158,18 +161,74 @@
         "runtime_service_list": "passed"
       },
       "requirements": ["REQ-EDH-K-001", "REQ-EDH-K-002"]
+    },
+    "uas_aios_cluster": {
+      "status": "in_progress",
+      "description": "UAS-AIOS 集群：规划完成；阶段 A Hub 内核可测",
+      "invariants": {
+        "uas_aios_reqharness": "passed",
+        "uas_aios_phase_a": "passed",
+        "uas_aios_protocol": "passed"
+      },
+      "requirements": [
+        "REQ-UAS-AIOS-001",
+        "REQ-UAS-AIOS-002",
+        "REQ-UAS-M01",
+        "REQ-UAS-M02",
+        "REQ-UAS-M03",
+        "REQ-UAS-M04",
+        "REQ-UAS-M05",
+        "REQ-UAS-M06",
+        "REQ-UAS-M07",
+        "REQ-UAS-M08",
+        "REQ-UAS-M09",
+        "REQ-UAS-M10",
+        "REQ-UAS-M11",
+        "REQ-UAS-M12",
+        "REQ-UAS-M13",
+        "REQ-UAS-M14",
+        "REQ-UAS-M15",
+        "REQ-UAS-M16",
+        "REQ-UAS-M17",
+        "REQ-UAS-M18",
+        "REQ-UAS-M19",
+        "REQ-UAS-M20",
+        "REQ-UAS-M21",
+        "REQ-UAS-M22",
+        "REQ-UAS-M23",
+        "REQ-UAS-M24"
+      ],
+      "artifacts": [
+        "docs/strategic/design/UAS_AIOS_MODULE_DESIGN.md",
+        "harness/knowledge/product/uas-aios-cluster-prd.md",
+        "harness/knowledge/technical/uas-aios-module-delivery.md",
+        "harness/knowledge/constraints/adr-sel-001-semantic-layers.md",
+        "harness/knowledge/constraints/adr-sel-002-dual-loop.md",
+        "harness/knowledge/constraints/adr-sel-003-no-substitutes.md",
+        "harness/requirements/sprint-uas-aios-001.md",
+        "harness/requirements/sprint-uas-aios-002.md",
+        "harness/requirements/sprint-uas-aios-003.md",
+        "configs/protocol/KERNEL.yaml",
+        "configs/protocol/registry.json",
+        "services/hub-api/uas_hub/ports.py",
+        "harness/knowledge/technical/uas-aios-global-protocol.md",
+        "harness/traces/hengchuan-ltc/index.json",
+        "services/hub-api/uas_hub/cycle.py",
+        "deploy/compose/docker-compose.yml",
+        "services/temporal-worker/uas_runtime/workflow.py",
+        "services/hub-api/uas_hub/hub.py"
+      ]
     }
   },
   "current_sprint": {
-    "id": "sprint-edh-001",
-    "name": "数字人生态 Phase-0：项目基线与平台契约",
-    "start_date": "2026-05-23",
-    "end_date": "2026-08-23",
+    "id": "sprint-uas-aios-003",
+    "name": "阶段 B 起步：exec.open 外环端口",
+    "start_date": "2026-09-10",
+    "end_date": "2026-09-24",
     "goals": [
-      "建立 harness 世界模型与实体图谱（可计算、可追踪）",
-      "冻结 Phase-0 需求与验收标准（PL/SP/PP/K）",
-      "输出 cs.* 能力服务目录与 OpenAPI 契约骨架",
-      "对齐 SelfPaw 参考实现与 UAS-AIOS 内核边界"
+      "exec.open 必须已签发",
+      "L2 等待确认后再 invoke_cs",
+      "一线不展示 workflow_id"
     ]
   },
   "metrics": {

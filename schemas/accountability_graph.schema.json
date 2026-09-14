@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asui.dev/schemas/accountability_graph.schema.json",
+  "title": "Accountability Graph",
+  "description": "企业级 AGI 统一责任图：目标节点 ≡ 组织节点 ≡ 指标节点 ≡ 流程挂钩。每个节点必须能投影到世界模型五维。",
+  "type": "object",
+  "required": ["graph_id", "tenant_id", "pack", "nodes"],
+  "additionalProperties": false,
+  "properties": {
+    "graph_id": { "type": "string", "pattern": "^ag-[a-z0-9-]+$" },
+    "tenant_id": { "type": "string" },
+    "pack": {
+      "type": "string",
+      "description": "Scene Pack：ops | cm | pmo | invest",
+      "enum": ["ops", "cm", "pmo", "invest"]
+    },
+    "world_model_id": { "type": "string" },
+    "period": {
+      "type": "object",
+      "required": ["grain", "from", "to"],
+      "properties": {
+        "grain": { "type": "string", "enum": ["day", "week", "month", "quarter"] },
+        "from": { "type": "string" },
+        "to": { "type": "string" }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/accountabilityNode" }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/decomposeEdge" }
+    }
+  },
+  "$defs": {
+    "accountabilityNode": {
+      "type": "object",
+      "required": ["node_id", "goal", "org", "kpi", "process", "wm"],
+      "additionalProperties": false,
+      "properties": {
+        "node_id": { "type": "string", "pattern": "^an-[a-z0-9-]+$" },
+        "parent_id": { "type": ["string", "null"] },
+        "goal": {
+          "type": "object",
+          "required": ["statement"],
+          "properties": {
+            "statement": { "type": "string" },
+            "horizon": { "type": "string" },
+            "success_criteria": { "type": "string" }
+          }
+        },
+        "org": {
+          "type": "object",
+          "required": ["unit_id", "position_id", "owner_id"],
+          "properties": {
+            "unit_id": { "type": "string" },
+            "position_id": { "type": "string" },
+            "owner_id": { "type": "string" },
+            "raci": { "type": "string", "enum": ["R", "A", "C", "I"] }
+          }
+        },
+        "kpi": {
+          "type": "object",
+          "required": ["kpi_id", "name", "ought", "is"],
+          "properties": {
+            "kpi_id": { "type": "string" },
+            "name": { "type": "string" },
+            "unit": { "type": "string" },
+            "caliber": { "type": "string", "description": "口径公式，禁止口头口径" },
+            "ought": { "type": "number" },
+            "is": { "type": "number" },
+            "delta": { "type": "number" },
+            "status": { "type": "string", "enum": ["ok", "watch", "gate"] }
+          }
+        },
+        "process": {
+          "type": "object",
+          "required": ["value_stream"],
+          "properties": {
+            "value_stream": { "type": "string" },
+            "stage": { "type": ["string", "null"] },
+            "cs_read": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "指标回写所读 cs.*"
+            },
+            "cs_write": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "任务落地所写 cs.*；场景态禁止直接调用"
+            },
+            "system_of_record": { "type": "string" }
+          }
+        },
+        "wm": {
+          "type": "object",
+          "required": ["space", "time", "subject", "object", "feedback"],
+          "properties": {
+            "space": { "type": "string" },
+            "time": { "type": "string" },
+            "subject": { "type": "string" },
+            "object": { "type": "string" },
+            "feedback": { "type": "string" }
+          }
+        },
+        "object_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "本节点管辖的业务客体 ID（客户/项目/人才）"
+        }
+      }
+    },
+    "decomposeEdge": {
+      "type": "object",
+      "required": ["from", "to", "kind"],
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["org_cascade", "kpi_split", "stage_split", "object_drill"],
+          "description": "四类边是同一棵树的四种投影，禁止做成四套图"
+        },
+        "weight": { "type": "number" }
+      }
+    }
+  }
+}

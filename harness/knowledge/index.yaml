@@ -1,6 +1,8 @@
 product:
   - file: product/digital-human-ecosystem-vision.md
     title: 数字人生态产品愿景与双轨定位
+  - file: product/uas-aios-cluster-prd.md
+    title: UAS-AIOS 集群 PRD（方案研究）
 technical:
   - file: technical/edh-platform-baseline.md
     title: 平台+模型架构与 Phase-0 技术基线
@@ -20,6 +22,10 @@ technical:
     title: Intent Hub 与升级 ΠPaw API 草案
   - file: technical/world-model-studio.md
     title: World Model Studio（ΠPaw 器层原型）
+  - file: technical/uas-aios-module-delivery.md
+    title: UAS-AIOS M1–M24 技术方案与开发规划
+  - file: technical/uas-aios-global-protocol.md
+    title: UAS-AIOS 全局协议 Π（信封·Port·24 模块）
 domain:
   - file: domain/glossary.md
     title: 数字人生态术语表
@@ -30,3 +36,9 @@ constraints:
     title: ADR-EDH-002 先能力服务化再挂 Agent 岗位
   - file: constraints/adr-uas-003-experience-protocol-boundary.md
     title: ADR-UAS-003 体验域通用机制上收 G/E/Π
+  - file: constraints/adr-sel-001-semantic-layers.md
+    title: ADR-SEL-001 语义分层
+  - file: constraints/adr-sel-002-dual-loop.md
+    title: ADR-SEL-002 Agent 双环
+  - file: constraints/adr-sel-003-no-substitutes.md
+    title: ADR-SEL-003 禁替代清单

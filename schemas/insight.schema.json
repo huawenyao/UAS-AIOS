@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asui.dev/schemas/insight.schema.json",
+  "title": "Operating Insight",
+  "description": "指标下拆产出。grounded=false 或五维缺项不得进入 task.issue。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "insight_id",
+    "tenant_id",
+    "source_node_id",
+    "profile",
+    "hypothesis",
+    "suggested_cs",
+    "evidence_refs",
+    "grounded",
+    "wm_completeness"
+  ],
+  "properties": {
+    "insight_id": { "type": "string", "pattern": "^ins-[a-z0-9-]+$" },
+    "tenant_id": { "type": "string" },
+    "source_node_id": { "type": "string", "pattern": "^an-[a-z0-9-]+$" },
+    "profile": { "type": "string", "enum": ["scene", "explore", "builder", "runtime"] },
+    "hypothesis": { "type": "string", "minLength": 1 },
+    "suggested_cs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^cs\\.[a-z0-9_.]+$" }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "id"],
+        "properties": {
+          "kind": { "type": "string", "enum": ["kg", "metric", "audit", "artifact"] },
+          "id": { "type": "string" },
+          "as_of": { "type": "string" }
+        }
+      }
+    },
+    "grounded": { "type": "boolean" },
+    "wm_completeness": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["space", "time", "subject", "object", "feedback"]
+      }
+    }
+  }
+}

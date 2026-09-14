@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-09-12T00:00:00Z",
+  "approval_gate_mapping": {
+    "L1": { "description": "自动执行：只读与低风险写", "gates": ["G1", "G4"], "human_confirm": false },
+    "L2": { "description": "需用户或主管确认后执行", "gates": ["G1", "G4", "G6"], "human_confirm": true },
+    "L3": { "description": "禁止 Agent 自主执行或需双人审批", "gates": ["G6", "G7"], "human_confirm": true, "dual_control": true }
+  },
+  "charter_gates": [
+    { "id": "G0", "name": "意图显式" },
+    { "id": "G1", "name": "租户隔离" },
+    { "id": "G4", "name": "剖面/能力可见" },
+    { "id": "G6", "name": "审批与证据" },
+    { "id": "G7", "name": "审计闭环" }
+  ]
+}
